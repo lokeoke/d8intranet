@@ -1,6 +1,0 @@
-name: Intranet helper
-description: Meta module.
-package: Intranet
-type: module
-version: 1.0
-core: 8.x

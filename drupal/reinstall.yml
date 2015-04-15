@@ -15,27 +15,10 @@
     mysql_db: drupal
     cache_folder: /var/www/cache
     backup_folder: /var/www/backup
-    base_url: http://dmjx.192.168.51.121.xip.io
-    workflow_type: 'sql'
     pp_environment: 'default'
-    php_env_vars: '' # APP_ENV=dev - this varible will be set at PR_BUILDER from CI shell executor.
-    backup_user: propeople
-    backup_pass: givemebackup
-    source_database: http://{{ backup_user }}:{{ backup_pass }}@188.226.222.144/backup/latest.sql.gz
-    live_site_url: 'http://dmjx.dk/'
+    php_env_vars: ''
 
   tasks:
-  - name: Creating backup folder
-    file: path={{ backup_folder }} state=directory recurse=yes
-#
-#  - name: Remove old backup
-#    sudo: yes
-#    file: path={{ backup_folder }}/latest.sql.gz state=absent
-#    when: workflow_type == "sql" and pp_environment == "default"
-
-  - name: Downloading latest backup
-    get_url: url={{ source_database }} dest={{ backup_folder }}/latest.sql.gz force=yes
-    when: workflow_type == "sql" and pp_environment == "default"
 
   - name: Droping drupal database
     mysql_db: name={{ mysql_db }} state=absent login_user={{ mysql_user }} login_password={{ mysql_pass }}
@@ -43,98 +26,20 @@
   - name: Creating drupal database
     mysql_db: name={{ mysql_db }} state=present login_user={{ mysql_user }} login_password={{ mysql_pass }}
 
-  - name: Import dump
-    mysql_db: name={{ mysql_db }} state=import target={{ backup_folder }}/latest.sql.gz login_user={{ mysql_user }} login_password={{ mysql_pass }}
-    sudo: yes
-
   - name: Creating cache folder
     sudo: yes
-    file: path={{ cache_folder }} state=directory recurse=yes mode=0777
+    file: path={{ cache_folder }} state=directory recurse=yes
 
-  - name: Remove settings.php
-    file: name=sites/default/settings.php state=absent
+  - name: Removing tmp folder
     sudo: yes
+    shell: "chmod -R 777 sites/default && rm -rf sites/default/files && rm -f sites/default/services.yml && rm -f sites/default/settings.php"
 
-  - name: Creating settings.php
+  - name: Cooking defaults
     sudo: yes
-    shell: "cp sites/default/default.settings.php sites/default/settings.php"
+    shell: "cp sites/default/default.services.yml sites/default/services.yml"
 
-  - name: Adding database variable to settings.php
+  - name: Installing drupal
     sudo: yes
-    lineinfile: dest='sites/default/settings.php' line='$databases = array(\"default\" => array (\"default\" => array (\"database\" => \"{{ mysql_db }}\", \"username\" => \"{{ mysql_user }}\", \"password\" => \"{{ mysql_pass }}\", \"host\" => \"{{ mysql_host }}\", \"port\" => \"\", \"driver\" => \"mysql\", \"prefix\" => \"\", ), ), );'
-
-  - name: Adding base_url variable to settings.php
-    sudo: yes
-    lineinfile: dest='sites/default/settings.php' line='$base_url = \"{{ base_url }}\";'
-
-  - name: Random prefix for memcache to settings.php
-    sudo: yes
-    lineinfile: dest='sites/default/settings.php' line='$conf[\"memcache_key_prefix\"] = \"{{ mysql_db }}\";'
-
-  - name: Memcache settings to settings.php
-    sudo: yes
-    lineinfile: dest='sites/default/settings.php' line='$conf[\"cache_backends\"][] = \"sites/all/modules/contrib/memcache/memcache.inc\";'
-
-  - name: Memcache settings to settings.php
-    sudo: yes
-    lineinfile: dest='sites/default/settings.php' line='$conf[\"cache_default_class\"] = \"MemCacheDrupal\";'
-
-  - name: Adding environment variable to settings.php
-    sudo: yes
-    lineinfile: dest='sites/default/settings.php' line='$conf[\"pp_environment\"] = \"{{ pp_environment }}\";'
-
-  - name: Removing files directory
-    file: path=sites/default/files state=absent
-
-  - name: Set writable files dir
-    sudo: yes
-    file: dest=sites/default mode=777 state=directory recurse=yes
-
-  - name: Creating files directory
-    file: path=sites/default/files state=directory mode=0777
-
-  - name: Catch all emails via devel mail logger
-    lineinfile: dest='sites/default/settings.php' line='$conf["mail_system"] = array("default-system" => "TestingMailSystem");'
-#    when: pp_environment == 'default'
-
-  - name: Check if registry_rebuild is installed
-    shell: "{{ php_env_vars }} drush | grep -c registry_rebuild"
-    register: registry_rebuild_installed
-    ignore_errors: true
-
-  - name: Downloading registry_rebuild
-    shell: "{{ php_env_vars }} drush -y dl registry_rebuild"
-    when: workflow_type == 'sql' and registry_rebuild_installed.stdout == "0"
-
-  - name: Clear memcache
-    service: name=memcached state=restarted
-
-  - name: Rebuilding drupal registry
-    shell: "{{ php_env_vars }} drush -y rr -l {{ base_url }} || true && {{ php_env_vars }} drush -y rr -l {{ base_url }} || true"
-    when: workflow_type == 'sql'
-
-  - name: Change solr server
-    shell: "drush sqlq \"UPDATE apachesolr_environment SET url='http://localhost:8983/solr/{{ pp_environment }}' WHERE env_id = 'solr';\" && drush cc all && drush solr-delete-index && drush solr-mark-all && drush solr-index"
-
-  - name: Updating database
-    shell: "{{ php_env_vars }} drush -dvy updb -l {{ base_url }}"
-    when: workflow_type == 'sql'
-
-  - name: Disable prod only modules, enable dev modules and disable caching
-    shell: drush dis cdn advagg securepages -y && drush en devel mail_logger dblog -y && drush vset cache 0 && drush vset preprocess_css 0 && drush vset preprocess_js 0 && drush upwd admin --password="dmjxpr0ppl"
-
-  - name: Clear drush cache
-    shell: "{{ php_env_vars }} drush cc all"
-    when: workflow_type == 'sql' and registry_rebuild_installed.stdout == "0"
-
-  - name: Enable module Stage File Proxy
-    sudo: yes
-    shell: "{{ php_env_vars }} drush -y en stage_file_proxy"
-    when: pp_environment == "demo" or pp_environment == "default"
-
-  - name: Stage File Proxy settings
-    sudo: yes
-    lineinfile: dest='sites/default/settings.php' line='$conf[\"stage_file_proxy_origin\"] = \"{{ live_site_url }}";'
-    when: pp_environment == "demo" or pp_environment == "default"
+    shell: "{{ php_env_vars }} drush -y si {{ installation_profile_name }} --db-url=mysql://{{ mysql_user }}:{{ mysql_pass }}@127.0.0.1:/{{ mysql_db }} --account-name={{ drupal_user }} --account-pass={{ drupal_pass }}"
 
   handlers:

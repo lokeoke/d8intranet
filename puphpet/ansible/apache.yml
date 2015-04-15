@@ -13,7 +13,7 @@
     apache_vhosts_filename: "vhosts.conf"
     apache_vhosts:
       - {
-        servername: "dmjx.192.168.51.121.xip.io",
+        servername: "d8pp.dev",
         documentroot: "/var/www/drupal"
       }
 #    apache_vhosts_ssl:
