@@ -1,0 +1,20 @@
+uuid: 48a78de7-329f-43df-b809-09339cf651eb
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.user.field_drupal_org_id
+id: user.user.field_drupal_org_id
+field_name: field_drupal_org_id
+entity_type: user
+bundle: user
+label: 'Drupal.org ID'
+description: ''
+required: false
+translatable: false
+default_value:
+  -
+    value: ''
+default_value_callback: ''
+settings: {  }
+field_type: string

@@ -38,6 +38,10 @@ dependencies:
   - views
   - views_ui
   - tour
+  # CONTRIB
+  - field_group
+  # CUSTOM
+  - intranet_configs
 
 themes:
   - bartik

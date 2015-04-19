@@ -1,0 +1,6 @@
+name: 'Intranet config storage'
+description: 'Config storage module that contains sidewide configurations.'
+package: Intranet
+type: module
+version: 1.0
+core: 8.x

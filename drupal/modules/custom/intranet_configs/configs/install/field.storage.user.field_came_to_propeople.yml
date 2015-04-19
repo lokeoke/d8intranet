@@ -1,0 +1,19 @@
+uuid: b847a371-e9cc-4dab-8b05-5be3e375fcf2
+langcode: en
+status: true
+dependencies:
+  module:
+    - datetime
+    - user
+id: user.field_came_to_propeople
+field_name: field_came_to_propeople
+entity_type: user
+type: datetime
+settings:
+  datetime_type: date
+module: datetime
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false

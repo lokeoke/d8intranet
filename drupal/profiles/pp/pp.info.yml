@@ -3,8 +3,6 @@ type: profile
 description: 'Base propeople profile.'
 core: 8.x
 
-exclusive: 1
-
 dependencies:
   - block
   - dblog
