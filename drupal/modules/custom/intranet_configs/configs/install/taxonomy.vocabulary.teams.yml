@@ -1,9 +1,0 @@
-uuid: 41cb6a61-c963-4189-9200-ab4a361af3b1
-langcode: en
-status: true
-dependencies: {  }
-name: Teams
-vid: teams
-description: 'Particular developers team, or just Mitko team'
-hierarchy: 0
-weight: 0

@@ -1,0 +1,11 @@
+name: 'Intranet Callendar'
+desription: 'Contains formatters and REST controllers for http://fullcalendar.io/ integration'
+core: 8.x
+type: module
+version: 1.0
+package: Intranet
+
+dependencies:
+  - views
+  - rest
+  - date

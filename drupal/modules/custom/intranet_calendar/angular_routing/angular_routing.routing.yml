@@ -1,0 +1,5 @@
+angular.generate_url:
+  path: '/angular/generate-url/route'
+  defaults:
+    _title: 'Generate url using route and params'
+    _controller: '\Drupal\angular_routing\Controller\AngularController::generateDrupalUrl'

@@ -68,4 +68,5 @@ function pp_install() {
 
   // Enable the admin theme.
   \Drupal::configFactory()->getEditable('node.settings')->set('use_admin_theme', '1')->save();
+  \Drupal::configFactory()->getEditable('system.theme')->set('admin', 'seven')->set('default', 'bartik')->save();
 }

@@ -1,0 +1,10 @@
+name: 'Angular routing'
+description: 'REST controllers to get url by route name and params'
+core: 8.x
+package: Angular
+version: 1.x
+
+dependencies:
+  - rest
+  - path
+  - menu

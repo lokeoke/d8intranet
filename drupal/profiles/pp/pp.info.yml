@@ -7,3 +7,9 @@ dependencies:
   - block
   - dblog
   - intranet_helper
+  - intranet_configs
+
+themes:
+  - bartik
+  - seven
+

@@ -4,3 +4,7 @@ package: Intranet
 type: module
 version: 1.0
 core: 8.x
+
+dependecies:
+  - intranet_helper
+  - path
