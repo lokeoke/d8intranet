@@ -40,7 +40,11 @@ dependencies:
   - user
   - views_ui
   - text
+  - rest
+  - hal
   - tour
   # CONTRIB
   - field_group
+  - devel
+  - devel_generate
   # CUSTOM
