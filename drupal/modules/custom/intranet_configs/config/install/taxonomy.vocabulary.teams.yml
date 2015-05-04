@@ -1,0 +1,8 @@
+langcode: en
+status: true
+dependencies: {  }
+name: Teams
+vid: teams
+description: 'Particular developers team, or just Mitko team'
+hierarchy: 0
+weight: 0

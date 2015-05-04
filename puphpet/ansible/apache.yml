@@ -16,6 +16,7 @@
         servername: "d8pp.dev",
         documentroot: "/var/www/drupal"
       }
+      - { servername: "client.d8pp.dev", documentroot: /var/www/angular/app" }
 #    apache_vhosts_ssl:
 #      - {
 #        servername: "dmjx.192.168.51.121.xip.io",
@@ -25,6 +26,7 @@
 #      }
     apache_mods_enabled:
       - rewrite.load
+      - headers.load
       - ssl.load
 
   roles:

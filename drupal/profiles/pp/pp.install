@@ -30,7 +30,7 @@ function pp_install() {
   $user_settings->set('register', USER_REGISTER_VISITORS_ADMINISTRATIVE_APPROVAL)->save();
 
   // Enable default permissions for system roles.
-  user_role_grant_permissions(RoleInterface::ANONYMOUS_ID, array('access comments'));
+  user_role_grant_permissions(RoleInterface::ANONYMOUS_ID, array('access comments', 'access user profiles'));
   user_role_grant_permissions(RoleInterface::AUTHENTICATED_ID, array('access comments', 'post comments', 'skip comment approval'));
 
   // Assign user 1 the "administrator" role.
@@ -68,4 +68,5 @@ function pp_install() {
 
   // Enable the admin theme.
   \Drupal::configFactory()->getEditable('node.settings')->set('use_admin_theme', '1')->save();
+  \Drupal::configFactory()->getEditable('system.theme')->set('admin', 'seven')->set('default', 'bartik')->save();
 }

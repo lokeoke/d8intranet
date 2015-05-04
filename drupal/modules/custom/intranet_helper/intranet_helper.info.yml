@@ -36,9 +36,15 @@ dependencies:
   - file
   - rdf
   - views
+  - search
+  - user
   - views_ui
+  - text
+  - rest
+  - hal
   - tour
-
-themes:
-  - bartik
-  - seven
+  # CONTRIB
+  - field_group
+  - devel
+  - devel_generate
+  # CUSTOM
