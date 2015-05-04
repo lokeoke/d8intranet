@@ -9,12 +9,10 @@
  */
 angular.module('d8intranetApp')
   .controller('UsersCtrl', function ($scope, $routeParams, $http) {
-    $http.get('http://d8server.local/user').then(function(response) {
+    $http.get('http://d8pp.dev/user-list').then(function(response) {
       console.log('NodeCtrl GET response', response);
       var data = response.data;
-      $scope.type = data.type[0].target_id;
-      $scope.title = data.title[0].value;
-      $scope.body = data.body[0].value;
+      $scope.users = data;
       console.log('NodeCtrl GET $scope', $scope);
     });
   });
