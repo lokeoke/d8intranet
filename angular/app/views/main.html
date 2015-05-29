@@ -1,23 +1,109 @@
-<div class="jumbotron">
-  <h1>'Allo, 'Allo!</h1>
-  <p class="lead">
-    <img src="images/yeoman.png" alt="I'm Yeoman"><br>
-    Always a pleasure scaffolding your apps.
-  </p>
-  <p><a class="btn btn-lg btn-success" ng-href="#/">Splendid!<span class="glyphicon glyphicon-ok"></span></a></p>
-</div>
+<h1 class="page-title">Dashboard</h1>
 
-<div class="row marketing">
-  <h4>HTML5 Boilerplate</h4>
-  <p>
-    HTML5 Boilerplate is a professional front-end template for building fast, robust, and adaptable web apps or sites.
-  </p>
+<div class="page-content" ng-controller="MainCtrl">
 
-  <h4>Angular</h4>
-  <p>
-    AngularJS is a toolset for building the framework most suited to your application development.
-  </p>
+  <article class="info-box" ng-repeat="user in users">
+    <div class="info-box-headline">
+      <!--<div class="counter">-->
+        <!--{{(user |filter:query).length}} people-->
+      <!--</div>-->
+      <h1>{{user.field_firs_name[0].value}}</h1>
+    </div>
 
-  <h4>Karma</h4>
-  <p>Spectacular Test Runner for JavaScript.</p>
+    <div class="employee-columns">
+      <div class="col">
+        <div class="employee" >
+          <a href="" class="employee-link">
+                  <span class="user-pic">
+                    <!--<img src="images/users/alyona.png" alt="Angolenko Alyona"/>-->
+                  </span>
+            <span class="user-name"> {{user.field_firs_name[0].value}}</span>
+          </a>
+        </div>
+      </div>
+
+    </div>
+  </article>
+
+  <!--<article class="info-box">-->
+  <!--<div class="info-box-headline">-->
+  <!--<h1>Day off</h1>-->
+  <!--<span class="counter">-->
+  <!--3 people-->
+  <!--</span>-->
+
+  <!--</div>-->
+
+  <!--<div class="employee-columns">-->
+  <!--<div class="col">-->
+  <!--<div class="employee">-->
+  <!--<a href="" class="employee-link">-->
+  <!--<span class="user-pic">-->
+  <!--<!--<img src="images/users/vlad.png" alt="Vasetskiy Vlad "/>-->
+  <!--</span>-->
+  <!--<span class="user-name">Vasetskiy Vlad </span>-->
+  <!--</a>-->
+  <!--</div>-->
+
+  <!--<div class="employee">-->
+  <!--<a href="" class="employee-link">-->
+  <!--<span class="user-pic">-->
+  <!--<!--<img src="images/users/anya.png" alt="Plakhuta Anna"/>-->
+  <!--</span>-->
+  <!--<span class="user-name">Plakhuta Anna</span>-->
+  <!--</a>-->
+  <!--</div>-->
+
+  <!--<div class="employee">-->
+  <!--<a href="" class="employee-link">-->
+  <!--<span class="user-pic">-->
+  <!--<!--<img src="images/users/dima_m.png" alt="Mitko Dmitriy"/>-->
+  <!--</span>-->
+  <!--<span class="user-name">Mitko Dmitriy</span>-->
+  <!--</a>-->
+  <!--</div>-->
+  <!--</div>-->
+
+  <!--<div class="col">-->
+  <!--<div class="employee">-->
+  <!--<a href="" class="employee-link">-->
+  <!--<span class="user-pic">-->
+  <!--<!--<img src="images/users/pasha_d.png" alt="Druzhchenko Pavel"/>-->
+  <!--</span>-->
+  <!--<span class="user-name">Druzhchenko Pavel</span></a>-->
+  <!--</div>-->
+  <!--</div>-->
+  <!--</div>-->
+  <!--</article>-->
+
+  <!--<article class="info-box">-->
+  <!--<div class="info-box-headline">-->
+  <!--<div class="counter">-->
+  <!--2 people-->
+  <!--</div>-->
+  <!--<h1>Business trip</h1>-->
+  <!--</div>-->
+
+  <!--<div class="employee-columns">-->
+  <!--<div class="col">-->
+  <!--<div class="employee">-->
+  <!--<a href="" class="employee-link">-->
+  <!--<span class="user-pic">-->
+  <!--<!--<img src="images/users/alyona.png" alt="Angolenko Alyona"/>-->
+  <!--</span>-->
+  <!--<span class="user-name">Angolenko Alyona</span>-->
+  <!--</a>-->
+  <!--</div>-->
+  <!--<div class="employee">-->
+  <!--<a href="" class="employee-link">-->
+  <!--<span class="user-pic">-->
+  <!--<!--<img src="images/users/pasha_l.png" alt="Loparev Pavel"/>-->
+  <!--</span>-->
+  <!--<span class="user-name">Loparev Pavel</span>-->
+  <!--</a>-->
+  <!--</div>-->
+  <!--</div>-->
+
+  <!--</div>-->
+  <!--</article>-->
 </div>

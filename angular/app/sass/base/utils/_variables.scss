@@ -1,0 +1,72 @@
+//------------------------------------------------------------------------------
+// Images
+$sprite: '../images/sprite.png';
+
+//------------------------------------------------------------------------------
+// Fonts
+
+// Fallback fonts
+$fonts-sans: 'Open Sans', Helvetica, Arial, sans-serif;
+$fonts-serif: Georgia, serif;
+
+$sans: $fonts-sans !default;
+$serif: $fonts-serif !default;
+
+// Colors
+//------------------------------------------------------------------------------
+
+// Site base colors
+$white: #fff !default;
+$black: #000 !default;
+
+// Define variables
+$site-bg: #fff;
+$block-bg: #282828;
+
+$sidebar-bg: #1b1b1b;
+$menu-hover: #111;
+$header-divider: #6e6e6e;
+$block-divider: #383838;
+$site-font-color: #cfcfcf;
+$link: #66d5e9;
+$link-hover: #e9c366;
+// Language switcher colors$site-b
+$switcher-bg: #404040;
+$switcher-border: #2c2c2c;
+$switcher-btn: #b5b5b5;
+
+$themes: (
+    'dark': (
+        $site-bg: #3c3c3c,
+        $block-bg: #282828,
+
+        $sidebar-bg: #1b1b1b,
+        $menu-hover: #111,
+        $header-divider: #6e6e6e,
+        $block-divider: #383838,
+        $site-font-color: #cfcfcf,
+        $link: #66d5e9,
+        $link-hover: #e9c366,
+
+      // Language switcher colors
+        $switcher-bg: #404040,
+        $switcher-border: #2c2c2c,
+        $switcher-btn: #b5b5b5
+    ),
+    'light': (
+        $site-bg: #e1e3e4,
+        $block-bg: #f4f4f4,
+
+        $sidebar-bg: #57646b,
+        $menu-hover: #4a555a,
+        $header-divider: #c6c6c6,
+        $block-divider: #d2d6d5,
+        $site-font-color: #2e2e2e,
+        $link: #498baf,
+        $link-hover: #537786,
+      // Language switcher colors
+        $switcher-bg: #f4f4f4,
+        $switcher-border: #cbcdcd,
+        $switcher-btn: #373f43
+    )
+);

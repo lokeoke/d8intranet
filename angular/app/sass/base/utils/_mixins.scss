@@ -1,0 +1,201 @@
+//------------------------------------------------------------------------------
+// Main sprite
+@mixin sprite($x, $y, $bg-color: transparent, $sprite: '../images/sprite.png') {
+  background: $bg-color url($sprite) no-repeat $x $y;
+}
+
+//------------------------------------------------------------------------------
+// Font resizing
+@mixin font-size($size-value: 16) {
+  // Use pixels only if it's IE8 or less
+  .lt-ie9 & {
+    font-size: ($size-value) + px;
+  }
+  // For other browsers use REM
+  font-size: ($size-value / 16) + rem;
+}
+
+//------------------------------------------------------------------------------
+// include_font
+
+//
+// Includes any font.
+// The font must be placed in: ../font/NAME.[eot|woff|ttf|svg]
+//
+// @param (string) $name - font and folder name;
+// @param (string) $weight - font weight, subfolder and file name.
+//
+// @example:
+//
+// ../font/Arial/bold/bold.[eot|woff|ttf|svg]
+// @include include_font(Arial, bold);
+
+@mixin include-font($name, $weight) {
+  $url: unquote('../fonts/' +  $name + '/' + $weight + '/' + $weight);
+
+  @font-face {
+    font-family: $name + $weight;
+    src: url($url + '.eot');
+    src: url($url + '.eot?#iefix') format('embedded-opentype'),
+    url($url + '.woff') format('woff'),
+    url($url + '.ttf') format('truetype'),
+    url($url + '.svg#' + $name) format('svg');
+    font-style: normal;
+  }
+}
+
+//------------------------------------------------------------------------------
+// Links
+@mixin links($color: $link, $hover: $link-hover, $dec: false) {
+  color: $color;
+
+  @if $dec == true {
+    text-decoration: underline;
+
+    &:hover { color: $hover; }
+  }
+
+  @if $dec == false {
+    text-decoration: none;
+
+    &:hover { color: $hover; }
+  }
+}
+
+//------------------------------------------------------------------------------
+// Input fields
+
+@mixin inputs($width: auto, $height: auto, $border: none, $color: $black) {
+  height: $height;
+  width: $width;
+  border: $border;
+  background-color: #fff;
+  padding: 0 5px;
+  color: $color;
+}
+
+//------------------------------------------------------------------------------
+// Submit Button
+
+@mixin submit($width: auto, $height: auto, $border: none, $color: #fff) {
+  width: $width;
+  height: $height;
+  line-height: $height;
+  border: $border;
+  color: $color;
+  padding: 5px;
+}
+
+//------------------------------------------------------------------------------
+// Regular Button
+@mixin button($pad-top: 25px, $pad-side: 35px, $bg-color: #f00, $bordered: false) {
+  @include font-size(14);
+  background-color: $bg-color;
+  text-align: center;
+  padding: $pad-top $pad-side;
+  text-decoration: none;
+  color: $white;
+
+
+  @if $bordered == true {
+    background-color: transparent;
+    border: 1px solid $bg-color;
+  }
+}
+
+
+//------------------------------------------------------------------------------
+// CSS3 Animation
+%animate {
+  transition-property: all;
+  transition-timing-function: ease-in;
+  transition-duration: .1s;
+}
+
+//------------------------------------------------------------------------------
+// Opacity
+
+// @example:
+// .some-class {  @include opacity(.8);  }
+
+@mixin opacity($opacity) {
+  opacity: $opacity;
+  $opacity-ie: $opacity * 100;
+  filter: alpha(opacity=$opacity-ie); //IE8 fix
+}
+
+//------------------------------------------------------------------------------
+// Placeholder
+@mixin placeholder($color) {
+  .placeholder {
+    color: $color;
+  }
+
+  &:-moz-placeholder {
+    color: $color;
+  }
+
+  &::-webkit-input-placeholder {
+    color: $color;
+  }
+}
+
+//------------------------------------------------------------------------------
+// Responsive video
+%respondvideo {
+  position: relative;
+  padding-bottom: 56.25%; // 16/9 ratio
+  height: 0;
+  overflow: hidden;
+  display: block;
+
+  iframe,
+  object,
+  embed {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+  }
+}
+
+//------------------------------------------------------------------------------
+// Helper classes
+
+//-----------------------------------
+// Smart overflow of Floated elements
+%group,
+.group {
+  zoom: 1; // For IE 6/7 (trigger hasLayout)
+
+  &:before,
+  &:after {
+    content: '';
+    display: table;
+  }
+
+  &:after {
+    clear: both;
+  }
+}
+
+//-----------------------------------
+// Visually hide an element
+%visuallyhidden {
+  margin: -1px;
+  padding: 0;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  clip: rect(0, 0, 0, 0);
+  position: absolute;
+}
+
+// Hide from both screen readers and browsers: h5bp.com/u
+.hidden {
+  visibility: hidden;
+  display: none;
+}
+

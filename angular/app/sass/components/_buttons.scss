@@ -1,0 +1,20 @@
+.btn,
+.more-link {
+  color: $white;
+
+  &:active,
+  &:focus {
+    outline: none;
+  }
+}
+
+.form-submit {
+  @include font-size(15);
+  -webkit-appearance: none;
+  border: 0;
+  color: $white;
+  cursor: pointer;
+  font-family: $sans;
+  outline: 0;
+  padding: 8px 29px 7px;
+}

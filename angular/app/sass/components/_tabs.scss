@@ -1,0 +1,26 @@
+.tabs {
+  $tabs-background: #ccc;
+  $tab-hover: #fff;
+  $links-main-color: #fff;
+  $links-hover-color: #000;
+
+  background-color: $tabs-background;
+  position: relative;
+  z-index: 42;
+
+  li {
+    float: left;
+    margin: 0;
+    padding: 0;
+
+    a {
+      @include links($links-main-color, $links-hover-color);
+      display: block;
+      padding: 10px 15px;
+    }
+
+    &:hover { background-color: $tab-hover; }
+    &.active { background-color: $tab-hover; }
+  }
+}
+

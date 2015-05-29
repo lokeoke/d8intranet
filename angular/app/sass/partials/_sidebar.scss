@@ -1,0 +1,160 @@
+//------------------------------------------------------------------------------
+// Sidebar global
+.sidebar {
+  position: fixed;
+  top: 0;
+  height: 100%;
+  overflow: hidden;
+  width: 115px;
+  transition: all .2s ease-in-out;
+  box-shadow: -3px 0 2px rgba(0, 0, 0, .2) inset;
+  z-index: 80;
+
+  @each $theme, $map in $themes {
+    .#{$theme} & {
+      background: map-get($map, $sidebar-bg);
+    }
+  }
+
+  a {
+    display: block;
+  }
+
+  // User pic
+  .user-pic {
+    margin: 0 auto 20px;
+    width: 70px;
+    height: 70px;
+  }
+}
+
+.logo {
+  margin: 25px auto 65px;
+  max-width: 80px;
+}
+
+// Menu icons
+.sidebar-icon {
+  padding: 15px 0;
+  @extend %group;
+  min-height: 80px;
+  transition: all .3s ease-in-out;
+  position: relative;
+
+  [class$='-icon'] {
+    font-family: fontello;
+    color: $white;
+    padding: 10px 25px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: block;
+    position: absolute;
+    text-align: center;
+    width: 80px;
+    transition: all .4s ease-in-out;
+  }
+
+  &::before {
+    display: block;
+  }
+
+  &.active,
+  &:hover {
+    @each $theme, $map in $themes {
+      .#{$theme} & {
+        background: map-get($map, $menu-hover);
+      }
+    }
+  }
+
+  // Titles
+  .menu-item-title {
+    color: $white;
+    float: left;
+    padding: 7px 0;
+    position: absolute;
+    width: 100%;
+    left: 100%;
+    opacity: 0;
+    top: 26px;
+    transition: all .3s ease-in-out;
+  }
+}
+
+.dashboard-icon {
+  &::before {
+    @include font-size(30);
+    content: '\e808';
+  }
+}
+
+.employees-icon {
+  &::before {
+    @include font-size(30);
+    content: '\e807';
+  }
+}
+
+.rest-icon {
+  &::before {
+    @include font-size(30);
+    content: '\e80c';
+  }
+}
+
+.logout-icon {
+  &::before {
+    @include font-size(30);
+    content: '\e809';
+  }
+}
+
+.roll-menu-icon {
+  display: block;
+
+  &::before {
+    @include font-size(20);
+    content: '\e80d';
+  }
+}
+
+.roll-icon {
+  float: none;
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+}
+
+// Animated sidebar
+
+.page-content-container {
+  transition: all .3s ease-in-out;
+}
+
+.roll-bar {
+
+  .sidebar {
+    width: 215px;
+  }
+
+  .page-content-container {
+//    margin-left: 215px;
+  }
+
+  .sidebar-icon [class$='-icon'] {
+    left: 0;
+    transform: translateX(0);
+  }
+
+  .menu-item-title {
+    left: 80px;
+    width: 65%;
+    opacity: 1;
+  }
+
+  .sidebar-icon .roll-menu-icon {
+    transform: rotate(-180deg);
+    transform-origin: 100% 0 100%;
+  }
+}
+

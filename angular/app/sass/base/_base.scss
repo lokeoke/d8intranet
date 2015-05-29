@@ -1,0 +1,156 @@
+//------------------------------------------------------------------------------
+// Breakpoints
+
+$wide: 1025px 12 !default;
+$tablet-land: 769px 12 !default;
+$tablet-port: 768px 12 !default;
+$phone-x2: 640px 12 !default;
+$phone: 320px 12 !default;
+
+//------------------------------------------------------------------------------
+//Page
+
+html { @include font-size(); }
+
+html,
+body {
+//  transition: all .3s ease-in-out;
+  -webkit-font-smoothing: antialiased;
+}
+
+body {
+  font-family: $sans;
+  font-weight: 300;
+  min-width: 320px;
+  -webkit-text-size-adjust: 100%;
+  word-wrap: break-word;
+  @include border-box-sizing;
+  transition: all .2s ease-in-out;
+
+  @each $theme, $map in $themes {
+    .#{$theme} & {
+      background: map-get($map, $site-bg);
+      color: map-get($map, $site-font-color);
+    }
+  }
+}
+
+
+// -----------------------------------------------------------------------------
+// Reset base styles for all lists
+ul,
+ol {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+a {
+//  @include links($black, $black, true);
+  outline: medium none;
+  text-decoration: none;
+
+  @each $theme, $map in $themes {
+    .#{$theme} & {
+      color: map-get($map, $link);
+    }
+  }
+
+
+  // .no-touch & { }
+
+  &:focus { outline: medium none;  }
+  &:hover {
+    @each $theme, $map in $themes {
+      .#{$theme} & {
+        color: map-get($map, $link-hover);
+      }
+    }
+  }
+}
+
+// -----------------------------------------------------------------------------
+// Status messages styles
+.drupal-system {
+  @include span(12);
+}
+
+input[type="text"],
+input[type="password"],
+input[type="email"],
+input[type="url"],
+input[type="search"] {
+  @include font-size(14);
+  border: 0;
+  border-radius: 5px;
+  color: $black;
+  height: 17px;
+  margin: 0;
+  max-width: 100%;
+  padding: 9px 0;
+}
+
+input[type="text"]::-ms-clear {
+  display: none;
+}
+
+.form-text,
+.form-textarea {
+  border: 1px solid transparent;
+
+  &:hover,
+  &:focus {
+    outline: none;
+  }
+}
+
+// -----------------------------------------------------------------------------
+// Make all image are fluid
+
+img {
+  height: auto;
+  max-width: 100%;
+}
+
+
+// -----------------------------------------------------------------------------
+// Make white fill for webkit browsers
+input:-webkit-autofill {
+  -webkit-box-shadow: 0 0 0 1000px $white inset;
+}
+
+hr {
+  border-top: 0 none;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+//------------------------------------------------------------------------------
+// Warning, Tabs, Message pane
+.status,
+.warning,
+.error,
+.alert-block {
+  @include font-size(15);
+  box-sizing: border-box;
+  color: $white;
+  display: block;
+  padding: 15px;
+
+
+  .krumo-root {
+    color: $black;
+  }
+
+  a {
+    color: $black;
+  }
+
+  li {
+    margin-bottom: 10px;
+  }
+}
+
+.error { background-color: #e05041; }
+.status { background-color: #01be53; }
+.warning { background-color: #446bad; }
