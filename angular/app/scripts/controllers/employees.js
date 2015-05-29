@@ -8,10 +8,10 @@
  * Controller of the d8intranetApp
  */
 angular.module('d8intranetApp')
-  .controller('AboutCtrl', function ($scope) {
-    $scope.awesomeThings = [
-      'HTML5 Boilerplate',
-      'AngularJS',
-      'Karma'
-    ];
+  .controller('EmployeesCtrl', function ($scope) {
+    //$scope.awesomeThings = [
+    //  'HTML5 Boilerplate',
+    //  'AngularJS',
+    //  'Karma'
+    //];
   });

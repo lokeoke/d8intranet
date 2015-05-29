@@ -1,0 +1,72 @@
+//---------------------------------------------------------------------- Pager
+.pager {
+  @include font-size(15);
+  border-top: 1px solid #dddedf;
+  font-family: $sans;
+  margin: 30px 0;
+  position: relative;
+  text-align: center;
+
+  .pager-ellipsis {
+    display: none;
+  }
+
+  .node-content & {
+    border: 0;
+  }
+
+
+  li {
+    background-color: #8a99aa;
+    margin: 0 0 0 5px;
+    vertical-align: middle;
+
+    &:hover {
+      cursor: default;
+    }
+
+    a {
+      @include links($white, $white);
+      display: block;
+      padding: 10px 14px;
+    }
+
+    &.pager-last,
+    &.pager-first {
+      display: none;
+    }
+  }
+
+  // Current element
+  .pager-current {
+    color: $white;
+    cursor: default;
+    vertical-align: middle;
+  }
+
+  .pager-previous,
+  .pager-next {
+    background-color: transparent;
+    position: absolute;
+    text-transform: uppercase;
+
+    &:hover {
+      background-color: transparent;
+    }
+
+    a {
+      padding: 10px 0;
+    }
+
+    a:hover {
+      background-color: transparent;
+    }
+  }
+
+  .pager-next { right: 0; }
+
+  .pager-previous {
+    left: 0;
+    margin-left: 0;
+  }
+}

@@ -1,0 +1,13 @@
+//------------------------------------------------------------------------------
+// Breadcrumbs
+.breadcrumb {
+  color: $black;
+  margin-bottom: 20px;
+  margin-top: 20px;
+
+  a {
+    @include font-size(14);
+    @include links($black, $black);
+  }
+}
+

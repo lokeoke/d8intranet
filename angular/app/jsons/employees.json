@@ -1,0 +1,97 @@
+{
+  "users": [
+    {
+      "uid": [
+        {
+          "value": "1"
+        }
+      ],
+
+      "field_firs_name": [
+        {
+          "value": "Artem"
+        }
+      ],
+
+      "field_last_name": [
+        {
+          "value": "Miroshnik"
+        }
+      ],
+
+      "status": [
+        {
+          "day_off": "0",
+          "sick": "0",
+          "business_trip": "1",
+          "remote_work": "0",
+          "vacation": "0"
+        }
+      ]
+    },
+
+    {
+      "uid": [
+        {
+          "value": "2"
+        }
+      ],
+
+      "field_firs_name": [
+        {
+          "value": "Alex"
+        }
+      ],
+
+      "field_last_name": [
+        {
+          "value": "Mikhutkin"
+        }
+      ],
+
+      "status": [
+        {
+          "day_off": "0",
+          "sick": "0",
+          "business_trip": "0",
+          "remote_work": "1",
+          "vacation": "0"
+        }
+      ]
+    },
+
+    {
+      "uid": [
+        {
+          "value": "2"
+        }
+      ],
+
+      "field_firs_name": [
+        {
+          "value": "Vlad"
+        }
+      ],
+
+      "field_last_name": [
+        {
+          "value": "Vaseckiy"
+        }
+      ],
+
+      "status": [
+        {
+          "day_off": "0",
+          "sick": "0",
+          "business_trip": "0",
+          "remote_work": "0",
+          "vacation": "1"
+        }
+      ]
+    }
+
+  ]
+}
+
+
+

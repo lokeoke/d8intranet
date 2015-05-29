@@ -9,7 +9,7 @@
  */
 angular.module('d8intranetApp')
   .controller('UsersCtrl', function ($scope, $routeParams, $http) {
-    $http.get('http://d8pp.dev/user-list').then(function(response) {
+    $http.get('http://drupal.d8pp.dev/user-list').then(function(response) {
       console.log('NodeCtrl GET response', response);
       var data = response.data;
       $scope.users = data;

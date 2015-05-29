@@ -1,0 +1,38 @@
+//------------------------------------------------------------------------------
+// Global layout
+
+$susy: (
+    flow: ltr, // ltr | rtl
+    output: float, // float | isolate
+    math: fluid, // fluid | static (requires column-width)
+    container: 100%, // length or % | auto
+    container-position: center, // left | center | right | <length> [*2] (grid padding)
+    last-flow: to,
+    columns: 24,
+    gutters: .33,
+    gutter-position: after , // before | after | split | inside | inside-static (requires column-width)
+    global-box-sizing: border-box, // content-box | border-box (affects inside/inside-static)
+
+    debug: (
+        image: hide,
+        color: rgba(#54bcff, .5),
+        output: background,
+        toggle: bottom right,
+    ),
+);
+
+.container {
+  @include container;
+}
+
+.page-content-container {
+  @include container;
+  margin-left: 115px;
+
+}
+
+.page-container {
+//  @include span(18);
+  @include pre(2);
+  @include post(2);
+}

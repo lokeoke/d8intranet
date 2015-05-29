@@ -1,0 +1,144 @@
+// Here base styles for Web form and for Comments form
+// Elements which similar and styled - Input text, Text area, Submit buttons
+// labels for them.
+form {
+  $gray: #f2f2f2;
+  $gray-dark: #dedede;
+
+  // Prevent Webkit auto fill highlighting
+  input:-webkit-autofill {
+    background-color: $white !important;
+  }
+
+  .form-wrapper {
+    clear: both;
+    position: relative;
+  }
+
+  // Text fields and text area similar styles
+  .form-text,
+  .form-textarea {
+    @include font-size(16);
+    background-color: $gray;
+    color: $black;
+    font-family: $sans;
+    height: 44px;
+    padding: 0 3%;
+    width: 94%;
+
+    &:active,
+    &:focus {
+      box-shadow: 0 1px 0 #d4d4d4 inset, 0 0 0 1000px #080d10 inset;
+    }
+  }
+
+  label {
+    @include font-size(15);
+    box-sizing: border-box;
+    line-height: 1.2;
+    padding-right: 10px;
+    text-align: right;
+  }
+
+  .error {
+    margin-bottom: 10px;
+  }
+
+  .form-checkbox.error,
+  .form-radio.error {
+    & + & label {
+      color: #8b1a35;
+    }
+  }
+
+  // Textarea
+  .form-textarea {
+    height: 100px;
+    resize: vertical;
+    padding: 10px;
+  }
+
+  // Actions buttons
+  .form-actions {
+    margin-top: -7px;
+  }
+
+  // Submit
+  .form-submit {
+    padding: 8px 25px 7px;
+  }
+}
+
+// Web form
+.webform-client-form {
+  // Fieldsets
+  .webform-component-fieldset {
+    padding: 10px 0;
+    margin: 0 auto 30px;
+    max-width: 600px;
+    @extend %group;
+
+    .webform-component {
+      margin-bottom: 20px;
+      font-size: 0;
+    }
+  }
+
+
+  // ---------------------------------------------------------------------------
+  // Items
+  .form-item {
+    // Labels
+    label {
+      display: block;
+      width: 100%;
+      text-align: left;
+    }
+  }
+
+  .form-text {
+    width: 100%;
+  }
+
+  .webform-component-textarea {
+    @extend %group;
+    margin-bottom: 40px;
+    clear: both;
+
+    label {
+      line-height: 1.2;
+      display: block;
+      margin-bottom: 10px;
+      text-align: left;
+    }
+
+    .form-textarea {
+      width: 100%;
+    }
+  }
+
+  // Radios
+  .webform-component-radios {
+    font-size: 0;
+    padding: 20px 0;
+
+
+    .form-type-radio {
+      display: block;
+      margin: 0 40px 5px 0;
+
+      label { display: block; }
+    }
+  }
+
+
+  // File uploader
+  .webform-component-file {
+    clear: both;
+  }
+
+  // Form submit
+  .form-actions {
+    text-align: center;
+  }
+}
