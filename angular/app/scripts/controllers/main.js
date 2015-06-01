@@ -13,39 +13,60 @@ angular.module('d8intranetApp')
       method: 'GET',
       url: '../../jsons/employees.json'
     }).success(function (response) {
-      $scope.users = response.users;
-      console.log($scope.users);
+        $scope.users = response.users;
+        console.log($scope.users);
 
-      $scope.states = [];
-      $scope.employees = [];
+        $scope.states = {};
 
-      angular.forEach(response.users, function(user) {
-        angular.forEach(user.status[0], function(key, statusName) {
-          if(key == 1) {
-            $scope.states.push(statusName)
-          }
+        angular.forEach(response.users, function (user) {
+          angular.forEach(user.status[0], function (key, statusName) {
+            if (key == 1) {
+
+              if (typeof $scope.states[cardName(statusName)] != 'undefined') {
+                $scope.states[cardName(statusName)][user.uid[0].value] = user;
+                $scope.states[cardName(statusName)]['count'] += 1;
+              } else {
+                $scope.states[cardName(statusName)] = {};
+                $scope.states[cardName(statusName)][user.uid[0].value] = user;
+                $scope.states[cardName(statusName)]['count'] = 1;
+
+              }
+            }
+          });
         });
 
-      });
+        console.log($scope.states);
 
-      console.log($scope.states);
+        function cardName (status) {
+          switch (status) {
+            case 'day_off':
+              return 'Day off';
+              break;
+            case 'sick':
+              return 'Sick';
+              break;
+            case 'business_trip':
+              return 'Business Trip';
+              break;
+            case 'remote_work':
+              return 'Remote work';
+              break;
+            case 'vacation':
+              return 'Vacation';
+              break;
+            default:
+              return '';
+              break;
 
+          }
+        };
+      }
+    );
 
-      //$scope.employees = [];
-      //angular.forEach(response.users, function (cards, index) {
-      //  angular.forEach(cards.users, function (users, index) {
-      //    $scope.employees.push(users);
-      //  });
-      //});
-
-      //console.log($scope.employees);
-    });
-
-    $scope.usersFilter = function(item) {
+    $scope.usersFilter = function (item) {
       console.log(item);
       return item.userStatus === 'sick' || item.userStatus === 'dayoff'
     }
-
 
   })
 
