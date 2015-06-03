@@ -1,41 +1,21 @@
 drupal project
 ======
+Welcome to the d8intranet!
+
+Requirements: 
+1. Ansible 
+2. Vagrant & VirtualBox 
+3. Useful Vagrant plugins: HostsUpdater, VBGuest 
+4. npm -g yo gulp bower generator-gulp-angular generator-angular
+
+To setup project locally: 
+1. git clone git@github.com:propeopleua/d8intranet.git 
+2. cd d8intranet 
+3. vagrant up 
+4. Angular - cd angular && gulp serve
 
 Drupal project is for SPS
 
-For obtaining development environment locally You should install vagrant and virtualbox or lxc and from console ran
-```sh
-vagrant up && vagrant ssh
-```
-afterwards.
-You will be logged into virtual machine.
-
-use 
-```sh
-sh reinstall.sh
-```
-for drupal reinstallation from scratch
-
-Virtual host for accessing ppdorg drupal installation 
-
-```
-http://drupal.192.168.56.112.xip.io
-```
-
-Adminer for mysql administration (credentials drupal:drupal and root:root)
-
-```
-http://192.168.56.112.xip.io/adminer.php
-```
-
-
-If ```xip.io``` not working - create row with
-
-```hosts
-192.168.56.112 drupal.192.168.56.112.xip.io
-```
-
-in ```/etc/hosts```
 
 Linux Containers
 =====
