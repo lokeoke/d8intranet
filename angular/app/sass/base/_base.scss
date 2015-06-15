@@ -154,3 +154,12 @@ hr {
 .error { background-color: #e05041; }
 .status { background-color: #01be53; }
 .warning { background-color: #446bad; }
+
+// Clear floats.
+.clearfix:after {
+  clear: both;
+  content: "";
+  display: block;
+  height: 0;
+  visibility: hidden;
+}

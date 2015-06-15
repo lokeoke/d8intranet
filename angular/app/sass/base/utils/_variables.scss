@@ -6,7 +6,10 @@ $sprite: '../images/sprite.png';
 // Fonts
 
 // Fallback fonts
+
+
 $fonts-sans: 'Open Sans', Helvetica, Arial, sans-serif;
+$fonts-sans-light: 'Open Sans Light', Helvetica, Arial, sans-serif;
 $fonts-serif: Georgia, serif;
 
 $sans: $fonts-sans !default;
@@ -35,6 +38,9 @@ $switcher-bg: #404040;
 $switcher-border: #2c2c2c;
 $switcher-btn: #b5b5b5;
 
+$tabs-color: #5f5e5e;
+$tabs-color-active: #e4e4e4;
+
 $themes: (
     'dark': (
         $site-bg: #3c3c3c,
@@ -51,7 +57,10 @@ $themes: (
       // Language switcher colors
         $switcher-bg: #404040,
         $switcher-border: #2c2c2c,
-        $switcher-btn: #b5b5b5
+        $switcher-btn: #b5b5b5,
+
+        $tabs-color: #5f5e5e,
+        $tabs-color-active: #e4e4e4,
     ),
     'light': (
         $site-bg: #e1e3e4,
@@ -67,6 +76,9 @@ $themes: (
       // Language switcher colors
         $switcher-bg: #f4f4f4,
         $switcher-border: #cbcdcd,
-        $switcher-btn: #373f43
-    )
+        $switcher-btn: #373f43,
+
+        $tabs-color: #4a555a,
+        $tabs-color-active: #2e2e2e,
+  )
 );
