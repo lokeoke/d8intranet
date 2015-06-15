@@ -27,12 +27,11 @@ $susy: (
 
 .page-content-container {
   @include container;
-  margin-left: 115px;
-
+//  margin-left: 115px;
 }
 
 .page-container {
 //  @include span(18);
-  @include pre(2);
+  @include pre(3);
   @include post(2);
 }

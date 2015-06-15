@@ -30,19 +30,22 @@
 // ../font/Arial/bold/bold.[eot|woff|ttf|svg]
 // @include include_font(Arial, bold);
 
-@mixin include-font($name, $weight) {
-  $url: unquote('../fonts/' +  $name + '/' + $weight + '/' + $weight);
+@mixin include-font($name, $fileName, $weight) {
+  $url: unquote('../fonts/' +  $fileName);
 
   @font-face {
-    font-family: $name + $weight;
+    font-family: $name;
     src: url($url + '.eot');
     src: url($url + '.eot?#iefix') format('embedded-opentype'),
     url($url + '.woff') format('woff'),
     url($url + '.ttf') format('truetype'),
-    url($url + '.svg#' + $name) format('svg');
-    font-style: normal;
+    url($url + '.svg#' + $fileName) format('svg');
+    font-style: $weight;
   }
 }
+
+@include include-font('Open Sans', 'OpenSans', 'normal');
+@include include-font('Open Sans Light', 'OpenSansLight', 'normal');
 
 //------------------------------------------------------------------------------
 // Links

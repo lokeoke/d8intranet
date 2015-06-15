@@ -1,1 +1,18 @@
-<p>This is the about view.</p>
+<h1 class="page-title">Employees</h1>
+
+<div class="page-content" ng-controller="EmployeesCtrl">
+
+  <div class="employees-tabs clearfix">
+    <ul>
+      <li class="item" ng-repeat="tab in tabs">
+        <span class="link"
+              ng-class="{active:isActiveTab(tab.url)}"
+              ng-click="onClickTab(tab)">{{tab.title}}</span>
+      </li>
+    </ul>
+  </div>
+
+
+  <div ng-include="currentTab"></div>
+</div>
+  
