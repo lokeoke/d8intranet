@@ -1,0 +1,117 @@
+// -----------------------------------------------------------------------------
+// Employees List
+
+.teams-content {
+  position: relative;
+}
+
+.count-employees {
+  position: absolute;
+  right: 0;
+  top: 0;
+  min-height: 50px;
+  line-height: 50px;
+}
+
+.people-list {
+  margin-bottom: 150px;
+}
+
+.people-list .item {
+  @include font-size(15);
+  line-height: 1.4;
+  overflow: hidden;
+  font-family: $sans;
+  margin-bottom: 15px;
+  width: 50%;
+  display: inline-block;
+
+  @include susy-breakpoint(1630px) {
+    width: 100%;
+    display: block;
+  }
+
+  .user-info {
+    @include span(3 of 19);
+
+    @include susy-breakpoint(1630px) {
+      @include span(4 of 19);
+    }
+  }
+
+  .user-pic {
+    width: 70px;
+    height: 70px;
+    margin-right: 10px;
+  }
+
+  .user-pic,
+  .user-name {
+    display: inline-block;
+    vertical-align: middle;
+    max-width: 50%;
+  }
+
+  .name {
+    @include span(2 of 4);
+    box-sizing: border-box;
+    float: left;
+    padding-left: 45px;
+    margin-right: 0;
+  }
+
+  .position,
+  .mail,
+  .phone,
+  .skype {
+    @include span(3 of 19);
+    box-sizing: border-box;
+    font-family: $fonts-sans-light;
+  }
+
+  .mail {
+    @include span(5 of 19);
+
+    @include susy-breakpoint(1630px) {
+      @include span(5 of 19);
+    }
+  }
+
+  .phone {
+    //    @include span(2 of 19);
+  }
+
+  .skype {
+    @include span(4 of 19);
+  }
+
+  .position {
+    @include span(2 of 19);
+  }
+
+  .phone a,
+  .phone .link {
+    // Themes
+    @each $theme, $map in $themes {
+      .#{$theme} & {
+        color: map-get($map, $link);
+      }
+    }
+
+    &:hover {
+      // Themes
+      @each $theme, $map in $themes {
+        .#{$theme} & {
+          color: map-get($map, $link-hover);
+        }
+      }
+    }
+  }
+
+  .table-cell-container {
+    display: table-cell;
+    width: inherit;
+    vertical-align: middle;
+    height: 70px;
+  }
+}
