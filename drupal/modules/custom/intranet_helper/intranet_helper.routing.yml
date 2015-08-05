@@ -1,0 +1,6 @@
+intranet_helper.user_statuses:
+  path: '/user-statuses'
+  defaults:
+    _controller: '\Drupal\intranet_helper\Controller\UsersStatusController::view'
+  requirements:
+    _access: 'TRUE'
