@@ -961,17 +961,10 @@ table {
   border-collapse: collapse;
   border-spacing: 0; }
 
-html {
-  font-size: 1rem; }
-  .lt-ie9 html {
-    font-size: 16px; }
-
-html, body {
-  -webkit-font-smoothing: antialiased; }
-
 body {
   font-family: 'Open Sans', Helvetica, Arial, sans-serif;
   font-weight: 300;
+  font-size: 16px;
   min-width: 320px;
   -webkit-text-size-adjust: 100%;
   word-wrap: break-word;
@@ -2071,11 +2064,16 @@ form .form-submit {
   position: relative; }
 
 .count-employees {
-  position: absolute;
-  right: 0;
-  top: 0;
-  min-height: 50px;
-  line-height: 50px; }
+  text-align: right;
+  margin: 0 0 40px 0; }
+  @media (min-width: 860px) {
+    .count-employees {
+      position: absolute;
+      right: 0;
+      top: 0;
+      min-height: 50px;
+      margin: 0;
+      line-height: 50px; } }
 
 .people-list {
   margin-bottom: 150px; }
@@ -2085,32 +2083,60 @@ form .form-submit {
   line-height: 1.4;
   overflow: hidden;
   font-family: 'Open Sans', Helvetica, Arial, sans-serif;
-  margin-bottom: 15px;
-  width: 50%;
-  display: inline-block; }
+  margin-bottom: 40px; }
   .lt-ie9 .people-list .item {
     font-size: 15px; }
-  @media (min-width: 1630px) {
+  @media (min-width: 768px) {
+    .people-list .item {
+      width: 50%;
+      display: inline-block;
+      vertical-align: top; } }
+  @media (min-width: 1650px) {
     .people-list .item {
       width: 100%;
-      display: block; } }
-  .people-list .item .user-info {
-    width: 14.67522%;
-    float: left;
-    margin-right: 1.32318%; }
-    @media (min-width: 1630px) {
-      .people-list .item .user-info {
-        width: 20.00802%;
-        float: left;
-        margin-right: 1.32318%; } }
+      display: block;
+      margin-bottom: 0; } }
   .people-list .item .user-pic {
-    width: 70px;
-    height: 70px;
-    margin-right: 10px; }
+    margin-right: 20px; }
+  .people-list .item .user-data-wrapper {
+    margin: -50px 0 0 124px; }
+    @media (min-width: 768px) {
+      .people-list .item .user-data-wrapper {
+        margin: 0; } }
+  @media (min-width: 1024px) {
+    .people-list .item .user-data-wrapper {
+      width: 100%;
+      overflow: hidden; }
+    .people-list .item .user-info {
+      float: left;
+      width: 100%; } }
+  @media (min-width: 1650px) {
+    .people-list .item .user-info {
+      width: 20.00802%;
+      float: left;
+      margin-right: 1.32318%;
+      margin-bottom: 1.2rem; }
+    .people-list .item .user-data-wrapper {
+      width: 78.66881%;
+      float: left;
+      margin-right: 1.32318%;
+      float: right;
+      margin-right: 0; }
+    .people-list .item .user-pic {
+      width: 70px;
+      height: 70px;
+      margin-right: 10px; } }
   .people-list .item .user-pic, .people-list .item .user-name {
     display: inline-block;
     vertical-align: middle;
     max-width: 50%; }
+  .people-list .item .user-name {
+    font-size: 1.25rem; }
+    .lt-ie9 .people-list .item .user-name {
+      font-size: 20px; }
+    @media (min-width: 768px) {
+      .people-list .item .user-name {
+        font-size: inherit; } }
   .people-list .item .name {
     width: 46.69339%;
     float: left;
@@ -2120,28 +2146,45 @@ form .form-submit {
     padding-left: 45px;
     margin-right: 0; }
   .people-list .item .position, .people-list .item .mail, .people-list .item .phone, .people-list .item .skype {
-    width: 14.67522%;
-    float: left;
-    margin-right: 1.32318%;
     box-sizing: border-box;
     font-family: 'Open Sans Light', Helvetica, Arial, sans-serif; }
-  .people-list .item .mail {
-    width: 25.34082%;
-    float: left;
-    margin-right: 1.32318%; }
-    @media (min-width: 1630px) {
-      .people-list .item .mail {
-        width: 25.34082%;
+    @media (min-width: 1650px) {
+      .people-list .item .position, .people-list .item .mail, .people-list .item .phone, .people-list .item .skype {
+        width: 14.67522%;
         float: left;
         margin-right: 1.32318%; } }
-  .people-list .item .skype {
-    width: 20.00802%;
-    float: left;
-    margin-right: 1.32318%; }
+  .people-list .item .mail {
+    font-size: 0.875rem; }
+    .lt-ie9 .people-list .item .mail {
+      font-size: 14px; }
+    @media (min-width: 1650px) {
+      .people-list .item .mail {
+        width: 32.21203%;
+        float: left;
+        margin-right: 1.68196%; } }
+  @media (min-width: 1650px) {
+    .people-list .item .skype {
+      width: 20.00802%;
+      float: left;
+      margin-right: 1.32318%; } }
   .people-list .item .position {
-    width: 9.34242%;
-    float: left;
-    margin-right: 1.32318%; }
+    font-size: 1.25rem;
+    margin: 20px 0; }
+    .lt-ie9 .people-list .item .position {
+      font-size: 20px; }
+    @media (min-width: 768px) {
+      .people-list .item .position {
+        font-size: 1rem; }
+        .lt-ie9 .people-list .item .position {
+          font-size: 16px; } }
+    @media (min-width: 1650px) {
+      .people-list .item .position {
+        font-size: inherit;
+        width: 18.65443%;
+        float: left;
+        margin-right: 1.68196%;
+        text-align: left;
+        margin: 0; } }
   .dark .people-list .item .phone a, .dark .people-list .item .phone .link {
     color: #66d5e9; }
   .light .people-list .item .phone a, .light .people-list .item .phone .link {
@@ -2150,8 +2193,9 @@ form .form-submit {
     color: #e9c366; }
   .light .people-list .item .phone a:hover, .light .people-list .item .phone .link:hover {
     color: #537786; }
-  .people-list .item .table-cell-container {
-    display: table-cell;
-    width: inherit;
-    vertical-align: middle;
-    height: 70px; }
+  @media (min-width: 1650px) {
+    .people-list .item .table-cell-container {
+      display: table-cell;
+      width: inherit;
+      vertical-align: middle;
+      height: 70px; } }
