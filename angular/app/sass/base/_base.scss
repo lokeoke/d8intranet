@@ -9,17 +9,10 @@ $phone: 320px 12 !default;
 
 //------------------------------------------------------------------------------
 //Page
-
-html { @include font-size(); }
-
-html,
-body {
-  -webkit-font-smoothing: antialiased;
-}
-
 body {
   font-family: $sans;
   font-weight: 300;
+  font-size: 16px;
   min-width: 320px;
   -webkit-text-size-adjust: 100%;
   word-wrap: break-word;
