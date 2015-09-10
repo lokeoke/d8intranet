@@ -14,7 +14,6 @@ angular.module('d8intranetApp')
     var promise;
 
     var getJsonData = {
-
       getUsers: function () {
         if (users.length > 0) {
           console.log('I have users');

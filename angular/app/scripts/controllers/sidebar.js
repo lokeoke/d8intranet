@@ -8,22 +8,22 @@
  * Controller of the d8intranetApp
  */
 angular.module('d8intranetApp')
-  .controller('SidebarCtrl', function ($scope, $location) {
+  .controller('SidebarCtrl', function (config, $scope, $location) {
     $scope.menuItemsList = [
       {
         icon: 'dashboard',
         title: 'Dashboard',
-        url: '#main'
+        url: config.frontUrl
       },
       {
         icon: 'employees',
         title: 'Employees',
-        url: '#employees'
+        url: config.employeesUrl
       },
       {
         icon: 'rest',
         title: 'My vacation',
-        url: '#vacation'
+        url: config.vacationsUrl
       },
       {
         icon: 'logout',

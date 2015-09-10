@@ -21,7 +21,6 @@ angular.module('d8intranetApp')
         return new Date(timestamp * 1000).getDate();
       }
 
-      $scope.dayOffArray = {};
 
       angular.forEach($scope.users, function (employee) {
         $scope.members = employee;
@@ -47,18 +46,19 @@ angular.module('d8intranetApp')
         });
 
 
-        var dayOff = '';
-        var month = 0;
+        //var month = 0;
         var new_vacationDays = {};
         var daysOffCounter = 0;
         var datesInMonth = {};
 
-        angular.forEach($scope.members.field_dayoff, function (dayoff, key) {
-          month = getMonthNumber(dayoff.day_off);
-          dayoff.day_off = getDateNumber(dayoff.day_off);
 
-          if (new_vacationDays[month] != undefined && new_vacationDays[month][dayoff.state] != undefined) {
-            new_vacationDays[month][dayoff.state] += dayoff.day_off + ' ';
+        angular.forEach($scope.members.field_dayoff, function (dayoff, key) {
+          var month = getMonthNumber(dayoff.day_off_date);
+          var current = dayoff;
+          current.day_off = getDateNumber(current.day_off_date);
+
+          if (new_vacationDays[month] != undefined && new_vacationDays[month][current.state] != undefined) {
+            new_vacationDays[month][current.state] += current.day_off + ' ';
             daysOffCounter ++;
             datesInMonth[month]++;
           } else {
@@ -67,17 +67,17 @@ angular.module('d8intranetApp')
               datesInMonth[month] = 0;
             }
 
-            if (new_vacationDays[month][dayoff.state] == undefined) {
-              new_vacationDays[month][dayoff.state] = '';
+            if (new_vacationDays[month][current.state] == undefined) {
+              new_vacationDays[month][current.state] = '';
             }
-            new_vacationDays[month][dayoff.state] += dayoff.day_off + ' ';
+            new_vacationDays[month][current.state] += current.day_off + ' ';
             daysOffCounter ++;
             datesInMonth[month]++;
           }
 
           vacationDays[month].dayOff = new_vacationDays[month];
           vacationDays[month].datesInMonth = datesInMonth[month];
-          console.log(vacationDays[month].dayOff)
+          //console.log(vacationDays[month].dayOff)
         });
 
         employee.vacationDays = vacationDays;

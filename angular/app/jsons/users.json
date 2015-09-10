@@ -49,19 +49,19 @@
       }],
     "field_dayoff": [
       {
-        "day_off": 1423699200,
+        "day_off_date": 1423699200,
         "state": "Paid"
       },
       {
-        "day_off": 1426809600,
+        "day_off_date": 1426809600,
         "state": "Unpaid"
       },
       {
-        "day_off": 1427155200,
+        "day_off_date": 1427155200,
         "state": "Unpaid"
       },
       {
-        "day_off": 1427587200,
+        "day_off_date": 1427587200,
         "state": "Paid"
       }
 
@@ -122,15 +122,15 @@
 
     "field_dayoff": [
       {
-        "day_off": 1428710400,
+        "day_off_date": 1428710400,
         "state": "Paid"
       },
       {
-        "day_off": 1424044800,
+        "day_off_date": 1424044800,
         "state": "Unpaid"
       },
       {
-        "day_off": 1429660800,
+        "day_off_date": 1429660800,
         "state": "Unpaid"
       }
     ]
