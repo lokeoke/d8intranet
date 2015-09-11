@@ -62,9 +62,10 @@
           </ul>
 
           <ul class="menu-mobile">
-            <li ng-repeat="menuItem in menuItemsList">
-              <a class="sidebar-icon"  ng-href="{{menuItem.url}}"
-                  ng-class="{active: $uiRoute}">
+            <li ng-repeat="menuItem in menuItemsList"
+                ng-class="{'active': menuItem.url == menuStates.activeItem}"
+                ng-click="menuStates.activeItem=menuItem.url">
+              <a class="sidebar-icon"  ng-href="{{menuItem.url}}">
                 <span class="{{menuItem.icon}}-icon"></span>
               </a>
             </li>
@@ -93,7 +94,8 @@
           <ul>
             <li ng-repeat="menuItem in menuItemsList"
                 ui-route="{{menuItem.url}}"
-                ng-class="{active: isActive('/main')}">
+                ng-class="{'active': menuItem.url == menuStates.activeItem}"
+                ng-click="menuStates.activeItem=menuItem.url">
               <a class="sidebar-icon" ng-href="{{menuItem.url}}">
                 <span class="{{menuItem.icon}}-icon"></span>
             <span class="menu-item-title">

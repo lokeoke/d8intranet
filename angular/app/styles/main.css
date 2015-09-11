@@ -1677,6 +1677,13 @@ hr {
 .rolled-bar .menu-desktop {
   width: 215px; }
 
+.sidebar li {
+  transition: all .4s ease-in-out; }
+  .dark .sidebar li.active, .dark .sidebar li:hover {
+    background: #111; }
+  .light .sidebar li.active, .light .sidebar li:hover {
+    background: #4a555a; }
+
 .menu-desktop {
   position: fixed;
   top: 0;
@@ -1700,6 +1707,7 @@ hr {
 .checkin {
   font-size: 0.9375rem;
   width: 80%;
+  outline: none;
   color: #000 !important;
   border-radius: 3px;
   padding: 10px 0;
@@ -1716,7 +1724,7 @@ hr {
     background: #537786; }
 
 .checked {
-  background: #23A170; }
+  background: #23a170; }
 
 .menu-mobile {
   display: none; }
@@ -1753,10 +1761,6 @@ hr {
     transition: all .4s ease-in-out; }
   .sidebar-icon::before {
     display: block; }
-  .dark .sidebar-icon.active, .dark .sidebar-icon:hover {
-    background: #111; }
-  .light .sidebar-icon.active, .light .sidebar-icon:hover {
-    background: #4a555a; }
   .sidebar-icon .menu-item-title {
     color: #fff;
     float: left;

@@ -36,6 +36,7 @@
     "field_phone_number": [{"value": "+380 095 123 12 12"}],
     "field_position": [{"value": 2}],
     "field_team": [{"value": 1}],
+    "field_work": [{"value": 1}],
     "field_vacation": [
       {
         "start_vacation": 1420070400,

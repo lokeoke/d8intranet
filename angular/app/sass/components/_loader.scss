@@ -69,36 +69,3 @@
     transform: rotate(360deg);
   }
 }
-
-//body > * {
-//  opacity: 0;
-//  transition: all .3s ease-in-out;
-//}
-//
-//.loaded * > {
-//  opacity: 1;
-//
-//  .loader {
-//    display: none;
-//  }
-//}
-//
-//.cssanimations {
-//  .loader {
-//    animation: fadeIn .3s linear;
-//    animation-delay: .5s;
-//    animation-fill-mode: forwards;
-//
-////  Here add link to your preloader
-////  background: url('../images/loader.gif') no-repeat;
-//    background-size: contain;
-//
-//    height: 25px;
-//    left: 0;
-//    margin: -5px auto 0;
-//    position: absolute;
-//    right: 0;
-//    top: 50%;
-//    width: 25px;
-//  }
-//}

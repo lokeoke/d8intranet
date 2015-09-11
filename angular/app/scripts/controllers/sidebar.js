@@ -9,6 +9,12 @@
  */
 angular.module('d8intranetApp')
   .controller('SidebarCtrl', function (config, $scope, $location) {
+    $scope.menuStates = {};
+    $scope.menuStates.activeItem = config.frontUrl;
+
+    console.log($scope.menuStates.activeItem);
+    console.log(config.frontUrl);
+
     $scope.menuItemsList = [
       {
         icon: 'dashboard',
@@ -31,7 +37,8 @@ angular.module('d8intranetApp')
       }
     ];
 
-    $scope.isActive = function (viewLocation) {
-      return viewLocation === $location.path();
+    $scope.isActiveMenuItem = function(item) {
+      item.path == $location.path() //? true : false;
     };
+
   });
