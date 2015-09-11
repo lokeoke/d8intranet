@@ -12,7 +12,8 @@ angular.module('d8intranetApp')
   .constant('config', {
     frontUrl: "#main",
     employeesUrl: "#employees",
-    vacationsUrl: "#vacation"
+    vacationsUrl: "#vacation",
+    checkInUrl: "http://drupal.d8pp.dev:8888/checkin"
   })
 
   .controller('MainCtrl', function ($scope, $http, getJsonData, $rootScope) {
@@ -99,7 +100,6 @@ angular.module('d8intranetApp')
   })
 
   .controller('checkIn', function ($scope, $http, $rootScope) {
-    var url = 'http://drupal.d8pp.dev:8888/checkin';
 
     var colors = new Array(
       [62, 35, 255],
@@ -168,7 +168,7 @@ angular.module('d8intranetApp')
 
       var dataObj = {"message": "Yo! Bitch"};
 
-      var res = $http.post(url, dataObj);
+      var res = $http.post(constant.checkInUrl, dataObj);
 
       res.success(function (data, status, headers, config) {
         $scope.message = data;
