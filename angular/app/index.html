@@ -31,10 +31,12 @@
 
 
 <!-- Add your site or application content here -->
-<div class="overlay" ng-if="messageRequest">
+<div class="overlay" ng-if="messageRequest" ng-cloak>
   <div class="message">
-    Sending data...
+    <div class="spinner" id="gradient"></div>
+    <span>Sending data</span>
   </div>
+
 </div>
 
 <div class="global-wrapper"  >
@@ -50,9 +52,6 @@
           <a class="bt-menu-trigger" mobile-menu><span>Menu</span></a>
 
           <ul class="user-data">
-            <!--<li><a class="logo" href="/">-->
-            <!--<img src="images/logo-blue.png" alt="FFW"/>-->
-            <!--</a></li>-->
             <li>
               <a class="user-pic" ng-href="#user/5">
                 <img src="../images/employees/alex.jpg"
@@ -63,9 +62,10 @@
           </ul>
 
           <ul class="menu-mobile">
-            <li ng-repeat="menuItem in menuItemsList">
-              <a class="sidebar-icon" ui-route="{{menuItem.url}}"
-                  ng-class="{active: $uiRoute}">
+            <li ng-repeat="menuItem in menuItemsList"
+                ng-class="{'active': menuItem.url == menuStates.activeItem}"
+                ng-click="menuStates.activeItem=menuItem.url">
+              <a class="sidebar-icon"  ng-href="{{menuItem.url}}">
                 <span class="{{menuItem.icon}}-icon"></span>
               </a>
             </li>
@@ -94,7 +94,8 @@
           <ul>
             <li ng-repeat="menuItem in menuItemsList"
                 ui-route="{{menuItem.url}}"
-                ng-class="{active: isActive('/main')}">
+                ng-class="{'active': menuItem.url == menuStates.activeItem}"
+                ng-click="menuStates.activeItem=menuItem.url">
               <a class="sidebar-icon" ng-href="{{menuItem.url}}">
                 <span class="{{menuItem.icon}}-icon"></span>
             <span class="menu-item-title">
@@ -116,7 +117,7 @@
 
           <!-- Page headline -->
           <div class="page-header page-container">
-            <div class="current-date-wrapper">
+            <div class="current-date-wrapper" ng-cloak>
               <div class="theme-switcher" ng-click="setCookieData()">
                 <div class="theme-switcher-btn" ></div>
               </div>

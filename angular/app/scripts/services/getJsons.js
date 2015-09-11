@@ -8,13 +8,12 @@
  */
 
 angular.module('d8intranetApp')
-  .service('getJsonData', function($http){
+  .service('getJsonData', function($http, $timeout){
     var url = '../../jsons/users.json';
     var users = [];
     var promise;
 
     var getJsonData = {
-
       getUsers: function () {
         if (users.length > 0) {
           console.log('I have users');
@@ -33,6 +32,8 @@ angular.module('d8intranetApp')
           // The then function here is an opportunity to modify the response
           // The return value gets picked up by the then in the controller.
           users = response.data;
+          // Clear users each 2 minutes
+          $timeout(function () {users = [];}, '120000');
           console.log('Users are sent');
           return users;
         });

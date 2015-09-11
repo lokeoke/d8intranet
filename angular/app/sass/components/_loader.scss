@@ -1,5 +1,8 @@
 //------------------------------------------------------------------------------
 // Throbber styles
+[ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
+  display: none !important;
+}
 
 .overlay {
   position: fixed;
@@ -9,50 +12,60 @@
   height: 100%;
   background: rgba(0, 0, 0, .7);
   z-index: 999;
+  //  display: none;
 }
+
 .message {
-  background: #3ea83f;
-  display: block;
   position: fixed;
   top: 50%;
   left: 50%;
-  transform: translate(-50%,-50%);
-//  width: 200px;
-//  height: 100px;
-  padding: 30px 50px;
+  transform: translate(-50%, -50%);
+  text-align: center;
   text-transform: uppercase;
-  color: #000;
+  display: inline-block;
 }
 
-//body > * {
-//  opacity: 0;
-//  transition: all .3s ease-in-out;
-//}
-//
-//.loaded * > {
-//  opacity: 1;
-//
-//  .loader {
-//    display: none;
-//  }
-//}
-//
-//.cssanimations {
-//  .loader {
-//    animation: fadeIn .3s linear;
-//    animation-delay: .5s;
-//    animation-fill-mode: forwards;
-//
-////  Here add link to your preloader
-////  background: url('../images/loader.gif') no-repeat;
-//    background-size: contain;
-//
-//    height: 25px;
-//    left: 0;
-//    margin: -5px auto 0;
-//    position: absolute;
-//    right: 0;
-//    top: 50%;
-//    width: 25px;
-//  }
-//}
+.spinner {
+  width: 35px;
+  height: 35px;
+  color: #000;
+  border-radius: 100%;
+  animation: rotating 2s linear infinite;
+  display: inline-block;
+  vertical-align: middle;
+  margin-right: 10px;
+}
+
+@-webkit-keyframes rotating /* Safari and Chrome */ {
+  from {
+    -ms-transform: rotate(0deg);
+    -moz-transform: rotate(0deg);
+    -webkit-transform: rotate(0deg);
+    -o-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+  to {
+    -ms-transform: rotate(360deg);
+    -moz-transform: rotate(360deg);
+    -webkit-transform: rotate(360deg);
+    -o-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes rotating {
+  from {
+    -ms-transform: rotate(0deg);
+    -moz-transform: rotate(0deg);
+    -webkit-transform: rotate(0deg);
+    -o-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+  to {
+    -ms-transform: rotate(360deg);
+    -moz-transform: rotate(360deg);
+    -webkit-transform: rotate(360deg);
+    -o-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
