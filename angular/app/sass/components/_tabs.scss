@@ -19,7 +19,6 @@
 
   .link {
     border-bottom: 1px solid;
-    color: $tabs-color;
     display: block;
     padding: 20px 80px;
     text-align: center;
@@ -33,8 +32,6 @@
 
     &:hover,
     &.active {
-      color: $tabs-color-active;
-
       &:after {
         content: '';
         position: absolute;
@@ -50,15 +47,16 @@
       }
     }
 
+
     // Themes
     @each $theme, $map in $themes {
       .#{$theme} & {
         border-color: map-get($map, $header-divider);
-        color: map-get($map, $tabs-color);
+        color: rgba( map-get($map,$tabs-color), .5);
 
         &:hover,
         &.active {
-          color: map-get($map, $tabs-color-active);
+          color: map-get($map, $tabs-color);
         }
 
         &:after {

@@ -16,17 +16,29 @@
 
 .page-bg {
   min-height: 500px;
-  background: url(../images/user-page-bg.jpg) no-repeat;
+  background: url(../images/user-page-bg-blue.jpg) no-repeat;
   position: relative;
+
+  .light & {
+    background: url(../images/user-page-bg-light.jpg) no-repeat;
+  }
 }
 
 .welcome-block {
+  // Themes
+  color: #fff;
+
+  .light & {
+    color: #000;
+  }
+
   position: absolute;
   left: 50%;
   top: 50%;
   transform: translate(-50%, -50%);
   text-align: center;
-  color: $white;
+
+
 
   img {
     width: 180px;
@@ -126,16 +138,6 @@
     display: block;
     text-align: center;
     transition: color .2s ease-out;
-
-    @each $theme, $map in $themes {
-      .#{$theme} & {
-        color: map-get($map, $header-divider);
-
-        &:hover {
-          color: map-get($map, $site-font-color);
-        }
-      }
-    }
   }
 }
 

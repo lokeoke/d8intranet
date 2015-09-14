@@ -12,8 +12,8 @@ angular.module('d8intranetApp')
     $scope.menuStates = {};
     $scope.menuStates.activeItem = config.frontUrl;
 
-    console.log($scope.menuStates.activeItem);
-    console.log(config.frontUrl);
+    //console.log($scope.menuStates.activeItem);
+    //console.log(config.frontUrl);
 
     $scope.menuItemsList = [
       {
@@ -37,8 +37,9 @@ angular.module('d8intranetApp')
       }
     ];
 
-    $scope.isActiveMenuItem = function(item) {
-      item.path == $location.path() //? true : false;
-    };
+    $scope.setActiveMenuItem = function(menuItemUrl) {
+      $scope.menuStates.activeItem = menuItemUrl;
+      console.log($scope.menuStates.activeItem);
+    }
 
   });

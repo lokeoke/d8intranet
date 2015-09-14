@@ -7,7 +7,7 @@
   <title>Propeople Intranet</title>
   <meta name="description" content="">
   <meta name="viewport" content="width=device-width">
-  <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+  <link rel="icon" href="favicon.png">
   <!-- build:css(.) styles/vendor.css -->
   <!-- bower:css -->
   <!-- endbower -->
@@ -53,7 +53,7 @@
 
           <ul class="user-data">
             <li>
-              <a class="user-pic" ng-href="#user/5">
+              <a class="user-pic" ng-href="#user/5" ng-click="setActiveMenuItem('#user/5')">
                 <img src="../images/employees/alex.jpg"
                     ng-src="../images/employees/alex.jpg"
                     alt="Alexander Mikhutkin">
@@ -74,15 +74,15 @@
         </nav>
 
         <div class="menu-desktop">
-          <a class="logo" href="/">
+          <a class="logo" href="#main">
             <img src="images/logo-blue.png" alt="FFW"/>
           </a>
-          <a class="user-pic" ng-href="#user/5">
+          <a class="user-pic" ng-href="#user/5"
+              ng-click="setActiveMenuItem('#user/5')"
+              ng-class="{'active': '#user/5' == menuStates.activeItem}">
             <img src="../images/employees/alex.jpg"
                 ng-src="../images/employees/alex.jpg" alt="Alexander Mikhutkin">
           </a>
-
-            <!--<a class="checkin" href="#" check-in>Check in</a>-->
 
           <div ng-controller="checkIn">
             <form ng-submit="checkIn()">
@@ -95,7 +95,7 @@
             <li ng-repeat="menuItem in menuItemsList"
                 ui-route="{{menuItem.url}}"
                 ng-class="{'active': menuItem.url == menuStates.activeItem}"
-                ng-click="menuStates.activeItem=menuItem.url">
+                ng-click="setActiveMenuItem(menuItem.url)">
               <a class="sidebar-icon" ng-href="{{menuItem.url}}">
                 <span class="{{menuItem.icon}}-icon"></span>
             <span class="menu-item-title">

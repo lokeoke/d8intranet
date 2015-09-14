@@ -73,7 +73,7 @@ angular.module('d8intranetApp')
     expireDate.setDate(expireDate.getDate() + 12);
 
     // If we don't have any cookie yet - set cookie to light theme
-    if ($cookies.get('current-theme') == undefined) {
+    if ($cookies.get('current-theme') === undefined) {
       $cookies.put('current-theme', 'light', {'expires': expireDate});
       $scope.isDark = false;
     }
@@ -101,13 +101,7 @@ angular.module('d8intranetApp')
 
   .controller('checkIn', function ($scope, $http, $rootScope) {
 
-    var colors = new Array(
-      [62, 35, 255],
-      [60, 255, 60],
-      [255, 35, 98],
-      [45, 175, 230],
-      [255, 0, 255],
-      [255, 128, 0]);
+    var colors = new Array([62, 35, 255], [60, 255, 60], [255, 35, 98], [45, 175, 230], [255, 0, 255], [255, 128, 0]);
 
     var step = 0;
 //color table indices for:

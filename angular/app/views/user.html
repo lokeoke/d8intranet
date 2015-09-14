@@ -2,7 +2,7 @@
 
   <div class="page-bg">
     <div class="welcome-block">
-      <img ng-src="{{user.field_user_image[0].value}}" alt="Alex"/>
+      <img ng-src="{{user.field_user_image[0].value}}" alt=""/>
 
       <div class="name">
         {{user.field_first_name[0].value}} {{user.field_last_name[0].value}}
@@ -70,7 +70,7 @@
 
         <div class="user-social-data">
           <div class="experience">
-            Working at company: {{yearsOfWork}} years {{monthsOfWork}} months
+            Working at company: {{yearsOfWork + ' year' | plural}}  {{monthsOfWork + ' month' | plural}}
           </div>
           <div class="social-list">
             <h3>Social</h3>

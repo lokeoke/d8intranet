@@ -89,8 +89,8 @@
     "statuses": [{
       "day_off": 0,
       "sick": 0,
-      "business_trip": 0,
-      "remote_work": 1,
+      "business_trip": 1,
+      "remote_work": 0,
       "vacation": 0
     }],
     "field_came_to_propeople": [{"value": "2011-12-15"}],

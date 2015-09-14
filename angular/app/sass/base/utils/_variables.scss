@@ -22,9 +22,13 @@ $serif: $fonts-serif !default;
 $white: #fff !default;
 $black: #000 !default;
 
+$table-row-bg: #282828;
+$table-row-bg-odd: #383838;
+
 // Define variables
 $site-bg: #fff;
 $block-bg: #282828;
+$dark-red: #DE1B1B;
 
 $sidebar-bg: #1b1b1b;
 $menu-hover: #111;
@@ -40,58 +44,55 @@ $switcher-btn: #b5b5b5;
 
 $tabs-color: #5f5e5e;
 $tabs-color-active: #e4e4e4;
-
-$table-row-bg: #282828;
-$table-row-bg-odd: #383838;
+$side-bar-checkin: #000;
 $table-color: #fff;
+$light-gray: #f6f6f6;
+
+$active-elements: #FF3D00;
+$checkin-bg: #DE1B1B;
+$light-links: #fff;
 
 $themes: (
-    'dark': (
-        $site-bg: #3c3c3c,
-        $block-bg: #282828,
+    dark: (
+        $light-links: #fff,
+        $light-gray: #263238,
+        $active-elements: #FF9E80,
+        $checkin-bg: #DE1B1B,
+        $site-bg: #37474F,
+        $block-bg: #263238,
 
-        $sidebar-bg: #1b1b1b,
-        $menu-hover: #111,
-        $header-divider: #6e6e6e,
-        $block-divider: #383838,
+        $sidebar-bg: #263238,
+        $menu-hover: #37474F,
+        $header-divider: #263238,
+        $block-divider: #2d3d43,
         $site-font-color: #cfcfcf,
         $link: #66d5e9,
         $link-hover: #e9c366,
-
-      // Table colors
-        $table-row-bg: #282828,
-        $table-row-bg-odd: #383838,
-
-      // Language switcher colors
-        $switcher-bg: #404040,
+        $switcher-bg: #37474F,
         $switcher-border: #2c2c2c,
         $switcher-btn: #b5b5b5,
-
-        $tabs-color: #5f5e5e,
+        $tabs-color: #fff,
         $tabs-color-active: #e4e4e4,
     ),
-    'light': (
-        $site-bg: #e1e3e4,
-        $block-bg: #f4f4f4,
 
-        $sidebar-bg: #57646b,
-        $menu-hover: #4a555a,
+    light: (
+        $light-links: #000,
+        $light-gray: #f6f6f6,
+        $active-elements: #DE1B1B,
+        $checkin-bg: #DE1B1B,
+        $site-bg: #fff,
+        $block-bg: #f6f6f6,
+        $sidebar-bg: #2B2B2B,
+        $menu-hover: #fff,
         $header-divider: #c6c6c6,
-        $block-divider: #d2d6d5,
+        $block-divider: #DCDCDC,
         $site-font-color: #2e2e2e,
         $link: #498baf,
         $link-hover: #537786,
-
-      // Table colors
-        $table-row-bg: #a2aeb4,
-        $table-row-bg-odd: #cdd3d8,
-
-      // Language switcher colors
         $switcher-bg: #f4f4f4,
         $switcher-border: #cbcdcd,
         $switcher-btn: #373f43,
-
-        $tabs-color: #4a555a,
+        $tabs-color: #000,
         $tabs-color-active: #2e2e2e,
   )
 );

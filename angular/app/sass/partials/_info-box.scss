@@ -18,7 +18,7 @@
   @each $theme, $map in $themes {
     .#{$theme} & {
       background: map-get($map, $block-bg);
-      box-shadow: 3px 3px 0 map-get($map, $header-divider);
+      box-shadow: 3px 3px 0 map-get($map, $block-divider);
     }
   }
 
@@ -48,59 +48,6 @@
 
 .employee-link {
   overflow: hidden;
-
-  &::before,
-  &::after {
-    display: block;
-    color: $white;
-    position: absolute;
-    height: 100%;
-    transition: all .3s ease-in-out;
-    opacity: 0;
-  }
-
-  &::before {
-    background: #57646B;
-    width: 0%;
-    left: 2px;
-    top: 0;
-    border-radius: 22px;
-    font-family: fontello;
-    content: '\e800';
-    text-align: right;
-    padding-right: 10px;
-    padding-top: 2px;
-    transition-delay: .1s;
-
-    // Themes
-    @each $theme, $map in $themes {
-      .#{$theme} & {
-        background: map-get($map, $sidebar-bg);
-      }
-    }
-  }
-
-  &::after {
-    @include font-size(12);
-    content: 'View profile';
-    left: 0;
-    top: -10px;
-    overflow: hidden;
-    width: 80%;
-    height: 100%;
-    text-align: center;
-    line-height: 2.5;
-    transition: all .4s ease-in-out;
-    transition-delay: .1s;
-  }
-
-  &:hover {
-    &::before,
-    &::after { opacity: 1; }
-
-    &::before { width: 80%; }
-    &::after { top: 0; }
-  }
 
 }
 
