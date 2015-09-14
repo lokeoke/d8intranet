@@ -46,7 +46,7 @@ a {
 
   @each $theme, $map in $themes {
     .#{$theme} & {
-      color: map-get($map, $link);
+      color: map-get($map, $active-elements);
     }
   }
 
@@ -54,13 +54,13 @@ a {
   // .no-touch & { }
 
   &:focus { outline: medium none;  }
-  &:hover {
-    @each $theme, $map in $themes {
-      .#{$theme} & {
-        color: map-get($map, $link-hover);
-      }
-    }
-  }
+//  &:hover {
+//    @each $theme, $map in $themes {
+//      .#{$theme} & {
+//        color: map-get($map, $link-hover);
+//      }
+//    }
+//  }
 }
 
 // -----------------------------------------------------------------------------

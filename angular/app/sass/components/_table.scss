@@ -62,21 +62,18 @@
     @extend %group;
     position: relative;
     overflow: hidden;
+    border-bottom: 1px solid $table-row-bg;
 
-    @each $theme, $map in $themes {
-      .#{$theme} & {
-        background: map-get($map, $table-row-bg);
-        border-bottom: 1px solid $table-row-bg;
-      }
-    }
+
 
     &:nth-child(odd) {
       // Themes
       @each $theme, $map in $themes {
         .#{$theme} & {
-          background: map-get($map, $table-row-bg-odd);
+          background: map-get($map, $light-gray);
         }
       }
+
     }
 
 
@@ -165,7 +162,14 @@
 
   .user-name {
     @include font-size(18);
+    @each $theme, $map in $themes {
+      .#{$theme} & {
+        background: map-get($map, $site-bg);
+      }
+    }
+
     padding: 11px;
+    box-shadow: 1px 0 3px rgba($black, .2);
 
     @include susy-breakpoint(1280px) {
       @include font-size(16);
@@ -309,27 +313,23 @@
 .pre-holiday,
 .unpaid-leave,
 .not-approved {
-  @each $theme, $map in $themes {
-    .#{$theme} & {
-      color: $site-font-color;
-    }
-  }
+  color: #fff;
 }
 
 .pre-holiday,
 .pre-holiday-leave:before {
-  background: #827c5f;
+  background: #FF5722;
 }
 
 .paid-leave,
 .approved-paid-leave:before {
-  background: #3f5449;
+  background: #4CAF50;
 }
 
 .unpaid-leave,
 .approved-unpaid-leave:before {
-  background: #825f65;
+  background: #E91E63;
 }
 
-.not-approved { background: #944746; }
+.not-approved { background: #B71C1C; }
 

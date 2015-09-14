@@ -27,13 +27,4 @@ angular.module('d8intranetApp')
       }
     }
   }])
-
-  //.controller('Controller', ['$scope', '$http', function ($scope, $http) {
-  //  $http({
-  //    method: 'GET',
-  //    url: '../../jsons/check-in.json'
-  //  }).success(function (response) {
-  //    $scope.state = response.checked;
-  //  });
-  //}])
 ;

@@ -77,7 +77,6 @@ angular.module('d8intranetApp')
 
           vacationDays[month].dayOff = new_vacationDays[month];
           vacationDays[month].datesInMonth = datesInMonth[month];
-          //console.log(vacationDays[month].dayOff)
         });
 
         employee.vacationDays = vacationDays;

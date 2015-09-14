@@ -6,7 +6,7 @@
     <article class="info-box" ng-repeat="(key, user) in states">
       <div class="info-box-headline">
         <div class="counter">
-          {{user.count}} people
+          {{user.count + ' employee' | plural }}
         </div>
         <h1>{{key}}</h1>
       </div>
@@ -20,11 +20,11 @@
 
                   <span class="user-pic">
                     <img ng-src="{{employee.field_user_image[0].value}}"
-                        alt="{{employee.field_firs_name[0].value}} {{employee.field_last_name[0].value}}"/>
+                        alt="{{employee.field_first_name[0].value}} {{employee.field_last_name[0].value}}"/>
 
                   </span>
             <span class="user-name">
-              {{employee.field_firs_name[0].value}} {{employee.field_last_name[0].value}}
+              {{employee.field_first_name[0].value}} {{employee.field_last_name[0].value}}
             </span>
 
             </a>

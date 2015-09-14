@@ -5,17 +5,14 @@
   transition: all .2s ease-out;
 }
 
-.member a,
-.user-info a {
+.member a {
   display: block;
+  color: #fff;
 
-  // Themes
-  @each $theme, $map in $themes {
-    .#{$theme} & {
-      color: map-get($map, $site-font-color);
-    }
+  .light & {
+    color: #000;
   }
-  
+
   .user-pic {
     border-radius: 100%;
   }
