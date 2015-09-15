@@ -30,6 +30,7 @@
     "field_user_position": [{"value": "Department Lead"}],
     "field_user_birthday": [{"value": "30.01.1992"}],
     "field_user_image": [{"value": "../images/employees/artem_m.jpg"}],
+    "field_user_email":   [{"value": "artyom.miroshnik@propeople.com.ua"}],
     "field_github_id": [{"value": "www.github.com"}],
     "field_drupal_org_id": [{"value": "www.drupal.org"}],
     "field_user_skype":   [{"value": "miroshnik92"}],
@@ -100,7 +101,7 @@
     "field_user_position": [{"value": "Department Lead"}],
     "field_user_birthday": [{"value": "11.02.1987"}],
     "field_user_image": [{"value": "../images/employees/alex.jpg"}],
-
+    "field_user_email":   [{"value": "alexander.mikhutkin@propeople.com.ua"}],
     "field_github_id": [{"value": "www.github.com"}],
     "field_drupal_org_id": [{"value": "https://www.drupal.org/u/anmikhutkin"}],
     "field_user_skype":   [{"value": "anmihutkin"}],

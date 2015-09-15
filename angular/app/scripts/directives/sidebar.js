@@ -27,4 +27,15 @@ angular.module('d8intranetApp')
       }
     }
   }])
+
+  .directive('ngBlur', ['$document', function($document) {
+    return {
+      link: function (scope, element, attrs) {
+        element.bind('blur', function(){
+          scope.inputSelected = true;
+          element[0].value ? scope.inputSelected = true : scope.inputSelected = false
+        })
+      }
+    }
+  }])
 ;

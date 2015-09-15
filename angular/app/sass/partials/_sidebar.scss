@@ -23,6 +23,7 @@
     @each $theme, $map in $themes {
       .#{$theme} & {
         background: map-get($map, $menu-hover);
+        color: map-get($map, $light-gray);
       }
     }
   }
@@ -150,6 +151,10 @@
     opacity: 0;
     top: 26px;
     transition: all .3s ease-in-out;
+
+    .light & {
+      color: #7a7a7a;
+    }
   }
 }
 
