@@ -5,7 +5,8 @@
   transition: all .2s ease-out;
 }
 
-.member a {
+.member a,
+.user-info > a {
   display: block;
   color: #fff;
 

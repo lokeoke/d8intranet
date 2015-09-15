@@ -8,8 +8,9 @@
  * Controller of the d8intranetApp
  */
 angular.module('d8intranetApp')
-  .controller('EmployeesCtrl', function ($scope, $http, $filter) {
+  .controller('EmployeesCtrl', function ($scope, $http, $filter, getJsonData) {
     // Teams requests
+
     $http({
       method: 'GET',
       url: '../../jsons/teams.json'
@@ -29,12 +30,11 @@ angular.module('d8intranetApp')
       });
     });
 
-    $http({
-      method: 'GET',
-      url: '../../jsons/people_list.json'
-    }).success(function (response) {
-      $scope.people = response.people;
+
+    getJsonData.getUsers().then(function (d) {
+      $scope.people = d;
     });
+
 
     $scope.tabs = [{
       title: 'Teams',

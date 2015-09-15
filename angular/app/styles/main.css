@@ -1622,6 +1622,7 @@ hr {
   z-index: 999; }
 
 .message {
+  color: #fff;
   position: fixed;
   top: 50%;
   left: 50%;
@@ -1671,9 +1672,11 @@ hr {
 .sidebar li {
   transition: all .4s ease-in-out; }
   .dark .sidebar li.active, .dark .sidebar li:hover {
-    background: #37474F; }
+    background: #37474F;
+    color: #263238; }
   .light .sidebar li.active, .light .sidebar li:hover {
-    background: #fff; }
+    background: #fff;
+    color: #f6f6f6; }
 
 .menu-desktop {
   position: fixed;
@@ -1767,6 +1770,8 @@ hr {
     opacity: 0;
     top: 26px;
     transition: all .3s ease-in-out; }
+    .light .sidebar-icon .menu-item-title {
+      color: #7a7a7a; }
 
 .dashboard-icon::before {
   font-size: 1.875rem;
@@ -2221,14 +2226,14 @@ form .form-submit {
 .user-pic img {
   transition: all .2s ease-out; }
 
-.member a {
+.member a, .user-info > a {
   display: block;
   color: #fff; }
-  .light .member a {
+  .light .member a, .light .user-info > a {
     color: #000; }
-  .member a .user-pic {
+  .member a .user-pic, .user-info > a .user-pic {
     border-radius: 100%; }
-  .member a:hover img {
+  .member a:hover img, .user-info > a:hover img {
     -webkit-transform: scale(.85);
             transform: scale(.85); }
 

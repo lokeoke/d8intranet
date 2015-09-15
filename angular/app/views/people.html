@@ -1,8 +1,9 @@
 <div type="text/ng-template" id="views/people.html">
   <div class="teams-content">
-    <div class="filter-field-container">
-      <input type="text" class="filter-field" id="filter-people" input-effects
-          autofocus ng-model="query">
+    <div class="filter-field-container"
+        ng-class="inputSelected ? 'input-filled' : ' ' ">
+      <input type="text" class="filter-field" id="filter-people" ng-blur
+          ng-model="query">
       <label class="filter-label" for="filter-people">Quick filter</label>
     </div>
     <div class="count-employees">
@@ -11,7 +12,7 @@
 
     <ul class="people-list">
       <li class="item"
-          ng-repeat="user in people | filter:query | orderBy:'field_first_name[0].value' ">
+          ng-repeat="user in people | filter:query | orderBy:'user.field_first_name[0].value' ">
         <div class="user-info">
           <a href="#user/{{user.uid[0].value}}">
             <div class="user-pic">
@@ -38,7 +39,7 @@
           <div class="phone">
             <div class="table-cell-container">
               <span class="font-icon phone-icon">&nbsp;</span>
-              {{user.field_user_phone[0].value}}
+              {{user.field_phone_number[0].value}}
             </div>
           </div>
           <div class="skype">
