@@ -9,14 +9,14 @@
  * Main module of the application.
  */
 angular.module('d8intranetApp', [
-    'ngAnimate',
-    'ngCookies',
-    'ngResource',
-    'ngRoute',
-    'ngSanitize',
-    'ngTouch',
-    'ui.router'
-  ])
+  'ngAnimate',
+  'ngCookies',
+  'ngResource',
+  'ngRoute',
+  'ngSanitize',
+  'ngTouch',
+  'ui.router'
+])
   .config(function ($routeProvider, $httpProvider) {
     $routeProvider
       .when('/', {
@@ -51,3 +51,5 @@ angular.module('d8intranetApp', [
 
     $httpProvider.defaults.headers.common.Accept = 'application/hal+json';
   });
+
+

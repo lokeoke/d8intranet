@@ -38,4 +38,20 @@ angular.module('d8intranetApp')
       }
     }
   }])
+
+
+  .directive('chosen', function() {
+    var linker = function(scope, element, attr) {
+      scope.$watch('teamFilter', function(){
+        element.trigger('chosen:updated');
+      });
+
+      element.chosen();
+    };
+
+    return {
+      restrict: 'A',
+      link: linker
+    }
+  })
 ;

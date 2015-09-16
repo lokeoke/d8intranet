@@ -1,24 +1,25 @@
 <div type="text/ng-template" id="views/people.html">
   <div class="teams-content">
 
+    <div class="group">
 
-    <select ng-model='teamFileter.selectedOption' name="Group filter" id="teamFIlter"
-        ng-options="option.value as option.team_name for option in teams">
-    </select>
+      <div class="filter-field-container"
+          ng-class="inputSelected ? 'input-filled' : ' ' ">
+        <input type="text" class="filter-field" id="filter-people" ng-blur
+            ng-model="searchEmployees">
+        <label class="filter-label" for="filter-people">Quick filter</label>
+      </div>
 
+      <select chosen ng-model='teamFilter.selectedOption' name="Group filter"
+          id="teamFilter"
+          ng-options="option.value as option.team_name for option in teams">
+      </select>
 
-
-    <div class="filter-field-container"
-        ng-class="inputSelected ? 'input-filled' : ' ' ">
-      <input type="text" class="filter-field" id="filter-people" ng-blur
-          ng-model="searchEmployees">
-      <label class="filter-label" for="filter-people">Quick filter</label>
+      <div class="count-employees">
+        Total {{people.length}} employees
+      </div>
     </div>
-    <div class="count-employees">
-      Total {{people.length}} employees
-    </div>
 
-    <!--{{people[0].field_team[0].team_name}}-->
 
     <ul class="people-list">
       <li class="item"

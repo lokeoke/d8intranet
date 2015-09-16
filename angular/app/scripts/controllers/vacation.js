@@ -82,6 +82,25 @@ angular.module('d8intranetApp')
         employee.daysOffTotal = daysOffCounter;
         employee.totalVacation = totalVacation;
       });
+
+
+      $scope.$watch('teamFilter', function (newValue, oldValue) {
+        $scope.filterBy = newValue;
+      });
+
+      // Create teams array for filtering
+      $scope.teams = [];
+      angular.forEach($scope.users, function(emplyee){
+        if (!$scope.teams[emplyee.field_team[0].value]) {
+          $scope.teams[emplyee.field_team[0].value] = emplyee.field_team[0]
+        }
+      });
+
+
+      $scope.teams = $scope.teams.filter(function(n){ return n != undefined });
+      $scope.teams.unshift({"team_name":'all', "value": "0"});
+      $scope.teamFilter = {selectedOption : $scope.teams[0].value}
+      //console.log($scope.teams);
     });
 
     $scope.tabs = [{
