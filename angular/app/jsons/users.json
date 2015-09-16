@@ -36,7 +36,7 @@
     "field_user_skype":   [{"value": "miroshnik92"}],
     "field_phone_number": [{"value": "+380 095 123 12 12"}],
     "field_position": [{"value": 2}],
-    "field_team": [{"value": 1}],
+    "field_team": [{"value": 3, "team_name" : "Departments leads"}],
     "field_work": [{"value": 1}],
     "field_vacation": [
       {
@@ -65,6 +65,18 @@
       {
         "day_off_date": 1427587200,
         "state": "Paid"
+      },
+      {
+        "day_off_date": 1444435200,
+        "state": "Pre-holiday"
+      },
+      {
+        "day_off_date": 1443744000,
+        "state": "Pre-holiday"
+      },
+      {
+        "day_off_date": 1445299200,
+        "state": "Unpaid"
       }
 
     ]
@@ -108,7 +120,143 @@
 
     "field_phone_number": [{"value": "+38 095 625 47 19"}],
     "field_position": [{"value": 2}],
-    "field_team": [{"value": 1}],
+    "field_team": [{"value": 3, "team_name" : "Departments leads"}],
+    "field_user_edu":   [{"value": "National Mining University, Dnipropetrovsk, 2003-2008, master degree"}],
+    "field_vacation": [
+      {
+        "start_vacation": 1420070400,
+        "end_vacation": 1420156800,
+        "state": "paid-leave"
+      },
+      {
+        "start_vacation": 1423699200,
+        "end_vacation": 1424044800,
+        "state": "unpaid-leave"
+      }],
+
+    "field_dayoff": [
+      {
+        "day_off_date": 1428710400,
+        "state": "Paid"
+      },
+      {
+        "day_off_date": 1424044800,
+        "state": "Unpaid"
+      },
+      {
+        "day_off_date": 1429660800,
+        "state": "Unpaid"
+      }
+    ]
+  },
+
+  {
+    "uid": [{"value": "6"}],
+    "uuid": [{"value": "37cc971e-1ef0-49f7-9358-88edda295464"}],
+    "langcode": [{"value": "en"}],
+    "preferred_langcode": [{"value": "en"}],
+    "preferred_admin_langcode": [],
+    "name": [{"value": "propraw"}],
+    "mail": [{"value": "alexander.mikhutkin@propeople.com.ua"}],
+    "timezone": [{"value": "UTC"}],
+    "status": [{"value": "1"}],
+    "created": [{"value": "1438871090"}],
+    "changed": [{"value": "1438871090"}],
+    "access": [{"value": "0"}],
+    "login": [{"value": "0"}],
+    "init": [],
+    "roles": [],
+    "default_langcode": [{"value": "1"}],
+    "statuses": [{
+      "day_off": 0,
+      "sick": 0,
+      "business_trip": 1,
+      "remote_work": 0,
+      "vacation": 0
+    }],
+    "field_came_to_propeople": [{"value": "2011-12-15"}],
+    "field_first_name": [{"value": "Alyona"}],
+    "field_last_name": [{"value": "Angolenko"}],
+    "field_job_title":  [{"value": "Project manager"}],
+    "field_user_position": [{"value": "Project manager"}],
+    "field_user_birthday": [{"value": "11.02.1987"}],
+    "field_user_image": [{"value": "../images/employees/alyona.jpg"}],
+    "field_user_email":   [{"value": "angolenko.alyona@propeople.com.ua"}],
+    "field_github_id": [{"value": "www.github.com"}],
+    "field_drupal_org_id": [{"value": "https://www.drupal.org/u/anmikhutkin"}],
+    "field_user_skype":   [{"value": "Alyona"}],
+
+    "field_phone_number": [{"value": "+38 097 956 93 46"}],
+    "field_position": [{"value": 2}],
+    "field_team": [{"value": 2, "team_name" : "Alyona team"}],
+    "field_user_edu":   [{"value": "National Mining University, Dnipropetrovsk, 2003-2008, master degree"}],
+    "field_vacation": [
+      {
+        "start_vacation": 1420070400,
+        "end_vacation": 1420156800,
+        "state": "paid-leave"
+      },
+      {
+        "start_vacation": 1423699200,
+        "end_vacation": 1424044800,
+        "state": "unpaid-leave"
+      }],
+
+    "field_dayoff": [
+      {
+        "day_off_date": 1428710400,
+        "state": "Paid"
+      },
+      {
+        "day_off_date": 1424044800,
+        "state": "Unpaid"
+      },
+      {
+        "day_off_date": 1429660800,
+        "state": "Unpaid"
+      }
+    ]
+  },
+
+  {
+    "uid": [{"value": "7"}],
+    "uuid": [{"value": "37cc971e-1ef0-49f7-9358-88edda295464"}],
+    "langcode": [{"value": "en"}],
+    "preferred_langcode": [{"value": "en"}],
+    "preferred_admin_langcode": [],
+    "name": [{"value": "propraw"}],
+    "mail": [{"value": "yuriy.boychenko@propeople.com.ua"}],
+    "timezone": [{"value": "UTC"}],
+    "status": [{"value": "1"}],
+    "created": [{"value": "1438871090"}],
+    "changed": [{"value": "1438871090"}],
+    "access": [{"value": "0"}],
+    "login": [{"value": "0"}],
+    "init": [],
+    "roles": [],
+    "default_langcode": [{"value": "1"}],
+    "statuses": [{
+      "day_off": 0,
+      "sick": 0,
+      "business_trip": 1,
+      "remote_work": 0,
+      "vacation": 0
+    }],
+    "field_came_to_propeople": [{"value": "2011-12-15"}],
+    "field_first_name": [{"value": "Yuriy"}],
+    "field_last_name": [{"value": "Boychenko"}],
+    "field_job_title":  [{"value": "Team Lead"}],
+    "field_user_position": [{"value": "Team Lead"}],
+    "field_user_birthday": [{"value": "11.02.1987"}],
+    "field_user_image": [{"value": "../images/employees/yura.jpg"}],
+    "field_user_email":   [{"value": "yuriy.boychenko@propeople.com.ua"}],
+    "field_github_id": [{"value": "www.github.com"}],
+    "field_drupal_org_id": [{"value": "https://www.drupal.org/u/anmikhutkin"}],
+    "field_user_skype":   [{"value": "yboychenko"}],
+
+    "field_phone_number": [{"value": "+38 097 956 93 46"}],
+    "field_position": [{"value": 2}],
+    "field_team": [{"value": 2, "team_name" : "Alyona team"}],
     "field_user_edu":   [{"value": "National Mining University, Dnipropetrovsk, 2003-2008, master degree"}],
     "field_vacation": [
       {

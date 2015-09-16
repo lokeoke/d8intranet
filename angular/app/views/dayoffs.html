@@ -3,6 +3,11 @@
   <div class="view-animate-container">
 
     <div class="container group">
+      <ul class="legend">
+        <li class="leave-type pre-holiday-leave">Pre-holiday</li>
+        <li class="leave-type approved-paid-leave">Paid leave</li>
+        <li class="leave-type approved-unpaid-leave"> Unpaid leave</li>
+      </ul>
 
       <div class="year-table">
         <div class="table-headline">
@@ -32,14 +37,17 @@
           </div>
 
           <div class="months">
-            <div class="month" data-month="{{date.monthName}}"
+            <div class="month flipper-container" data-month="{{date.monthName}}"
                 ng-repeat="date in user.vacationDays">
-                <span class="dates" ng-if="date.datesInMonth">{{date.datesInMonth}}</span>
-              <span class="dates dates-numbers" ng-if="date.dayOff">
-                <span class="day_key" ng-repeat="(day_key, day) in date.dayOff">
-                  {{day_key}}: {{day}};
+              <div class="flipper">
+                <span class="dates front" ng-if="date.datesInMonth">{{date.datesInMonth}}</span>
+              <span class="dates dates-numbers back" ng-if="date.dayOff">
+                <span class="{{day_key | lowercase}}"
+                    ng-repeat="(day_key, day) in date.dayOff">
+                  {{day}}
                 </span>
               </span>
+              </div>
             </div>
 
             <div class="month total" data-month="Total:">
