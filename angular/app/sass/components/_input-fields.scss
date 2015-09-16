@@ -1,6 +1,7 @@
 .filter-field-container {
-  margin-bottom: 30px;
+  margin: 0 30px 30px 0;
   width: 468px;
+  float: left;
 
   .filter-field {
     @include font-size(16);

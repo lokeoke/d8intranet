@@ -3,7 +3,12 @@
   <!-- Leads container -->
   <div class="view-animate-container">
 
-    <div class="container group">
+    <div class="container group table-data">
+
+      <select chosen ng-model='teamFilter.selectedOption' name="Group filter"
+          id="teamFilter"
+          ng-options="option.value as option.team_name for option in teams">
+      </select>
 
       <ul class="legend">
         <li class="leave-type pre-holiday-leave">Pre-holiday</li>
@@ -33,7 +38,7 @@
           </div>
         </div>
 
-        <div class="user-dates" ng-repeat="user in users">
+        <div class="user-dates" ng-repeat="user in users | teamsOnly:filterBy.selectedOption">
           <div class="user-name">{{user.field_last_name[0].value}} {{user.field_first_name[0].value}}</div>
           <div class="months">
             <div class="month flipper-container" data-month="{{date.monthName}}" ng-repeat="date in user.vacationDays">

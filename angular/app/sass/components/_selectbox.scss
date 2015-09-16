@@ -1,59 +1,178 @@
 //------------------------------------------------------------------------------
 // Selectbox styles
-.form-type-radio {
-  position: relative;
 
-  // Label
-  label {
-    color: $black;
-    font-family: $sans;
-    line-height: 23px;
-    margin-left: 47px;
+// Select box vendor plugin
+
+.chosen-container-single {
+  @include font-size(16);
+  position: relative;
+  width: 100% !important;
+  max-width: 300px;
+  display: inline-block;
+}
+
+.table-data {
+  .chosen-container-single {
+    position: absolute;
+    top: -65px;
+    right: 0;
+  }
+}
+
+.chosen-single {
+  @each $theme, $map in $themes {
+    .#{$theme} & {
+      background: map-get($map, $light-gray);
+    }
+  }
+  height: 50px;
+  position: relative;
+  display: block;
+  overflow: hidden;
+  padding: 0 0 0 10px;
+  white-space: nowrap;
+  color: #444;
+
+  span {
+    //
+    @each $theme, $map in $themes {
+      .#{$theme} & {
+        color: map-get($map, $active-elements);
+      }
+    }
+    display: block;
+    overflow: hidden;
+    margin-right: 30px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    line-height: 50px;
   }
 
-  > span {
-    left: 0;
+  div {
     position: absolute;
+    top: 0;
+    right: 0;
+    width: 30px;
+    height: 100%;
+  }
 
-    &:after {
-      // Select background image from sprite
-      // background: url(../images/checkbox.png) 0 0 no-repeat;
+  b {
+    &::after {
+      top: 50%;
+      left: 50%;
       content: '';
-      height: 22px;
-      display: block;
-      width: 22px;
+      height: 0;
+      width: 0;
+      position: absolute;
+      pointer-events: none;
+      border: solid transparent;
+      border-top-color: #c4c4c4;
+      border-width: 6px;
+      margin-left: -8px;
+      margin-top: -3px;
+      transform: translateX(-50%);
+    }
+  }
+}
+
+.chosen-container .chosen-results {
+  color: #768C96;
+  overflow-x: hidden;
+  overflow-y: auto;
+
+  .light & {
+    color: #444;
+  }
+
+  .active-result {
+    display: list-item;
+    cursor: pointer;
+    margin: 0;
+    padding: 10px;
+    list-style: none;
+    line-height: 15px;
+    word-wrap: break-word;
+    border-bottom: 1px solid #e4e4e4;
+
+    &:last-child {
+      border-bottom-color: transparent;
     }
   }
 
-  input {
-    cursor: pointer;
-    // hide the radio button
-    filter: alpha(opacity=0);
-    height: 22px;
-    left: 0;
-    margin: 0;
-
-    -khtml-opacity: 0;
-    -moz-opacity: 0;
-    opacity: 0;
-
-    position: absolute;
-    width: 22px;
+  .highlighted {
+    @each $theme, $map in $themes {
+      .#{$theme} & {
+        background: map-get($map, $checkin-bg);
+        border-bottom-color: map-get($map, $checkin-bg);
+      }
+    }
+    color: #fff;
   }
 
-  input[type="radio"] + span,
-  input[type="checkbox"] + span { //the span element that immediately follow the radio button
-    visibility: hidden; // temporarily hide label
-  }
-
-  input[type="radio"] + span:after,
-  input[type="checkbox"] + span:after {
-    // Select background image from sprite
-    // background: url(../images/checkbox.png) 0 -22px no-repeat;
-  }
-
-  input[type="radio"]:checked + span,
-  input[type="checkbox"]:checked + span {
-    visibility: visible; //show if the radio button is checked
+  .no-results {
+    padding: 10px;
   }
 }
+
+.chosen-drop {
+  left: -999em;
+  position: absolute;
+}
+
+.chosen-search {
+  position: relative;
+  z-index: 1010;
+  margin: 0;
+  padding: 10px;
+  white-space: nowrap;
+
+  input[type="text"] {
+    background: #fff;
+    padding: 10px;
+    font-size: 1em;
+    line-height: normal;
+    width: 100%;
+    height: auto;
+    outline: 0;
+    margin: 0;
+  }
+}
+
+.chosen-with-drop {
+
+  b {
+    &::after {
+      border-color: transparent;
+      border-bottom-color: #c4c4c4;
+      margin-top: -9px;
+    }
+  }
+  .chosen-single {
+    color: #fff;
+
+    .light & {
+      background: #2b2b2b;
+    }
+
+    span {
+      color: #fff;
+    }
+  }
+
+  .chosen-drop {
+    @each $theme, $map in $themes {
+      .#{$theme} & {
+        background: map-get($map, $light-gray);
+      }
+    }
+    position: absolute;
+    top: 100%;
+    left: 0;
+    z-index: 1010;
+    width: 100%;
+    margin-top: -1px;
+  }
+}
+
+
+

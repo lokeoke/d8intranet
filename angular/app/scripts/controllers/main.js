@@ -180,3 +180,6 @@ angular.module('d8intranetApp')
     $scope.date = new Date();
   });
 
+
+
+
