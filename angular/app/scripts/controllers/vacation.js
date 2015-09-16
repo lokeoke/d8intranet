@@ -21,7 +21,6 @@ angular.module('d8intranetApp')
         return new Date(timestamp * 1000).getDate();
       }
 
-
       angular.forEach($scope.users, function (employee) {
         $scope.members = employee;
         var vacationDays = {},
@@ -31,7 +30,6 @@ angular.module('d8intranetApp')
         for (var i = 0; i < 12; i++) {
           vacationDays[i] = {"monthName": monthes[i], "dayOff": ""};
         }
-
 
         // Get vacations days
         angular.forEach($scope.members.field_vacation, function (vacation) {
@@ -45,12 +43,10 @@ angular.module('d8intranetApp')
           vacationDays[month].monthlyTotal += getDateNumber(vacation.end_vacation) - getDateNumber(vacation.start_vacation);
         });
 
-
         //var month = 0;
         var new_vacationDays = {};
         var daysOffCounter = 0;
         var datesInMonth = {};
-
 
         angular.forEach($scope.members.field_dayoff, function (dayoff, key) {
           var month = getMonthNumber(dayoff.day_off_date);
@@ -59,10 +55,11 @@ angular.module('d8intranetApp')
 
           if (new_vacationDays[month] != undefined && new_vacationDays[month][current.state] != undefined) {
             new_vacationDays[month][current.state] += current.day_off + ' ';
-            daysOffCounter ++;
+            daysOffCounter++;
             datesInMonth[month]++;
-          } else {
-            if (new_vacationDays[month] == undefined ) {
+          }
+          else {
+            if (new_vacationDays[month] == undefined) {
               new_vacationDays[month] = {};
               datesInMonth[month] = 0;
             }
@@ -70,13 +67,15 @@ angular.module('d8intranetApp')
             if (new_vacationDays[month][current.state] == undefined) {
               new_vacationDays[month][current.state] = '';
             }
+
             new_vacationDays[month][current.state] += current.day_off + ' ';
-            daysOffCounter ++;
+            daysOffCounter++;
             datesInMonth[month]++;
           }
 
           vacationDays[month].dayOff = new_vacationDays[month];
           vacationDays[month].datesInMonth = datesInMonth[month];
+
         });
 
         employee.vacationDays = vacationDays;
@@ -84,7 +83,6 @@ angular.module('d8intranetApp')
         employee.totalVacation = totalVacation;
       });
     });
-
 
     $scope.tabs = [{
       title: 'Vacations',

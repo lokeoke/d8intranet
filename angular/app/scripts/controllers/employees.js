@@ -33,7 +33,25 @@ angular.module('d8intranetApp')
 
     getJsonData.getUsers().then(function (d) {
       $scope.people = d;
+
+      $scope.$watch('teamFileter', function (newValue, oldValue) {
+        $scope.filterBy = newValue;
+      });
+
+
+      $scope.teams = [];
+      angular.forEach($scope.people, function(emplyee){
+        if (!$scope.teams[emplyee.field_team[0].value]) {
+           $scope.teams[emplyee.field_team[0].value] = emplyee.field_team[0]
+        }
+      });
+
+      $scope.teams = $scope.teams.filter(function(n){ return n != undefined });
+      $scope.teams.unshift({"team_name":'all', "value": "0"});
+      $scope.teamFileter = {selectedOption : $scope.teams[0].value}
+
     });
+
 
 
     $scope.tabs = [{
