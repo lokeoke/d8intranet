@@ -8,7 +8,7 @@
  * Controller of the d8intranetApp
  */
 angular.module('d8intranetApp')
-  .controller('SidebarCtrl', function (config, $scope, $location) {
+  .controller('SidebarCtrl', function (config, $scope, $rootScope, $location) {
     $scope.menuStates = {};
     $scope.menuStates.activeItem = '#'+($location.$$url).slice(1);
 
@@ -34,8 +34,10 @@ angular.module('d8intranetApp')
       }
     ];
 
-    $scope.setActiveMenuItem = function(menuItemUrl) {
-      $scope.menuStates.activeItem = menuItemUrl;
-    }
+    $scope.menuIsOpen = false;
 
+    $scope.setActiveMenuItem = function(menuItemUrl, menuState) {
+      $scope.menuStates.activeItem = menuItemUrl;
+      $scope.menuIsOpen = menuState;
+    };
   });

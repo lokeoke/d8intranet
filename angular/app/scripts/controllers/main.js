@@ -13,8 +13,17 @@ angular.module('d8intranetApp')
     frontUrl: "#main",
     employeesUrl: "#employees",
     vacationsUrl: "#vacation",
-    checkInUrl: "http://drupal.d8pp.dev:8888/checkin"
+    checkInUrl: "http://drupal.d8pp.dev:8888/checkin",
+    totalVacation: "20"
   })
+
+  .config( [
+    '$compileProvider',
+    function( $compileProvider )
+    {
+      $compileProvider.aHrefSanitizationWhitelist(/^\s*(https?|mailto|skype|chrome-extension):/);
+    }
+  ])
 
   .controller('MainCtrl', function ($scope, $http, getJsonData, $rootScope) {
 

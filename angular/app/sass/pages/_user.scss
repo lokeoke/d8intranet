@@ -80,15 +80,12 @@
   margin-bottom: 20px;
 }
 
-
 .user-info-title {
   @include font-size(18);
-
   margin-right: 20px;
   line-height: 1.4;
   display: block;
   margin-bottom: 5px;
-
 
   @include susy-breakpoint(768px) {
     font-family: $fonts-sans-light;
@@ -119,7 +116,6 @@
   margin-left: 1rem;
 }
 
-
 .user-social-data {
 
   h3 {
@@ -127,7 +123,6 @@
     font-family: $fonts-sans-light;
     margin: 2rem 0;
   }
-
 
   a {
     padding: 10px 15px;
@@ -146,4 +141,72 @@
   color: #000;
   opacity: .3;
   margin: 5rem 0;
+}
+
+// My holidays
+.my-holidays {
+  border-top: 1px solid #f6f6f6;
+}
+
+.holiday-block {
+  @include span(4);
+  @include pre(1);
+  @each $theme, $map in $themes {
+    .#{$theme} & {
+      background: map-get($map, $block-bg);
+      box-shadow: 0 3px 0 map-get($map, $block-divider);
+    }
+  }
+  padding-top: span(4);
+  border-radius: 100%;
+  margin-bottom: 3rem;
+  position: relative;
+  font-family: $fonts-sans-light;
+}
+
+.holiday-info-wrapper {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+}
+
+.holiday-title {
+  margin-bottom: 10px;
+}
+
+.days-count {
+  @include font-size(40);
+}
+
+.vacation-left {
+  position: absolute;
+  bottom: 0;
+  height: 100%;
+  width: 100%;
+  color: #fff;
+  overflow: hidden;
+  border-radius: 100%;
+}
+
+.vacation-left-progress {
+  background: #5999BB;
+  position: absolute;
+  bottom: 0;
+  height: 50%;
+  width: 100%;
+}
+
+.vacation-days-left {
+  @include font-size(16);
+  border-bottom: 1px solid #5999bb;
+  position: absolute;
+  left: -60px;
+  width: 75%;
+  margin-bottom: -1px;
+  bottom: 15px;
+  z-index: 1;
+  font-family: $fonts-sans;
+  font-weight: 500;
 }
