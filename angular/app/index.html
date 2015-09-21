@@ -48,8 +48,8 @@
     <main role="main" class="main-content">
 
       <aside class="sidebar" ng-controller="SidebarCtrl">
-        <nav id="bt-menu" class="bt-menu bt-menu-close">
-          <a class="bt-menu-trigger" mobile-menu><span>Menu</span></a>
+        <nav id="bt-menu" class="bt-menu bt-menu-close" ng-class="menuIsOpen ? 'bt-menu-open' : ' ' ">
+          <a class="bt-menu-trigger" ng-click="menuIsOpen=!menuIsOpen"><span>Menu</span></a>
 
           <ul class="user-data">
             <li>
@@ -61,16 +61,26 @@
             </li>
           </ul>
 
+
+
           <ul class="menu-mobile">
+            <li>
+              <div ng-controller="checkIn">
+                <form ng-submit="checkIn()">
+                  <button type="submit" class="checkin" data-checked="false">Check in
+                  </button>
+                </form>
+              </div>
+            </li>
             <li ng-repeat="menuItem in menuItemsList"
                 ng-class="{'active': menuItem.url == menuStates.activeItem}"
-                ng-click="menuStates.activeItem=menuItem.url">
+                ng-click="setActiveMenuItem(menuItem.url, false)">
               <a class="sidebar-icon"  ng-href="{{menuItem.url}}">
                 <span class="{{menuItem.icon}}-icon"></span>
               </a>
             </li>
           </ul>
-          <div class="bt-overlay"></div>
+          <div class="bt-overlay" ng-click="menuIsOpen=!menuIsOpen"></div>
         </nav>
 
         <div class="menu-desktop">
@@ -95,7 +105,7 @@
             <li ng-repeat="menuItem in menuItemsList"
                 ui-route="{{menuItem.url}}"
                 ng-class="{'active': menuItem.url == menuStates.activeItem}"
-                ng-click="setActiveMenuItem(menuItem.url)">
+                ng-click="setActiveMenuItem(menuItem.url, false)">
               <a class="sidebar-icon" ng-href="{{menuItem.url}}">
                 <span class="{{menuItem.icon}}-icon"></span>
             <span class="menu-item-title">

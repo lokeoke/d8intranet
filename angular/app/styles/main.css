@@ -1713,7 +1713,9 @@ hr {
     list-style: none;
     line-height: 15px;
     word-wrap: break-word;
-    border-bottom: 1px solid #e4e4e4; }
+    border-bottom: 1px solid #768C96; }
+    .light .chosen-container .chosen-results .active-result {
+      border-bottom: 1px solid #e4e4e4; }
     .chosen-container .chosen-results .active-result:last-child {
       border-bottom-color: transparent; }
   .chosen-container .chosen-results .highlighted {
@@ -1785,6 +1787,11 @@ hr {
   .light .sidebar li.active, .light .sidebar li:hover {
     background: #fff;
     color: #f6f6f6; }
+  @media (min-width: 0) and (max-width: 1280px) {
+    .dark .sidebar li:hover:not(.active) {
+      background: transparent; }
+    .light .sidebar li:hover:not(.active) {
+      background: transparent; } }
 
 .menu-desktop {
   position: fixed;
@@ -1806,7 +1813,7 @@ hr {
     width: 90px;
     height: 90px; }
     .menu-desktop .user-pic.active img {
-      box-shadow: 0 0 10px 2px #46575D; }
+      box-shadow: 0 0 10px 2px #46575d; }
 
 .checkin {
   font-size: 0.9375rem;
@@ -1953,10 +1960,17 @@ hr {
   height: 0;
   border-width: 0px;
   border-style: solid;
-  border-color: #333;
   background-color: transparent;
   -webkit-backface-visibility: hidden;
   transition: border-width 0.3s, background-color 0.3s, height 0s 0.3s; }
+  .dark .bt-menu {
+    border-color: #263238; }
+  .light .bt-menu {
+    border-color: #2B2B2B; }
+
+@media (min-width: 1280px) {
+  .bt-menu {
+    display: none; } }
 
 .bt-menu.bt-menu-open {
   height: 100%;
@@ -1997,9 +2011,9 @@ hr {
           user-select: none;
   transition: background-color 0.3s; }
   .dark .bt-menu-trigger span {
-    background: #37474F; }
+    background: #263238; }
   .light .bt-menu-trigger span {
-    background: #fff; }
+    background: #2B2B2B; }
 
 .bt-menu-open .bt-menu-trigger span {
   background-color: transparent; }
@@ -2014,9 +2028,9 @@ hr {
   transition: -webkit-transform 0.3s;
   transition: transform 0.3s; }
   .dark .bt-menu-trigger span:before, .dark .bt-menu-trigger span:after {
-    background: #37474F; }
+    background: #263238; }
   .light .bt-menu-trigger span:before, .light .bt-menu-trigger span:after {
-    background: #fff; }
+    background: #2B2B2B; }
 
 .bt-menu-trigger span:before {
   -webkit-transform: translateY(-250%);
@@ -2095,7 +2109,7 @@ hr {
 
 .page-title {
   font-size: 3.75rem;
-  padding-top: 80px;
+  padding: 80px 0 20px;
   border-bottom: 1px solid;
   margin-bottom: 50px;
   font-weight: 400; }
@@ -2789,3 +2803,69 @@ form .form-submit {
   margin: 5rem 0; }
   .lt-ie9 .more-come-soon {
     font-size: 40px; }
+
+.my-holidays {
+  border-top: 1px solid #f6f6f6; }
+
+.holiday-block {
+  width: 15.79614%;
+  float: left;
+  margin-right: 1.04463%;
+  margin-left: 4.21019%;
+  padding-top: 15.79614%;
+  border-radius: 100%;
+  margin-bottom: 3rem;
+  position: relative;
+  font-family: 'Open Sans Light', Helvetica, Arial, sans-serif; }
+  .dark .holiday-block {
+    background: #263238;
+    box-shadow: 0 3px 0 #2d3d43; }
+  .light .holiday-block {
+    background: #f6f6f6;
+    box-shadow: 0 3px 0 #DCDCDC; }
+
+.holiday-info-wrapper {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  -webkit-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%);
+  text-align: center; }
+
+.holiday-title {
+  margin-bottom: 10px; }
+
+.days-count {
+  font-size: 2.5rem; }
+  .lt-ie9 .days-count {
+    font-size: 40px; }
+
+.vacation-left {
+  position: absolute;
+  bottom: 0;
+  height: 100%;
+  width: 100%;
+  color: #fff;
+  overflow: hidden;
+  border-radius: 100%; }
+
+.vacation-left-progress {
+  background: #5999BB;
+  position: absolute;
+  bottom: 0;
+  height: 50%;
+  width: 100%; }
+
+.vacation-days-left {
+  font-size: 1rem;
+  border-bottom: 1px solid #5999bb;
+  position: absolute;
+  left: -60px;
+  width: 75%;
+  margin-bottom: -1px;
+  bottom: 15px;
+  z-index: 1;
+  font-family: 'Open Sans', Helvetica, Arial, sans-serif;
+  font-weight: 500; }
+  .lt-ie9 .vacation-days-left {
+    font-size: 16px; }
