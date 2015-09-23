@@ -39,7 +39,7 @@
         </div>
 
         <div class="user-dates" ng-repeat="user in users | teamsOnly:filterBy.selectedOption">
-          <div class="user-name">{{user.field_last_name[0].value}} {{user.field_first_name[0].value}}</div>
+          <div class="user-name" show-table-data>{{user.field_last_name[0].value}} {{user.field_first_name[0].value}}</div>
           <div class="months">
             <div class="month flipper-container" data-month="{{date.monthName}}" ng-repeat="date in user.vacationDays">
               <div class="flipper">

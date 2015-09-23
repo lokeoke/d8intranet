@@ -20,9 +20,9 @@
       {
         "day_off": 0,
         "sick": 0,
-        "business_trip": 0,
+        "business_trip": 1,
         "remote_work": 0,
-        "vacation": 1
+        "vacation": 0
       }
     ],
     "field_came_to_propeople": [{"value": 1323648000}],
@@ -106,7 +106,7 @@
       {
         "day_off": 0,
         "sick": 0,
-        "business_trip": 1,
+        "business_trip": 0,
         "remote_work": 0,
         "vacation": 0
       }
@@ -206,7 +206,7 @@
       {
         "day_off": 0,
         "sick": 0,
-        "business_trip": 1,
+        "business_trip": 0,
         "remote_work": 0,
         "vacation": 0
       }
@@ -279,7 +279,7 @@
         "sick": 0,
         "business_trip": 1,
         "remote_work": 0,
-        "vacation": 0
+        "vacation": 1
       }
     ],
     "field_came_to_propeople": [{"value": 1255478400}],

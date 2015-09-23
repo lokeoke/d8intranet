@@ -145,7 +145,12 @@
 
 // My holidays
 .my-holidays {
-  border-top: 1px solid #f6f6f6;
+  // Themes
+  @each $theme, $map in $themes {
+    .#{$theme} & {
+      border-top: 1px solid map-get($map, $header-divider);
+    }
+  }
 }
 
 .holiday-block {

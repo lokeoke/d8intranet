@@ -1,2 +1,47 @@
 // -----------------------------------------------------------------------------
 // Front page
+.available-users {
+  margin: 4rem 0;
+  padding-top: 3rem;
+  position: relative;
+  @extend %group;
+
+  // Themes
+  @each $theme, $map in $themes {
+    .#{$theme} & {
+      border-top: 1px solid map-get($map, $header-divider);
+    }
+  }
+
+
+  .av-users-count {
+    position: absolute;
+    top: 20px;
+    right: 0;
+  }
+
+  .av-user {
+    @include font-size(14);
+    margin-bottom: .5rem;
+
+
+    @include susy-breakpoint(580px) {
+      display: inline-block;
+      margin: 0 1rem 1rem 0;
+      padding: .3rem;
+    }
+  }
+
+  h2 {
+    @include font-size(36);
+    margin-bottom: 2rem;
+  }
+
+  .user-pic {
+    width: 32px;
+    height: 32px;
+    display: inline-block;
+    vertical-align: middle;
+    margin-right: 5px;
+  }
+}

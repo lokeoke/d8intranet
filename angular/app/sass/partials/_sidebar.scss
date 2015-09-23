@@ -38,8 +38,6 @@
   }
 }
 
-
-
 .menu-desktop {
   position: fixed;
   top: 0;
@@ -237,10 +235,6 @@
 }
 
 .user-data {
-  position: fixed;
-  width: 90px;
-  top: 75px;
-  left: 10px;
 
   .user-pic {
     width: 70px;
@@ -249,27 +243,19 @@
 }
 
 // Menu button
+.bt-menu {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: auto;
+  height: 0;
 
-  .bt-menu {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 0;
-    border-width: 0px;
-    border-style: solid;
-
-    @each $theme, $map in $themes {
-      .#{$theme} & {
-        border-color: map-get($map, $sidebar-bg);
-      }
+  @each $theme, $map in $themes {
+    .#{$theme} & {
+      border-color: map-get($map, $sidebar-bg);
     }
-
-    background-color: rgba(0, 0, 0, 0);
-    -webkit-backface-visibility: hidden;
-    -webkit-transition: border-width 0.3s, background-color 0.3s, height 0s 0.3s;
-    transition: border-width 0.3s, background-color 0.3s, height 0s 0.3s;
   }
+}
 
 // Hide menu for desktop version
 @include susy-breakpoint(1280px) {
@@ -278,32 +264,43 @@
   }
 }
 
-.bt-menu.bt-menu-open {
-  height: 100%;
-  border-width: 0 0 0 90px;
-  background-color: rgba(0, 0, 0, 0.7);
-  transition: border-width 0.2s, background-color 0.2s;
-  z-index: 999;
+.page-header {
+  @include susy-breakpoint(0 767px) {
+    position: fixed;
+    top: 0;
+    z-index: 200;
+
+    @each $theme, $map in $themes {
+      .#{$theme} & {
+        background: map-get($map,  $sidebar-bg);
+      }
+    }
+  }
+  @include susy-breakpoint(0 1279px) {
+    margin: 0px auto;
+    float: none;
+    width: 100%;
+    padding: 0px 5% 15px;
+  }
 }
 
-.bt-overlay {
-  position: absolute;
-  width: 100%;
-}
-
-.bt-menu-open .bt-overlay {
-  height: 100%;
-}
 
 .bt-menu-trigger {
-  position: fixed;
+  position: relative;
   top: 15px;
-  left: 25px;
   display: block;
   width: 40px;
   height: 40px;
   cursor: pointer;
-  z-index: 1;
+  z-index: 101;
+
+  @include susy-breakpoint(0 767px) {
+    top: 10px;
+  }
+
+  @include susy-breakpoint(1280px) {
+    display: none;
+  }
 }
 
 .bt-menu-trigger span {
@@ -323,10 +320,14 @@
       background: map-get($map, $sidebar-bg);
     }
   }
-}
 
-.bt-menu-open .bt-menu-trigger span {
-  background-color: transparent;
+  @include susy-breakpoint(0 767px) {
+    @each $theme, $map in $themes {
+      .#{$theme} & {
+        background: #fff;
+      }
+    }
+  }
 }
 
 .bt-menu-trigger span:before,
@@ -334,8 +335,8 @@
   position: absolute;
   left: 0;
   width: 100%;
-  height: 100%;
-  background: #fff;
+  height: 4px;
+  display: block;
   content: '';
   -webkit-transition: -webkit-transform 0.3s;
   transition: transform 0.3s;
@@ -343,6 +344,14 @@
   @each $theme, $map in $themes {
     .#{$theme} & {
       background: map-get($map, $sidebar-bg);
+    }
+  }
+
+  @include susy-breakpoint(0 767px) {
+    @each $theme, $map in $themes {
+      .#{$theme} & {
+        background: #fff;
+      }
     }
   }
 }
@@ -357,90 +366,65 @@
   transform: translateY(250%);
 }
 
-.bt-menu-open .bt-menu-trigger span:before {
-  -webkit-transform: translateY(0) rotate(45deg);
-  transform: translateY(0) rotate(45deg);
-  background: $white;
-}
-
-.bt-menu-open .bt-menu-trigger span:after {
-  -webkit-transform: translateY(0) rotate(-45deg);
-  transform: translateY(0) rotate(-45deg);
-  background: $white;
-}
-
-.menu-mobile {
+.menu-close {
   position: fixed;
-  top: 155px;
+}
+
+.menu-close span {
+  background: transparent !important;
+
+
+  &::before {
+    -webkit-transform: translateY(0) rotate(45deg);
+    transform: translateY(0) rotate(45deg);
+    background: $white !important;
+  }
+
+  &::after {
+    -webkit-transform: translateY(0) rotate(-45deg);
+    transform: translateY(0) rotate(-45deg);
+    background: $white !important;
+  }
+}
+
+.mobile-menu {
+  position: fixed;
+  top: 0;
+  background: rgba(0, 0, 0, .9);
+  height: 100%;
   left: 0;
   margin: 0;
   padding: 0;
-  width: 90px;
   list-style: none;
-  -webkit-backface-visibility: hidden;
-  backface-visibility: hidden;
-}
-
-.bt-menu ul li,
-.bt-menu ul li a {
-  display: block;
   width: 100%;
-  text-align: center;
-}
-
-.bt-menu ul li {
   opacity: 0;
   visibility: hidden;
-  -webkit-transition: -webkit-transform 0.3s, opacity 0.2s, visibility 0s 0.3s;
-  transition: transform 0.3s, opacity 0.2s, visibility 0s 0.3s;
-}
+  transition: all ease-out .2s;
 
-.menu-mobile {
-  li:first-child {
-    -webkit-transform: translate3d(-100%, 200%, 0);
-    transform: translate3d(-100%, 200%, 0);
+  // User pic
+  .user-pic {
+    width: 100px;
+    height: 100px;
+    margin: 3rem 0 2rem;
+    display: inline-block;
   }
 
-  li:nth-child(2) {
-    -webkit-transform: translate3d(-100%, 100%, 0);
-    transform: translate3d(-100%, 100%, 0);
+  // Menu items
+  li {
+    max-width: 300px;
+    margin: 0 auto;
+    text-align: center;
   }
 
-  li:nth-child(4) {
-    -webkit-transform: translate3d(-100%, -100%, 0);
-    transform: translate3d(-100%, -100%, 0);
-  }
-
-  li:nth-child(3) {
-    -webkit-transform: translate3d(-100%, 0, 0);
-    transform: translate3d(-100%, 0, 0);
+  li a {
+    display: block;
+    min-height: auto;
+    color: #fff;
   }
 }
 
-.bt-menu.bt-menu-open ul li {
-  visibility: visible;
+.mobile-menu-open {
   opacity: 1;
-  -webkit-transition: -webkit-transform 0.3s, opacity 0.3s 0.1s;
-  transition: transform 0.3s, opacity 0.3s;
-  -webkit-transform: translate3d(0, 0, 0);
-  transform: translate3d(0, 0, 0);
-}
-
-.bt-menu ul li a {
-  display: block;
-  outline: none;
-  color: transparent;
-  text-decoration: none;
-  font-size: 0px;
-}
-
-.bt-menu ul li a:hover:before,
-.bt-menu ul li a:focus:before {
-  color: #fff;
-}
-
-@media screen and (max-height: 31.125em) {
-  .bt-menu ul li a:before {
-    font-size: 32px;
-  }
+  z-index: 100;
+  visibility: visible;
 }
