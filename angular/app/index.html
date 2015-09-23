@@ -22,13 +22,13 @@
   <![endif]-->
 
 </head>
-<body ng-app="d8intranetApp" ng-controller="pageLoad" ng-class="isDark ? 'dark' : 'light'"   >
+<body ng-app="d8intranetApp" ng-controller="pageLoad"
+    ng-class="isDark ? 'dark' : 'light'">
 <!--[if lt IE 7]>
 <p class="browsehappy">You are using an <strong>outdated</strong> browser.
   Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve
   your experience.</p>
 <![endif]-->
-
 
 <!-- Add your site or application content here -->
 <div class="overlay" ng-if="messageRequest" ng-cloak>
@@ -39,7 +39,7 @@
 
 </div>
 
-<div class="global-wrapper"  >
+<div class="global-wrapper">
   <div class="wrapper container">
     <!-- Site header-->
     <header role="banner" class="header group"></header>
@@ -48,41 +48,6 @@
     <main role="main" class="main-content">
 
       <aside class="sidebar" ng-controller="SidebarCtrl">
-        <nav id="bt-menu" class="bt-menu bt-menu-close" ng-class="menuIsOpen ? 'bt-menu-open' : ' ' ">
-          <a class="bt-menu-trigger" ng-click="menuIsOpen=!menuIsOpen"><span>Menu</span></a>
-
-          <ul class="user-data">
-            <li>
-              <a class="user-pic" ng-href="#user/5" ng-click="setActiveMenuItem('#user/5')">
-                <img src="../images/employees/alex.jpg"
-                    ng-src="../images/employees/alex.jpg"
-                    alt="Alexander Mikhutkin">
-              </a>
-            </li>
-          </ul>
-
-
-
-          <ul class="menu-mobile">
-            <li>
-              <div ng-controller="checkIn">
-                <form ng-submit="checkIn()">
-                  <button type="submit" class="checkin" data-checked="false">Check in
-                  </button>
-                </form>
-              </div>
-            </li>
-            <li ng-repeat="menuItem in menuItemsList"
-                ng-class="{'active': menuItem.url == menuStates.activeItem}"
-                ng-click="setActiveMenuItem(menuItem.url, false)">
-              <a class="sidebar-icon"  ng-href="{{menuItem.url}}">
-                <span class="{{menuItem.icon}}-icon"></span>
-              </a>
-            </li>
-          </ul>
-          <div class="bt-overlay" ng-click="menuIsOpen=!menuIsOpen"></div>
-        </nav>
-
         <div class="menu-desktop">
           <a class="logo" href="#main">
             <img src="images/logo-blue.png" alt="FFW"/>
@@ -96,7 +61,8 @@
 
           <div ng-controller="checkIn">
             <form ng-submit="checkIn()">
-              <button type="submit" class="checkin" data-checked="false">Check in
+              <button type="submit" class="checkin" data-checked="false">Check
+                in
               </button>
             </form>
           </div>
@@ -125,25 +91,65 @@
       <div class="page-content-container">
         <!--<div class="page-container">-->
 
-          <!-- Page headline -->
-          <div class="page-header page-container">
-            <div class="current-date-wrapper" ng-cloak>
-              <div class="theme-switcher" ng-click="setCookieData()">
-                <div class="theme-switcher-btn" ></div>
-              </div>
+        <!-- Page headline -->
+        <div class="page-header page-container group"
+            ng-controller="SidebarCtrl">
 
-              <div class="date" ng-controller="GetDateCtrl">
-                {{date | date:'EEEE d MMM y'}}
-              </div>
-
+          <div class="current-date-wrapper" ng-cloak>
+            <div class="theme-switcher" ng-click="setCookieData()">
+              <div class="theme-switcher-btn"></div>
             </div>
+
+            <div class="date" ng-controller="GetDateCtrl">
+              {{date | date:'EEE d MMM y'}}
+            </div>
+
           </div>
 
-          <!-- Page content -->
-          <!--<div ng-view ng-animate="animate"></div>-->
-          <div class="view-animate-container">
-            <div ng-view class="view-animate"></div>
-          </div>
+          <a class="bt-menu-trigger" ng-click="menuIsOpen=!menuIsOpen"
+              ng-class="menuIsOpen ? 'menu-close' : ' ' "><span>Menu</span></a>
+
+          <nav id="mobile-menu" class="mobile-menu"
+              ng-class="menuIsOpen ? 'mobile-menu-open' : ' ' ">
+
+            <ul class="menu-mobile">
+              <li class="user-data">
+                <a class="user-pic" ng-href="#user/5"
+                    ng-click="setActiveMenuItem('#user/5')">
+                  <img src="../images/employees/alex.jpg"
+                      ng-src="../images/employees/alex.jpg"
+                      alt="Alexander Mikhutkin">
+                </a>
+              </li>
+
+              <li>
+                <div ng-controller="checkIn">
+                  <form ng-submit="checkIn()">
+                    <button type="submit" class="checkin" data-checked="false">
+                      Check in
+                    </button>
+                  </form>
+                </div>
+              </li>
+              <li ng-repeat="menuItem in menuItemsList"
+                  ng-class="{'active': menuItem.url == menuStates.activeItem}"
+                  ng-click="setActiveMenuItem(menuItem.url, false)">
+                <a class="sidebar-icon" ng-href="{{menuItem.url}}">
+                  {{menuItem.title}}
+                </a>
+              </li>
+            </ul>
+            <div class="bt-overlay" ng-click="menuIsOpen=!menuIsOpen"></div>
+          </nav>
+
+
+        </div>
+
+        <!-- Page content -->
+        <!--<div ng-view ng-animate="animate"></div>-->
+        <div class="view-animate-container">
+          <div ng-view class="view-animate"></div>
+        </div>
 
         <!--</div>-->
       </div>
@@ -187,8 +193,6 @@
 <!-- endbuild -->
 
 <!-- build:js({.tmp,app}) scripts/scripts.js -->
-
-
 
 <script src="scripts/app.js"></script>
 <script src="scripts/services/getJsons.js"></script>

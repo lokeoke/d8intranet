@@ -24,13 +24,61 @@
 
   // Single User
   // Image
+  .back,
   .user-pic {
     width: 32px;
     height: 32px;
-    margin-right: 5px;
     float: left;
     left: 0;
-    transition: all .3s ease-in-out;
+  }
+
+  .flipper-container {
+    display: inline-block;
+    vertical-align: middle;
+    margin-right: 5px;
+  }
+
+  .flipper {
+    width: 32px;
+    height: 32px;
+    display: block;
+  }
+
+  .back {
+    border-radius: 100%;
+    overflow: hidden;
+    @each $theme, $map in $themes {
+      .#{$theme} & {
+        background: map-get($map, $active-elements);
+      }
+    }
+
+    &:before {
+      left: 57%;
+      top: 50%;
+      border: solid transparent;
+      content: " ";
+      height: 0;
+      width: 0;
+      position: absolute;
+      pointer-events: none;
+      border-color: rgba(213, 38, 38, 0);
+      border-left-color: #fff;
+      border-width: 6px;
+      margin-top: -6px;
+    }
+
+    &:after {
+      content: '';
+      width: 9px;
+      height: 6px;
+      background: #fff;
+      display: block;
+      position: absolute;
+      top: 50%;
+      left: 11px;
+      margin-top: -3px;
+    }
   }
 
 }
@@ -41,22 +89,26 @@
   position: relative;
   line-height: 2;
   z-index: 10;
-  display: block;
+
   margin-bottom: 5px;
   overflow: hidden;
+
+  @include susy-breakpoint(580px) {
+    display: inline-block;
+    width: 50%;
+  }
 }
 
 .employee-link {
+  cursor: pointer;
   overflow: hidden;
 
-}
-
-.employee-columns {
-  .col {
-
-    @include susy-breakpoint(768px, 24) {
-      width: 33.33%;
-      float: left;
+  &:hover {
+    .front {
+      transform: rotateY(-180deg);
+    }
+    .back {
+      transform: rotateY(0deg);
     }
   }
 }
@@ -76,14 +128,26 @@
 
   h1 {
     @include font-size(36);
-    float: left;
+    clear: both;
+
+    @include susy-breakpoint(640px) {
+      float: left;
+    }
   }
 
   .counter {
     @include font-size(14);
-    position: absolute;
-    bottom: 9px;
-    right: 0;
     display: inline-block;
+    width: 100%;
+    text-align: right;
+    margin-bottom: 15px;
+
+
+    @include susy-breakpoint(640px) {
+      width: auto;
+      position: absolute;
+      bottom: 9px;
+      right: 0;
+    }
   }
 }

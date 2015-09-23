@@ -114,6 +114,12 @@
     width: 100%;
     font-family: $fonts-sans-light;
 
+    @each $theme, $map in $themes {
+      .#{$theme} & {
+        background: map-get($map, $site-bg);
+      }
+    }
+
     @include susy-breakpoint(1280px) {
       @include span(3 of 16);
       float: none;
@@ -137,17 +143,19 @@
 
   .user-name {
     @include font-size(18);
-    @each $theme, $map in $themes {
-      .#{$theme} & {
-        background: map-get($map, $site-bg);
+    padding: 11px;
+
+    @include susy-breakpoint(0 1279px) {
+      @each $theme, $map in $themes {
+        .#{$theme} & {
+          background: map-get($map, $switcher-bg);
+        }
       }
     }
 
-    padding: 11px;
-    box-shadow: 2px 1px 1px rgba($black, 0.13);
-
     @include susy-breakpoint(1280px) {
       @include font-size(16);
+      box-shadow: 2px 1px 1px rgba($black, 0.13);
     }
   }
 
@@ -275,6 +283,43 @@
       }
     }
   }
+
+
+  @include susy-breakpoint(0 1279px) {
+    .months {
+      max-height: 0;
+      overflow: hidden;
+      transition: all ease-out .3s;
+
+      @include susy-breakpoint(1280px) {
+        height: auto;
+        max-height: auto;
+      }
+    }
+
+    .show-table-data {
+      max-height: 200px;
+
+      .total {
+        @each $theme, $map in $themes {
+          .#{$theme} & {
+            color: #fff;
+            background: map-get($map, $sidebar-bg);
+          }
+        }
+      }
+    }
+
+    .active-table-data {
+      @each $theme, $map in $themes {
+        .#{$theme} & {
+          color: #fff;
+          background: map-get($map, $sidebar-bg);
+        }
+      }
+    }
+  }
+
 }
 
 .paid-leave,
