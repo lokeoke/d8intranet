@@ -22,6 +22,7 @@
     transform: scale(.85);
   }
 }
+
 // Top leads
 // -----------------------------------------------------------------------------
 .leads,
@@ -29,7 +30,6 @@
   border-top: 0;
   margin-bottom: -1px;
   padding-bottom: 50px;
-  text-align: center;
   border-bottom: 1px solid;
 
   // Themes
@@ -66,7 +66,6 @@
   border-bottom: 0;
 }
 
-
 // All teams wrapper
 // -----------------------------------------------------------------------------
 // Team title
@@ -96,7 +95,7 @@
 
   // Team member styles/layout
   .member {
-    @include span(5 of 10);
+    @include span(10 of 10);
     @include font-size(13);
     float: none;
     display: inline-block;
@@ -111,6 +110,10 @@
 
     @include susy-breakpoint(1280px) {
       @include font-size(15);
+    }
+
+    @include susy-breakpoint(639px) {
+      @include span(5 of 10);
     }
 
     @include susy-breakpoint(320px 1600px) {
@@ -138,6 +141,13 @@
   .user-pic {
     display: inline-block;
     margin-bottom: 10px;
+    vertical-align: middle;
+
+    @include susy-breakpoint(320px 639px) {
+      width: 50px;
+      height: 50px;
+      margin: 0 10px 0 0;
+    }
 
     @include susy-breakpoint(768px 1279px) {
       width: 80px;
@@ -182,7 +192,6 @@
   }
 
   @include susy-breakpoint(1024px 1601px) {
-    @include span(10 of 20);
     padding: 20px;
     margin: 0;
     border: 0;
@@ -226,12 +235,22 @@
 
   // Small member layout
   .member {
-    @include span(5 of 10);
-    float: none;
+    width: 100%;
+    margin-top: 1rem;
+
+    @include susy-breakpoint(640px) {
+      @include span(5 of 10);
+      float: none;
+    }
 
     @include susy-breakpoint(1601px) {
       @include span(2 of 8);
       float: none;
+      display: inline-block;
+
+      &:last-child {
+        margin-right: 0;
+      }
     }
   }
 }

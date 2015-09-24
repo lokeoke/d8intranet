@@ -49,6 +49,7 @@
     @include font-size(24);
     margin-bottom: 10px;
   }
+
   .position {
     @include font-size(18);
   }
@@ -72,6 +73,21 @@
     right: 0;
     top: 5.7rem;
     text-align: right;
+  }
+
+  h3 {
+    @include font-size(30);
+    font-family: $fonts-sans-light;
+    margin: 2rem 0;
+  }
+
+  a {
+    padding: 10px 15px;
+    min-width: 50px;
+    border-radius: 4px;
+    display: block;
+    text-align: center;
+    transition: color .2s ease-out;
   }
 }
 
@@ -116,23 +132,7 @@
   margin-left: 1rem;
 }
 
-.user-social-data {
 
-  h3 {
-    @include font-size(30);
-    font-family: $fonts-sans-light;
-    margin: 2rem 0;
-  }
-
-  a {
-    padding: 10px 15px;
-    min-width: 50px;
-    border-radius: 4px;
-    display: block;
-    text-align: center;
-    transition: color .2s ease-out;
-  }
-}
 
 .more-come-soon {
   @include font-size(40);
@@ -196,7 +196,7 @@
 }
 
 .vacation-left-progress {
-  background: #5999BB;
+  background: #5999bb;
   position: absolute;
   bottom: 0;
   height: 50%;

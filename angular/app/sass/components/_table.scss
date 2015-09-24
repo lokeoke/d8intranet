@@ -33,13 +33,13 @@
 }
 
 .flipper {
-  transition: 0.6s;
+  transition: .6s;
   transform-style: preserve-3d;
 
   .front,
   .back {
     backface-visibility: hidden;
-    transition: 0.6s;
+    transition: .6s;
     transform-style: preserve-3d;
     position: absolute;
     top: 0;
@@ -76,19 +76,21 @@
     }
   }
 
-  .table-headline .user-dates {
-    @each $theme, $map in $themes {
-      .#{$theme} & {
-        background: map-get($map, $site-bg);
-      }
-    }
-  }
+
 
   .table-headline {
     display: none;
 
     .total {
       border-bottom: 0 !important;
+    }
+
+    .user-dates {
+      @each $theme, $map in $themes {
+        .#{$theme} & {
+          background: map-get($map, $site-bg);
+        }
+      }
     }
 
     @include susy-breakpoint(1280px) {
@@ -110,25 +112,7 @@
     }
   }
 
-  .user-name {
-    width: 100%;
-    font-family: $fonts-sans-light;
 
-    @each $theme, $map in $themes {
-      .#{$theme} & {
-        background: map-get($map, $site-bg);
-      }
-    }
-
-    @include susy-breakpoint(1280px) {
-      @include span(3 of 16);
-      float: none;
-      display: inline-block;
-      vertical-align: middle;
-      min-height: 30px;
-      padding: 10px;
-    }
-  }
 
   .dates {
     display: block;
@@ -143,7 +127,15 @@
 
   .user-name {
     @include font-size(18);
+    @each $theme, $map in $themes {
+      .#{$theme} & {
+        background: map-get($map, $site-bg);
+      }
+    }
+
     padding: 11px;
+    width: 100%;
+    font-family: $fonts-sans-light;
 
     @include susy-breakpoint(0 1279px) {
       @each $theme, $map in $themes {
@@ -155,7 +147,13 @@
 
     @include susy-breakpoint(1280px) {
       @include font-size(16);
-      box-shadow: 2px 1px 1px rgba($black, 0.13);
+      @include span(3 of 16);
+      box-shadow: 2px 1px 1px rgba($black, .13);
+      float: none;
+      display: inline-block;
+      vertical-align: middle;
+      min-height: 30px;
+      padding: 10px;
     }
   }
 
@@ -251,13 +249,13 @@
 
     @include susy-breakpoint(1280px) {
       @include last;
-      box-shadow: -2px 1px 1px rgba($black, 0.13);
+      box-shadow: -2px 1px 1px rgba($black, .13);
     }
 
     @include susy-breakpoint(0 1279px) {
       position: absolute;
-      right: 0px;
-      top: 0px;
+      right: 0;
+      top: 0;
       width: auto;
       padding: 14px 10px 0;
       display: block;
