@@ -107,7 +107,7 @@
         "day_off": 0,
         "sick": 0,
         "business_trip": 0,
-        "remote_work": 0,
+        "remote_work": 1,
         "vacation": 0
       }
     ],
@@ -275,11 +275,11 @@
     "default_langcode": [{"value": "1"}],
     "statuses": [
       {
-        "day_off": 0,
+        "day_off": 1,
         "sick": 0,
-        "business_trip": 1,
+        "business_trip": 0,
         "remote_work": 0,
-        "vacation": 1
+        "vacation": 0
       }
     ],
     "field_came_to_propeople": [{"value": 1255478400}],

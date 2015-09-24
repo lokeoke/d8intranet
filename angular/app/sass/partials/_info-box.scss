@@ -3,12 +3,13 @@
 
 .info-box {
   padding: 20px;
-  min-height: 235px;
   margin-bottom: 20px;
 
   @include susy-breakpoint(1280px, 24) {
     @include span(12);
     height: 235px;
+    min-height: 235px;
+
     &:nth-child(2n) {
       @include last;
     }
@@ -57,7 +58,7 @@
       left: 57%;
       top: 50%;
       border: solid transparent;
-      content: " ";
+      content: '';
       height: 0;
       width: 0;
       position: absolute;
@@ -104,12 +105,9 @@
   overflow: hidden;
 
   &:hover {
-    .front {
-      transform: rotateY(-180deg);
-    }
-    .back {
-      transform: rotateY(0deg);
-    }
+    .front { transform: rotateY(-180deg); }
+
+    .back { transform: rotateY(0deg); }
   }
 }
 

@@ -52,7 +52,7 @@
     @each $theme, $map in $themes {
       .#{$theme} & {
         border-color: map-get($map, $header-divider);
-        color: rgba( map-get($map,$tabs-color), .5);
+        color: rgba(map-get($map, $tabs-color), .5);
 
         &:hover,
         &.active {

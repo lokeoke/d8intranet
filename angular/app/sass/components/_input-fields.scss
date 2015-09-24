@@ -8,8 +8,8 @@
     font-family: $fonts-sans-light;
     position: relative;
     display: block;
-    padding: 0.8em;
-    border: none;
+    padding: .8em;
+    border: 0;
     border-radius: 0;
     z-index: 10;
     width: 100%;
@@ -18,9 +18,8 @@
     color: $site-font-color;
     opacity: 1;
     outline: 0;
-    -webkit-transition: opacity 0.3s;
-    transition: opacity 0.3s;
-    -webkit-appearance: none;
+    transition: opacity .3s;
+    appearance: none;
 
     // Themes
     @each $theme, $map in $themes {
@@ -51,12 +50,9 @@
       width: 100%;
       height: 50px;
       background: $block-bg;
-      -webkit-transform: perspective(1000px) rotate3d(1, 0, 0, 90deg);
       transform: perspective(1000px) rotate3d(1, 0, 0, 90deg);
-      -webkit-transform-origin: 50% 100%;
       transform-origin: 50% 100%;
-      -webkit-transition: -webkit-transform 0.3s;
-      transition: transform 0.3s;
+      transition: transform .3s;
 
       // Themes
       @each $theme, $map in $themes {
@@ -72,12 +68,10 @@
       top: 0;
       left: 0;
       width: 100%;
-      height: 0.25em;
+      height: .25em;
       background: #2a2a2a;
-      -webkit-transform-origin: 50% 0%;
       transform-origin: 50% 0%;
-      -webkit-transition: -webkit-transform 0.3s;
-      transition: transform 0.3s;
+      transition: transform .3s;
 
       // Themes
       @each $theme, $map in $themes {
@@ -98,20 +92,17 @@
   .filter-field:focus,
   &.input-filled .filter-field {
     opacity: 1;
-    -webkit-transition-delay: 0.3s;
-    transition-delay: 0.3s;
+    transition-delay: .3s;
     pointer-events: none;
   }
 
   .filter-field:focus + .filter-label:before,
   &.input-filled .filter-label:before {
-    -webkit-transform: perspective(1000px) rotate3d(1, 0, 0, 0deg);
     transform: perspective(1000px) rotate3d(1, 0, 0, 0deg);
   }
 
   .filter-field:focus + .filter-label:after,
   &.input-filled .filter-label:after {
-    -webkit-transform: perspective(1000px) rotate3d(1, 0, 0, -90deg);
     transform: perspective(1000px) rotate3d(1, 0, 0, -90deg);
   }
 }
