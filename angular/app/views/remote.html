@@ -37,52 +37,50 @@
           </div>
         </div>
 
-        <div class="user-dates"
-            ng-repeat="user in users  | teamsOnly:filterBy.selectedOption">
-          <div class="user-name" show-table-data>
-            {{user.field_last_name[0].value}}
+        <div class="user-dates" ng-repeat="user in users  | teamsOnly:filterBy.selectedOption">
+          <div class="user-name" show-table-data>{{user.field_last_name[0].value}}
             {{user.field_first_name[0].value}}
           </div>
 
           <div class="months">
             <div class="month flipper-container"
 
-                ng-click="date.showDetailsDayoff = !date.showDetailsDayoff"
+                ng-click="date.showDetailsRemote = !date.showDetailsRemote"
                 data-month="{{date.monthName}}"
                 ng-repeat="date in user.calendarMonths">
 
               <div class="dates-popup"
-                  ng-class="{hidden: !date.showDetailsDayoff}"
-                  ng-if="date.dayOffDays.multipleDates">
+                  ng-class="{hidden: !date.showDetailsRemote}"
+                  ng-if="date.remoteWorkDays.multipleDates">
                 <span class="popup-label">Dates:</span>
-                <span class="{{dates.statusDate}}"
-                    ng-repeat="dates in date.dayOffDays.multipleDates">
+                <span class="no-state sick-remote"
+                    ng-repeat="dates in date.remoteWorkDays.multipleDates">
                     {{dates.date}}
                 </span>
 
-                <span class="dates" ng-if="!date.dayOffDays.multipleDates">
-                  {{date.dayOffDays.daysRange}}
+                <span class="dates" ng-if="!date.remoteWorkDays.multipleDates">
+                  {{date.remoteWorkDays.daysRange}}
                 </span>
               </div>
 
-              <div class="dates-popup" ng-if="!date.dayOffDays.multipleDates && date.dayOffDays.daysRange"
-                  ng-class="{hidden: !date.showDetailsDayoff}">
+              <div class="dates-popup" ng-if="!date.remoteWorkDays.multipleDates && date.remoteWorkDays.daysRange"
+                  ng-class="{hidden: !date.showDetailsRemote}">
                 <span class="popup-label">Dates:</span>
-                <span class="{{date.dayOffDays.state}}">
-                  {{date.dayOffDays.daysRange}}
+                <span class="no-state sick-remote">
+                  {{date.remoteWorkDays.daysRange}}
                 </span>
               </div>
 
               <span class="dates dates-numbers"
-                  ng-class="{selectedDate: date.showDetailsDayoff}"
-                  ng-if="date.dayOffDays.totalMonthDays">
-                {{date.dayOffDays.totalMonthDays}}
+                  ng-class="{selectedDate: date.showDetailsRemote}"
+                  ng-if="date.remoteWorkDays.totalMonthDays">
+                {{date.remoteWorkDays.totalMonthDays}}
               </span>
             </div>
 
             <div class="month total" data-month="Total:">
 
-              <span class="dates dates-total">{{user.totalDaysOff}}</span>
+              <span class="dates dates-total">{{user.totalRemoteWork}}</span>
             </div>
           </div>
         </div>

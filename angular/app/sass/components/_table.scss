@@ -1,7 +1,7 @@
 // Table
 // -----------------------------------------------------------------------------
 .legend {
-  margin: 2rem 0 3rem;
+  margin: 1rem 0 3rem;
   text-align: right;
 }
 
@@ -76,8 +76,6 @@
     }
   }
 
-
-
   .table-headline {
     display: none;
 
@@ -111,8 +109,6 @@
       }
     }
   }
-
-
 
   .dates {
     display: block;
@@ -152,7 +148,7 @@
       float: none;
       display: inline-block;
       vertical-align: middle;
-      min-height: 30px;
+      min-height: 39px;
       padding: 10px;
     }
   }
@@ -183,17 +179,27 @@
 
     .dates-numbers {
       @include font-size(15);
-      cursor: default;
-      color: #fff;
       width: 100%;
       white-space: nowrap;
+      user-select: none;
+      transition: all ease-out .1s;
+
+      &:hover,
+      &.selectedDate {
+        cursor: pointer;
+        @each $theme, $map in $themes {
+          .#{$theme} & {
+            background: map-get($map, $sidebar-bg);
+            color: #fff;
+          }
+        }
+      }
     }
 
     .flipper {
       @include susy-breakpoint(0 1279px) {
         width: 50%;
         float: left;
-        //        height: 30px;
         text-align: center;
       }
     }
@@ -229,7 +235,7 @@
     @include susy-breakpoint(1280px) {
       @include span(1 of 14);
       display: inline-block;
-      min-height: 38px;
+      min-height: 39px;
       vertical-align: middle;
       text-align: center;
       background: transparent;
@@ -282,7 +288,6 @@
     }
   }
 
-
   @include susy-breakpoint(0 1279px) {
     .months {
       max-height: 0;
@@ -317,14 +322,70 @@
       }
     }
   }
-
 }
 
+.dates-popup {
+  position: absolute;
+  bottom: calc(100% + 8px);
+  padding: 4px;
+  border-spacing: 5px;
+  border-collapse: separate;
+  left: 50%;
+  transform: translateX(-50%);
+  border-radius: 3px;
+
+  @each $theme, $map in $themes {
+    .#{$theme} & {
+      background: map-get($map, $site-font-color);
+    }
+  }
+
+  &::after {
+    top: 100%;
+    left: 50%;
+    border: solid transparent;
+    content: " ";
+    height: 0;
+    width: 0;
+    position: absolute;
+    pointer-events: none;
+    border-width: 8px;
+    margin-left: -8px;
+
+    @each $theme, $map in $themes {
+      .#{$theme} & {
+        border-top-color: map-get($map, $site-font-color);
+      }
+    }
+  }
+
+  .popup-label {
+    color: #00001c;
+
+    .light & {
+      color: #ddd;
+    }
+  }
+}
+
+.no-state,
 .paid-leave,
 .pre-holiday,
 .unpaid-leave,
 .not-approved {
   color: #fff;
+  padding: 5px;
+  border-radius: 2px;
+  display: table-cell;
+  white-space: nowrap;
+
+  &:last-child {
+    margin-right: 0;
+  }
+}
+
+.popup-label {
+  display: table-cell;
 }
 
 .pre-holiday,
@@ -344,6 +405,12 @@
 .approved-unpaid-leave:before {
   background: #e91e63;
 }
+
+.journey-state { background: #286b90; }
+
+.sick-state { background: #5f7f15; }
+.sick-remote { background: #139f71; }
+.state-work-off { background: #ff8063; }
 
 .not-approved { background: #b71c1c; }
 

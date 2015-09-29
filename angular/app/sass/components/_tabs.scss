@@ -1,45 +1,36 @@
-
 // Tabs
 // -----------------------------------------------------------------------------
 .employees-tabs {
   @extend %group;
-  @include font-size(24);
-  color: $tabs-color;
+  @include font-size(14);
+  background: #4a4a4a;
   font-family: $fonts-sans-light;
-  margin-bottom: 15px;
+  margin-bottom: 3rem;
 
-  .item {
-    float: left;
-
-    @include susy-breakpoint(0 900px) {
-      width: 50%;
-      padding: 0;
+  @each $theme, $map in $themes {
+    .#{$theme} & {
+      background: map-get($map, $sidebar-bg);
     }
   }
 
+  .item {
+    float: left;
+  }
+
   .link {
-    border-bottom: 1px solid;
     display: block;
-    padding: 20px 80px;
+    padding: 15px 20px;
     text-align: center;
     cursor: pointer;
     position: relative;
-
-    @include susy-breakpoint(0 900px) {
-      padding: 20px 0;
-    }
-
 
     &:hover,
     &.active {
       &:after {
         content: '';
         position: absolute;
-        width: 17px;
-        height: 17px;
-        border: 1px solid;
-        border-bottom: 0;
-        border-left: 0;
+        width: 10px;
+        height: 10px;
         transform: rotate(-45deg) translate(-50%, 0);
         bottom: -3px;
         left: 50%;
@@ -47,24 +38,23 @@
       }
     }
 
-
     // Themes
     @each $theme, $map in $themes {
       .#{$theme} & {
-        border-color: map-get($map, $header-divider);
-        color: rgba(map-get($map, $tabs-color), .5);
+        color: #fff;
 
         &:hover,
         &.active {
-          color: map-get($map, $tabs-color);
+          background: map-get($map, $active-elements);
+          color: #fff;
         }
 
         &:after {
-          border-color: map-get($map, $header-divider);
           background: map-get($map, $site-bg);
           transition-duration: 0s;
         }
       }
     }
+
   }
 }

@@ -39,6 +39,7 @@ angular.module('d8intranetApp')
 
 
       $scope.teams = [];
+
       angular.forEach($scope.people, function(emplyee){
         if (!$scope.teams[emplyee.field_team[0].value]) {
            $scope.teams[emplyee.field_team[0].value] = emplyee.field_team[0]

@@ -13,9 +13,7 @@
 
 .table-data {
   .chosen-container-single {
-    position: absolute;
-    top: -65px;
-    right: 0;
+    float: left;
   }
 }
 
@@ -34,7 +32,6 @@
   color: #444;
 
   span {
-    //
     @each $theme, $map in $themes {
       .#{$theme} & {
         color: map-get($map, $active-elements);

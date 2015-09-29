@@ -25,7 +25,7 @@ angular.module('d8intranetApp')
       },
       {
         icon: 'rest',
-        title: 'My vacation',
+        title: 'Statistic',
         url: config.vacationsUrl
       },
       {
