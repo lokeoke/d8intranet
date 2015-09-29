@@ -1199,55 +1199,48 @@ hr {
     bottom: 0; }
 
 .employees-tabs {
-  font-size: 1.5rem;
-  color: #5f5e5e;
+  font-size: 0.875rem;
+  background: #4a4a4a;
   font-family: 'Open Sans Light', Helvetica, Arial, sans-serif;
-  margin-bottom: 15px; }
+  margin-bottom: 3rem; }
   .lt-ie9 .employees-tabs {
-    font-size: 24px; }
+    font-size: 14px; }
+  .dark .employees-tabs {
+    background: #263238; }
+  .light .employees-tabs {
+    background: #2B2B2B; }
   .employees-tabs .item {
     float: left; }
-    @media (min-width: 0) and (max-width: 900px) {
-      .employees-tabs .item {
-        width: 50%;
-        padding: 0; } }
   .employees-tabs .link {
-    border-bottom: 1px solid;
     display: block;
-    padding: 20px 80px;
+    padding: 15px 20px;
     text-align: center;
     cursor: pointer;
     position: relative; }
-    @media (min-width: 0) and (max-width: 900px) {
-      .employees-tabs .link {
-        padding: 20px 0; } }
     .employees-tabs .link:hover:after, .employees-tabs .link.active:after {
       content: '';
       position: absolute;
-      width: 17px;
-      height: 17px;
-      border: 1px solid;
-      border-bottom: 0;
-      border-left: 0;
+      width: 10px;
+      height: 10px;
       -webkit-transform: rotate(-45deg) translate(-50%, 0);
               transform: rotate(-45deg) translate(-50%, 0);
       bottom: -3px;
       left: 50%;
       transition-duration: 0s; }
     .dark .employees-tabs .link {
-      color: rgba(255, 255, 255, 0.5); }
+      color: #fff; }
       .dark .employees-tabs .link:hover, .dark .employees-tabs .link.active {
+        background: #FF9E80;
         color: #fff; }
       .dark .employees-tabs .link:after {
         background: #37474F;
         transition-duration: 0s; }
     .light .employees-tabs .link {
-      border-color: #c6c6c6;
-      color: rgba(0, 0, 0, 0.5); }
+      color: #fff; }
       .light .employees-tabs .link:hover, .light .employees-tabs .link.active {
-        color: #000; }
+        background: #DE1B1B;
+        color: #fff; }
       .light .employees-tabs .link:after {
-        border-color: #c6c6c6;
         background: #fff;
         transition-duration: 0s; }
 
@@ -1345,7 +1338,7 @@ hr {
             transform: perspective(1000px) rotate3d(1, 0, 0, -90deg); }
 
 .legend {
-  margin: 2rem 0 3rem;
+  margin: 1rem 0 3rem;
   text-align: right; }
 
 .leave-type {
@@ -1464,7 +1457,7 @@ hr {
         float: none;
         display: inline-block;
         vertical-align: middle;
-        min-height: 30px;
+        min-height: 39px;
         padding: 10px; }
         .lt-ie9 .year-table .user-name {
           font-size: 16px; } }
@@ -1496,12 +1489,23 @@ hr {
         background: #DCDCDC; } }
     .year-table .month .dates-numbers {
       font-size: 0.9375rem;
-      cursor: default;
-      color: #fff;
       width: 100%;
-      white-space: nowrap; }
+      white-space: nowrap;
+      -webkit-user-select: none;
+         -moz-user-select: none;
+          -ms-user-select: none;
+              user-select: none;
+      transition: all ease-out .1s; }
       .lt-ie9 .year-table .month .dates-numbers {
         font-size: 15px; }
+      .year-table .month .dates-numbers:hover, .year-table .month .dates-numbers.selectedDate {
+        cursor: pointer; }
+        .dark .year-table .month .dates-numbers:hover, .dark .year-table .month .dates-numbers.selectedDate {
+          background: #263238;
+          color: #fff; }
+        .light .year-table .month .dates-numbers:hover, .light .year-table .month .dates-numbers.selectedDate {
+          background: #2B2B2B;
+          color: #fff; }
     @media (min-width: 0) and (max-width: 1279px) {
       .year-table .month .flipper {
         width: 50%;
@@ -1532,7 +1536,7 @@ hr {
         float: left;
         margin-right: 1.80426%;
         display: inline-block;
-        min-height: 38px;
+        min-height: 39px;
         vertical-align: middle;
         text-align: center;
         background: transparent; } }
@@ -1593,8 +1597,51 @@ hr {
       color: #fff;
       background: #2B2B2B; } }
 
-.paid-leave, .pre-holiday, .unpaid-leave, .not-approved {
-  color: #fff; }
+.dates-popup {
+  position: absolute;
+  bottom: calc(100% + 8px);
+  padding: 4px;
+  border-spacing: 5px;
+  border-collapse: separate;
+  left: 50%;
+  -webkit-transform: translateX(-50%);
+          transform: translateX(-50%);
+  border-radius: 3px; }
+  .dark .dates-popup {
+    background: #cfcfcf; }
+  .light .dates-popup {
+    background: #2e2e2e; }
+  .dates-popup::after {
+    top: 100%;
+    left: 50%;
+    border: solid transparent;
+    content: " ";
+    height: 0;
+    width: 0;
+    position: absolute;
+    pointer-events: none;
+    border-width: 8px;
+    margin-left: -8px; }
+    .dark .dates-popup::after {
+      border-top-color: #cfcfcf; }
+    .light .dates-popup::after {
+      border-top-color: #2e2e2e; }
+  .dates-popup .popup-label {
+    color: #00001c; }
+    .light .dates-popup .popup-label {
+      color: #ddd; }
+
+.no-state, .paid-leave, .pre-holiday, .unpaid-leave, .not-approved {
+  color: #fff;
+  padding: 5px;
+  border-radius: 2px;
+  display: table-cell;
+  white-space: nowrap; }
+  .no-state:last-child, .paid-leave:last-child, .pre-holiday:last-child, .unpaid-leave:last-child, .not-approved:last-child {
+    margin-right: 0; }
+
+.popup-label {
+  display: table-cell; }
 
 .pre-holiday, .dates-numbers .pre-holiday, .pre-holiday-leave:before {
   background: #ff5722; }
@@ -1604,6 +1651,18 @@ hr {
 
 .unpaid-leave, .dates-numbers .unpaid, .approved-unpaid-leave:before {
   background: #e91e63; }
+
+.journey-state {
+  background: #286b90; }
+
+.sick-state {
+  background: #5f7f15; }
+
+.sick-remote {
+  background: #139f71; }
+
+.state-work-off {
+  background: #ff8063; }
 
 .not-approved {
   background: #b71c1c; }
@@ -1673,9 +1732,7 @@ hr {
     font-size: 16px; }
 
 .table-data .chosen-container-single {
-  position: absolute;
-  top: -65px;
-  right: 0; }
+  float: left; }
 
 .chosen-single {
   height: 50px;
@@ -1936,7 +1993,7 @@ hr {
 
 .rest-icon::before {
   font-size: 1.875rem;
-  content: '\e80c'; }
+  content: '\e811'; }
   .lt-ie9 .rest-icon::before {
     font-size: 30px; }
 

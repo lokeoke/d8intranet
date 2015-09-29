@@ -69,9 +69,6 @@ angular.module('d8intranetApp')
 
       $scope.availableEmployees.available['title'] = 'Available employees';
 
-      console.log($scope.availableEmployees.available);
-
-
 
       function cardName(status) {
         switch (status) {

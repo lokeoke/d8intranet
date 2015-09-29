@@ -40,8 +40,8 @@ angular.module('d8intranetApp', [
         controller: 'ShowUserCtrl'
       })
       .when('/vacation', {
-        url: "/vacation",
-        templateUrl: 'views/vacation.html',
+        url: "/statistic",
+        templateUrl: 'views/statistic.html',
         controller: 'VacationCtrl'
       })
       .otherwise({

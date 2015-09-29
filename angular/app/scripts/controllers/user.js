@@ -42,6 +42,7 @@ angular.module('d8intranetApp')
           var past = new Date(cameToCompany);
 
           $scope.filteredKeys = {};
+
           angular.forEach(user, function (value, title) {
 
             if (stateTitle(title)) {
@@ -58,7 +59,7 @@ angular.module('d8intranetApp')
               else if (title == 'field_duty_journey') {
                 var journeyDays = 0;
                 for (var j = 0; j < value.length; j++) {
-                  journeyDays = getDateNumber(value[j].end_journey) - getDateNumber(value[j].start_journey);
+                  journeyDays = getDateNumber(value[j].end_date) - getDateNumber(value[j].end_date);
                 }
                 $scope.filteredKeys[stateTitle(title)] = journeyDays;
               }
@@ -70,7 +71,7 @@ angular.module('d8intranetApp')
           });
 
           // Get current days of user vacation
-          var totalMonthOfWork  = calcDate(today, past);
+          var totalMonthOfWork = calcDate(today, past);
           $scope.totalVacationDays = 0;
 
           // If user month of work less than 12 month
@@ -120,7 +121,6 @@ angular.module('d8intranetApp')
       var months;
       var vacationForNow = 0;
 
-
       // Calculate amount of months from user started to work in company
       function calcDate(date1, date2) {
 
@@ -142,8 +142,6 @@ angular.module('d8intranetApp')
         // 18 days divide by 12 month and multiply by month of work
         return config.totalVacation / 12 * $scope.monthsOfWork;
       }
-
-
 
       getWorkPeriod(calcDate(today, past));
     });

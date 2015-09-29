@@ -42,46 +42,32 @@
     "field_work": [{"value": 1}],
     "field_vacation": [
       {
-        "start_vacation": 1420070400,
-        "end_vacation": 1420156800,
+        "start_date": 1420070400,
+        "end_date": 1420156800,
         "state": "unpaid-leave"
       },
       {
-        "start_vacation": 1423699200,
-        "end_vacation": 1424044800,
+        "start_date": 1423699200,
+        "end_date": 1424044800,
         "state": "paid-leave"
       }
     ],
     "field_dayoff": [
       {
-        "day_off_date": 1423699200,
-        "state": "Paid"
+        "start_date": 1428710400,
+        "end_date": 1428710400,
+        "state": "paid-leave"
       },
       {
-        "day_off_date": 1426809600,
-        "state": "Unpaid"
+        "start_date": 1424044800,
+        "end_date": 1424044800,
+        "state": "unpaid-leave"
       },
       {
-        "day_off_date": 1427155200,
-        "state": "Unpaid"
-      },
-      {
-        "day_off_date": 1427587200,
-        "state": "Paid"
-      },
-      {
-        "day_off_date": 1444435200,
-        "state": "Pre-holiday"
-      },
-      {
-        "day_off_date": 1443744000,
-        "state": "Pre-holiday"
-      },
-      {
-        "day_off_date": 1445299200,
-        "state": "Unpaid"
+        "start_date": 1429660800,
+        "end_date": 1429660800,
+        "state": "unpaid-leave"
       }
-
     ]
   },
 
@@ -129,58 +115,77 @@
     "field_user_edu": [{"value": "National Mining University, Dnipropetrovsk, 2003-2008, master degree"}],
     "field_vacation": [
       {
-        "start_vacation": 1420070400,
-        "end_vacation": 1420156800,
+        "start_date": 1420070400,
+        "end_date": 1420156800,
         "state": "paid-leave"
       }
 
     ],
 
-    "field_sick": [],
+    "field_sick": [
+      {
+        "start_date": 1428969600,
+        "end_date": 1429488000
+      },
+      {
+        "start_date": 1431302400,
+        "end_date": 1431302400
+      }
+    ],
 
     "field_duty_journey": [
       {
-        "start_journey": 1420070400,
-        "end_journey": 1420848000
+        "start_date": 1420070400,
+        "end_date": 1420848000
       }
     ],
 
     "field_remote_work": [
       {
-        "day_remote_work": 1428710400
+        "start_date": 1428710400,
+        "end_date": 1428710400
+      },
+
+      {
+        "start_date": 1429660800,
+        "end_date": 1429660800
       },
       {
-        "day_remote_work": 1424044800
-      },
-      {
-        "day_remote_work": 1429660800
+        "start_date": 1424044800,
+        "end_date": 1424044800
       }
     ],
 
     "field_work_off": [
       {
-        "day_work_off": 1428710400
+        "start_date": 1433203200,
+        "end_date": 1433203200
       },
       {
-        "day_work_off": 1424044800
+        "start_date": 1434326400,
+        "end_date": 1434326400
       },
       {
-        "day_work_off": 1429660800
+        "start_date": 1439164800,
+        "end_date": 1439164800
       }
     ],
 
     "field_dayoff": [
       {
-        "day_off_date": 1428710400,
-        "state": "Paid"
+        "start_date": 1428710400,
+        "end_date": 1428710400,
+        "state": "paid-leave"
       },
       {
-        "day_off_date": 1424044800,
-        "state": "Unpaid"
+        "start_date": 1424044800,
+        "end_date": 1424044800,
+        "state": "unpaid-leave"
       },
       {
-        "day_off_date": 1429660800,
-        "state": "Unpaid"
+        "start_date": 1429660800,
+        "end_date": 1429660800,
+        "state": "unpaid-leave"
       }
     ]
   },
@@ -229,29 +234,32 @@
     "field_user_edu": [{"value": "National Mining University, Dnipropetrovsk, 2003-2008, master degree"}],
     "field_vacation": [
       {
-        "start_vacation": 1420070400,
-        "end_vacation": 1420156800,
+        "start_date": 1420070400,
+        "end_date": 1420156800,
         "state": "paid-leave"
       },
       {
-        "start_vacation": 1423699200,
-        "end_vacation": 1424044800,
+        "start_date": 1423699200,
+        "end_date": 1424044800,
         "state": "unpaid-leave"
       }
     ],
 
     "field_dayoff": [
       {
-        "day_off_date": 1428710400,
-        "state": "Paid"
+        "start_date": 1428710400,
+        "end_date": 1428710400,
+        "state": "paid-leave"
       },
       {
-        "day_off_date": 1424044800,
-        "state": "Unpaid"
+        "start_date": 1424044800,
+        "end_date": 1424044800,
+        "state": "unpaid-leave"
       },
       {
-        "day_off_date": 1429660800,
-        "state": "Unpaid"
+        "start_date": 1429660800,
+        "end_date": 1429660800,
+        "state": "paid-leave"
       }
     ]
   },
@@ -300,29 +308,32 @@
     "field_user_edu": [{"value": "National Mining University, Dnipropetrovsk, 2003-2008, master degree"}],
     "field_vacation": [
       {
-        "start_vacation": 1420070400,
-        "end_vacation": 1420156800,
+        "start_date": 1420070400,
+        "end_date": 1420156800,
         "state": "paid-leave"
       },
       {
-        "start_vacation": 1423699200,
-        "end_vacation": 1424044800,
+        "start_date": 1423699200,
+        "end_date": 1424044800,
         "state": "unpaid-leave"
       }
     ],
 
     "field_dayoff": [
       {
-        "day_off_date": 1428710400,
-        "state": "Paid"
+        "start_date": 1428710400,
+        "end_date": 1428710400,
+        "state": "unpaid-leave"
       },
       {
-        "day_off_date": 1424044800,
-        "state": "Unpaid"
+        "start_date": 1424044800,
+        "end_date": 1424044800,
+        "state": "paid-leave"
       },
       {
-        "day_off_date": 1429660800,
-        "state": "Unpaid"
+        "start_date": 1429660800,
+        "end_date": 1429660800,
+        "state": "paid-leave"
       }
     ]
   }
