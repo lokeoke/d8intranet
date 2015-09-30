@@ -1,25 +1,3 @@
-// Table
-// -----------------------------------------------------------------------------
-.legend {
-  margin: 1rem 0 3rem;
-  text-align: right;
-}
-
-.leave-type {
-  @include font-size(13);
-  display: inline-block;
-  margin-right: 20px;
-
-  &:before {
-    content: '';
-    display: inline-block;
-    width: 20px;
-    height: 20px;
-    background: #000;
-    vertical-align: middle;
-    margin-right: 10px;
-  }
-}
 
 .flipper-container {
   perspective: 1000;
@@ -52,19 +30,89 @@
   }
 }
 
+// Legend
+// -----------------------------------------------------------------------------
+.legend {
+  margin: 1rem 0 3rem;
+  text-align: right;
+}
+
+.leave-type {
+  @include font-size(13);
+  text-align: left;
+  display: block;
+  clear: both;
+  margin: 0 0 15px 0;
+
+  @include susy-breakpoint(901px) {
+    clear: none;
+    display: inline-block;
+    margin: 0 20px 0 0;
+    text-align: right;
+  }
+
+
+  &:before {
+    content: '';
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    background: #000;
+    vertical-align: middle;
+    margin-right: 10px;
+  }
+}
+
+// Table
+// -----------------------------------------------------------------------------
+
+// Table header which have a bit different styles from global table data
+// Showing only for desktop site version
+.table-headline {
+  display: none;
+
+  .total {
+    border-bottom: 0 !important;
+  }
+
+  .user-dates {
+    @each $theme, $map in $themes {
+      .#{$theme} & {
+        background: map-get($map, $site-bg);
+      }
+    }
+  }
+
+  @include susy-breakpoint(1280px) {
+    @extend %group;
+    display: block;
+
+    .month {
+      font-size: 14px;
+    }
+
+    .user-name {
+      @include font-size(16);
+    }
+
+    .user-dates {
+      @include font-size(18);
+      font-family: $fonts-sans;
+    }
+  }
+}
+
+// Table data styles
 .year-table {
   margin: 3rem 0;
   table-layout: fixed;
   width: 100%;
 
+  // Row for each user
   .user-dates {
     @extend %group;
     position: relative;
     border-bottom: 1px solid $table-row-bg;
-
-    .back {
-      background: transparent;
-    }
 
     &:nth-child(odd) {
       // Themes
@@ -76,51 +124,7 @@
     }
   }
 
-  .table-headline {
-    display: none;
-
-    .total {
-      border-bottom: 0 !important;
-    }
-
-    .user-dates {
-      @each $theme, $map in $themes {
-        .#{$theme} & {
-          background: map-get($map, $site-bg);
-        }
-      }
-    }
-
-    @include susy-breakpoint(1280px) {
-      @extend %group;
-      display: block;
-
-      .month {
-        font-size: 14px;
-      }
-
-      .user-name {
-        @include font-size(16);
-      }
-
-      .user-dates {
-        @include font-size(18);
-        font-family: $fonts-sans;
-      }
-    }
-  }
-
-  .dates {
-    display: block;
-    float: left;
-    width: 100%;
-
-    @include susy-breakpoint(1280px) {
-      padding: 12px 0;
-      display: block;
-    }
-  }
-
+  // Name of User styles
   .user-name {
     @include font-size(18);
     @each $theme, $map in $themes {
@@ -132,15 +136,9 @@
     padding: 11px;
     width: 100%;
     font-family: $fonts-sans-light;
+    cursor: pointer;
 
-    @include susy-breakpoint(0 1279px) {
-      @each $theme, $map in $themes {
-        .#{$theme} & {
-          background: map-get($map, $switcher-bg);
-        }
-      }
-    }
-
+    // Desktop breakpoint
     @include susy-breakpoint(1280px) {
       @include font-size(16);
       @include span(3 of 16);
@@ -150,9 +148,11 @@
       vertical-align: middle;
       min-height: 39px;
       padding: 10px;
+      cursor: default;
     }
   }
 
+  // Months list container
   .months {
     @include font-size(0);
 
@@ -160,14 +160,22 @@
       @include font-size(15);
       @include span(13 of 16);
       @include last;
+      height: auto;
+      max-height: auto;
     }
+
   }
 
+  // Each month cell styles
   .month {
-    @include font-size(14);
-    width: 33.33%;
+    width: 50%;
     display: inline-block;
     position: relative;
+    z-index: 3;
+
+    @include susy-breakpoint(640px) {
+      width: 33.33%;
+    }
 
     @include susy-breakpoint(0 1279px) {
       @each $theme, $map in $themes {
@@ -177,80 +185,89 @@
       }
     }
 
-    .dates-numbers {
-      @include font-size(15);
-      width: 100%;
-      white-space: nowrap;
-      user-select: none;
-      transition: all ease-out .1s;
-
-      &:hover,
-      &.selectedDate {
-        cursor: pointer;
-        @each $theme, $map in $themes {
-          .#{$theme} & {
-            background: map-get($map, $sidebar-bg);
-            color: #fff;
-          }
-        }
-      }
-    }
-
-    .flipper {
-      @include susy-breakpoint(0 1279px) {
-        width: 50%;
-        float: left;
-        text-align: center;
-      }
-    }
-
-    .dates {
-      display: inline-block;
-
-      @include susy-breakpoint(0 1279px) {
-        padding: 9px 0;
-      }
-    }
-
-    &:before {
-      content: attr(data-month);
-      text-transform: capitalize;
-      padding: 8px;
-      text-align: center;
-      min-width: 50%;
-      float: left;
-
-      // Themes
-      @each $theme, $map in $themes {
-        .#{$theme} & {
-          background: map-get($map, $block-bg);
-        }
-      }
-
-      @include susy-breakpoint(1280px) {
-        display: none;
-      }
-    }
-
     @include susy-breakpoint(1280px) {
       @include span(1 of 14);
+      @include font-size(14);
       display: inline-block;
       min-height: 39px;
       vertical-align: middle;
       text-align: center;
       background: transparent;
+      //      width: 100%;
     }
   }
 
+  .dates-numbers {
+    width: 50%;
+    white-space: nowrap;
+    user-select: none;
+    float: none;
+    transition: all ease-out .1s;
+
+    &:hover,
+    &.selectedDate {
+      cursor: pointer;
+      @each $theme, $map in $themes {
+        .#{$theme} & {
+          background: map-get($map, $sidebar-bg);
+          color: #fff;
+        }
+      }
+    }
+
+    @include susy-breakpoint(1280px) {
+      width: 100%;
+      @include font-size(15);
+    }
+  }
+
+  // Date field in each month in table
+  .dates {
+    @include font-size(0);
+    display: inline-block;
+    width: 50%;
+    text-align: center;
+    transition: all ease-out .3s;
+
+    @include susy-breakpoint(1280px) {
+      @include font-size(14);
+      padding: 12px 0;
+      display: block;
+      height: 39px;
+      width: 100%;
+    }
+  }
+
+  // Month name which showing on mobile devices only
+  .month:before {
+    @each $theme, $map in $themes {
+      .#{$theme} & {
+        background: map-get($map, $block-bg);
+      }
+    }
+
+    @include font-size(0);
+    max-height: 0;
+    content: attr(data-month);
+    text-transform: capitalize;
+    text-align: center;
+    min-width: 50%;
+    display: inline-block;
+    transition: all ease-out .3s;
+
+    @include susy-breakpoint(1280px) {
+      display: none;
+    }
+  }
+
+  // Total user dates in year
   .total {
+    transition: none ease-out 0s;
+
     @each $theme, $map in $themes {
       .#{$theme} & {
         background: map-get($map, $site-bg);
       }
-    }
-
-    &:before {
-      display: none;
     }
 
     @include susy-breakpoint(1280px) {
@@ -268,16 +285,13 @@
       height: 40px;
       min-width: 80px;
 
-      @each $theme, $map in $themes {
-        .#{$theme} & {
-          background: map-get($map, $switcher-bg);
-        }
-      }
-
+      &:before,
       .dates-total {
+        transition: none ease-out 0s;
         width: auto;
         float: none;
         padding: 0 0 0 10px;
+        font-size: 14px;
       }
 
       &:before {
@@ -288,31 +302,11 @@
     }
   }
 
+
+
+
   @include susy-breakpoint(0 1279px) {
-    .months {
-      max-height: 0;
-      overflow: hidden;
-      transition: all ease-out .3s;
-
-      @include susy-breakpoint(1280px) {
-        height: auto;
-        max-height: auto;
-      }
-    }
-
-    .show-table-data {
-      max-height: 200px;
-
-      .total {
-        @each $theme, $map in $themes {
-          .#{$theme} & {
-            color: #fff;
-            background: map-get($map, $sidebar-bg);
-          }
-        }
-      }
-    }
-
+    // Add color to selected table item
     .active-table-data {
       @each $theme, $map in $themes {
         .#{$theme} & {
@@ -321,18 +315,52 @@
         }
       }
     }
+
+    // Slide down table data for current selected user
+    .show-table-data {
+      .dates,
+      .month:before {
+        max-height: 100px;
+      }
+
+      .month:before {
+        padding: 10px;
+        @include font-size(14);
+      }
+
+      .dates {
+        @include font-size(14);
+        padding: 9px 0;
+      }
+
+      .total {
+        z-index: 1;
+
+        &:before,
+        .dates {
+          padding: 0;
+        }
+
+        .dates {
+          padding-left: 10px;
+        }
+      }
+    }
   }
 }
 
 .dates-popup {
+  @include font-size(14);
   position: absolute;
-  bottom: calc(100% + 8px);
+  bottom: 100%;
   padding: 4px;
   border-spacing: 5px;
   border-collapse: separate;
+  margin-bottom: 10px;
   left: 50%;
   transform: translateX(-50%);
   border-radius: 3px;
+  z-index: 10;
 
   @each $theme, $map in $themes {
     .#{$theme} & {
@@ -343,13 +371,12 @@
   &::after {
     top: 100%;
     left: 50%;
-    border: solid transparent;
+    border: 8px solid transparent;
     content: " ";
     height: 0;
     width: 0;
     position: absolute;
     pointer-events: none;
-    border-width: 8px;
     margin-left: -8px;
 
     @each $theme, $map in $themes {
@@ -409,7 +436,9 @@
 .journey-state { background: #286b90; }
 
 .sick-state { background: #5f7f15; }
+
 .sick-remote { background: #139f71; }
+
 .state-work-off { background: #ff8063; }
 
 .not-approved { background: #b71c1c; }

@@ -47,11 +47,9 @@
 
           <div class="months">
             <div class="month"
-
                 ng-click="date.showDetailsVacation = !date.showDetailsVacation"
-                data-month="{{vacationDate.monthName}}"
+                data-month="{{date.monthName}}"
                 ng-repeat="date in user.calendarMonths">
-
               <div class="dates-popup" ng-class="{hidden: !date.showDetailsVacation}"
                   ng-if="date.vacationDays.multipleDates">
                 <span class="popup-label">

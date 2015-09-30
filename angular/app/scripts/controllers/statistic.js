@@ -163,6 +163,7 @@ angular.module('d8intranetApp')
         employee.totalJourney = getTotalDays(calendarMonths, 'journeyDays');
         employee.totalRemoteWork = getTotalDays(calendarMonths, 'remoteWorkDays');
 
+        console.log(employee);
       });
 
       $scope.$watch('teamFilter', function (newValue, oldValue) {

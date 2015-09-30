@@ -169,7 +169,9 @@
     "field_work_off": [
       {
         "start_date": 1433203200,
-        "end_date": 1433203200
+        "end_date": 1433203200,
+        "start_date_work_off": 1428710400,
+        "end_date_work_off": 1428710400
       },
       {
         "start_date": 1434326400,

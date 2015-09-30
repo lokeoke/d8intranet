@@ -69,8 +69,7 @@ angular.module('d8intranetApp')
             $(this).addClass('active-table-data');
             $(this).next().addClass('show-table-data');
           }
-
-        })
+        });
       };
 
       return {
