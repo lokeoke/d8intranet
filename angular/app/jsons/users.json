@@ -117,6 +117,16 @@
       {
         "start_date": 1420070400,
         "end_date": 1420156800,
+        "state": "unpaid-leave"
+      },
+      {
+        "start_date": 1425168000,
+        "end_date": 1426291200,
+        "state": "unpaid-leave"
+      },
+      {
+        "start_date": 1426809600,
+        "end_date": 1426809600,
         "state": "paid-leave"
       }
 
