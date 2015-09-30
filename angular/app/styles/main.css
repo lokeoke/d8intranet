@@ -10,12 +10,12 @@
   src: url(../fonts/OpenSansLight.eot?#iefix) format('embedded-opentype'), url(../fonts/OpenSansLight.woff) format('woff'), url(../fonts/OpenSansLight.ttf) format('truetype'), url(../fonts/OpenSansLight.svg#OpenSansLight) format('svg');
   font-style: 'normal'; }
 
-.employee, .employees-tabs, .year-table .user-dates, .year-table .table-headline, .sidebar-icon, .current-date-wrapper, .info-box-headline, .webform-client-form .webform-component-fieldset, .webform-client-form .webform-component-textarea, .available-users, .team, .user-page .page-content, .user-data-group, .group {
+.employee, .employees-tabs, .table-headline, .year-table .user-dates, .sidebar-icon, .current-date-wrapper, .info-box-headline, .webform-client-form .webform-component-fieldset, .webform-client-form .webform-component-textarea, .available-users, .team, .user-page .page-content, .user-data-group, .group {
   zoom: 1; }
-  .employee:before, .employees-tabs:before, .year-table .user-dates:before, .year-table .table-headline:before, .sidebar-icon:before, .current-date-wrapper:before, .info-box-headline:before, .webform-client-form .webform-component-fieldset:before, .webform-client-form .webform-component-textarea:before, .available-users:before, .team:before, .user-page .page-content:before, .user-data-group:before, .employee:after, .employees-tabs:after, .year-table .user-dates:after, .year-table .table-headline:after, .sidebar-icon:after, .current-date-wrapper:after, .info-box-headline:after, .webform-client-form .webform-component-fieldset:after, .webform-client-form .webform-component-textarea:after, .available-users:after, .team:after, .user-page .page-content:after, .user-data-group:after, .group:before, .group:after {
+  .employee:before, .employees-tabs:before, .table-headline:before, .year-table .user-dates:before, .sidebar-icon:before, .current-date-wrapper:before, .info-box-headline:before, .webform-client-form .webform-component-fieldset:before, .webform-client-form .webform-component-textarea:before, .available-users:before, .team:before, .user-page .page-content:before, .user-data-group:before, .employee:after, .employees-tabs:after, .table-headline:after, .year-table .user-dates:after, .sidebar-icon:after, .current-date-wrapper:after, .info-box-headline:after, .webform-client-form .webform-component-fieldset:after, .webform-client-form .webform-component-textarea:after, .available-users:after, .team:after, .user-page .page-content:after, .user-data-group:after, .group:before, .group:after {
     content: '';
     display: table; }
-  .employee:after, .employees-tabs:after, .year-table .user-dates:after, .year-table .table-headline:after, .sidebar-icon:after, .current-date-wrapper:after, .info-box-headline:after, .webform-client-form .webform-component-fieldset:after, .webform-client-form .webform-component-textarea:after, .available-users:after, .team:after, .user-page .page-content:after, .user-data-group:after, .group:after {
+  .employee:after, .employees-tabs:after, .table-headline:after, .year-table .user-dates:after, .sidebar-icon:after, .current-date-wrapper:after, .info-box-headline:after, .webform-client-form .webform-component-fieldset:after, .webform-client-form .webform-component-textarea:after, .available-users:after, .team:after, .user-page .page-content:after, .user-data-group:after, .group:after {
     clear: both; }
 
 .hidden {
@@ -1337,25 +1337,6 @@ hr {
     -webkit-transform: perspective(1000px) rotate3d(1, 0, 0, -90deg);
             transform: perspective(1000px) rotate3d(1, 0, 0, -90deg); }
 
-.legend {
-  margin: 1rem 0 3rem;
-  text-align: right; }
-
-.leave-type {
-  font-size: 0.8125rem;
-  display: inline-block;
-  margin-right: 20px; }
-  .lt-ie9 .leave-type {
-    font-size: 13px; }
-  .leave-type:before {
-    content: '';
-    display: inline-block;
-    width: 20px;
-    height: 20px;
-    background: #000;
-    vertical-align: middle;
-    margin-right: 10px; }
-
 .flipper-container {
   -webkit-perspective: 1000;
           perspective: 1000;
@@ -1388,6 +1369,56 @@ hr {
     -webkit-transform: rotateY(-180deg);
             transform: rotateY(-180deg); }
 
+.legend {
+  margin: 1rem 0 3rem;
+  text-align: right; }
+
+.leave-type {
+  font-size: 0.8125rem;
+  text-align: left;
+  display: block;
+  clear: both;
+  margin: 0 0 15px 0; }
+  .lt-ie9 .leave-type {
+    font-size: 13px; }
+  @media (min-width: 901px) {
+    .leave-type {
+      clear: none;
+      display: inline-block;
+      margin: 0 20px 0 0;
+      text-align: right; } }
+  .leave-type:before {
+    content: '';
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    background: #000;
+    vertical-align: middle;
+    margin-right: 10px; }
+
+.table-headline {
+  display: none; }
+  .table-headline .total {
+    border-bottom: 0 !important; }
+  .dark .table-headline .user-dates {
+    background: #37474F; }
+  .light .table-headline .user-dates {
+    background: #fff; }
+  @media (min-width: 1280px) {
+    .table-headline {
+      display: block; }
+      .table-headline .month {
+        font-size: 14px; }
+      .table-headline .user-name {
+        font-size: 1rem; }
+        .lt-ie9 .table-headline .user-name {
+          font-size: 16px; }
+      .table-headline .user-dates {
+        font-size: 1.125rem;
+        font-family: 'Open Sans', Helvetica, Arial, sans-serif; }
+        .lt-ie9 .table-headline .user-dates {
+          font-size: 18px; } }
+
 .year-table {
   margin: 3rem 0;
   table-layout: fixed;
@@ -1395,58 +1426,22 @@ hr {
   .year-table .user-dates {
     position: relative;
     border-bottom: 1px solid #282828; }
-    .year-table .user-dates .back {
-      background: transparent; }
     .dark .year-table .user-dates:nth-child(odd) {
       background: #263238; }
     .light .year-table .user-dates:nth-child(odd) {
       background: #f6f6f6; }
-  .year-table .table-headline {
-    display: none; }
-    .year-table .table-headline .total {
-      border-bottom: 0 !important; }
-    .dark .year-table .table-headline .user-dates {
-      background: #37474F; }
-    .light .year-table .table-headline .user-dates {
-      background: #fff; }
-    @media (min-width: 1280px) {
-      .year-table .table-headline {
-        display: block; }
-        .year-table .table-headline .month {
-          font-size: 14px; }
-        .year-table .table-headline .user-name {
-          font-size: 1rem; }
-          .lt-ie9 .year-table .table-headline .user-name {
-            font-size: 16px; }
-        .year-table .table-headline .user-dates {
-          font-size: 1.125rem;
-          font-family: 'Open Sans', Helvetica, Arial, sans-serif; }
-          .lt-ie9 .year-table .table-headline .user-dates {
-            font-size: 18px; } }
-  .year-table .dates {
-    display: block;
-    float: left;
-    width: 100%; }
-    @media (min-width: 1280px) {
-      .year-table .dates {
-        padding: 12px 0;
-        display: block; } }
   .year-table .user-name {
     font-size: 1.125rem;
     padding: 11px;
     width: 100%;
-    font-family: 'Open Sans Light', Helvetica, Arial, sans-serif; }
+    font-family: 'Open Sans Light', Helvetica, Arial, sans-serif;
+    cursor: pointer; }
     .lt-ie9 .year-table .user-name {
       font-size: 18px; }
     .dark .year-table .user-name {
       background: #37474F; }
     .light .year-table .user-name {
       background: #fff; }
-    @media (min-width: 0) and (max-width: 1279px) {
-      .dark .year-table .user-name {
-        background: #37474F; }
-      .light .year-table .user-name {
-        background: #f4f4f4; } }
     @media (min-width: 1280px) {
       .year-table .user-name {
         font-size: 1rem;
@@ -1458,7 +1453,8 @@ hr {
         display: inline-block;
         vertical-align: middle;
         min-height: 39px;
-        padding: 10px; }
+        padding: 10px;
+        cursor: default; }
         .lt-ie9 .year-table .user-name {
           font-size: 16px; } }
   .year-table .months {
@@ -1472,141 +1468,167 @@ hr {
         float: left;
         margin-right: 1.57518%;
         float: right;
-        margin-right: 0; }
+        margin-right: 0;
+        height: auto;
+        max-height: auto; }
         .lt-ie9 .year-table .months {
           font-size: 15px; } }
   .year-table .month {
-    font-size: 0.875rem;
-    width: 33.33%;
+    width: 50%;
     display: inline-block;
-    position: relative; }
-    .lt-ie9 .year-table .month {
-      font-size: 14px; }
+    position: relative;
+    z-index: 3; }
+    @media (min-width: 640px) {
+      .year-table .month {
+        width: 33.33%; } }
     @media (min-width: 0) and (max-width: 1279px) {
       .dark .year-table .month {
         background: #2d3d43; }
       .light .year-table .month {
         background: #DCDCDC; } }
-    .year-table .month .dates-numbers {
-      font-size: 0.9375rem;
-      width: 100%;
-      white-space: nowrap;
-      -webkit-user-select: none;
-         -moz-user-select: none;
-          -ms-user-select: none;
-              user-select: none;
-      transition: all ease-out .1s; }
-      .lt-ie9 .year-table .month .dates-numbers {
-        font-size: 15px; }
-      .year-table .month .dates-numbers:hover, .year-table .month .dates-numbers.selectedDate {
-        cursor: pointer; }
-        .dark .year-table .month .dates-numbers:hover, .dark .year-table .month .dates-numbers.selectedDate {
-          background: #263238;
-          color: #fff; }
-        .light .year-table .month .dates-numbers:hover, .light .year-table .month .dates-numbers.selectedDate {
-          background: #2B2B2B;
-          color: #fff; }
-    @media (min-width: 0) and (max-width: 1279px) {
-      .year-table .month .flipper {
-        width: 50%;
-        float: left;
-        text-align: center; } }
-    .year-table .month .dates {
-      display: inline-block; }
-      @media (min-width: 0) and (max-width: 1279px) {
-        .year-table .month .dates {
-          padding: 9px 0; } }
-    .year-table .month:before {
-      content: attr(data-month);
-      text-transform: capitalize;
-      padding: 8px;
-      text-align: center;
-      min-width: 50%;
-      float: left; }
-      .dark .year-table .month:before {
-        background: #263238; }
-      .light .year-table .month:before {
-        background: #f6f6f6; }
-      @media (min-width: 1280px) {
-        .year-table .month:before {
-          display: none; } }
     @media (min-width: 1280px) {
       .year-table .month {
         width: 5.46747%;
         float: left;
         margin-right: 1.80426%;
+        font-size: 0.875rem;
         display: inline-block;
         min-height: 39px;
         vertical-align: middle;
         text-align: center;
-        background: transparent; } }
-  .dark .year-table .total {
-    background: #37474F; }
-  .light .year-table .total {
-    background: #fff; }
-  .year-table .total:before {
-    display: none; }
-  @media (min-width: 1280px) {
-    .year-table .total {
-      float: right;
-      margin-right: 0;
-      box-shadow: -2px 1px 1px rgba(0, 0, 0, 0.13); } }
-  @media (min-width: 0) and (max-width: 1279px) {
-    .year-table .total {
-      position: absolute;
-      right: 0;
-      top: 0;
-      width: auto;
-      padding: 14px 10px 0;
-      display: block;
-      height: 40px;
-      min-width: 80px; }
-      .dark .year-table .total {
-        background: #37474F; }
-      .light .year-table .total {
-        background: #f4f4f4; }
-      .year-table .total .dates-total {
+        background: transparent; }
+        .lt-ie9 .year-table .month {
+          font-size: 14px; } }
+  .year-table .dates-numbers {
+    width: 50%;
+    white-space: nowrap;
+    -webkit-user-select: none;
+       -moz-user-select: none;
+        -ms-user-select: none;
+            user-select: none;
+    float: none;
+    transition: all ease-out .1s; }
+    .year-table .dates-numbers:hover, .year-table .dates-numbers.selectedDate {
+      cursor: pointer; }
+      .dark .year-table .dates-numbers:hover, .dark .year-table .dates-numbers.selectedDate {
+        background: #263238;
+        color: #fff; }
+      .light .year-table .dates-numbers:hover, .light .year-table .dates-numbers.selectedDate {
+        background: #2B2B2B;
+        color: #fff; }
+    @media (min-width: 1280px) {
+      .year-table .dates-numbers {
+        width: 100%;
+        font-size: 0.9375rem; }
+        .lt-ie9 .year-table .dates-numbers {
+          font-size: 15px; } }
+  .year-table .dates {
+    font-size: 0rem;
+    display: inline-block;
+    width: 50%;
+    text-align: center;
+    transition: all ease-out .3s; }
+    .lt-ie9 .year-table .dates {
+      font-size: 0px; }
+    @media (min-width: 1280px) {
+      .year-table .dates {
+        font-size: 0.875rem;
+        padding: 12px 0;
+        display: block;
+        height: 39px;
+        width: 100%; }
+        .lt-ie9 .year-table .dates {
+          font-size: 14px; } }
+  .year-table .month:before {
+    font-size: 0rem;
+    max-height: 0;
+    content: attr(data-month);
+    text-transform: capitalize;
+    text-align: center;
+    min-width: 50%;
+    display: inline-block;
+    transition: all ease-out .3s; }
+    .dark .year-table .month:before {
+      background: #263238; }
+    .light .year-table .month:before {
+      background: #f6f6f6; }
+    .lt-ie9 .year-table .month:before {
+      font-size: 0px; }
+    @media (min-width: 1280px) {
+      .year-table .month:before {
+        display: none; } }
+  .year-table .total {
+    transition: none ease-out 0s; }
+    .dark .year-table .total {
+      background: #37474F; }
+    .light .year-table .total {
+      background: #fff; }
+    @media (min-width: 1280px) {
+      .year-table .total {
+        float: right;
+        margin-right: 0;
+        box-shadow: -2px 1px 1px rgba(0, 0, 0, 0.13); } }
+    @media (min-width: 0) and (max-width: 1279px) {
+      .year-table .total {
+        position: absolute;
+        right: 0;
+        top: 0;
         width: auto;
-        float: none;
-        padding: 0 0 0 10px; }
-      .year-table .total:before {
-        display: inline;
-        padding: 0;
-        background: transparent !important; } }
+        padding: 14px 10px 0;
+        display: block;
+        height: 40px;
+        min-width: 80px; }
+        .year-table .total:before, .year-table .total .dates-total {
+          transition: none ease-out 0s;
+          width: auto;
+          float: none;
+          padding: 0 0 0 10px;
+          font-size: 14px; }
+        .year-table .total:before {
+          display: inline;
+          padding: 0;
+          background: transparent !important; } }
   @media (min-width: 0) and (max-width: 1279px) {
-    .year-table .months {
-      max-height: 0;
-      overflow: hidden;
-      transition: all ease-out .3s; }
-      @media (min-width: 1280px) {
-        .year-table .months {
-          height: auto;
-          max-height: auto; } }
-    .year-table .show-table-data {
-      max-height: 200px; }
-      .dark .year-table .show-table-data .total {
-        color: #fff;
-        background: #263238; }
-      .light .year-table .show-table-data .total {
-        color: #fff;
-        background: #2B2B2B; }
     .dark .year-table .active-table-data {
       color: #fff;
       background: #263238; }
     .light .year-table .active-table-data {
       color: #fff;
-      background: #2B2B2B; } }
+      background: #2B2B2B; }
+    .year-table .show-table-data .dates, .year-table .show-table-data .month:before {
+      max-height: 100px; }
+    .year-table .show-table-data .month:before {
+      padding: 10px;
+      font-size: 0.875rem; }
+      .lt-ie9 .year-table .show-table-data .month:before {
+        font-size: 14px; }
+    .year-table .show-table-data .dates {
+      font-size: 0.875rem;
+      padding: 9px 0; }
+      .lt-ie9 .year-table .show-table-data .dates {
+        font-size: 14px; }
+    .year-table .show-table-data .total {
+      z-index: 1; }
+      .year-table .show-table-data .total:before, .year-table .show-table-data .total .dates {
+        padding: 0; }
+      .year-table .show-table-data .total .dates {
+        padding-left: 10px; } }
 
 .dates-popup {
+  font-size: 0.875rem;
   position: absolute;
-  bottom: calc(100% + 8px);
+  bottom: 100%;
   padding: 4px;
   border-spacing: 5px;
   border-collapse: separate;
+  margin-bottom: 10px;
   left: 50%;
   -webkit-transform: translateX(-50%);
           transform: translateX(-50%);
-  border-radius: 3px; }
+  border-radius: 3px;
+  z-index: 10; }
+  .lt-ie9 .dates-popup {
+    font-size: 14px; }
   .dark .dates-popup {
     background: #cfcfcf; }
   .light .dates-popup {
@@ -1614,13 +1636,12 @@ hr {
   .dates-popup::after {
     top: 100%;
     left: 50%;
-    border: solid transparent;
+    border: 8px solid transparent;
     content: " ";
     height: 0;
     width: 0;
     position: absolute;
     pointer-events: none;
-    border-width: 8px;
     margin-left: -8px; }
     .dark .dates-popup::after {
       border-top-color: #cfcfcf; }
@@ -1732,7 +1753,8 @@ hr {
     font-size: 16px; }
 
 .table-data .chosen-container-single {
-  float: left; }
+  float: left;
+  margin-bottom: 20px; }
 
 .chosen-single {
   height: 50px;
