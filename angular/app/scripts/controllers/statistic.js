@@ -33,71 +33,38 @@ angular.module('d8intranetApp')
         // If future formatted object is undefined, create it
         if (formattedObject[month] == undefined) {
           formattedObject[month] = {
-            daysRange: '',
-            totalMonthDays: '',
-            state: '',
+            totalMonthDays: 0,
             multipleDates: [] // this property will be an array to collect multiple data
           };
         }
 
+        datesStatesCollection[month] = {
+          date: '',
+          statusDate: ''
+        };
+
         // If user has only ony booked date
-        // set total days to 1 and set date range to one value
         if (dateStart == dateEnd) {
-          totalDays = 1;
+          // Add date and status into new object
+          // in case if there are several dates in one month
+          datesStatesCollection[month].date = dateStart;
+          datesStatesCollection[month].statusDate = statisticType.state;
 
-          datesStatesCollection[month] = {
-            date: '',
-            statusDate: ''
-          };
-
-          // If dates range is empty add start date only
-          if (formattedObject[month].daysRange == '') {
-            formattedObject[month].daysRange = dateStart;
-
-            // Add date and status into new object
-            // in case if there are several dates in one month
-            datesStatesCollection[month].date = dateStart;
-            datesStatesCollection[month].statusDate = statisticType.state;
-
-            // Add object into new property - multiple dates
-            // object goes into array
-            formattedObject[month].multipleDates.push(datesStatesCollection[month]);
-          }
-
-          // If there are multiple dates in range,
-          // Two dates in one month add second date to dates Range
-          // and increment count of days
-          else {
-            totalDays += 1;
-            formattedObject[month].daysRange += ',' + dateStart;
-
-            // Add date and status into new object
-            // in case if there are several dates in one month
-            datesStatesCollection[month].date += dateStart;
-            datesStatesCollection[month].statusDate += statisticType.state;
-
-            // Add object into new property - multiple dates
-            // object goes into array
-            formattedObject[month].multipleDates.push(datesStatesCollection[month])
-          }
+          // Add object into new property - multiple dates
+          // object goes into array
+          formattedObject[month].multipleDates.push(datesStatesCollection[month]);
+          formattedObject[month].totalMonthDays++;
         }
+
         // Calculate total days
         // output range between two dates
         else {
-          totalDays = dateEnd - dateStart;
-          formattedObject[month].daysRange = dateStart + '-' + dateEnd;
-          formattedObject[month].state = statisticType.state;
+          formattedObject[month].totalMonthDays += dateEnd - dateStart + 1;
+          datesStatesCollection[month].date = dateStart + '-' + dateEnd;
+          datesStatesCollection[month].statusDate = statisticType.state;
+          formattedObject[month].multipleDates.push(datesStatesCollection[month]);
         }
 
-        formattedObject[month].totalMonthDays = totalDays;
-
-
-        // Remove property multiple dates if property is empty
-        if (formattedObject[month].multipleDates.length == 0) {
-          delete formattedObject[month].multipleDates;
-        }
-
-        // Return Object with formatted data
         return formattedObject[month];
       }
 
@@ -141,7 +108,7 @@ angular.module('d8intranetApp')
         for (var i = 0; i < 12; i++) {
           calendarMonths[i] = {"monthName": months[i]};
         }
-        
+
         // Get Vacation days
         // ---------------------------------------------------------------------
         angular.forEach($scope.members.field_vacation, function (vacation) {
@@ -155,7 +122,7 @@ angular.module('d8intranetApp')
           var month = getMonthNumber(dayoff.start_date);
           calendarMonths[month].dayOffDays = formatStatisticsData(dayOffDays, dayoff);
         });
-
+        //
         // Get Sick days
         // ---------------------------------------------------------------------
         angular.forEach($scope.members.field_sick, function (sick) {
@@ -177,7 +144,6 @@ angular.module('d8intranetApp')
           calendarMonths[month].remoteWorkDays = formatStatisticsData(remoteWorkDays, remoteWork);
         });
 
-
         // Get WorkOff work days
         // -------------------------------------------------------------------
         angular.forEach($scope.members.field_work_off, function (workOff) {
@@ -197,7 +163,6 @@ angular.module('d8intranetApp')
         employee.totalJourney = getTotalDays(calendarMonths, 'journeyDays');
         employee.totalRemoteWork = getTotalDays(calendarMonths, 'remoteWorkDays');
 
-        console.log(employee);
       });
 
       $scope.$watch('teamFilter', function (newValue, oldValue) {

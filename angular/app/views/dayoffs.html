@@ -65,14 +65,6 @@
                 </span>
               </div>
 
-              <div class="dates-popup" ng-if="!date.dayOffDays.multipleDates && date.dayOffDays.daysRange"
-                  ng-class="{hidden: !date.showDetailsDayoff}">
-                <span class="popup-label">Dates:</span>
-                <span class="{{date.dayOffDays.state}}">
-                  {{date.dayOffDays.daysRange}}
-                </span>
-              </div>
-
               <span class="dates dates-numbers"
                   ng-class="{selectedDate: date.showDetailsDayoff}"
                   ng-if="date.dayOffDays.totalMonthDays">

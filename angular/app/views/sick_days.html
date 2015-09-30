@@ -63,14 +63,6 @@
                 </span>
               </div>
 
-              <div class="dates-popup" ng-if="!date.sickDays.multipleDates && date.sickDays.daysRange"
-                  ng-class="{hidden: !date.showDetailsSick}">
-                <span class="popup-label">Dates:</span>
-                <span class="no-state sick-state">
-                  {{date.sickDays.daysRange}}
-                </span>
-              </div>
-
               <span class="dates dates-numbers"
                   ng-class="{selectedDate: date.showDetailsSick}"
                   ng-if="date.sickDays.totalMonthDays">

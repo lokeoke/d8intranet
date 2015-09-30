@@ -63,14 +63,6 @@
                 </span>
               </div>
 
-              <div class="dates-popup" ng-if="!date.journeyDays.multipleDates && date.journeyDays.daysRange"
-                  ng-class="{hidden: !date.showDetailsJourney}">
-                <span class="popup-label">Dates:</span>
-                <span class="no-state journey-state">
-                  {{date.journeyDays.daysRange}}
-                </span>
-              </div>
-
               <span class="dates dates-numbers"
                   ng-class="{selectedDate: date.showDetailsJourney}"
                   ng-if="date.journeyDays.totalMonthDays">
