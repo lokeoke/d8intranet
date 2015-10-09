@@ -92,7 +92,7 @@
     </div>
 
     <section class="my-holidays group">
-      <h1 class="user-statistics">{{user.field_first_name[0].value}} statistics: </h1>
+      <h1 class="user-statistics">{{user.field_first_name[0].value}}'s statistics: </h1>
 
       <div class="holiday-block" ng-repeat="(key, value) in filteredKeys">
 
@@ -104,7 +104,8 @@
 
         <div class="holiday-info-wrapper">
           <h3 class="holiday-title">{{key}}</h3>
-          <div class="days-count">{{value}}</div>
+          <div class="days-count" ng-if="key == 'Vacation'">{{value}} <span>of</span> {{totalVacationDays}}</div>
+          <div class="days-count" ng-if="key != 'Vacation'">{{value}}</div>
         </div>
       </div>
     </section>

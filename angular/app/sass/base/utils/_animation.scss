@@ -5,6 +5,7 @@
   position:relative;
 }
 
+
 .view-animate {
   position: absolute;
   top: 0;
@@ -15,18 +16,20 @@
 
   &.ng-enter,
   &.ng-leave {
-    -webkit-transition: all .6s ease;
-    transition: all .6s ease;
+    -webkit-transition: all .8s ease;
+    transition: all .8s ease;
   }
 
   &.ng-enter {
     opacity: 0;
+    z-index: 8888;
   }
   &.ng-enter-active {
     opacity: 1;
   }
   &.ng-leave {
     opacity: 1;
+    z-index: 9999;
   }
   &.ng-leave-active {
     opacity: 0;

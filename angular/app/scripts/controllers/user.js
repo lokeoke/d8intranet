@@ -8,77 +8,60 @@
  * Controller of the d8intranetApp
  */
 angular.module('d8intranetApp')
-  .controller('UserCtrl', function ($scope, $http, $routeParams, getJsonData, config) {
+  .controller('UserCtrl', function ($scope, $http, $routeParams, getJsonData, formatUserData, config) {
 
-    getJsonData.getUsers().then(function (d) {
+    getJsonData.getUsers().then(function (data) {
+      $scope.users = data;
 
-      function getDateNumber(timestamp) {
-        return new Date(timestamp * 1000).getDate();
-      }
+      formatUserData.formattedUser($scope.users);
 
-      function getMonthNumber(timestamp) {
-        return new Date(timestamp * 1000).getMonth();
-      }
+      //console.log($scope.users);
 
-      function getYearNumber(timestamp) {
-        return new Date(timestamp * 1000).getFullYear();
-      }
-
-      $scope.users = d;
       $scope.user = {};
       var cameToCompany = '';
-      var currentVacation;
+      //var currentVacation;
 
       angular.forEach($scope.users, function (user, title) {
+        var calendarMonths = {};
+
         // Get current user
         if (user.uid[0].value == $routeParams.userId) {
           $scope.user = user;
+          $scope.filteredKeys = {};
+
+          console.log(cameToCompany);
 
           var stamp = user.field_came_to_propeople[0].value;
 
-          cameToCompany = getYearNumber(stamp) + ',' + getMonthNumber(stamp) + ',' + getDateNumber(stamp);
+          cameToCompany = formatUserData.getYearNumber(stamp) + ',' + formatUserData.getMonthNumber(stamp) + ',' + formatUserData.getDateNumber(stamp);
 
-          var today = new Date();
-          var past = new Date(cameToCompany);
+          var today = new Date(),
+              past = new Date(cameToCompany);
 
-          $scope.filteredKeys = {};
-
-          angular.forEach(user, function (value, title) {
-
-            if (stateTitle(title)) {
-              $scope.filteredKeys[stateTitle(title)] = value;
-
-              if (title == 'field_vacation') {
-                var totalVacationDays = 0;
-                for (var k = 0; k < value.length; k++) {
-                  totalVacationDays += getDateNumber(value[k].end_vacation) - getDateNumber(value[k].start_vacation);
-                }
-                $scope.filteredKeys[stateTitle(title)] = totalVacationDays;
-              }
-
-              else if (title == 'field_duty_journey') {
-                var journeyDays = 0;
-                for (var j = 0; j < value.length; j++) {
-                  journeyDays = getDateNumber(value[j].end_date) - getDateNumber(value[j].end_date);
-                }
-                $scope.filteredKeys[stateTitle(title)] = journeyDays;
-              }
-              else {
-                $scope.filteredKeys[stateTitle(title)] = value.length;
-              }
-
-            }
+          angular.forEach(user.timeRanges, function (value, key) {
+            $scope.filteredKeys[stateTitle(key)] = value;
           });
+
 
           // Get current days of user vacation
           var totalMonthOfWork = calcDate(today, past);
+
           $scope.totalVacationDays = 0;
 
           // If user month of work less than 12 month
           // Get current period of user work and subtract current days of vacation
           if (totalMonthOfWork < 12) {
             $scope.totalVacationDays = Math.floor(getWorkPeriod(calcDate(today, past)));
-            $scope.vacationDaysLeft = $scope.totalVacationDays - $scope.filteredKeys['Vacation'];
+
+            if ($scope.totalVacationDays > $scope.filteredKeys['Vacation']) {
+              $scope.vacationDaysLeft = $scope.totalVacationDays - $scope.filteredKeys['Vacation'];
+            }
+            else {
+              $scope.vacationDaysLeft = 0;
+            }
+
+            console.log($scope.vacationDaysLeft);
+            console.log('Total vacation: ' + $scope.totalVacationDays);
           }
           else {
             $scope.totalVacationDays = config.totalVacation;
@@ -90,22 +73,22 @@ angular.module('d8intranetApp')
 
       function stateTitle(title) {
         switch (title) {
-          case 'field_vacation':
+          case 'totalVacation':
             return 'Vacation';
             break;
-          case 'field_dayoff':
+          case 'totalDaysOff':
             return 'Day off';
             break;
-          case 'field_sick':
+          case 'totalSick':
             return 'Sick days';
             break;
-          case 'field_duty_journey':
+          case 'totalJourney':
             return 'Duty Journey';
             break;
-          case 'field_remote_work':
+          case 'totalRemoteWork':
             return 'Remote work';
             break;
-          case 'field_work_off':
+          case 'totalWorkOff':
             return 'Work Off';
             break;
           default:

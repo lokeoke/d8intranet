@@ -12,6 +12,26 @@
       </ul>
     </div>
 
-    <div ng-include="currentTab"></div>
+    <select chosen ng-model='teamFilter.selectedOption' name="Group filter"
+        id="teamFilter"
+        ng-options="option.value as option.team_name for option in teams">
+    </select>
+
+    <ul class="legend">
+      <li class="leave-type pre-holiday-leave">Pre-holiday</li>
+      <li class="leave-type approved-paid-leave">Paid leave</li>
+      <li class="leave-type approved-unpaid-leave"> Unpaid leave</li>
+    </ul>
+
+    <div class="container group table-data">
+      <div class="year-table">
+        <div table-headline></div>
+        <div class="view-animate-container">
+          <div ng-include="currentTab" class="slide-down"></div>
+        </div>
+
+      </div>
+    </div>
+
   </div>
 </div>

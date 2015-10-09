@@ -209,7 +209,7 @@
     "preferred_langcode": [{"value": "en"}],
     "preferred_admin_langcode": [],
     "name": [{"value": "propraw"}],
-    "mail": [{"value": "alexander.mikhutkin@propeople.com.ua"}],
+    "mail": [{"value": "angolenko.alyona@propeople.com.ua"}],
     "timezone": [{"value": "UTC"}],
     "status": [{"value": "1"}],
     "created": [{"value": "1438871090"}],
@@ -237,13 +237,13 @@
     "field_user_image": [{"value": "../images/employees/alyona.jpg"}],
     "field_user_email": [{"value": "angolenko.alyona@propeople.com.ua"}],
     "field_github_id": [{"value": "www.github.com"}],
-    "field_drupal_org_id": [{"value": "https://www.drupal.org/u/anmikhutkin"}],
+    "field_drupal_org_id": [{"value": ""}],
     "field_user_skype": [{"value": "Alyona"}],
 
     "field_phone_number": [{"value": "+38 097 956 93 46"}],
     "field_position": [{"value": 2}],
     "field_team": [{"value": 2, "team_name": "Alyona team"}],
-    "field_user_edu": [{"value": "National Mining University, Dnipropetrovsk, 2003-2008, master degree"}],
+    "field_user_edu": [{"value": ""}],
     "field_vacation": [
       {
         "start_date": 1420070400,
@@ -311,13 +311,13 @@
     "field_user_image": [{"value": "../images/employees/yura.jpg"}],
     "field_user_email": [{"value": "yuriy.boychenko@propeople.com.ua"}],
     "field_github_id": [{"value": "www.github.com"}],
-    "field_drupal_org_id": [{"value": "https://www.drupal.org/u/anmikhutkin"}],
+    "field_drupal_org_id": [{"value": "https://www.drupal.org/u/yboychenko"}],
     "field_user_skype": [{"value": "yboychenko"}],
 
     "field_phone_number": [{"value": "+38 097 956 93 46"}],
     "field_position": [{"value": 2}],
     "field_team": [{"value": 2, "team_name": "Alyona team"}],
-    "field_user_edu": [{"value": "National Mining University, Dnipropetrovsk, 2003-2008, master degree"}],
+    "field_user_edu": [{"value": ""}],
     "field_vacation": [
       {
         "start_date": 1420070400,

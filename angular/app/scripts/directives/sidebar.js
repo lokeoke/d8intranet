@@ -46,13 +46,23 @@ angular.module('d8intranetApp')
 
   .directive('vacationsLeft', function () {
     var progressLeft = function (scope, element, attrs) {
-      element.height((attrs.daysLeft / attrs.daysTotal) * 100 + '%');
+      var barHeight = (attrs.daysLeft / attrs.daysTotal) * 100 + '%';
+
+      console.log(barHeight);
+      element.height(barHeight);
       $('.vacation-days-left').css('bottom', ((attrs.daysLeft / attrs.daysTotal) * 100 + '%'));
     };
 
     return {
       restrict: 'A',
       link: progressLeft
+    }
+  })
+
+  .directive('tableHeadline', function() {
+    return {
+      restrict: 'A',
+      templateUrl: 'templates/tableHeader.html'
     }
   })
 
