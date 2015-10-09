@@ -33,13 +33,15 @@
   height: 100%;
   opacity: 1; }
   .view-animate.ng-enter, .view-animate.ng-leave {
-    transition: all .6s ease; }
+    transition: all .8s ease; }
   .view-animate.ng-enter {
-    opacity: 0; }
+    opacity: 0;
+    z-index: 8888; }
   .view-animate.ng-enter-active {
     opacity: 1; }
   .view-animate.ng-leave {
-    opacity: 1; }
+    opacity: 1;
+    z-index: 9999; }
   .view-animate.ng-leave-active {
     opacity: 0; }
 
@@ -1371,7 +1373,8 @@ hr {
 
 .legend {
   margin: 1rem 0 3rem;
-  text-align: right; }
+  text-align: right;
+  float: right; }
 
 .leave-type {
   font-size: 0.8125rem;
@@ -1876,7 +1879,8 @@ hr {
 .global-wrapper {
   transition: all .3s ease-in-out; }
   .global-wrapper .menu-desktop {
-    width: 115px; }
+    width: 115px;
+    z-index: 99999; }
 
 .sidebar li {
   transition: all .4s ease-in-out; }
@@ -3017,6 +3021,10 @@ form .form-submit {
   font-size: 2.5rem; }
   .lt-ie9 .days-count {
     font-size: 40px; }
+  .days-count span {
+    font-size: 1.5625rem; }
+    .lt-ie9 .days-count span {
+      font-size: 25px; }
 
 .vacation-left {
   position: absolute;

@@ -1,0 +1,42 @@
+<div class="table-data">
+  <div class="user-dates" ng-repeat="user in users  | teamsOnly:filterBy.selectedOption">
+    <div class="user-name" show-table-data>{{user.field_last_name[0].value}}
+      {{user.field_first_name[0].value}}
+    </div>
+
+    <div class="months">
+      <div class="month flipper-container"
+
+          ng-click="date.showDetailsRemote = !date.showDetailsRemote"
+          data-month="{{date.monthName}}"
+          ng-repeat="date in user.calendarMonths">
+
+        <div class="dates-popup"
+            ng-class="{hidden: !date.showDetailsRemote}"
+            ng-if="date.remoteWorkDays.multipleDates">
+          <span class="popup-label">Dates:</span>
+                <span class="no-state sick-remote"
+                    ng-repeat="dates in date.remoteWorkDays.multipleDates">
+                    {{dates.date}}
+                </span>
+
+                <span class="dates" ng-if="!date.remoteWorkDays.multipleDates">
+                  {{date.remoteWorkDays.daysRange}}
+                </span>
+        </div>
+
+
+              <span class="dates dates-numbers"
+                  ng-class="{selectedDate: date.showDetailsRemote}"
+                  ng-if="date.remoteWorkDays.totalMonthDays">
+                {{date.remoteWorkDays.totalMonthDays}}
+              </span>
+      </div>
+
+      <div class="month total" data-month="Total:">
+
+        <span class="dates dates-total">{{user.timeRanges.totalRemoteWork}}</span>
+      </div>
+    </div>
+  </div>
+</div>

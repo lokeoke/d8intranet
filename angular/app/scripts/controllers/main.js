@@ -25,7 +25,9 @@ angular.module('d8intranetApp')
     }
   ])
 
-  .controller('MainCtrl', function ($scope, $http, getJsonData, $rootScope) {
+  .controller('MainCtrl', function ($scope, $http, getJsonData) {
+
+    $scope.pageClass = 'page-home';
 
     getJsonData.getUsers().then(function (d) {
       $scope.users = d;

@@ -42,7 +42,7 @@ angular.module('d8intranetApp', [
       .when('/vacation', {
         url: "/statistic",
         templateUrl: 'views/statistic.html',
-        controller: 'VacationCtrl'
+        controller: 'StatisticController'
       })
       .otherwise({
         redirectTo: '/main',
