@@ -47,4 +47,5 @@ dependencies:
   - field_group
   - devel
   - devel_generate
+  - jira_rest
   # CUSTOM
