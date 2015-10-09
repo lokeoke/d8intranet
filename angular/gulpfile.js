@@ -24,10 +24,10 @@ livereload({start: true});
 
 // General paths to the files
 var paths = {
-  sass: ['./app/sass/**/*.scss'],
-  html: ['./app/**/*.html'],
-  css: './app/styles/',
-  scripts: ['./app/scripts/**/*.js']
+  sass: ['./www/sass/**/*.scss'],
+  html: ['./www/**/*.html'],
+  css: './www/styles/',
+  scripts: ['./www/scripts/**/*.js']
 };
 
 // -----------------------------------------------------------------------------
@@ -36,8 +36,8 @@ gulp.task('connect', function () {
   connect.server({
     port: 8888,
     livereload: true,
-    host: 'angular.d8pp.dev',
-    root: './app',
+    host: 'localhost',
+    root: './www',
 
     middleware: function (connect, opt) {
       return [
@@ -79,7 +79,7 @@ gulp.task('sass', function (done) {
 // JS
 gulp.task('scripts', function(){
   gulp.src(paths.scripts)
-    .pipe(gulp.dest('./app/scripts/'))
+    .pipe(gulp.dest('./www/scripts/'))
     .pipe(livereload())
     .pipe(connect.reload());
 });
