@@ -4,3 +4,9 @@ intranet_helper.user_statuses:
     _controller: '\Drupal\intranet_helper\Controller\UsersStatusController::view'
   requirements:
     _access: 'TRUE'
+intranet_helper.jira_rest_worklog:
+  path: '/user-worklog'
+  defaults:
+    _controller: '\Drupal\intranet_helper\Controller\JiraRestWorkLogController::view'
+  requirements:
+    _access: 'TRUE'

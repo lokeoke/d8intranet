@@ -1,0 +1,6 @@
+jjira_rest.settings.form:
+  title: 'Jira REST Settings'
+  parent: system.admin_config_services
+  route_name: jira_rest.settings.form
+  description: 'Setup connection to JIRA instance'
+  weight: -1
