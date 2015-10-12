@@ -23,14 +23,13 @@ class NodeImportCreateTest extends KernelTestBase {
    *
    * @var array
    */
-  public static $modules = array('node', 'field', 'text', 'system', 'user', 'entity_reference');
+  public static $modules = array('node', 'field', 'text', 'system', 'user');
 
   /**
    * Set the default field storage backend for fields created during tests.
    */
   protected function setUp() {
     parent::setUp();
-    $this->installSchema('system', array('router'));
     $this->installEntitySchema('user');
 
     // Set default storage backend.
@@ -62,19 +61,19 @@ class NodeImportCreateTest extends KernelTestBase {
 
     // Simulate config data to import.
     $active = $this->container->get('config.storage');
-    $staging = $this->container->get('config.storage.staging');
-    $this->copyConfig($active, $staging);
+    $sync = $this->container->get('config.storage.sync');
+    $this->copyConfig($active, $sync);
     // Manually add new node type.
-    $src_dir = drupal_get_path('module', 'node_test_config') . '/staging';
-    $target_dir = $this->configDirectories[CONFIG_STAGING_DIRECTORY];
+    $src_dir = drupal_get_path('module', 'node_test_config') . '/sync';
+    $target_dir = $this->configDirectories[CONFIG_SYNC_DIRECTORY];
     $this->assertTrue(file_unmanaged_copy("$src_dir/$node_type_config_name.yml", "$target_dir/$node_type_config_name.yml"));
 
-    // Import the content of the staging directory.
+    // Import the content of the sync directory.
     $this->configImporter()->import();
 
     // Check that the content type was created.
     $node_type = NodeType::load($node_type_id);
-    $this->assertTrue($node_type, 'Import node type from staging was created.');
+    $this->assertTrue($node_type, 'Import node type from sync was created.');
     $this->assertFalse(FieldConfig::loadByName('node', $node_type_id, 'body'));
   }
 

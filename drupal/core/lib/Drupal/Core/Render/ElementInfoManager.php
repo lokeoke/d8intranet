@@ -86,6 +86,15 @@ class ElementInfoManager extends DefaultPluginManager implements ElementInfoMana
   }
 
   /**
+   * {@inheritdoc}
+   */
+  public function getInfoProperty($type, $property_name, $default = NULL) {
+    $info = $this->getInfo($type);
+
+    return isset($info[$property_name]) ? $info[$property_name] : $default;
+  }
+
+  /**
    * Builds up all element information.
    *
    * @param string $theme_name
@@ -101,10 +110,7 @@ class ElementInfoManager extends DefaultPluginManager implements ElementInfoMana
     }
 
     // Otherwise, rebuild and cache.
-    // @todo Remove this hook once all elements are converted to plugins in
-    //   https://www.drupal.org/node/2311393.
-    $info = $this->moduleHandler->invokeAll('element_info');
-
+    $info = [];
     foreach ($this->getDefinitions() as $element_type => $definition) {
       $element = $this->createInstance($element_type);
       $element_info = $element->getInfo();

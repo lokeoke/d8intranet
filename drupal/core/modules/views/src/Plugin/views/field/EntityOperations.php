@@ -9,6 +9,9 @@ namespace Drupal\views\Plugin\views\field;
 
 use Drupal\Core\Entity\EntityManagerInterface;
 use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\Language\LanguageManagerInterface;
+use Drupal\Core\Routing\RedirectDestinationTrait;
+use Drupal\views\Entity\Render\EntityTranslationRenderTrait;
 use Drupal\views\ResultRow;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
@@ -21,12 +24,22 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  */
 class EntityOperations extends FieldPluginBase {
 
+  use EntityTranslationRenderTrait;
+  use RedirectDestinationTrait;
+
   /**
    * The entity manager.
    *
    * @var \Drupal\Core\Entity\EntityManagerInterface
    */
   protected $entityManager;
+
+  /**
+   * The language manager.
+   *
+   * @var \Drupal\Core\Language\LanguageManagerInterface
+   */
+  protected $languageManager;
 
   /**
    * Constructor.
@@ -39,10 +52,14 @@ class EntityOperations extends FieldPluginBase {
    *   The plugin implementation definition.
    * @param \Drupal\Core\Entity\EntityManagerInterface $entity_manager
    *    The entity manager.
+   * @param \Drupal\Core\Language\LanguageManagerInterface $language_manager
+   *   The language manager.
    */
-  public function __construct(array $configuration, $plugin_id, array $plugin_definition, EntityManagerInterface $entity_manager) {
+  public function __construct(array $configuration, $plugin_id, array $plugin_definition, EntityManagerInterface $entity_manager, LanguageManagerInterface $language_manager) {
     parent::__construct($configuration, $plugin_id, $plugin_definition);
+
     $this->entityManager = $entity_manager;
+    $this->languageManager = $language_manager;
   }
 
   /**
@@ -53,7 +70,8 @@ class EntityOperations extends FieldPluginBase {
       $configuration,
       $plugin_id,
       $plugin_definition,
-      $container->get('entity.manager')
+      $container->get('entity.manager'),
+      $container->get('language_manager')
     );
   }
 
@@ -95,14 +113,14 @@ class EntityOperations extends FieldPluginBase {
    * {@inheritdoc}
    */
   public function render(ResultRow $values) {
-    $entity = $this->getEntity($values);
+    $entity = $this->getEntityTranslation($this->getEntity($values), $values);
     $operations = $this->entityManager->getListBuilder($entity->getEntityTypeId())->getOperations($entity);
     if ($this->options['destination']) {
       foreach ($operations as &$operation) {
         if (!isset($operation['query'])) {
           $operation['query'] = array();
         }
-        $operation['query'] += drupal_get_destination();
+        $operation['query'] += $this->getDestinationArray();
       }
     }
     $build = array(
@@ -117,8 +135,39 @@ class EntityOperations extends FieldPluginBase {
    * {@inheritdoc}
    */
   public function query() {
-    // There is nothing to ensure or add for this handler, so we purposefully do
-    //   nothing here and do not call parent::query() either.
+    // We purposefully do not call parent::query() because we do not want the
+    // default query behavior for Views fields. Instead, let the entity
+    // translation renderer provide the correct query behavior.
+    if ($this->languageManager->isMultilingual()) {
+      $this->getEntityTranslationRenderer()->query($this->query, $this->relationship);
+    }
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function getEntityTypeId() {
+    return $this->getEntityType();
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  protected function getEntityManager() {
+    return $this->entityManager;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  protected function getLanguageManager() {
+    return $this->languageManager;
+  }
+  /**
+   * {@inheritdoc}
+   */
+  protected function getView() {
+    return $this->view;
   }
 
 }

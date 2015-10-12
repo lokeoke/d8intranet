@@ -1,7 +1,7 @@
 {#
 /**
  * @file
- * Default theme implementation for a progress bar.
+ * Theme override for a progress bar.
  *
  * Note that the core Batch API uses this only for non-JavaScript batch jobs.
  *
@@ -11,6 +11,7 @@
  * - message: A string containing information to be displayed.
  */
 #}
+{{ attach_library('classy/progress') }}
 <div class="progress" data-drupal-progress>
   {% if label %}
     <div class="progress__label">{{ label }}</div>

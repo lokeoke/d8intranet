@@ -8,7 +8,7 @@
 namespace Drupal\user\Entity;
 
 use Drupal\Core\Entity\ContentEntityBase;
-use Drupal\Core\Entity\EntityMalformedException;
+use Drupal\Core\Entity\EntityChangedTrait;
 use Drupal\Core\Entity\EntityStorageInterface;
 use Drupal\Core\Entity\EntityTypeInterface;
 use Drupal\Core\Field\BaseFieldDefinition;
@@ -63,12 +63,14 @@ use Drupal\user\UserInterface;
  */
 class User extends ContentEntityBase implements UserInterface {
 
+  use EntityChangedTrait;
+
   /**
-   * The hostname for this user.
+   * Stores a reference for a reusable anonymous user entity.
    *
-   * @var string
+   * @var \Drupal\user\UserInterface
    */
-  protected $hostname;
+  protected static $anonymousUser;
 
   /**
    * {@inheritdoc}
@@ -87,24 +89,6 @@ class User extends ContentEntityBase implements UserInterface {
     foreach ($this->get('roles') as $index => $item) {
       if (in_array($item->target_id, array(RoleInterface::ANONYMOUS_ID, RoleInterface::AUTHENTICATED_ID))) {
         $this->get('roles')->offsetUnset($index);
-      }
-    }
-
-    // Update the user password if it has changed.
-    if ($this->isNew() || ($this->pass->value && $this->pass->value != $this->original->pass->value)) {
-      // Allow alternate password hashing schemes.
-      $this->pass->value = \Drupal::service('password')->hash(trim($this->pass->value));
-      // Abort if the hashing failed and returned FALSE.
-      if (!$this->pass->value) {
-        throw new EntityMalformedException('The entity does not have a password.');
-      }
-    }
-
-    if (!$this->isNew()) {
-      // If the password is empty, that means it was not changed, so use the
-      // original password.
-      if (empty($this->pass->value)) {
-        $this->pass->value = $this->original->pass->value;
       }
     }
 
@@ -180,37 +164,6 @@ class User extends ContentEntityBase implements UserInterface {
     }
 
     return $roles;
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  public function getSecureSessionId() {
-    return NULL;
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  public function getSessionData() {
-    return array();
-  }
-  /**
-   * {@inheritdoc}
-   */
-  public function getSessionId() {
-    return NULL;
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  public function getHostname() {
-    if (!isset($this->hostname) && \Drupal::hasRequest()) {
-      $this->hostname = \Drupal::request()->getClientIp();
-    }
-
-    return $this->hostname;
   }
 
   /**
@@ -409,7 +362,21 @@ class User extends ContentEntityBase implements UserInterface {
    * {@inheritdoc}
    */
   public function getUsername() {
-    $name = $this->get('name')->value ?: \Drupal::config('user.settings')->get('anonymous');
+    return $this->getAccountName();
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function getAccountName() {
+    return $this->get('name')->value ?: '';
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function getDisplayName() {
+    $name = $this->getAccountName() ?: \Drupal::config('user.settings')->get('anonymous');
     \Drupal::moduleHandler()->alter('user_format_name', $name, $this);
     return $name;
   }
@@ -425,8 +392,38 @@ class User extends ContentEntityBase implements UserInterface {
   /**
    * {@inheritdoc}
    */
-  public function getChangedTime() {
-    return $this->get('changed')->value;
+  public function setExistingPassword($password) {
+    $this->get('pass')->existing = $password;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function checkExistingPassword(UserInterface $account_unchanged) {
+    return strlen($this->get('pass')->existing) > 0 && \Drupal::service('password')->check(trim($this->get('pass')->existing), $account_unchanged->getPassword());
+  }
+
+  /**
+   * Returns an anonymous user entity.
+   *
+   * @return \Drupal\user\UserInterface
+   *   An anonymous user entity.
+   */
+  public static function getAnonymousUser() {
+    if (!isset(static::$anonymousUser)) {
+
+      // @todo Use the entity factory once available, see
+      //   https://www.drupal.org/node/1867228.
+      $entity_manager = \Drupal::entityManager();
+      $entity_type = $entity_manager->getDefinition('user');
+      $class = $entity_type->getClass();
+
+      static::$anonymousUser = new $class([
+        'uid' => [LanguageInterface::LANGCODE_DEFAULT => 0],
+        'name' => [LanguageInterface::LANGCODE_DEFAULT => ''],
+      ], $entity_type->id());
+    }
+    return clone static::$anonymousUser;
   }
 
   /**
@@ -476,24 +473,27 @@ class User extends ContentEntityBase implements UserInterface {
     $fields['name'] = BaseFieldDefinition::create('string')
       ->setLabel(t('Name'))
       ->setDescription(t('The name of this user.'))
-      ->setDefaultValue('')
+      ->setRequired(TRUE)
       ->setConstraints(array(
         // No Length constraint here because the UserName constraint also covers
         // that.
         'UserName' => array(),
         'UserNameUnique' => array(),
       ));
+    $fields['name']->getItemDefinition()->setClass('\Drupal\user\UserNameItem');
 
     $fields['pass'] = BaseFieldDefinition::create('password')
       ->setLabel(t('Password'))
-      ->setDescription(t('The password of this user (hashed).'));
+      ->setDescription(t('The password of this user (hashed).'))
+      ->addConstraint('ProtectedUserField');
 
     $fields['mail'] = BaseFieldDefinition::create('email')
       ->setLabel(t('Email'))
       ->setDescription(t('The email of this user.'))
       ->setDefaultValue('')
       ->addConstraint('UserMailUnique')
-      ->addConstraint('UserMailRequired');
+      ->addConstraint('UserMailRequired')
+      ->addConstraint('ProtectedUserField');
 
     $fields['timezone'] = BaseFieldDefinition::create('string')
       ->setLabel(t('Timezone'))
@@ -516,7 +516,8 @@ class User extends ContentEntityBase implements UserInterface {
 
     $fields['changed'] = BaseFieldDefinition::create('changed')
       ->setLabel(t('Changed'))
-      ->setDescription(t('The time that the user was last edited.'));
+      ->setDescription(t('The time that the user was last edited.'))
+      ->setTranslatable(TRUE);
 
     $fields['access'] = BaseFieldDefinition::create('timestamp')
       ->setLabel(t('Last access'))

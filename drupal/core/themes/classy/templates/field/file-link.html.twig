@@ -1,7 +1,7 @@
 {#
 /**
  * @file
- * Default theme implementation for a link to a file.
+ * Theme override for a link to a file.
  *
  * Available variables:
  * - attributes: The HTML attributes for the containing element.
@@ -11,4 +11,5 @@
  * @see template_preprocess_file_link()
  */
 #}
+{{ attach_library('classy/file') }}
 <span{{ attributes }}>{{ icon }} {{ link }}</span>

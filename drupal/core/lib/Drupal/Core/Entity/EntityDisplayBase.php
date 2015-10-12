@@ -8,11 +8,9 @@
 namespace Drupal\Core\Entity;
 
 use Drupal\Core\Config\Entity\ConfigEntityBase;
+use Drupal\Core\Config\Entity\ConfigEntityInterface;
 use Drupal\Core\Field\FieldDefinitionInterface;
 use Drupal\Core\Entity\Display\EntityDisplayInterface;
-use Drupal\field\Entity\FieldConfig;
-use Drupal\field\FieldConfigInterface;
-use Drupal\Component\Utility\String;
 
 /**
  * Provides a common base class for entity view and form displays.
@@ -67,7 +65,7 @@ abstract class EntityDisplayBase extends ConfigEntityBase implements EntityDispl
    * Whether this display is enabled or not. If the entity (form) display
    * is disabled, we'll fall back to the 'default' display.
    *
-   * @var boolean
+   * @var bool
    */
   protected $status;
 
@@ -115,6 +113,13 @@ abstract class EntityDisplayBase extends ConfigEntityBase implements EntityDispl
   protected $pluginManager;
 
   /**
+   * The renderer.
+   *
+   * @var \Drupal\Core\Render\RendererInterface
+   */
+  protected $renderer;
+
+  /**
    * {@inheritdoc}
    */
   public function __construct(array $values, $entity_type) {
@@ -125,6 +130,8 @@ abstract class EntityDisplayBase extends ConfigEntityBase implements EntityDispl
     if (!$this->entityManager()->getDefinition($values['targetEntityType'])->isSubclassOf('\Drupal\Core\Entity\FieldableEntityInterface')) {
       throw new \InvalidArgumentException('EntityDisplay entities can only handle fieldable entity types.');
     }
+
+    $this->renderer = \Drupal::service('renderer');
 
     // A plugin manager and a context type needs to be set by extending classes.
     if (!isset($this->pluginManager)) {
@@ -249,33 +256,29 @@ abstract class EntityDisplayBase extends ConfigEntityBase implements EntityDispl
     parent::calculateDependencies();
     $target_entity_type = $this->entityManager()->getDefinition($this->targetEntityType);
 
-    $bundle_entity_type_id = $target_entity_type->getBundleEntityType();
-    if ($bundle_entity_type_id != 'bundle') {
-      // If the target entity type uses entities to manage its bundles then
-      // depend on the bundle entity.
-      if (!$bundle_entity = $this->entityManager()->getStorage($bundle_entity_type_id)->load($this->bundle)) {
-        throw new \LogicException(String::format('Missing bundle entity, entity type %type, entity id %bundle.', array('%type' => $bundle_entity_type_id, '%bundle' => $this->bundle)));
-      }
-      $this->addDependency('config', $bundle_entity->getConfigDependencyName());
-    }
-    else {
-      // Depend on the provider of the entity type.
-      $this->addDependency('module', $target_entity_type->getProvider());
-    }
-    // Create dependencies on both hidden and visible fields.
-    $fields = $this->content + $this->hidden;
-    foreach ($fields as $field_name => $component) {
-      $field = FieldConfig::loadByName($this->targetEntityType, $this->bundle, $field_name);
-      if ($field) {
-        $this->addDependency('config', $field->getConfigDependencyName());
+    // Create dependency on the bundle.
+    $bundle_config_dependency = $target_entity_type->getBundleConfigDependency($this->bundle);
+    $this->addDependency($bundle_config_dependency['type'], $bundle_config_dependency['name']);
+
+    // If field.module is enabled, add dependencies on 'field_config' entities
+    // for both displayed and hidden fields. We intentionally leave out base
+    // field overrides, since the field still exists without them.
+    if (\Drupal::moduleHandler()->moduleExists('field')) {
+      $components = $this->content + $this->hidden;
+      $field_definitions = $this->entityManager()->getFieldDefinitions($this->targetEntityType, $this->bundle);
+      foreach (array_intersect_key($field_definitions, $components) as $field_name => $field_definition) {
+        if ($field_definition instanceof ConfigEntityInterface && $field_definition->getEntityTypeId() == 'field_config') {
+          $this->addDependency('config', $field_definition->getConfigDependencyName());
+        }
       }
     }
+
     // Depend on configured modes.
     if ($this->mode != 'default') {
       $mode_entity = $this->entityManager()->getStorage('entity_' . $this->displayContext . '_mode')->load($target_entity_type->id() . '.' . $this->mode);
       $this->addDependency('config', $mode_entity->getConfigDependencyName());
     }
-    return $this->dependencies;
+    return $this;
   }
 
   /**
@@ -374,7 +377,7 @@ abstract class EntityDisplayBase extends ConfigEntityBase implements EntityDispl
   }
 
   /**
-   * Returns the field definition of a field.
+   * Gets the field definition of a field.
    */
   protected function getFieldDefinition($field_name) {
     $definitions = $this->getFieldDefinitions();
@@ -382,7 +385,7 @@ abstract class EntityDisplayBase extends ConfigEntityBase implements EntityDispl
   }
 
   /**
-   * Returns the definitions of the fields that are candidate for display.
+   * Gets the definitions of the fields that are candidate for display.
    */
   protected function getFieldDefinitions() {
     if (!isset($this->fieldDefinitions)) {
@@ -417,7 +420,7 @@ abstract class EntityDisplayBase extends ConfigEntityBase implements EntityDispl
   public function onDependencyRemoval(array $dependencies) {
     $changed = parent::onDependencyRemoval($dependencies);
     foreach ($dependencies['config'] as $entity) {
-      if ($entity instanceof FieldConfigInterface) {
+      if ($entity->getEntityTypeId() == 'field_config') {
         // Remove components for fields that are being deleted.
         $this->removeComponent($entity->getName());
         unset($this->hidden[$entity->getName()]);
@@ -425,16 +428,85 @@ abstract class EntityDisplayBase extends ConfigEntityBase implements EntityDispl
       }
     }
     foreach ($this->getComponents() as $name => $component) {
-      if (isset($component['type']) && $definition = $this->pluginManager->getDefinition($component['type'], FALSE)) {
-        if (in_array($definition['provider'], $dependencies['module'])) {
+      if ($renderer = $this->getRenderer($name)) {
+        if (in_array($renderer->getPluginDefinition()['provider'], $dependencies['module'])) {
           // Revert to the defaults if the plugin that supplies the widget or
           // formatter depends on a module that is being uninstalled.
           $this->setComponent($name);
           $changed = TRUE;
         }
+
+        // Give this component the opportunity to react on dependency removal.
+        $component_removed_dependencies = $this->getPluginRemovedDependencies($renderer->calculateDependencies(), $dependencies);
+        if ($component_removed_dependencies) {
+          if ($renderer->onDependencyRemoval($component_removed_dependencies)) {
+            // Update component settings to reflect changes.
+            $component['settings'] = $renderer->getSettings();
+            $component['third_party_settings'] = [];
+            foreach ($renderer->getThirdPartyProviders() as $module) {
+              $component['third_party_settings'][$module] = $renderer->getThirdPartySettings($module);
+            }
+            $this->setComponent($name, $component);
+            $changed = TRUE;
+          }
+          // If there are unresolved deleted dependencies left, disable this
+          // component to avoid the removal of the entire display entity.
+          if ($this->getPluginRemovedDependencies($renderer->calculateDependencies(), $dependencies)) {
+            $this->removeComponent($name);
+            $arguments = [
+              '@display' => (string) $this->getEntityType()->getLabel(),
+              '@id' => $this->id(),
+              '@name' => $name,
+            ];
+            $this->getLogger()->warning("@display '@id': Component '@name' was disabled because its settings depend on removed dependencies.", $arguments);
+            $changed = TRUE;
+          }
+        }
       }
     }
     return $changed;
+  }
+
+  /**
+   * Returns the plugin dependencies being removed.
+   *
+   * The function recursively computes the intersection between all plugin
+   * dependencies and all removed dependencies.
+   *
+   * Note: The two arguments do not have the same structure.
+   *
+   * @param array[] $plugin_dependencies
+   *   A list of dependencies having the same structure as the return value of
+   *   ConfigEntityInterface::calculateDependencies().
+   * @param array[] $removed_dependencies
+   *   A list of dependencies having the same structure as the input argument of
+   *   ConfigEntityInterface::onDependencyRemoval().
+   *
+   * @return array
+   *   A recursively computed intersection.
+   *
+   * @see \Drupal\Core\Config\Entity\ConfigEntityInterface::calculateDependencies()
+   * @see \Drupal\Core\Config\Entity\ConfigEntityInterface::onDependencyRemoval()
+   */
+  protected function getPluginRemovedDependencies(array $plugin_dependencies, array $removed_dependencies) {
+    $intersect = [];
+    foreach ($plugin_dependencies as $type => $dependencies) {
+      if ($removed_dependencies[$type]) {
+        // Config and content entities have the dependency names as keys while
+        // module and theme dependencies are indexed arrays of dependency names.
+        // @see \Drupal\Core\Config\ConfigManager::callOnDependencyRemoval()
+        if (in_array($type, ['config', 'content'])) {
+          $removed = array_intersect_key($removed_dependencies[$type], array_flip($dependencies));
+        }
+        else {
+          $removed = array_values(array_intersect($removed_dependencies[$type], $dependencies));
+        }
+        if ($removed) {
+          $intersect[$type] = $removed;
+        }
+      }
+    }
+    return $intersect;
   }
 
   /**
@@ -458,7 +530,6 @@ abstract class EntityDisplayBase extends ConfigEntityBase implements EntityDispl
    * {@inheritdoc}
    */
   public function __wakeup() {
-    $is_new = $this->isNew();
     // Determine what were the properties from toArray() that were saved in
     // __sleep().
     $keys = $this->_serializedKeys;
@@ -467,7 +538,16 @@ abstract class EntityDisplayBase extends ConfigEntityBase implements EntityDispl
     // Run those values through the __construct(), as if they came from a
     // regular entity load.
     $this->__construct($values, $this->entityTypeId);
-    $this->enforceIsNew($is_new);
+  }
+
+  /**
+   * Provides the 'system' channel logger service.
+   *
+   * @return \Psr\Log\LoggerInterface
+   *   The 'system' channel logger.
+   */
+  protected function getLogger() {
+    return \Drupal::logger('system');
   }
 
 }

@@ -2,12 +2,12 @@
 
 /**
  * @file
- * Definition of Drupal\views\Plugin\views\HandlerBase.
+ * Contains \Drupal\views\Plugin\views\HandlerBase.
  */
 
 namespace Drupal\views\Plugin\views;
 
-use Drupal\Component\Utility\String;
+use Drupal\Component\Utility\Html;
 use Drupal\Component\Utility\Unicode;
 use Drupal\Component\Utility\UrlHelper;
 use Drupal\Component\Utility\Xss;
@@ -16,6 +16,7 @@ use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Render\Element;
 use Drupal\Core\Session\AccountInterface;
 use Drupal\views\Plugin\views\display\DisplayPluginBase;
+use Drupal\views\Render\ViewsRenderPipelineMarkup;
 use Drupal\views\ViewExecutable;
 use Drupal\Core\Database\Database;
 use Drupal\views\Views;
@@ -140,7 +141,7 @@ abstract class HandlerBase extends PluginBase implements ViewsHandlerInterface {
       $this->table = $options['table'];
     }
 
-    // Allow alliases on both fields and tables.
+    // Allow aliases on both fields and tables.
     if (isset($this->definition['real table'])) {
       $this->table = $this->definition['real table'];
     }
@@ -181,11 +182,10 @@ abstract class HandlerBase extends PluginBase implements ViewsHandlerInterface {
    */
   public function adminLabel($short = FALSE) {
     if (!empty($this->options['admin_label'])) {
-      $title = String::checkPlain($this->options['admin_label']);
-      return $title;
+      return $this->options['admin_label'];
     }
     $title = ($short && isset($this->definition['title short'])) ? $this->definition['title short'] : $this->definition['title'];
-    return $this->t('!group: !title', array('!group' => $this->definition['group'], '!title' => $title));
+    return $this->t('@group: @title', array('@group' => $this->definition['group'], '@title' => $title));
   }
 
   /**
@@ -230,13 +230,13 @@ abstract class HandlerBase extends PluginBase implements ViewsHandlerInterface {
         $value = Xss::filterAdmin($value);
         break;
       case 'url':
-        $value = String::checkPlain(UrlHelper::stripDangerousProtocols($value));
+        $value = Html::escape(UrlHelper::stripDangerousProtocols($value));
         break;
       default:
-        $value = String::checkPlain($value);
+        $value = Html::escape($value);
         break;
     }
-    return $value;
+    return ViewsRenderPipelineMarkup::create($value);
   }
 
   /**
@@ -305,7 +305,9 @@ abstract class HandlerBase extends PluginBase implements ViewsHandlerInterface {
       '#type' => 'details',
       '#title' => $this->t('More'),
       '#weight' => 200,
+      '#optional' => TRUE,
     );
+
     // Allow to alter the default values brought into the form.
     // @todo Do we really want to keep this hook.
     $this->getModuleHandler()->alter('views_handler_options', $this->options, $this->view);
@@ -523,7 +525,7 @@ abstract class HandlerBase extends PluginBase implements ViewsHandlerInterface {
     // Ensure this gets set to something.
     $this->relationship = NULL;
 
-    // Don't process non-existant relationships.
+    // Don't process non-existent relationships.
     if (empty($this->options['relationship']) || $this->options['relationship'] == 'none') {
       return;
     }
@@ -721,7 +723,7 @@ abstract class HandlerBase extends PluginBase implements ViewsHandlerInterface {
       return $views_data['table']['entity type'];
     }
     else {
-      throw new \Exception(String::format('No entity type for field @field on view @view', array('@field' => $this->options['id'], '@view' => $this->view->storage->id())));
+      throw new \Exception("No entity type for field {$this->options['id']} on view {$this->view->storage->id()}");
     }
   }
 

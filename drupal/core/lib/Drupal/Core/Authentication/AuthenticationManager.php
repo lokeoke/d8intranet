@@ -23,87 +23,20 @@ use Symfony\Component\HttpFoundation\Request;
 class AuthenticationManager implements AuthenticationProviderInterface, AuthenticationProviderFilterInterface, AuthenticationProviderChallengeInterface {
 
   /**
-   * Array of all registered authentication providers, keyed by ID.
+   * The authentication provider collector.
    *
-   * @var \Drupal\Core\Authentication\AuthenticationProviderInterface[]
+   * @var \Drupal\Core\Authentication\AuthenticationCollectorInterface
    */
-  protected $providers;
+  protected $authCollector;
 
   /**
-   * Array of all providers and their priority.
+   * Creates a new authentication manager instance.
    *
-   * @var array
+   * @param \Drupal\Core\Authentication\AuthenticationCollectorInterface $auth_collector
+   *   The authentication provider collector.
    */
-  protected $providerOrders = array();
-
-  /**
-   * Sorted list of registered providers.
-   *
-   * @var \Drupal\Core\Authentication\AuthenticationProviderInterface[]
-   */
-  protected $sortedProviders;
-
-  /**
-   * List of providers which implement the filter interface.
-   *
-   * @var \Drupal\Core\Authentication\AuthenticationProviderFilterInterface[]
-   */
-  protected $filters;
-
-  /**
-   * List of providers which implement the challenge interface.
-   *
-   * @var \Drupal\Core\Authentication\AuthenticationProviderChallengeInterface[]
-   */
-  protected $challengers;
-
-  /**
-   * List of providers which are allowed on routes with no _auth option.
-   *
-   * @var string[]
-   */
-  protected $globalProviders;
-
-  /**
-   * Constructs an authentication manager.
-   *
-   * @todo Revisit service construction. Especially write a custom compiler pass
-   *   which is capable of collecting, sorting and injecting all providers
-   *   (including global/vs non global), filters and challengers on compile
-   *   time in https://www.drupal.org/node/2432585.
-   *
-   * @param array $global_providers
-   *   List of global providers, keyed by the provier ID.
-   */
-  public function __construct($global_providers = ['cookie' => TRUE]) {
-    $this->globalProviders = $global_providers;
-  }
-
-  /**
-   * Adds a provider to the array of registered providers.
-   *
-   * @param \Drupal\Core\Authentication\AuthenticationProviderInterface $provider
-   *   The provider object.
-   * @param string $id
-   *   Identifier of the provider.
-   * @param int $priority
-   *   The providers priority.
-   */
-  public function addProvider(AuthenticationProviderInterface $provider, $id, $priority = 0) {
-    // Remove the 'authentication.' prefix from the provider ID.
-    $id = substr($id, 15);
-
-    $this->providers[$id] = $provider;
-    $this->providerOrders[$priority][$id] = $provider;
-    // Force the builders to be re-sorted.
-    $this->sortedProviders = NULL;
-
-    if ($provider instanceof AuthenticationProviderFilterInterface) {
-      $this->filters[$id] = $provider;
-    }
-    if ($provider instanceof AuthenticationProviderChallengeInterface) {
-      $this->challengers[$id] = $provider;
-    }
+  public function __construct(AuthenticationCollectorInterface $auth_collector) {
+    $this->authCollector = $auth_collector;
   }
 
   /**
@@ -118,7 +51,13 @@ class AuthenticationManager implements AuthenticationProviderInterface, Authenti
    */
   public function authenticate(Request $request) {
     $provider_id = $this->getProvider($request);
-    return $this->providers[$provider_id]->authenticate($request);
+    $provider = $this->authCollector->getProvider($provider_id);
+
+    if ($provider) {
+      return $provider->authenticate($request);
+    }
+
+    return NULL;
   }
 
   /**
@@ -131,7 +70,7 @@ class AuthenticationManager implements AuthenticationProviderInterface, Authenti
       $result = $this->applyFilter($request, $authenticated, $this->getProvider($request));
     }
     else {
-      foreach ($this->getSortedProviders() as $provider_id => $provider) {
+      foreach ($this->authCollector->getSortedProviders() as $provider_id => $provider) {
         if ($this->applyFilter($request, $authenticated, $provider_id)) {
           $result = TRUE;
           break;
@@ -147,8 +86,10 @@ class AuthenticationManager implements AuthenticationProviderInterface, Authenti
    */
   public function challengeException(Request $request, \Exception $previous) {
     $provider_id = $this->getChallenger($request);
+
     if ($provider_id) {
-      return $this->challengers[$provider_id]->challengeException($request, $previous);
+      $provider = $this->authCollector->getProvider($provider_id);
+      return $provider->challengeException($request, $previous);
     }
   }
 
@@ -163,7 +104,7 @@ class AuthenticationManager implements AuthenticationProviderInterface, Authenti
    *   If no application detects appropriate credentials, then NULL is returned.
    */
   protected function getProvider(Request $request) {
-    foreach ($this->getSortedProviders() as $provider_id => $provider) {
+    foreach ($this->authCollector->getSortedProviders() as $provider_id => $provider) {
       if ($provider->applies($request)) {
         return $provider_id;
       }
@@ -171,21 +112,19 @@ class AuthenticationManager implements AuthenticationProviderInterface, Authenti
   }
 
   /**
-   * Returns the id of the challenge provider for a request.
+   * Returns the ID of the challenge provider for a request.
    *
    * @param \Symfony\Component\HttpFoundation\Request $request
    *   The incoming request.
    *
    * @return string|NULL
-   *   The id of the first authentication provider which applies to the request.
+   *   The ID of the first authentication provider which applies to the request.
    *   If no application detects appropriate credentials, then NULL is returned.
    */
   protected function getChallenger(Request $request) {
-    if (!empty($this->challengers)) {
-      foreach ($this->getSortedProviders($request, FALSE) as $provider_id => $provider) {
-        if (isset($this->challengers[$provider_id]) && !$provider->applies($request) && $this->applyFilter($request, FALSE, $provider_id)) {
-          return $provider_id;
-        }
+    foreach ($this->authCollector->getSortedProviders() as $provider_id => $provider) {
+      if (($provider instanceof AuthenticationProviderChallengeInterface) && !$provider->applies($request) && $this->applyFilter($request, FALSE, $provider_id)) {
+        return $provider_id;
       }
     }
   }
@@ -207,8 +146,10 @@ class AuthenticationManager implements AuthenticationProviderInterface, Authenti
    *   TRUE if provider is allowed, FALSE otherwise.
    */
   protected function applyFilter(Request $request, $authenticated, $provider_id) {
-    if (isset($this->filters[$provider_id])) {
-      $result = $this->filters[$provider_id]->appliesToRoutedRequest($request, $authenticated);
+    $provider = $this->authCollector->getProvider($provider_id);
+
+    if ($provider && ($provider instanceof AuthenticationProviderFilterInterface)) {
+      $result = $provider->appliesToRoutedRequest($request, $authenticated);
     }
     else {
       $result = $this->defaultFilter($request, $provider_id);
@@ -243,30 +184,8 @@ class AuthenticationManager implements AuthenticationProviderInterface, Authenti
       return in_array($provider_id, $route->getOption('_auth'));
     }
     else {
-      return isset($this->globalProviders[$provider_id]);
+      return $this->authCollector->isGlobal($provider_id);
     }
-  }
-
-  /**
-   * Returns the sorted array of authentication providers.
-   *
-   * @todo Replace with a list of providers sorted during compile time in
-   *   https://www.drupal.org/node/2432585.
-   *
-   * @return \Drupal\Core\Authentication\AuthenticationProviderInterface[]
-   *   An array of authentication provider objects.
-   */
-  protected function getSortedProviders() {
-    if (!isset($this->sortedProviders)) {
-      // Sort the builders according to priority.
-      krsort($this->providerOrders);
-      // Merge nested providers from $this->providers into $this->sortedProviders.
-      $this->sortedProviders = array();
-      foreach ($this->providerOrders as $providers) {
-        $this->sortedProviders = array_merge($this->sortedProviders, $providers);
-      }
-    }
-    return $this->sortedProviders;
   }
 
 }

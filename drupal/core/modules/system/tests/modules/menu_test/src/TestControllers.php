@@ -7,7 +7,7 @@
 
 namespace Drupal\menu_test;
 
-use Drupal\Component\Utility\String;
+use Drupal\Component\Utility\SafeMarkup;
 use Drupal\Core\Entity\EntityInterface;
 
 /**
@@ -39,6 +39,17 @@ class TestControllers {
   /**
    * Prints out test data.
    */
+  public function testSession() {
+    if (!isset($_SESSION['menu_test'])) {
+      $_SESSION['menu_test'] = 0;
+    }
+    $_SESSION['menu_test']++;
+    return ['#markup' => SafeMarkup::format('Session menu_test is @count', ['@count' => $_SESSION['menu_test']])];
+  }
+
+  /**
+   * Prints out test data.
+   */
   public function testDerived() {
     return ['#markup' => 'testDerived'];
   }
@@ -54,11 +65,27 @@ class TestControllers {
    */
   public function testDefaults($placeholder = NULL) {
     if ($placeholder) {
-      return ['#markup' => String::format("Sometimes there is a placeholder: '@placeholder'.", array('@placeholder' => $placeholder))];
+      return ['#markup' => SafeMarkup::format("Sometimes there is a placeholder: '@placeholder'.", array('@placeholder' => $placeholder))];
     }
     else {
-      return ['#markup' => String::format('Sometimes there is no placeholder.')];
+      return ['#markup' => 'Sometimes there is no placeholder.'];
     }
   }
 
+  /**
+   * Prints out test data with contextual links.
+   */
+  public function testContextual() {
+    return [
+      '#markup' => 'testContextual',
+      'stuff' => [
+        '#type' => 'contextual_links',
+        '#contextual_links' => [
+          'menu_test_menu' => [
+            'route_parameters' => ['bar' => 1],
+          ]
+        ]
+      ]
+    ];
+  }
 }

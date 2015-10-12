@@ -7,7 +7,6 @@
 
 namespace Drupal\views\Plugin\views\row;
 
-use Drupal\Component\Utility\String;
 use Drupal\Core\Entity\EntityManagerInterface;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Language\LanguageManagerInterface;
@@ -160,7 +159,7 @@ class EntityRow extends RowPluginBase {
   public function summaryTitle() {
     $options = \Drupal::entityManager()->getViewModeOptions($this->entityTypeId);
     if (isset($options[$this->options['view_mode']])) {
-      return String::checkPlain($options[$this->options['view_mode']]);
+      return $options[$this->options['view_mode']];
     }
     else {
       return $this->t('No view mode selected');

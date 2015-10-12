@@ -7,7 +7,8 @@
 
 namespace Drupal\contact\Tests;
 
-use Drupal\Component\Utility\String;
+use Drupal\Component\Utility\SafeMarkup;
+use Drupal\Component\Render\PlainTextOutput;
 use Drupal\Core\Session\AccountInterface;
 use Drupal\simpletest\WebTestBase;
 use Drupal\user\RoleInterface;
@@ -63,8 +64,13 @@ class ContactPersonalTest extends WebTestBase {
    * Tests that mails for contact messages are correctly sent.
    */
   function testSendPersonalContactMessage() {
+    // Ensure that the web user's email needs escaping.
+    $mail = $this->webUser->getUsername() . '&escaped@example.com';
+    $this->webUser->setEmail($mail)->save();
     $this->drupalLogin($this->webUser);
 
+    $this->drupalGet('user/' . $this->contactUser->id() . '/contact');
+    $this->assertEscaped($mail);
     $message = $this->submitPersonalContact($this->contactUser);
     $mails = $this->drupalGetMails();
     $this->assertEqual(1, count($mails));
@@ -74,12 +80,13 @@ class ContactPersonalTest extends WebTestBase {
     $this->assertEqual($mail['reply-to'], $this->webUser->getEmail());
     $this->assertEqual($mail['key'], 'user_mail');
     $variables = array(
-      '!site-name' => $this->config('system.site')->get('name'),
-      '!subject' => $message['subject[0][value]'],
-      '!recipient-name' => $this->contactUser->getUsername(),
+      '@site-name' => $this->config('system.site')->get('name'),
+      '@subject' => $message['subject[0][value]'],
+      '@recipient-name' => $this->contactUser->getUsername(),
     );
-    $this->assertEqual($mail['subject'], t('[!site-name] !subject', $variables), 'Subject is in sent message.');
-    $this->assertTrue(strpos($mail['body'], t('Hello !recipient-name,', $variables)) !== FALSE, 'Recipient name is in sent message.');
+    $subject = PlainTextOutput::renderFromHtml(t('[@site-name] @subject', $variables));
+    $this->assertEqual($mail['subject'], $subject, 'Subject is in sent message.');
+    $this->assertTrue(strpos($mail['body'], 'Hello ' . $variables['@recipient-name']) !== FALSE, 'Recipient name is in sent message.');
     $this->assertTrue(strpos($mail['body'], $this->webUser->getUsername()) !== FALSE, 'Sender name is in sent message.');
     $this->assertTrue(strpos($mail['body'], $message['message[0][value]']) !== FALSE, 'Message body is in sent message.');
 
@@ -93,7 +100,9 @@ class ContactPersonalTest extends WebTestBase {
       '@sender_email' => $this->webUser->getEmail(),
       '@recipient_name' => $this->contactUser->getUsername()
     );
-    $this->assertText(String::format('@sender_name (@sender_email) sent @recipient_name an email.', $placeholders));
+    $this->assertRaw(SafeMarkup::format('@sender_name (@sender_email) sent @recipient_name an email.', $placeholders));
+    // Ensure an unescaped version of the email does not exist anywhere.
+    $this->assertNoRaw($this->webUser->getEmail());
   }
 
   /**
@@ -152,11 +161,13 @@ class ContactPersonalTest extends WebTestBase {
     // Test that anonymous users can access admin user's contact form.
     $this->drupalGet('user/' . $this->adminUser->id() . '/contact');
     $this->assertResponse(200);
+    $this->assertCacheContext('user');
 
     // Revoke the personal contact permission for the anonymous user.
     user_role_revoke_permissions(RoleInterface::ANONYMOUS_ID, array('access user contact forms'));
     $this->drupalGet('user/' . $this->contactUser->id() . '/contact');
     $this->assertResponse(403);
+    $this->assertCacheContext('user');
     $this->drupalGet('user/' . $this->adminUser->id() . '/contact');
     $this->assertResponse(403);
 
@@ -235,7 +246,7 @@ class ContactPersonalTest extends WebTestBase {
     }
 
     // Submit contact form one over limit.
-    $this->drupalGet('user/' . $this->contactUser->id(). '/contact');
+    $this->submitPersonalContact($this->contactUser);
     $this->assertRaw(t('You cannot send more than %number messages in @interval. Try again later.', array('%number' => $flood_limit, '@interval' => \Drupal::service('date.formatter')->formatInterval($this->config('contact.settings')->get('flood.interval')))), 'Normal user denied access to flooded contact form.');
 
     // Test that the admin user can still access the contact form even though

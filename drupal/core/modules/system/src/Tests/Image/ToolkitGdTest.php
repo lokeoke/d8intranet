@@ -2,14 +2,14 @@
 
 /**
  * @file
- * Definition of Drupal\system\Tests\Image\ToolkitGdTest.
+ * Contains \Drupal\system\Tests\Image\ToolkitGdTest.
  */
 
 namespace Drupal\system\Tests\Image;
 
 use Drupal\Core\Image\ImageInterface;
-use \Drupal\simpletest\KernelTestBase;
-use Drupal\Component\Utility\String;
+use Drupal\Component\Utility\SafeMarkup;
+use Drupal\simpletest\KernelTestBase;
 
 /**
  * Tests that core image manipulations work properly: scale, resize, rotate,
@@ -36,7 +36,7 @@ class ToolkitGdTest extends KernelTestBase {
   protected $transparent = array(0, 0, 0, 127);
   // Used as rotate background colors.
   protected $fuchsia            = array(255, 0, 255, 0);
-  protected $rotate_transparent = array(255, 255, 255, 127);
+  protected $rotateTransparent = array(255, 255, 255, 127);
 
   protected $width = 40;
   protected $height = 20;
@@ -219,7 +219,7 @@ class ToolkitGdTest extends KernelTestBase {
           'arguments' => array('degrees' => 5),
           'width' => 42,
           'height' => 24,
-          'corners' => array_fill(0, 4, $this->rotate_transparent),
+          'corners' => array_fill(0, 4, $this->rotateTransparent),
         ),
         'rotate_transparent_90' => array(
           'function' => 'rotate',
@@ -262,14 +262,14 @@ class ToolkitGdTest extends KernelTestBase {
         $image = $this->imageFactory->get(drupal_get_path('module', 'simpletest') . '/files/' . $file);
         $toolkit = $image->getToolkit();
         if (!$image->isValid()) {
-          $this->fail(String::format('Could not load image %file.', array('%file' => $file)));
+          $this->fail(SafeMarkup::format('Could not load image %file.', array('%file' => $file)));
           continue 2;
         }
         $image_original_type = $image->getToolkit()->getType();
 
         // All images should be converted to truecolor when loaded.
         $image_truecolor = imageistruecolor($toolkit->getResource());
-        $this->assertTrue($image_truecolor, String::format('Image %file after load is a truecolor image.', array('%file' => $file)));
+        $this->assertTrue($image_truecolor, SafeMarkup::format('Image %file after load is a truecolor image.', array('%file' => $file)));
 
         if ($image->getToolkit()->getType() == IMAGETYPE_GIF) {
           if ($op == 'desaturate') {
@@ -278,8 +278,18 @@ class ToolkitGdTest extends KernelTestBase {
           }
         }
 
+        // Store the original GD resource.
+        $old_res = $toolkit->getResource();
+
         // Perform our operation.
         $image->apply($values['function'], $values['arguments']);
+
+        // If the operation replaced the resource, check that the old one has
+        // been destroyed.
+        $new_res = $toolkit->getResource();
+        if ($new_res !== $old_res) {
+          $this->assertFalse(is_resource($old_res), SafeMarkup::format("'%operation' destroyed the original resource.", ['%operation' => $values['function']]));
+        }
 
         // To keep from flooding the test with assert values, make a general
         // value for whether each group of values fail.
@@ -312,8 +322,8 @@ class ToolkitGdTest extends KernelTestBase {
         $file_path = $directory . '/' . $op . image_type_to_extension($image->getToolkit()->getType());
         $image->save($file_path);
 
-        $this->assertTrue($correct_dimensions_real, String::format('Image %file after %action action has proper dimensions.', array('%file' => $file, '%action' => $op)));
-        $this->assertTrue($correct_dimensions_object, String::format('Image %file object after %action action is reporting the proper height and width values.', array('%file' => $file, '%action' => $op)));
+        $this->assertTrue($correct_dimensions_real, SafeMarkup::format('Image %file after %action action has proper dimensions.', array('%file' => $file, '%action' => $op)));
+        $this->assertTrue($correct_dimensions_object, SafeMarkup::format('Image %file object after %action action is reporting the proper height and width values.', array('%file' => $file, '%action' => $op)));
 
         // JPEG colors will always be messed up due to compression. So we skip
         // these tests if the original or the result is in jpeg format.
@@ -349,7 +359,7 @@ class ToolkitGdTest extends KernelTestBase {
             // conversion. The convert operation cannot handle that correctly.
             if ($image->getToolkit()->getType() == $image_original_type || $corner != $this->transparent) {
               $correct_colors = $this->colorsAreEqual($color, $corner);
-              $this->assertTrue($correct_colors, String::format('Image %file object after %action action has the correct color placement at corner %corner.',
+              $this->assertTrue($correct_colors, SafeMarkup::format('Image %file object after %action action has the correct color placement at corner %corner.',
                 array('%file'   => $file, '%action' => $op, '%corner' => $key)));
             }
           }
@@ -367,29 +377,29 @@ class ToolkitGdTest extends KernelTestBase {
       $image->createNew(50, 20, image_type_to_extension($type, FALSE), '#ffff00');
       $file = 'from_null' . image_type_to_extension($type);
       $file_path = $directory . '/' . $file ;
-      $this->assertEqual(50, $image->getWidth(), String::format('Image file %file has the correct width.', array('%file' => $file)));
-      $this->assertEqual(20, $image->getHeight(), String::format('Image file %file has the correct height.', array('%file' => $file)));
-      $this->assertEqual(image_type_to_mime_type($type), $image->getMimeType(), String::format('Image file %file has the correct MIME type.', array('%file' => $file)));
-      $this->assertTrue($image->save($file_path), String::format('Image %file created anew from a null image was saved.', array('%file' => $file)));
+      $this->assertEqual(50, $image->getWidth(), SafeMarkup::format('Image file %file has the correct width.', array('%file' => $file)));
+      $this->assertEqual(20, $image->getHeight(), SafeMarkup::format('Image file %file has the correct height.', array('%file' => $file)));
+      $this->assertEqual(image_type_to_mime_type($type), $image->getMimeType(), SafeMarkup::format('Image file %file has the correct MIME type.', array('%file' => $file)));
+      $this->assertTrue($image->save($file_path), SafeMarkup::format('Image %file created anew from a null image was saved.', array('%file' => $file)));
 
       // Reload saved image.
       $image_reloaded = $this->imageFactory->get($file_path);
       if (!$image_reloaded->isValid()) {
-        $this->fail(String::format('Could not load image %file.', array('%file' => $file)));
+        $this->fail(SafeMarkup::format('Could not load image %file.', array('%file' => $file)));
         continue;
       }
-      $this->assertEqual(50, $image_reloaded->getWidth(), String::format('Image file %file has the correct width.', array('%file' => $file)));
-      $this->assertEqual(20, $image_reloaded->getHeight(), String::format('Image file %file has the correct height.', array('%file' => $file)));
-      $this->assertEqual(image_type_to_mime_type($type), $image_reloaded->getMimeType(), String::format('Image file %file has the correct MIME type.', array('%file' => $file)));
+      $this->assertEqual(50, $image_reloaded->getWidth(), SafeMarkup::format('Image file %file has the correct width.', array('%file' => $file)));
+      $this->assertEqual(20, $image_reloaded->getHeight(), SafeMarkup::format('Image file %file has the correct height.', array('%file' => $file)));
+      $this->assertEqual(image_type_to_mime_type($type), $image_reloaded->getMimeType(), SafeMarkup::format('Image file %file has the correct MIME type.', array('%file' => $file)));
       if ($image_reloaded->getToolkit()->getType() == IMAGETYPE_GIF) {
-        $this->assertEqual('#ffff00', $image_reloaded->getToolkit()->getTransparentColor(), String::format('Image file %file has the correct transparent color channel set.', array('%file' => $file)));
+        $this->assertEqual('#ffff00', $image_reloaded->getToolkit()->getTransparentColor(), SafeMarkup::format('Image file %file has the correct transparent color channel set.', array('%file' => $file)));
       }
       else  {
-        $this->assertEqual(NULL, $image_reloaded->getToolkit()->getTransparentColor(), String::format('Image file %file has no color channel set.', array('%file' => $file)));
+        $this->assertEqual(NULL, $image_reloaded->getToolkit()->getTransparentColor(), SafeMarkup::format('Image file %file has no color channel set.', array('%file' => $file)));
       }
     }
 
-    // Test failures of CreateNew.
+    // Test failures of the 'create_new' operation.
     $image = $this->imageFactory->get();
     $image->createNew(-50, 20);
     $this->assertFalse($image->isValid(), 'CreateNew with negative width fails.');
@@ -399,6 +409,30 @@ class ToolkitGdTest extends KernelTestBase {
     $this->assertFalse($image->isValid(), 'CreateNew with invalid color hex string fails.');
     $image->createNew(50, 20, 'gif', '#ff0000');
     $this->assertTrue($image->isValid(), 'CreateNew with valid arguments validates the Image.');
+  }
+
+  /**
+   * Tests that GD resources are freed from memory.
+   */
+  public function testResourceDestruction() {
+    // Test that an Image object going out of scope releases its GD resource.
+    $image = $this->imageFactory->get(drupal_get_path('module', 'simpletest') . '/files/image-test.png');
+    $res = $image->getToolkit()->getResource();
+    $this->assertTrue(is_resource($res), 'Successfully loaded image resource.');
+    $image = NULL;
+    $this->assertFalse(is_resource($res), 'Image resource was destroyed after losing scope.');
+
+    // Test that 'create_new' operation does not leave orphaned GD resources.
+    $image = $this->imageFactory->get(drupal_get_path('module', 'simpletest') . '/files/image-test.png');
+    $old_res = $image->getToolkit()->getResource();
+    // Check if resource has been created successfully.
+    $this->assertTrue(is_resource($old_res));
+    $image->createNew(20, 20);
+    $new_res = $image->getToolkit()->getResource();
+    // Check if the original resource has been destroyed.
+    $this->assertFalse(is_resource($old_res));
+    // Check if a new resource has been created successfully.
+    $this->assertTrue(is_resource($new_res));
   }
 
   /**
@@ -420,12 +454,12 @@ class ToolkitGdTest extends KernelTestBase {
     $toolkit = $image->getToolkit();
 
     if (!$image->isValid()) {
-      $this->fail(String::format('Could not load image %file.', array('%file' => $file)));
+      $this->fail(SafeMarkup::format('Could not load image %file.', array('%file' => $file)));
     }
     else {
       // All images should be converted to truecolor when loaded.
       $image_truecolor = imageistruecolor($toolkit->getResource());
-      $this->assertTrue($image_truecolor, String::format('Image %file after load is a truecolor image.', array('%file' => $file)));
+      $this->assertTrue($image_truecolor, SafeMarkup::format('Image %file after load is a truecolor image.', array('%file' => $file)));
     }
   }
 
@@ -443,7 +477,7 @@ class ToolkitGdTest extends KernelTestBase {
     // Load up a fresh image.
     $image = $this->imageFactory->get(drupal_get_path('module', 'simpletest') . '/files/' . $file);
     if (!$image->isValid()) {
-      $this->fail(String::format('Could not load image %file.', array('%file' => $file)));
+      $this->fail(SafeMarkup::format('Could not load image %file.', array('%file' => $file)));
     }
 
     // Try perform a missing toolkit operation.

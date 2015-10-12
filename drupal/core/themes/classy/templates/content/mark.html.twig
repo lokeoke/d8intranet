@@ -1,7 +1,7 @@
 {#
 /**
  * @file
- * Default theme implementation for a marker for new or updated content.
+ * Theme override for a marker for new or updated content.
  *
  * Available variables:
  * - status: Number representing the marker status to display. Use the constants
@@ -13,8 +13,8 @@
 #}
 {% if logged_in %}
   {% if status is constant('MARK_NEW') %}
-    <span class="marker">{{ 'new'|t }}</span>
+    <span class="marker">{{ 'New'|t }}</span>
   {% elseif status is constant('MARK_UPDATED') %}
-    <span class="marker">{{ 'updated'|t }}</span>
+    <span class="marker">{{ 'Updated'|t }}</span>
   {% endif %}
 {% endif %}

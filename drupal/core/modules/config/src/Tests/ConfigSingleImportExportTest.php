@@ -22,7 +22,17 @@ class ConfigSingleImportExportTest extends WebTestBase {
    *
    * @var array
    */
-  public static $modules = array('config', 'config_test');
+  public static $modules = [
+    'block',
+    'config',
+    'config_test'
+  ];
+
+  protected function setUp() {
+    parent::setUp();
+
+    $this->drupalPlaceBlock('page_title_block');
+  }
 
   /**
    * Tests importing a single configuration file.
@@ -50,7 +60,7 @@ EOD;
     $this->assertNull($storage->load('first'));
     $edit['import'] = "id: first\n" . $edit['import'];
     $this->drupalPostForm('admin/config/development/configuration/single/import', $edit, t('Import'));
-    $this->assertRaw(t('Are you sure you want to create new %name @type?', array('%name' => 'first', '@type' => 'test configuration')));
+    $this->assertRaw(t('Are you sure you want to create a new %name @type?', array('%name' => 'first', '@type' => 'test configuration')));
     $this->drupalPostForm(NULL, array(), t('Confirm'));
     $entity = $storage->load('first');
     $this->assertIdentical($entity->label(), 'First');
@@ -70,7 +80,7 @@ EOD;
     // Attempt an import with a custom ID.
     $edit['custom_entity_id'] = 'custom_id';
     $this->drupalPostForm('admin/config/development/configuration/single/import', $edit, t('Import'));
-    $this->assertRaw(t('Are you sure you want to create new %name @type?', array('%name' => 'custom_id', '@type' => 'test configuration')));
+    $this->assertRaw(t('Are you sure you want to create a new %name @type?', array('%name' => 'custom_id', '@type' => 'test configuration')));
     $this->drupalPostForm(NULL, array(), t('Confirm'));
     $entity = $storage->load('custom_id');
     $this->assertRaw(t('The @entity_type %label was imported.', array('@entity_type' => 'config_test', '%label' => $entity->label())));
@@ -90,7 +100,7 @@ EOD;
     $second_uuid = $uuid->generate();
     $edit['import'] .= "\nuuid: " . $second_uuid;
     $this->drupalPostForm('admin/config/development/configuration/single/import', $edit, t('Import'));
-    $this->assertRaw(t('Are you sure you want to create new %name @type?', array('%name' => 'second', '@type' => 'test configuration')));
+    $this->assertRaw(t('Are you sure you want to create a new %name @type?', array('%name' => 'second', '@type' => 'test configuration')));
     $this->drupalPostForm(NULL, array(), t('Confirm'));
     $entity = $storage->load('second');
     $this->assertRaw(t('The @entity_type %label was imported.', array('@entity_type' => 'config_test', '%label' => $entity->label())));
@@ -126,6 +136,10 @@ EOD;
   public function testImportSimpleConfiguration() {
     $this->drupalLogin($this->drupalCreateUser(array('import configuration')));
     $config = $this->config('system.site')->set('name', 'Test simple import');
+
+    // Place branding block with site name into header region.
+    $this->drupalPlaceBlock('system_branding_block', ['region' => 'header']);
+
     $edit = array(
       'config_type' => 'system.simple',
       'config_name' => $config->getName(),
@@ -134,7 +148,7 @@ EOD;
     $this->drupalPostForm('admin/config/development/configuration/single/import', $edit, t('Import'));
     $this->assertRaw(t('Are you sure you want to update the %name @type?', array('%name' => $config->getName(), '@type' => 'simple configuration')));
     $this->drupalPostForm(NULL, array(), t('Confirm'));
-    $this->drupalGet('/');
+    $this->drupalGet('');
     $this->assertText('Test simple import');
   }
 

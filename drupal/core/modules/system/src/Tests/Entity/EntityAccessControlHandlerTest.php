@@ -2,7 +2,7 @@
 
 /**
  * @file
- * Contains \Drupal\system\Tests\Entity\EntityAccessHControlandlerTest.
+ * Contains \Drupal\system\Tests\Entity\EntityAccessControlHandlerTest.
  */
 
 namespace Drupal\system\Tests\Entity;
@@ -137,7 +137,7 @@ class EntityAccessControlHandlerTest extends EntityLanguageTestBase  {
     ));
     $entity->save();
 
-    $translation = $entity->getTranslation('bar');
+    $translation = $entity->addTranslation('bar');
     $this->assertEntityAccess(array(
       'view' => TRUE,
     ), $translation);

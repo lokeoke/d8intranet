@@ -7,8 +7,10 @@
 
 namespace Drupal\Tests\Core\Cache;
 
+use Drupal\Component\Assertion\Inspector;
 use Drupal\Core\Cache\Cache;
 use Drupal\Tests\UnitTestCase;
+use Symfony\Component\DependencyInjection\ContainerBuilder;
 
 /**
  * @coversDefaultClass \Drupal\Core\Cache\Cache
@@ -27,6 +29,7 @@ class CacheTest extends UnitTestCase {
       [['foo'], FALSE],
       [['foo', 'bar'], FALSE],
       [['foo', 'bar', 'llama:2001988', 'baz', 'llama:14031991'], FALSE],
+      // Invalid.
       [[FALSE], 'Cache tags must be strings, boolean given.'],
       [[TRUE], 'Cache tags must be strings, boolean given.'],
       [['foo', FALSE], 'Cache tags must be strings, boolean given.'],
@@ -56,6 +59,7 @@ class CacheTest extends UnitTestCase {
     // If it doesn't throw an exception, validateTags() returns NULL.
     $this->assertNull(Cache::validateTags($tags));
   }
+
 
   /**
    * Provides a list of pairs of cache tags arrays to be merged.

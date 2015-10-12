@@ -2,7 +2,7 @@
 
 /**
  * @file
- * Contains Drupal\locale\Tests\LocaleUpdateBase.
+ * Contains \Drupal\locale\Tests\LocaleUpdateBase.
  */
 
 namespace Drupal\locale\Tests;
@@ -10,7 +10,7 @@ namespace Drupal\locale\Tests;
 use Drupal\Core\StreamWrapper\PublicStream;
 use Drupal\Core\Url;
 use Drupal\simpletest\WebTestBase;
-use Drupal\Component\Utility\String;
+use Drupal\Component\Utility\SafeMarkup;
 
 /**
  * Base class for testing updates to string translations.
@@ -50,18 +50,13 @@ abstract class LocaleUpdateBase extends WebTestBase {
    *
    * @var array
    */
-  public static $modules = array('update', 'update_test', 'locale', 'locale_test');
+  public static $modules = array('locale', 'locale_test');
 
   /**
    * {@inheritdoc}
    */
   protected function setUp() {
     parent::setUp();
-
-    // Update module should not go out to d.o to check for updates. We override
-    // the url to the default update_test xml path. But without providing
-    // a mock xml file, no update data will be found.
-    $this->config('update.settings')->set('fetch.url', Url::fromRoute('update_test.update_test', [], ['absolute' => TRUE])->toString())->save();
 
     // Setup timestamps to identify old and new translation sources.
     $this->timestampOld = REQUEST_TIME - 300;
@@ -98,7 +93,7 @@ abstract class LocaleUpdateBase extends WebTestBase {
     $edit = array('predefined_langcode' => $langcode);
     $this->drupalPostForm('admin/config/regional/language/add', $edit, t('Add language'));
     $this->container->get('language_manager')->reset();
-    $this->assertTrue(\Drupal::languageManager()->getLanguage($langcode), String::format('Language %langcode added.', array('%langcode' => $langcode)));
+    $this->assertTrue(\Drupal::languageManager()->getLanguage($langcode), SafeMarkup::format('Language %langcode added.', array('%langcode' => $langcode)));
   }
 
   /**
@@ -186,6 +181,7 @@ EOF;
     // A flag is set to let the locale_test module replace the project data with
     // a set of test projects which match the below project files.
     \Drupal::state()->set('locale.test_projects_alter', TRUE);
+    \Drupal::state()->set('locale.remove_core_project', FALSE);
 
     // Setup the environment.
     $public_path = PublicStream::basePath();

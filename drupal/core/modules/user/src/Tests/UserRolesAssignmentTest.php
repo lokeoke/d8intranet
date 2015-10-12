@@ -2,7 +2,7 @@
 
 /**
  * @file
- * Definition of Drupal\user\Tests\UserRolesAssignmentTest.
+ * Contains \Drupal\user\Tests\UserRolesAssignmentTest.
  */
 
 namespace Drupal\user\Tests;
@@ -58,7 +58,7 @@ class UserRolesAssignmentTest extends WebTestBase {
       "roles[$rid]" => $rid,
     );
     $this->drupalPostForm('admin/people/create', $edit, t('Create new account'));
-    $this->assertText(t('Created a new user account for !name.', array('!name' => $edit['name'])));
+    $this->assertText(t('Created a new user account for @name.', array('@name' => $edit['name'])));
     // Get the newly added user.
     $account = user_load_by_name($edit['name']);
 
@@ -85,7 +85,9 @@ class UserRolesAssignmentTest extends WebTestBase {
    *   Defaults to TRUE.
    */
   private function userLoadAndCheckRoleAssigned($account, $rid, $is_assigned = TRUE) {
-    $account = user_load($account->id(), TRUE);
+    $user_storage = $this->container->get('entity.manager')->getStorage('user');
+    $user_storage->resetCache(array($account->id()));
+    $account = $user_storage->load($account->id());
     if ($is_assigned) {
       $this->assertFalse(array_search($rid, $account->getRoles()) === FALSE, 'The role is present in the user object.');
     }

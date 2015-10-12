@@ -2,7 +2,7 @@
 
 /**
  * @file
- * Definition of Drupal\config\Tests\ConfigOverrideTest.
+ * Contains \Drupal\config\Tests\ConfigOverrideTest.
  */
 
 namespace Drupal\config\Tests;
@@ -25,7 +25,7 @@ class ConfigOverrideTest extends KernelTestBase {
 
   protected function setUp() {
     parent::setUp();
-    $this->copyConfig($this->container->get('config.storage'), $this->container->get('config.storage.staging'));
+    $this->copyConfig($this->container->get('config.storage'), $this->container->get('config.storage.sync'));
   }
 
   /**
@@ -93,15 +93,15 @@ class ConfigOverrideTest extends KernelTestBase {
     $this->assertIdentical($config->getOriginal('baz', FALSE), $expected_original_data['baz']);
     $this->assertIdentical($config->getOriginal('404', FALSE), $expected_original_data['404']);
 
-    // Write file to staging.
-    $staging = $this->container->get('config.storage.staging');
+    // Write file to sync.
+    $sync = $this->container->get('config.storage.sync');
     $expected_new_data = array(
       'foo' => 'barbar',
       '404' => 'herpderp',
     );
-    $staging->write('config_test.system', $expected_new_data);
+    $sync->write('config_test.system', $expected_new_data);
 
-    // Import changed data from staging to active.
+    // Import changed data from sync to active.
     $this->configImporter()->import();
     $data = $active->read('config_test.system');
 
@@ -111,7 +111,7 @@ class ConfigOverrideTest extends KernelTestBase {
     $this->assertFalse(isset($data['baz']));
     $this->assertIdentical($data['404'], $expected_new_data['404']);
 
-    // Verifiy the overrides are still working.
+    // Verify that the overrides are still working.
     $config = \Drupal::config('config_test.system');
     $this->assertIdentical($config->get('foo'), $overrides['config_test.system']['foo']);
     $this->assertIdentical($config->get('baz'), $overrides['config_test.system']['baz']);

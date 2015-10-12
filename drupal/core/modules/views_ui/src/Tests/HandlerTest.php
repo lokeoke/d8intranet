@@ -7,7 +7,9 @@
 
 namespace Drupal\views_ui\Tests;
 
-use Drupal\Component\Utility\String;
+use Drupal\Component\Utility\SafeMarkup;
+use Drupal\field\Entity\FieldConfig;
+use Drupal\field\Entity\FieldStorageConfig;
 use Drupal\views\ViewExecutable;
 
 /**
@@ -23,7 +25,16 @@ class HandlerTest extends UITestBase {
    *
    * @var array
    */
-  public static $testViews = array('test_view_empty', 'test_view_broken');
+  public static $testViews = array('test_view_empty', 'test_view_broken', 'node');
+
+  /**
+   * {@inheritdoc}
+   */
+  protected function setUp() {
+    parent::setUp();
+
+    $this->drupalPlaceBlock('page_title_block');
+  }
 
   /**
    * Overrides \Drupal\views\Tests\ViewTestBase::schemaDefinition().
@@ -138,6 +149,40 @@ class HandlerTest extends UITestBase {
   }
 
   /**
+   * Tests escaping of field labels in help text.
+   */
+  public function testHandlerHelpEscaping() {
+    // Setup a field with two instances using a different label.
+    // Ensure that the label is escaped properly.
+
+    $this->drupalCreateContentType(['type' => 'article']);
+    $this->drupalCreateContentType(['type' => 'page']);
+
+    FieldStorageConfig::create([
+      'field_name' => 'field_test',
+      'entity_type' => 'node',
+      'type' => 'string',
+    ])->save();
+
+    FieldConfig::create([
+      'field_name' => 'field_test',
+      'entity_type' => 'node',
+      'bundle' => 'page',
+      'label' => 'The giraffe" label'
+    ])->save();
+
+    FieldConfig::create([
+      'field_name' => 'field_test',
+      'entity_type' => 'node',
+      'bundle' => 'article',
+      'label' => 'The <em>giraffe"</em> label <script>alert("the return of the xss")</script>'
+    ])->save();
+
+    $this->drupalGet('admin/structure/views/nojs/add-handler/content/default/field');
+    $this->assertEscaped('Appears in: page, article. Also known as: Content: The <em>giraffe"</em> label <script>alert("the return of the xss")</script>');
+  }
+
+  /**
    * Tests broken handlers.
    */
   public function testBrokenHandlers() {
@@ -148,14 +193,14 @@ class HandlerTest extends UITestBase {
       $href = "admin/structure/views/nojs/handler/test_view_broken/default/$type/id_broken";
 
       $result = $this->xpath('//a[contains(@href, :href)]', array(':href' => $href));
-      $this->assertEqual(count($result), 1, String::format('Handler (%type) edit link found.', array('%type' => $type)));
+      $this->assertEqual(count($result), 1, SafeMarkup::format('Handler (%type) edit link found.', array('%type' => $type)));
 
-      $text = t('Broken/missing handler');
+      $text = 'Broken/missing handler';
 
       $this->assertIdentical((string) $result[0], $text, 'Ensure the broken handler text was found.');
 
       $this->drupalGet($href);
-      $result = $this->xpath('//h1');
+      $result = $this->xpath('//h1[@class="page-title"]');
       $this->assertTrue(strpos((string) $result[0], $text) !== FALSE, 'Ensure the broken handler text was found.');
 
       $original_configuration = [
@@ -167,7 +212,7 @@ class HandlerTest extends UITestBase {
       ];
 
       foreach ($original_configuration as $key => $value) {
-        $this->assertText(String::format('@key: @value', array('@key' => $key, '@value' => $value)));
+        $this->assertText(SafeMarkup::format('@key: @value', array('@key' => $key, '@value' => $value)));
       }
     }
   }

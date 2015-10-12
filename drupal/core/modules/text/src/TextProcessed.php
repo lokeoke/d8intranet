@@ -8,7 +8,6 @@
 namespace Drupal\text;
 
 use Drupal\Component\Utility\SafeMarkup;
-use Drupal\Component\Utility\String;
 use Drupal\Core\TypedData\DataDefinitionInterface;
 use Drupal\Core\TypedData\TypedDataInterface;
 use Drupal\Core\TypedData\TypedData;
@@ -42,7 +41,7 @@ class TextProcessed extends TypedData {
   /**
    * Implements \Drupal\Core\TypedData\TypedDataInterface::getValue().
    */
-  public function getValue($langcode = NULL) {
+  public function getValue() {
     if ($this->processed !== NULL) {
       return $this->processed;
     }
@@ -50,8 +49,7 @@ class TextProcessed extends TypedData {
     $item = $this->getParent();
     $text = $item->{($this->definition->getSetting('text source'))};
 
-    // Avoid running check_markup() or
-    // \Drupal\Component\Utility\String::checkPlain() on empty strings.
+    // Avoid running check_markup() on empty strings.
     if (!isset($text) || $text === '') {
       $this->processed = '';
     }

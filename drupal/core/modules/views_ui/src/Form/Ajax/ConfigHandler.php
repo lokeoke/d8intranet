@@ -20,7 +20,7 @@ use Symfony\Component\HttpFoundation\Request;
 class ConfigHandler extends ViewsFormBase {
 
   /**
-   * Constucts a new ConfigHandler object.
+   * Constructs a new ConfigHandler object.
    */
   public function __construct($type = NULL, $id = NULL) {
     $this->setType($type);
@@ -160,7 +160,7 @@ class ConfigHandler extends ViewsFormBase {
           $form['options']['form_description'] = array(
             '#markup' => $handler->definition['help'],
             '#theme_wrappers' => array('container'),
-            '#attributes' => array('class' => array('form-item description')),
+            '#attributes' => array('class' => array('js-form-item form-item description')),
             '#weight' => -1000,
           );
         }
@@ -184,6 +184,7 @@ class ConfigHandler extends ViewsFormBase {
         '#ajax' => array(
           'url' => Url::fromRoute('<current>'),
         ),
+        '#button_type' => 'danger',
       );
     }
 

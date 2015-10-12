@@ -1,7 +1,7 @@
 {#
 /**
  * @file
- * Default theme implementation for a form element label.
+ * Theme override for a form element label.
  *
  * Available variables:
  * - title: The label's text.
@@ -16,6 +16,7 @@
   set classes = [
     title_display == 'after' ? 'option',
     title_display == 'invisible' ? 'visually-hidden',
+    required ? 'js-form-required',
     required ? 'form-required',
   ]
 %}

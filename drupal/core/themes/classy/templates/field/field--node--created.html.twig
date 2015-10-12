@@ -1,7 +1,7 @@
 {#
 /**
  * @file
- * Default theme implementation for the node created field.
+ * Theme override for the node created field.
  *
  * This is an override of field.html.twig for the node created field. See that
  * template for documentation about its details and overrides.
@@ -19,14 +19,12 @@
  * @see field.html.twig
  */
 #}
-{% set field_name_class = field_name|clean_class %}
 {%
   set classes = [
     'field',
-    'field-' ~ entity_type|clean_class ~ '--' ~ field_name_class,
-    'field-name-' ~ field_name_class,
-    'field-type-' ~ field_type|clean_class,
-    'field-label-' ~ label_display,
+    'field--name-' ~ field_name|clean_class,
+    'field--type-' ~ field_type|clean_class,
+    'field--label-' ~ label_display,
   ]
 %}
 <span{{ attributes.addClass(classes) }}>

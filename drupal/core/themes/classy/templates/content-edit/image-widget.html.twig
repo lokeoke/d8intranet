@@ -1,7 +1,7 @@
 {#
 /**
  * @file
- * Default theme implementation for an image field widget.
+ * Theme override for an image field widget.
  *
  * Available variables:
  * - attributes: HTML attributes for the containing element.
@@ -10,6 +10,7 @@
  * @see template_preprocess_image_widget()
  */
 #}
+{{ attach_library('classy/image-widget') }}
 <div{{ attributes }}>
   {% if data.preview %}
     <div class="image-preview">

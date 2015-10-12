@@ -18,7 +18,7 @@ use Drupal\Tests\UnitTestCase;
 class ElementInfoManagerTest extends UnitTestCase {
 
   /**
-   * The class under test.
+   * The mocked element_info.
    *
    * @var \Drupal\Core\Render\ElementInfoManagerInterface
    */
@@ -67,101 +67,6 @@ class ElementInfoManagerTest extends UnitTestCase {
   }
 
   /**
-   * Tests the getInfo method.
-   *
-   * @covers ::getInfo
-   * @covers ::buildInfo
-   *
-   * @dataProvider providerTestGetInfo
-   */
-  public function testGetInfo($type, $expected_info, $element_info, callable $alter_callback = NULL) {
-    $this->moduleHandler->expects($this->once())
-      ->method('invokeAll')
-      ->with('element_info')
-      ->will($this->returnValue($element_info));
-    $this->moduleHandler->expects($this->once())
-      ->method('alter')
-      ->with('element_info', $this->anything())
-      ->will($this->returnCallback($alter_callback ?: function($info) {
-        return $info;
-      }));
-    $this->themeManager->expects($this->once())
-      ->method('getActiveTheme')
-      ->willReturn(new ActiveTheme(['name' => 'test']));
-    $this->themeManager->expects($this->once())
-      ->method('alter')
-      ->with('element_info', $this->anything())
-      ->will($this->returnCallback($alter_callback ?: function($info) {
-        return $info;
-      }));
-
-    $this->cache->expects($this->at(0))
-      ->method('get')
-      ->with('element_info_build:test')
-      ->will($this->returnValue(FALSE));
-    $this->cache->expects($this->at(1))
-      ->method('get')
-      ->with('element_info')
-      ->will($this->returnValue(FALSE));
-    $this->cache->expects($this->at(2))
-      ->method('set')
-      ->with('element_info');
-    $this->cache->expects($this->at(3))
-      ->method('set')
-      ->with('element_info_build:test');
-
-    $this->assertEquals($expected_info, $this->elementInfo->getInfo($type));
-  }
-
-  /**
-   * Provides tests data for getInfo.
-   *
-   * @return array
-   */
-  public function providerTestGetInfo() {
-    $data = array();
-    // Provide an element and expect it is returned.
-    $data[] = array(
-      'page',
-      array(
-        '#type' => 'page',
-        '#theme' => 'page',
-        '#defaults_loaded' => TRUE,
-      ),
-      array('page' => array(
-        '#theme' => 'page',
-      )),
-    );
-    // Provide an element but request an non existent one.
-    $data[] = array(
-      'form',
-      array(
-        '#defaults_loaded' => TRUE,
-      ),
-      array('page' => array(
-        '#theme' => 'page',
-      )),
-    );
-    // Provide an element and alter it to ensure it is altered.
-    $data[] = array(
-      'page',
-      array(
-        '#type' => 'page',
-        '#theme' => 'page',
-        '#number' => 597219,
-        '#defaults_loaded' => TRUE,
-      ),
-      array('page' => array(
-        '#theme' => 'page',
-      )),
-      function ($alter_name, array &$info) {
-        $info['page']['#number'] = 597219;
-      }
-    );
-    return $data;
-  }
-
-  /**
    * Tests the getInfo() method when render element plugins are used.
    *
    * @covers ::getInfo
@@ -170,10 +75,6 @@ class ElementInfoManagerTest extends UnitTestCase {
    * @dataProvider providerTestGetInfoElementPlugin
    */
   public function testGetInfoElementPlugin($plugin_class, $expected_info) {
-    $this->moduleHandler->expects($this->once())
-      ->method('invokeAll')
-      ->with('element_info')
-      ->willReturn(array());
     $this->moduleHandler->expects($this->once())
       ->method('alter')
       ->with('element_info', $this->anything())
@@ -236,5 +137,36 @@ class ElementInfoManagerTest extends UnitTestCase {
     );
     return $data;
   }
+
+  /**
+   * @covers ::getInfoProperty
+   */
+  public function testGetInfoProperty() {
+    $this->themeManager
+      ->method('getActiveTheme')
+      ->willReturn(new ActiveTheme(['name' => 'test']));
+
+    $element_info = new TestElementInfoManager(new \ArrayObject(), $this->cache, $this->cacheTagsInvalidator, $this->moduleHandler, $this->themeManager);
+    $this->assertSame('baz', $element_info->getInfoProperty('foo', '#bar'));
+    $this->assertNull($element_info->getInfoProperty('foo', '#non_existing_property'));
+    $this->assertSame('qux', $element_info->getInfoProperty('foo', '#non_existing_property', 'qux'));
+  }
+}
+
+/**
+ * Provides a test custom element plugin.
+ */
+class TestElementInfoManager extends ElementInfoManager {
+
+  /**
+   * {@inheritdoc}
+   */
+  protected $elementInfo = array(
+    'test' => array(
+      'foo' => array(
+        '#bar' => 'baz',
+      ),
+    ),
+  );
 
 }

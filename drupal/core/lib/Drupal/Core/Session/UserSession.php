@@ -31,39 +31,18 @@ class UserSession implements AccountInterface {
   protected $roles = array(AccountInterface::ANONYMOUS_ROLE);
 
   /**
-   * Session ID.
+   * The Unix timestamp when the user last accessed the site.
    *
    * @var string.
    */
-  public $sid;
-
-  /**
-   * Secure session ID.
-   *
-   * @var string.
-   */
-  public $ssid;
-
-  /**
-   * Session data.
-   *
-   * @var array.
-   */
-  public $session;
-
-  /**
-   * The Unix timestamp when this session last requested a page.
-   *
-   * @var string.
-   */
-  protected $timestamp;
+  protected $access;
 
   /**
    * The name of this account.
    *
    * @var string
    */
-  public $name;
+  public $name = '';
 
   /**
    * The preferred language code of the account.
@@ -92,13 +71,6 @@ class UserSession implements AccountInterface {
    * @var string
    */
   protected $timezone;
-
-  /**
-   * The hostname for this user session.
-   *
-   * @var string
-   */
-  protected $hostname = '';
 
   /**
    * Constructs a new user session.
@@ -147,27 +119,6 @@ class UserSession implements AccountInterface {
   /**
    * {@inheritdoc}
    */
-  public function getSecureSessionId() {
-    return $this->ssid;
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  public function getSessionData() {
-    return $this->session;
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  public function getSessionId() {
-    return $this->sid;
-  }
-
-  /**
-   * {@inheritdoc}
-   */
   public function isAuthenticated() {
     return $this->uid > 0;
   }
@@ -209,6 +160,20 @@ class UserSession implements AccountInterface {
    * {@inheritdoc}
    */
   public function getUsername() {
+    return $this->getAccountName();
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function getAccountName() {
+    return $this->name;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function getDisplayName() {
     $name = $this->name ?: \Drupal::config('user.settings')->get('anonymous');
     \Drupal::moduleHandler()->alter('user_format_name', $name, $this);
     return $name;
@@ -232,14 +197,7 @@ class UserSession implements AccountInterface {
    * {@inheritdoc}
    */
   public function getLastAccessedTime() {
-    return $this->timestamp;
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  public function getHostname() {
-    return $this->hostname;
+    return $this->access;
   }
 
   /**
