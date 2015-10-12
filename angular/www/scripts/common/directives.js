@@ -47,8 +47,6 @@ angular.module('d8intranetApp')
   .directive('vacationsLeft', function () {
     var progressLeft = function (scope, element, attrs) {
       var barHeight = (attrs.daysLeft / attrs.daysTotal) * 100 + '%';
-
-      console.log(barHeight);
       element.height(barHeight);
       $('.vacation-days-left').css('bottom', ((attrs.daysLeft / attrs.daysTotal) * 100 + '%'));
     };

@@ -17,22 +17,22 @@ angular.module('d8intranetApp', [
   'ngTouch',
   'ui.router'
 ])
-  .config(function ($routeProvider, $httpProvider) {
+  .config(function ($routeProvider, $httpProvider, $compileProvider) {
     $routeProvider
       .when('/', {
         url: "/main",
-        templateUrl: 'views/main.html',
-        controller: 'MainCtrl'
+        templateUrl: 'views/dashboard.html',
+        controller: 'dashboardController'
       })
       .when('/employees', {
         url: "/employees",
         templateUrl: 'views/employees.html',
-        controller: 'EmployeesCtrl'
+        controller: 'employeesController'
       })
       .when('/user', {
         url: "/user",
         templateUrl: 'views/user.html',
-        controller: 'UserCtrl'
+        controller: 'singleUserController'
       })
       .when('/user/:userId', {
         url: "/user/:userId",
@@ -45,11 +45,27 @@ angular.module('d8intranetApp', [
         controller: 'StatisticController'
       })
       .otherwise({
-        redirectTo: '/main',
-        templateUrl: 'views/main.html'
+        redirectTo: '/dashboard',
+        templateUrl: 'views/dashboard.html'
       });
 
     $httpProvider.defaults.headers.common.Accept = 'application/hal+json';
+
+    $compileProvider.aHrefSanitizationWhitelist(/^\s*(https?|mailto|skype|chrome-extension):/);
+  })
+
+  .constant('config', {
+    frontUrl: "#main",
+    employeesUrl: "#employees",
+    vacationsUrl: "#vacation",
+    checkInUrl: "http://drupal.d8pp.dev:8888/checkin",
+    totalVacation: "20"
+  })
+  
+  .controller('GetDateCtrl', function ($scope) {
+    $scope.date = new Date();
   });
+
+
 
 

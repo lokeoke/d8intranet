@@ -1,0 +1,66 @@
+<div type="text/ng-template" id="templates/people.html">
+  <div class="teams-content" ng-controller="peopleListController">
+
+    <div class="group">
+
+      <div class="filter-field-container"
+          ng-class="inputSelected ? 'input-filled' : ' ' ">
+        <input type="text" class="filter-field" id="filter-people" ng-blur
+            ng-model="name" ng-change="updateSearchField(name)">
+        <label class="filter-label" for="filter-people">Quick filter</label>
+      </div>
+      <select chosen ng-model='teamFilter.selectedOption' name="Group filter"
+          id="teamFilter"
+          ng-options="option.value as option.team_name for option in teams">
+      </select>
+
+      <div class="count-employees">
+        Total {{people.length}} employees
+      </div>
+    </div>
+
+
+    <ul class="people-list">
+      <li class="item"
+          ng-repeat="user in people | teamsOnly:filterBy.selectedOption | filter:user | orderBy:'user' ">
+        <div class="user-info">
+          <a href="#user/{{user.uid[0].value}}">
+            <div class="user-pic">
+              <img ng-src="{{user.field_user_image[0].value}}" alt="{{user.field_first_name[0].value}}
+                     {{user.field_last_name[0].value}}"/>
+            </div>
+            <h3 class="user-name">
+              {{user.field_last_name[0].value}}
+              {{user.field_first_name[0].value}} </h3>
+          </a>
+        </div>
+        <div class="user-data-wrapper">
+          <div class="position">
+            <div class="table-cell-container">
+              {{user.field_user_position[0].value}}
+            </div>
+          </div>
+          <div class="mail">
+            <div class="table-cell-container">
+              <span class="font-icon mail-icon">&nbsp;</span>
+              <a href="mailto:{{user.field_user_email[0].value}}" class="link">{{user.field_user_email[0].value}}</a>
+            </div>
+          </div>
+          <div class="phone">
+            <div class="table-cell-container">
+              <span class="font-icon phone-icon">&nbsp;</span>
+              {{user.field_phone_number[0].value}}
+            </div>
+          </div>
+          <div class="skype">
+            <div class="table-cell-container">
+              <span class="font-icon skype-icon">&nbsp;</span>
+              <a ng-href="skype:{{user.field_user_skype[0].value}}" class="link">{{user.field_user_skype[0].value}}</a>
+            </div>
+          </div>
+        </div>
+      </li>
+    </ul>
+
+  </div>
+</div>
