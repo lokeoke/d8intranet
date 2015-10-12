@@ -13,20 +13,6 @@ angular.module('d8intranetApp')
 
   .controller('StatisticController', function ($scope, $http, getJsonData, formatUserData) {
 
-    //function processFields(fieldType, futureObjField, param) {
-    //  var obj = [];
-    //  angular.forEach(fieldType, function (param) {
-    //    var month = formatUserData.getMonthNumber(param.start_date);
-    //    $scope.months[month].futureObjField = formatUserData.formatStatisticsData(futureObjField, param);
-    //
-    //    obj.push($scope.months[month].futureObjField);
-    //
-    //  });
-    //
-    //  return obj;
-    //}
-
-
     getJsonData.getUsers().then(function (data) {
       $scope.users = data;
       var calendarMonths = {};

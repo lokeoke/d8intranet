@@ -8,18 +8,15 @@
  * Controller of the d8intranetApp
  */
 angular.module('d8intranetApp')
-  .controller('UserCtrl', function ($scope, $http, $routeParams, getJsonData, formatUserData, config) {
+  .controller('singleUserController', function ($scope, $http, $routeParams, getJsonData, formatUserData, config) {
 
     getJsonData.getUsers().then(function (data) {
       $scope.users = data;
 
       formatUserData.formattedUser($scope.users);
 
-      //console.log($scope.users);
-
       $scope.user = {};
       var cameToCompany = '';
-      //var currentVacation;
 
       angular.forEach($scope.users, function (user, title) {
         var calendarMonths = {};
@@ -29,7 +26,6 @@ angular.module('d8intranetApp')
           $scope.user = user;
           $scope.filteredKeys = {};
 
-          console.log(cameToCompany);
 
           var stamp = user.field_came_to_propeople[0].value;
 
@@ -39,7 +35,7 @@ angular.module('d8intranetApp')
               past = new Date(cameToCompany);
 
           angular.forEach(user.timeRanges, function (value, key) {
-            $scope.filteredKeys[stateTitle(key)] = value;
+            $scope.filteredKeys[setStiaticTitle(key)] = value;
           });
 
 
@@ -59,9 +55,6 @@ angular.module('d8intranetApp')
             else {
               $scope.vacationDaysLeft = 0;
             }
-
-            console.log($scope.vacationDaysLeft);
-            console.log('Total vacation: ' + $scope.totalVacationDays);
           }
           else {
             $scope.totalVacationDays = config.totalVacation;
@@ -71,7 +64,7 @@ angular.module('d8intranetApp')
         }
       });
 
-      function stateTitle(title) {
+      function setStiaticTitle(title) {
         switch (title) {
           case 'totalVacation':
             return 'Vacation';

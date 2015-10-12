@@ -8,7 +8,7 @@
  * Controller of the d8intranetApp
  */
 angular.module('d8intranetApp')
-  .controller('SidebarCtrl', function (config, $scope, $rootScope, $location) {
+  .controller('sidebarController', function (config, $scope, $rootScope, $location) {
     $scope.menuStates = {};
     $scope.menuStates.activeItem = '#'+($location.$$url).slice(1);
 

@@ -1,5 +1,6 @@
-<div type="text/ng-template" id="views/teams.html" class="teams"
+<div type="text/ng-template" id="templates/teams.html" class="teams"
     ng-controller="teamsController">
+
   <div class="container group">
     <div class="team-list" ng-repeat="team in regularTeams | orderBy:'weight'"
         ng-class="'{{team.type}}'">

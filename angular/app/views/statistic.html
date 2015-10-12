@@ -1,0 +1,37 @@
+<div class="page-container">
+  <h1 class="page-title">Global statistics</h1>
+
+  <div class="page-content">
+
+    <div class="employees-tabs">
+      <ul>
+        <li class="item" ng-repeat="tab in tabs">
+        <span class="link" ng-class="{active:isActiveTab(tab.url)}"
+            ng-click="onClickTab(tab)">{{tab.title}}</span>
+        </li>
+      </ul>
+    </div>
+
+    <select chosen ng-model='teamFilter.selectedOption' name="Group filter"
+        id="teamFilter"
+        ng-options="option.value as option.team_name for option in teams">
+    </select>
+
+    <ul class="legend">
+      <li class="leave-type pre-holiday-leave">Pre-holiday</li>
+      <li class="leave-type approved-paid-leave">Paid leave</li>
+      <li class="leave-type approved-unpaid-leave"> Unpaid leave</li>
+    </ul>
+
+    <div class="container group table-data">
+      <div class="year-table">
+        <div table-headline></div>
+        <div class="view-animate-container">
+          <div ng-include="currentTab" class="slide-down"></div>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+</div>
