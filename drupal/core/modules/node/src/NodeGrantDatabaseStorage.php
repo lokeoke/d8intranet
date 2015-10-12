@@ -22,6 +22,8 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  * Defines a controller class that handles the node grants system.
  *
  * This is used to build node query access.
+ *
+ * @ingroup node_access
  */
 class NodeGrantDatabaseStorage implements NodeGrantDatabaseStorageInterface {
 
@@ -65,12 +67,18 @@ class NodeGrantDatabaseStorage implements NodeGrantDatabaseStorageInterface {
   /**
    * {@inheritdoc}
    */
-  public function access(NodeInterface $node, $operation, $langcode, AccountInterface $account) {
+  public function access(NodeInterface $node, $operation, AccountInterface $account) {
     // If no module implements the hook or the node does not have an id there is
     // no point in querying the database for access grants.
     if (!$this->moduleHandler->getImplementations('node_grants') || !$node->id()) {
-      // No opinion.
-      return AccessResult::neutral();
+      // Return the equivalent of the default grant, defined by
+      // self::writeDefault().
+      if ($operation === 'view') {
+        return AccessResult::allowedIf($node->isPublished())->cacheUntilEntityChanges($node);
+      }
+      else {
+        return AccessResult::neutral();
+      }
     }
 
     // Check the database for potential access grants.
@@ -81,7 +89,7 @@ class NodeGrantDatabaseStorage implements NodeGrantDatabaseStorageInterface {
     // Check for grants for this node and the correct langcode.
     $nids = $query->andConditionGroup()
       ->condition('nid', $node->id())
-      ->condition('langcode', $langcode);
+      ->condition('langcode', $node->language()->getId());
     // If the node is published, also take the default grant into account. The
     // default is saved with a node ID of 0.
     $status = $node->isPublished();
@@ -108,7 +116,7 @@ class NodeGrantDatabaseStorage implements NodeGrantDatabaseStorageInterface {
     $set_cacheability = function (AccessResult $access_result) use ($operation) {
       $access_result->addCacheContexts(['user.node_grants:' . $operation]);
       if ($operation !== 'view') {
-        $access_result->setCacheable(FALSE);
+        $access_result->setCacheMaxAge(0);
       }
       return $access_result;
     };
@@ -117,7 +125,7 @@ class NodeGrantDatabaseStorage implements NodeGrantDatabaseStorageInterface {
       return $set_cacheability(AccessResult::allowed());
     }
     else {
-      return $set_cacheability(AccessResult::forbidden());
+      return $set_cacheability(AccessResult::neutral());
     }
   }
 

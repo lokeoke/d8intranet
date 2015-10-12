@@ -40,8 +40,8 @@ function pp_install() {
 
   // Enable the Contact link in the footer menu.
   /** @var \Drupal\Core\Menu\MenuLinkManagerInterface $menu_link_manager */
-  $menu_link_manager = \Drupal::service('plugin.manager.menu.link');
-  $menu_link_manager->updateDefinition('contact.site_page', array('enabled' => 1));
+  /*$menu_link_manager = \Drupal::service('plugin.manager.menu.link');
+  $menu_link_manager->updateDefinition('contact.site_page', array('enabled' => 1));*/
 
   user_role_grant_permissions(RoleInterface::ANONYMOUS_ID, array('access site-wide contact form'));
   user_role_grant_permissions(RoleInterface::AUTHENTICATED_ID, array('access site-wide contact form'));
@@ -50,7 +50,7 @@ function pp_install() {
   user_role_grant_permissions(RoleInterface::AUTHENTICATED_ID, array('access shortcuts'));
 
   // Populate the default shortcut set.
-  $shortcut = entity_create('shortcut', array(
+  /*$shortcut = entity_create('shortcut', array(
     'shortcut_set' => 'default',
     'title' => t('Add content'),
     'weight' => -20,
@@ -64,7 +64,7 @@ function pp_install() {
     'weight' => -19,
     'link' => array('uri' => 'internal:/admin/content'),
   ));
-  $shortcut->save();
+  $shortcut->save();*/
 
   // Enable the admin theme.
   \Drupal::configFactory()->getEditable('node.settings')->set('use_admin_theme', '1')->save();

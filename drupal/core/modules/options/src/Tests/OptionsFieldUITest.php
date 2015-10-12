@@ -296,7 +296,7 @@ class OptionsFieldUITest extends FieldTestBase {
    *   Message to display.
    */
   function assertAllowedValuesInput($input_string, $result, $message) {
-    $edit = array('field_storage[settings][allowed_values]' => $input_string);
+    $edit = array('settings[allowed_values]' => $input_string);
     $this->drupalPostForm($this->adminPath, $edit, t('Save field settings'));
     $this->assertNoRaw('&amp;lt;', 'The page does not have double escaped HTML tags.');
 
@@ -320,13 +320,13 @@ class OptionsFieldUITest extends FieldTestBase {
     $on = $this->randomMachineName();
     $off = $this->randomMachineName();
     $edit = array(
-      'field_storage[settings][allowed_values]' =>
+      'settings[allowed_values]' =>
         "1|$on
         0|$off",
     );
 
     $this->drupalPostForm($this->adminPath, $edit, t('Save field settings'));
-    $this->assertText(format_string('Updated field !field_name field settings.', array('!field_name' => $this->fieldName)), "The 'On' and 'Off' form fields work for boolean fields.");
+    $this->assertText(format_string('Updated field @field_name field settings.', array('@field_name' => $this->fieldName)), "The 'On' and 'Off' form fields work for boolean fields.");
 
     // Select a default value.
     $edit = array(

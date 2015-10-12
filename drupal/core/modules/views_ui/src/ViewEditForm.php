@@ -2,28 +2,26 @@
 
 /**
  * @file
- * Contains Drupal\views_ui\ViewEditForm.
+ * Contains \Drupal\views_ui\ViewEditForm.
  */
 
 namespace Drupal\views_ui;
 
 use Drupal\Component\Utility\Html;
-use Drupal\Component\Utility\UrlHelper;
+use Drupal\Component\Utility\SafeMarkup;
 use Drupal\Component\Utility\Xss;
 use Drupal\Core\Ajax\AjaxResponse;
 use Drupal\Core\Ajax\HtmlCommand;
 use Drupal\Core\Ajax\ReplaceCommand;
-use Drupal\Core\Datetime\DateFormatter;
-use Drupal\Component\Utility\NestedArray;
-use Drupal\Component\Utility\String;
+use Drupal\Core\Datetime\DateFormatterInterface;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Render\Element;
+use Drupal\Core\Render\ElementInfoManagerInterface;
 use Drupal\Core\Url;
 use Drupal\user\SharedTempStoreFactory;
 use Drupal\views\Views;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\HttpFoundation\RequestStack;
 
 /**
  * Form controller for the Views edit form.
@@ -47,9 +45,16 @@ class ViewEditForm extends ViewFormBase {
   /**
    * The date formatter service.
    *
-   * @var \Drupal\Core\Datetime\DateFormatter
+   * @var \Drupal\Core\Datetime\DateFormatterInterface
    */
   protected $dateFormatter;
+
+  /**
+   * The element info manager.
+   *
+   * @var \Drupal\Core\Render\ElementInfoManagerInterface
+   */
+  protected $elementInfo;
 
   /**
    * Constructs a new ViewEditForm object.
@@ -58,13 +63,16 @@ class ViewEditForm extends ViewFormBase {
    *   The factory for the temp store object.
    * @param \Symfony\Component\HttpFoundation\RequestStack $requestStack
    *   The request stack object.
-   * @param \Drupal\Core\Datetime\DateFormatter $date_formatter
+   * @param \Drupal\Core\Datetime\DateFormatterInterface $date_formatter
    *   The date Formatter service.
+   * @param \Drupal\Core\Render\ElementInfoManagerInterface $element_info
+   *   The element info manager.
    */
-  public function __construct(SharedTempStoreFactory $temp_store_factory, RequestStack $requestStack, DateFormatter $date_formatter) {
+  public function __construct(SharedTempStoreFactory $temp_store_factory, RequestStack $requestStack, DateFormatterInterface $date_formatter, ElementInfoManagerInterface $element_info) {
     $this->tempStore = $temp_store_factory->get('views');
     $this->requestStack = $requestStack;
     $this->dateFormatter = $date_formatter;
+    $this->elementInfo = $element_info;
   }
 
   /**
@@ -74,7 +82,8 @@ class ViewEditForm extends ViewFormBase {
     return new static(
       $container->get('user.shared_tempstore'),
       $container->get('request_stack'),
-      $container->get('date.formatter')
+      $container->get('date.formatter'),
+      $container->get('element_info')
     );
   }
 
@@ -110,13 +119,6 @@ class ViewEditForm extends ViewFormBase {
     $form['#attached']['library'][] = 'views_ui/views_ui.admin';
     $form['#attached']['library'][] = 'views_ui/admin.styling';
 
-    $form['#attached']['drupalSettings']['views']['ajax'] = [
-      'id' => '#views-ajax-body',
-      'title' => '#views-ajax-title',
-      'popup' => '#views-ajax-popup',
-      'defaultForm' => $view->getDefaultAJAXMessage(),
-    ];
-
     $form += array(
       '#prefix' => '',
       '#suffix' => '',
@@ -131,17 +133,17 @@ class ViewEditForm extends ViewFormBase {
     if ($view->isLocked()) {
       $username = array(
         '#theme' => 'username',
-        '#account' => user_load($view->lock->owner),
+        '#account' => $this->entityManager->getStorage('user')->load($view->lock->owner),
       );
       $lock_message_substitutions = array(
-        '!user' => drupal_render($username),
-        '!age' => $this->dateFormatter->formatInterval(REQUEST_TIME - $view->lock->updated),
-        '@url' => $view->url('break-lock-form'),
+        '@user' => drupal_render($username),
+        '@age' => $this->dateFormatter->formatTimeDiffSince($view->lock->updated),
+        ':url' => $view->url('break-lock-form'),
       );
       $form['locked'] = array(
         '#type' => 'container',
         '#attributes' => array('class' => array('view-locked', 'messages', 'messages--warning')),
-        '#children' => $this->t('This view is being edited by user !user, and is therefore locked from editing by others. This lock is !age old. Click here to <a href="@url">break this lock</a>.', $lock_message_substitutions),
+        '#children' => $this->t('This view is being edited by user @user, and is therefore locked from editing by others. This lock is @age old. Click here to <a href=":url">break this lock</a>.', $lock_message_substitutions),
         '#weight' => -10,
       );
     }
@@ -178,6 +180,9 @@ class ViewEditForm extends ViewFormBase {
       $form['displays']['settings'] = array(
         '#type' => 'container',
         '#id' => 'edit-display-settings',
+        '#attributes' => array(
+          'class' => array('edit-display-settings'),
+        ),
       );
 
       // Add a text that the display is disabled.
@@ -206,19 +211,6 @@ class ViewEditForm extends ViewFormBase {
         '#type' => 'container',
         'tab_content' => $tab_content,
       );
-
-      // The content of the popup dialog.
-      $form['ajax-area'] = array(
-        '#type' => 'container',
-        '#id' => 'views-ajax-popup',
-      );
-      $form['ajax-area']['ajax-title'] = array(
-        '#markup' => '<div id="views-ajax-title"></div>',
-      );
-      $form['ajax-area']['ajax-body'] = array(
-        '#type' => 'container',
-        '#id' => 'views-ajax-body',
-      );
     }
 
     return $form;
@@ -246,8 +238,8 @@ class ViewEditForm extends ViewFormBase {
   /**
    * {@inheritdoc}
    */
-  public function validate(array $form, FormStateInterface $form_state) {
-    parent::validate($form, $form_state);
+  public function validateForm(array &$form, FormStateInterface $form_state) {
+    parent::validateForm($form, $form_state);
 
     $view = $this->entity;
     if ($view->isLocked()) {
@@ -297,7 +289,7 @@ class ViewEditForm extends ViewFormBase {
     }
     $view->set('display', $displays);
 
-    // @todo: Revisit this when http://drupal.org/node/1668866 is in.
+    // @todo: Revisit this when https://www.drupal.org/node/1668866 is in.
     $query = $this->requestStack->getCurrentRequest()->query;
     $destination = $query->get('destination');
 
@@ -392,7 +384,7 @@ class ViewEditForm extends ViewFormBase {
     if ($display['id'] != 'default') {
       $build['top']['#theme_wrappers'] = array('container');
       $build['top']['#attributes']['id'] = 'edit-display-settings-top';
-      $build['top']['#attributes']['class'] = array('views-ui-display-tab-actions', 'views-ui-display-tab-bucket', 'clearfix');
+      $build['top']['#attributes']['class'] = array('views-ui-display-tab-actions', 'edit-display-settings-top', 'views-ui-display-tab-bucket', 'clearfix');
 
       // The Delete, Duplicate and Undo Delete buttons.
       $build['top']['actions'] = array(
@@ -407,7 +399,7 @@ class ViewEditForm extends ViewFormBase {
         if (!$is_enabled) {
           $build['top']['actions']['enable'] = array(
             '#type' => 'submit',
-            '#value' => $this->t('Enable !display_title', array('!display_title' => $display_title)),
+            '#value' => $this->t('Enable @display_title', ['@display_title' => $display_title]),
             '#limit_validation_errors' => array(),
             '#submit' => array('::submitDisplayEnable', '::submitDelayDestination'),
             '#prefix' => '<li class="enable">',
@@ -419,13 +411,19 @@ class ViewEditForm extends ViewFormBase {
         elseif ($view->status() && $view->getExecutable()->displayHandlers->get($display['id'])->hasPath()) {
           $path = $view->getExecutable()->displayHandlers->get($display['id'])->getPath();
           if ($path && (strpos($path, '%') === FALSE)) {
+            if (!parse_url($path, PHP_URL_SCHEME)) {
+              // @todo Views should expect and store a leading /. See:
+              //   https://www.drupal.org/node/2423913
+              $url = Url::fromUserInput('/' . ltrim($path, '/'));
+            }
+            else {
+              $url = Url::fromUri("base:$path");
+            }
             $build['top']['actions']['path'] = array(
               '#type' => 'link',
-              '#title' => $this->t('View !display_title', array('!display_title' => $display_title)),
+              '#title' => $this->t('View @display_title', ['@display_title' => $display_title]),
               '#options' => array('alt' => array($this->t("Go to the real page for this display"))),
-              // @todo Use Url::fromPath() once
-              //   https://www.drupal.org/node/2351379 is resolved.
-              '#url' => Url::fromUri("base:$path"),
+              '#url' => $url,
               '#prefix' => '<li class="view">',
               "#suffix" => '</li>',
             );
@@ -434,7 +432,7 @@ class ViewEditForm extends ViewFormBase {
         if (!$is_default) {
           $build['top']['actions']['duplicate'] = array(
             '#type' => 'submit',
-            '#value' => $this->t('Duplicate !display_title', array('!display_title' => $display_title)),
+            '#value' => $this->t('Duplicate @display_title', ['@display_title' => $display_title]),
             '#limit_validation_errors' => array(),
             '#submit' => array('::submitDisplayDuplicate', '::submitDelayDestination'),
             '#prefix' => '<li class="duplicate">',
@@ -444,7 +442,7 @@ class ViewEditForm extends ViewFormBase {
         // Always allow a display to be deleted.
         $build['top']['actions']['delete'] = array(
           '#type' => 'submit',
-          '#value' => $this->t('Delete !display_title', array('!display_title' => $display_title)),
+          '#value' => $this->t('Delete @display_title', ['@display_title' => $display_title]),
           '#limit_validation_errors' => array(),
           '#submit' => array('::submitDisplayDelete', '::submitDelayDestination'),
           '#prefix' => '<li class="delete">',
@@ -458,7 +456,7 @@ class ViewEditForm extends ViewFormBase {
 
           $build['top']['actions']['duplicate_as'][$type] = array(
             '#type' => 'submit',
-            '#value' => $this->t('Duplicate as !type', array('!type' => $label)),
+            '#value' => $this->t('Duplicate as @type', ['@type' => $label]),
             '#limit_validation_errors' => array(),
             '#submit' => array('::submitDuplicateDisplayAsType', '::submitDelayDestination'),
             '#prefix' => '<li class="duplicate">',
@@ -469,7 +467,7 @@ class ViewEditForm extends ViewFormBase {
       else {
         $build['top']['actions']['undo_delete'] = array(
           '#type' => 'submit',
-          '#value' => $this->t('Undo delete of !display_title', array('!display_title' => $display_title)),
+          '#value' => $this->t('Undo delete of @display_title', ['@display_title' => $display_title]),
           '#limit_validation_errors' => array(),
           '#submit' => array('::submitDisplayUndoDelete', '::submitDelayDestination'),
           '#prefix' => '<li class="undo-delete">',
@@ -479,7 +477,7 @@ class ViewEditForm extends ViewFormBase {
       if ($is_enabled) {
         $build['top']['actions']['disable'] = array(
           '#type' => 'submit',
-          '#value' => $this->t('Disable !display_title', array('!display_title' => $display_title)),
+          '#value' => $this->t('Disable @display_title', ['@display_title' => $display_title]),
           '#limit_validation_errors' => array(),
           '#submit' => array('::submitDisplayDisable', '::submitDelayDestination'),
           '#prefix' => '<li class="disable">',
@@ -492,7 +490,7 @@ class ViewEditForm extends ViewFormBase {
       $build['top']['display_title'] = array(
         '#theme' => 'views_ui_display_tab_setting',
         '#description' => $this->t('Display name'),
-        '#link' => $view->getExecutable()->displayHandlers->get($display['id'])->optionLink(String::checkPlain($display_title), 'display_title'),
+        '#link' => $view->getExecutable()->displayHandlers->get($display['id'])->optionLink($display_title, 'display_title'),
       );
     }
 
@@ -666,13 +664,11 @@ class ViewEditForm extends ViewFormBase {
 
     // Regenerate the main display area.
     $build = $this->getDisplayTab($view);
-    static::addMicroweights($build);
-    $response->addCommand(new HtmlCommand('#views-tab-' . $display_id, drupal_render($build)));
+    $response->addCommand(new HtmlCommand('#views-tab-' . $display_id, $build));
 
     // Regenerate the top area so changes to display names and order will appear.
     $build = $this->renderDisplayTop($view);
-    static::addMicroweights($build);
-    $response->addCommand(new ReplaceCommand('#views-display-top', drupal_render($build)));
+    $response->addCommand(new ReplaceCommand('#views-display-top', $build));
   }
 
   /**
@@ -753,14 +749,14 @@ class ViewEditForm extends ViewFormBase {
     foreach (Views::fetchPluginNames('display', NULL, array($view->get('base_table'))) as $type => $label) {
       $element['add_display'][$type] = array(
         '#type' => 'submit',
-        '#value' => $this->t('Add !display', array('!display' => $label)),
+        '#value' => $this->t('Add @display', array('@display' => $label)),
         '#limit_validation_errors' => array(),
         '#submit' => array('::submitDisplayAdd', '::submitDelayDestination'),
         '#attributes' => array('class' => array('add-display')),
         // Allow JavaScript to remove the 'Add ' prefix from the button label when
         // placing the button in a "Add" dropdown menu.
-        '#process' => array_merge(array('views_ui_form_button_was_clicked'), element_info_property('submit', '#process', array())),
-        '#values' => array($this->t('Add !display', array('!display' => $label)), $label),
+        '#process' => array_merge(array('views_ui_form_button_was_clicked'), $this->elementInfo->getInfoProperty('submit', '#process', array())),
+        '#values' => array($this->t('Add @display', array('@display' => $label)), $label),
       );
     }
 
@@ -1060,7 +1056,7 @@ class ViewEditForm extends ViewFormBase {
         continue;
       }
 
-      $field_name = String::checkPlain($handler->adminLabel(TRUE));
+      $field_name = $handler->adminLabel(TRUE);
       if (!empty($field['relationship']) && !empty($relationships[$field['relationship']])) {
         $field_name = '(' . $relationships[$field['relationship']] . ') ' . $field_name;
       }
@@ -1083,7 +1079,7 @@ class ViewEditForm extends ViewFormBase {
       $build['fields'][$id]['#class'][] = Html::cleanCssIdentifier($display['id']. '-' . $type . '-' . $id);
 
       if ($executable->display_handler->useGroupBy() && $handler->usesGroupBy()) {
-        $build['fields'][$id]['#settings_links'][] = $this->l(String::format('<span class="label">@text</span>', array('@text' => $this->t('Aggregation settings'))), new Url('views_ui.form_handler_group', array(
+        $build['fields'][$id]['#settings_links'][] = $this->l(SafeMarkup::format('<span class="label">@text</span>', array('@text' => $this->t('Aggregation settings'))), new Url('views_ui.form_handler_group', array(
           'js' => 'nojs',
           'view' => $view->id(),
           'display_id' => $display['id'],
@@ -1093,7 +1089,7 @@ class ViewEditForm extends ViewFormBase {
       }
 
       if ($handler->hasExtraOptions()) {
-        $build['fields'][$id]['#settings_links'][] = $this->l(String::format('<span class="label">@text</span>', array('@text' => $this->t('Settings'))), new Url('views_ui.form_handler_extra', array(
+        $build['fields'][$id]['#settings_links'][] = $this->l(SafeMarkup::format('<span class="label">@text</span>', array('@text' => $this->t('Settings'))), new Url('views_ui.form_handler_extra', array(
           'js' => 'nojs',
           'view' => $view->id(),
           'display_id' => $display['id'],
@@ -1131,7 +1127,8 @@ class ViewEditForm extends ViewFormBase {
         $last = end($keys);
         foreach ($contents as $key => $pid) {
           if ($key != $last) {
-            $store[$pid]['#link'] .= '&nbsp;&nbsp;' . ($group_info['groups'][$gid] == 'OR' ? $this->t('OR') : $this->t('AND'));
+            $operator = $group_info['groups'][$gid] == 'OR' ? $this->t('OR') : $this->t('AND');
+            $store[$pid]['#link'] = SafeMarkup::format('@link <span>@operator</span>', ['@link' => $store[$pid]['#link'], '@operator' => $operator]);
           }
           $build['fields'][$pid] = $store[$pid];
         }
@@ -1139,24 +1136,6 @@ class ViewEditForm extends ViewFormBase {
     }
 
     return $build;
-  }
-
-  /**
-   * Recursively adds microweights to a render array, similar to what
-   * \Drupal::formBuilder()->doBuildForm() does for forms.
-   *
-   * @todo Submit a core patch to fix drupal_render() to do this, so that all
-   *   render arrays automatically preserve array insertion order, as forms do.
-   */
-  public static function addMicroweights(&$build) {
-    $count = 0;
-    foreach (Element::children($build) as $key) {
-      if (!isset($build[$key]['#weight'])) {
-        $build[$key]['#weight'] = $count/1000;
-      }
-      static::addMicroweights($build[$key]);
-      $count++;
-    }
   }
 
 }

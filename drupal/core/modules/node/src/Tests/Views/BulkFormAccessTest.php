@@ -6,7 +6,8 @@
  */
 
 namespace Drupal\node\Tests\Views;
-use Drupal\Component\Utility\String;
+
+use Drupal\Component\Utility\SafeMarkup;
 use Drupal\node\Entity\Node;
 use Drupal\node\Entity\NodeType;
 
@@ -84,7 +85,7 @@ class BulkFormAccessTest extends NodeTestBase {
     $this->assertTrue($node->isPublished(), 'Node is initially published.');
 
     // Ensure that the node can not be edited.
-    $this->assertEqual(FALSE, $this->accessHandler->access($node, 'update', $node->prepareLangcode(), $account), 'The node may not be edited.');
+    $this->assertEqual(FALSE, $this->accessHandler->access($node, 'update', $account), 'The node may not be edited.');
 
     // Test editing the node using the bulk form.
     $edit = array(
@@ -92,7 +93,7 @@ class BulkFormAccessTest extends NodeTestBase {
       'action' => 'node_unpublish_action',
     );
     $this->drupalPostForm('test-node-bulk-form', $edit, t('Apply'));
-    $this->assertRaw(String::format('No access to execute %action on the @entity_type_label %entity_label.', [
+    $this->assertRaw(SafeMarkup::format('No access to execute %action on the @entity_type_label %entity_label.', [
       '%action' => 'Unpublish content',
       '@entity_type_label' => 'Content',
       '%entity_label' => $node->label(),
@@ -104,7 +105,7 @@ class BulkFormAccessTest extends NodeTestBase {
 
     // Create an account that may view the private node, but can update the
     // status.
-    $account = $this->drupalCreateUser(array('administer nodes', 'edit any article content', 'node test view'));
+    $account = $this->drupalCreateUser(array('administer nodes', 'node test view'));
     $this->drupalLogin($account);
 
     // Ensure the node is published.
@@ -154,9 +155,9 @@ class BulkFormAccessTest extends NodeTestBase {
     $this->drupalLogin($account);
 
     // Ensure that the private node can not be deleted.
-    $this->assertEqual(FALSE, $this->accessHandler->access($private_node, 'delete', $private_node->prepareLangcode(), $account), 'The private node may not be deleted.');
+    $this->assertEqual(FALSE, $this->accessHandler->access($private_node, 'delete', $account), 'The private node may not be deleted.');
     // Ensure that the public node may be deleted.
-    $this->assertEqual(TRUE, $this->accessHandler->access($own_node, 'delete', $own_node->prepareLangcode(), $account), 'The own node may be deleted.');
+    $this->assertEqual(TRUE, $this->accessHandler->access($own_node, 'delete', $account), 'The own node may be deleted.');
 
     // Try to delete the node using the bulk form.
     $edit = array(

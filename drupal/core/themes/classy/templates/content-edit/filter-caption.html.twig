@@ -1,7 +1,7 @@
 {#
 /**
  * @file
- * Default theme implementation for a filter caption.
+ * Theme override for a filter caption.
  *
  * Returns HTML for a captioned image, audio, video or other tag.
  *
@@ -12,7 +12,7 @@
  * - string classes: The classes of the captioned HTML tag.
  */
 #}
-<figure class="caption caption-{{ tag }}{%- if classes %} {{ classes }}{%- endif %}">
+<figure role="group" class="caption caption-{{ tag }}{%- if classes %} {{ classes }}{%- endif %}">
 {{ node }}
 <figcaption>{{ caption }}</figcaption>
 </figure>

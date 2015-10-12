@@ -2,7 +2,7 @@
 
 /**
  * @file
- * Definition of Drupal\views\Entity\View.
+ * Contains \Drupal\views\Entity\View.
  */
 
 namespace Drupal\views\Entity;
@@ -11,6 +11,7 @@ use Drupal\Component\Utility\NestedArray;
 use Drupal\Core\Cache\Cache;
 use Drupal\Core\Config\Entity\ConfigEntityBase;
 use Drupal\Core\Entity\EntityStorageInterface;
+use Drupal\Core\Language\LanguageInterface;
 use Drupal\views\Views;
 use Drupal\views\ViewEntityInterface;
 
@@ -19,7 +20,7 @@ use Drupal\views\ViewEntityInterface;
  *
  * @ConfigEntityType(
  *   id = "view",
- *   label = @Translation("View"),
+ *   label = @Translation("View", context = "View entity type"),
  *   handlers = {
  *     "access" = "Drupal\views\ViewAccessControlHandler"
  *   },
@@ -28,6 +29,17 @@ use Drupal\views\ViewEntityInterface;
  *     "id" = "id",
  *     "label" = "label",
  *     "status" = "status"
+ *   },
+ *   config_export = {
+ *     "id",
+ *     "label",
+ *     "module",
+ *     "description",
+ *     "tag",
+ *     "base_table",
+ *     "base_field",
+ *     "core",
+ *     "display",
  *   }
  * )
  */
@@ -179,7 +191,7 @@ class View extends ConfigEntityBase implements ViewEntityInterface {
       'display_plugin' => $plugin_id,
       'id' => $id,
       // Cast the display title to a string since it is an object.
-      // @see \Drupal\Core\StringTranslation\TranslationWrapper
+      // @see \Drupal\Core\StringTranslation\TranslatableMarkup
       'display_title' => (string) $title,
       'position' => $id === 'default' ? 0 : count($this->display),
       'display_options' => array(),
@@ -274,7 +286,7 @@ class View extends ConfigEntityBase implements ViewEntityInterface {
       $this->calculatePluginDependencies($display);
     }
 
-    return $this->dependencies;
+    return $this;
   }
 
   /**
@@ -299,8 +311,9 @@ class View extends ConfigEntityBase implements ViewEntityInterface {
    *
    * Cache metadata is set per view and per display, and ends up being stored in
    * the view's configuration. This allows Views to determine very efficiently:
-   * - whether a view is cacheable at all
-   * - what the cache key for a given view should be
+   * - the max-age
+   * - the cache contexts
+   * - the cache tags
    *
    * In other words: this allows us to do the (expensive) work of initializing
    * Views plugins and handlers to determine their effect on the cacheability of
@@ -315,10 +328,13 @@ class View extends ConfigEntityBase implements ViewEntityInterface {
       $display =& $this->getDisplay($display_id);
       $executable->setDisplay($display_id);
 
-      list($display['cache_metadata']['cacheable'], $display['cache_metadata']['contexts']) = $executable->getDisplay()->calculateCacheMetadata();
-      // Always include at least the 'languages' context as there will most
+      $cache_metadata = $executable->getDisplay()->calculateCacheMetadata();
+      $display['cache_metadata']['max-age'] = $cache_metadata->getCacheMaxAge();
+      $display['cache_metadata']['contexts'] = $cache_metadata->getCacheContexts();
+      $display['cache_metadata']['tags'] = $cache_metadata->getCacheTags();
+      // Always include at least the 'languages:' context as there will most
       // probably be translatable strings in the view output.
-      $display['cache_metadata']['contexts'] = Cache::mergeContexts($display['cache_metadata']['contexts'], ['languages']);
+      $display['cache_metadata']['contexts'] = Cache::mergeContexts($display['cache_metadata']['contexts'], ['languages:' . LanguageInterface::TYPE_INTERFACE]);
     }
     // Restore the previous active display.
     $executable->setDisplay($current_display);
@@ -332,6 +348,7 @@ class View extends ConfigEntityBase implements ViewEntityInterface {
 
     // @todo Remove if views implements a view_builder controller.
     views_invalidate_cache();
+    $this->invalidateCaches();
 
     // Rebuild the router if this is a new view, or it's status changed.
     if (!isset($this->original) || ($this->status() != $this->original->status())) {
@@ -431,7 +448,11 @@ class View extends ConfigEntityBase implements ViewEntityInterface {
    * {@inheritdoc}
    */
   public function isInstallable() {
-    return (bool) \Drupal::service('views.views_data')->get($this->base_table);
+    $table_definition = \Drupal::service('views.views_data')->get($this->base_table);
+    // Check whether the base table definition exists and contains a base table
+    // definition. For example, taxonomy_views_data_alter() defines
+    // node_field_data even if it doesn't exist as a base table.
+    return $table_definition && isset($table_definition['table']['base']);
   }
 
   /**
@@ -441,6 +462,15 @@ class View extends ConfigEntityBase implements ViewEntityInterface {
     $keys = parent::__sleep();
     unset($keys[array_search('executable', $keys)]);
     return $keys;
+  }
+
+  /**
+   * Invalidates cache tags.
+   */
+  public function invalidateCaches() {
+    // Invalidate cache tags for cached rows.
+    $tags = $this->getCacheTags();
+    \Drupal::service('cache_tags.invalidator')->invalidateTags($tags);
   }
 
 }

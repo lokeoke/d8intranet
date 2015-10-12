@@ -1,3 +1,0 @@
-services:
-    jira_rest.jira_rest_service:
-        class: Drupal\jira_rest\JiraRestService

@@ -93,13 +93,15 @@ class UserSearch extends SearchPluginBase implements AccessibleInterface {
     $this->moduleHandler = $module_handler;
     $this->currentUser = $current_user;
     parent::__construct($configuration, $plugin_id, $plugin_definition);
+
+    $this->addCacheTags(['user_list']);
   }
 
   /**
    * {@inheritdoc}
    */
   public function access($operation = 'view', AccountInterface $account = NULL, $return_as_object = FALSE) {
-    $result = AccessResult::allowedIf(!empty($account) && $account->hasPermission('access user profiles'))->cachePerRole();
+    $result = AccessResult::allowedIf(!empty($account) && $account->hasPermission('access user profiles'))->cachePerPermissions();
     return $return_as_object ? $result : $result->isAllowed();
   }
 
@@ -148,12 +150,13 @@ class UserSearch extends SearchPluginBase implements AccessibleInterface {
 
     foreach ($accounts as $account) {
       $result = array(
-        'title' => $account->getUsername(),
+        'title' => $account->getDisplayName(),
         'link' => $account->url('canonical', array('absolute' => TRUE)),
       );
       if ($this->currentUser->hasPermission('administer users')) {
         $result['title'] .= ' (' . $account->getEmail() . ')';
       }
+      $this->addCacheableDependency($account);
       $results[] = $result;
     }
 

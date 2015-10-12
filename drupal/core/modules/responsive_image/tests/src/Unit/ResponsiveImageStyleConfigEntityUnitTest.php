@@ -67,7 +67,7 @@ class ResponsiveImageStyleConfigEntityUnitTest extends UnitTestCase {
   public function testCalculateDependencies() {
     // Set up image style loading mock.
     $styles = [];
-    foreach (['small', 'medium', 'large'] as $style) {
+    foreach (['fallback', 'small', 'medium', 'large'] as $style) {
       $mock = $this->getMock('Drupal\Core\Config\Entity\ConfigEntityInterface');
       $mock->expects($this->any())
         ->method('getConfigDependencyName')
@@ -90,6 +90,7 @@ class ResponsiveImageStyleConfigEntityUnitTest extends UnitTestCase {
 
     $entity = new ResponsiveImageStyle(['breakpoint_group' => 'test_group']);
     $entity->setBreakpointGroup('test_group');
+    $entity->setFallbackImageStyle('fallback');
     $entity->addImageStyleMapping('test_breakpoint', '1x', ['image_mapping_type' => 'image_style', 'image_mapping' => 'small']);
     $entity->addImageStyleMapping('test_breakpoint', '2x', [
       'image_mapping_type' => 'sizes',
@@ -107,10 +108,10 @@ class ResponsiveImageStyleConfigEntityUnitTest extends UnitTestCase {
       ->with('test_group')
       ->willReturn(array('bartik' => 'theme', 'toolbar' => 'module'));
 
-    $dependencies = $entity->calculateDependencies();
+    $dependencies = $entity->calculateDependencies()->getDependencies();
     $this->assertEquals(['toolbar'], $dependencies['module']);
     $this->assertEquals(['bartik'], $dependencies['theme']);
-    $this->assertEquals(['image.style.large', 'image.style.medium', 'image.style.small'], $dependencies['config']);
+    $this->assertEquals(['image.style.fallback', 'image.style.large', 'image.style.medium', 'image.style.small'], $dependencies['config']);
   }
 
   /**
@@ -207,6 +208,10 @@ class ResponsiveImageStyleConfigEntityUnitTest extends UnitTestCase {
       'image_mapping_type' => 'image_style',
       'image_mapping' => 'thumbnail',
     ));
+    $entity->addImageStyleMapping('test_breakpoint2', '2x', array(
+      'image_mapping_type' => 'image_style',
+      'image_mapping' => '_original image_',
+    ));
 
     $expected = array(
       'test_breakpoint' => array(
@@ -235,6 +240,12 @@ class ResponsiveImageStyleConfigEntityUnitTest extends UnitTestCase {
           'image_mapping_type' => 'image_style',
           'image_mapping' => 'thumbnail',
         ),
+        '2x' => array(
+          'breakpoint_id' => 'test_breakpoint2',
+          'multiplier' => '2x',
+          'image_mapping_type' => 'image_style',
+          'image_mapping' => '_original image_',
+        ),
       )
     );
     $this->assertEquals($expected, $entity->getKeyedImageStyleMappings());
@@ -249,6 +260,19 @@ class ResponsiveImageStyleConfigEntityUnitTest extends UnitTestCase {
       'multiplier' => '2x',
       'image_mapping_type' => 'image_style',
       'image_mapping' => 'medium',
+    );
+    $this->assertEquals($expected, $entity->getKeyedImageStyleMappings());
+
+    // Overwrite a mapping to ensure keyed mapping static cache is rebuilt.
+    $entity->addImageStyleMapping('test_breakpoint2', '2x', array(
+      'image_mapping_type' => 'image_style',
+      'image_mapping' => 'large',
+    ));
+    $expected['test_breakpoint2']['2x'] = array(
+      'breakpoint_id' => 'test_breakpoint2',
+      'multiplier' => '2x',
+      'image_mapping_type' => 'image_style',
+      'image_mapping' => 'large',
     );
     $this->assertEquals($expected, $entity->getKeyedImageStyleMappings());
   }

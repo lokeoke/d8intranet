@@ -7,7 +7,6 @@
 
 namespace Drupal\block\Tests;
 
-use Drupal\Component\Utility\String;
 use Drupal\Core\Form\FormState;
 use Drupal\simpletest\KernelTestBase;
 use Drupal\block\BlockInterface;
@@ -44,10 +43,6 @@ class BlockInterfaceTest extends KernelTestBase {
       'label' => 'Custom Display Message',
       'provider' => 'block_test',
       'label_display' => BlockInterface::BLOCK_LABEL_VISIBLE,
-      'cache' => array(
-        'max_age' => 0,
-        'contexts' => array(),
-      ),
       'display_message' => 'no message set',
     );
     // Initial configuration of the block at construction time.
@@ -61,13 +56,6 @@ class BlockInterfaceTest extends KernelTestBase {
     $this->assertIdentical($display_block->getConfiguration(), $expected_configuration, 'The block configuration was updated correctly.');
     $definition = $display_block->getPluginDefinition();
 
-    $period = array(0, 60, 180, 300, 600, 900, 1800, 2700, 3600, 10800, 21600, 32400, 43200, 86400);
-    $period = array_map(array(\Drupal::service('date.formatter'), 'formatInterval'), array_combine($period, $period));
-    $period[0] = '<' . t('no caching') . '>';
-    $period[\Drupal\Core\Cache\Cache::PERMANENT] = t('Forever');
-    $contexts = \Drupal::service("cache_contexts")->getLabels();
-    unset($contexts['theme']);
-    unset($contexts['languages']);
     $expected_form = array(
       'provider' => array(
         '#type' => 'value',
@@ -76,7 +64,7 @@ class BlockInterfaceTest extends KernelTestBase {
       'admin_label' => array(
         '#type' => 'item',
         '#title' => t('Block description'),
-        '#markup' => String::checkPlain($definition['admin_label']),
+        '#plain_text' => $definition['admin_label'],
       ),
       'label' => array(
         '#type' => 'textfield',
@@ -91,29 +79,7 @@ class BlockInterfaceTest extends KernelTestBase {
         '#default_value' => TRUE,
         '#return_value' => 'visible',
       ),
-      'cache' => array(
-        '#type' => 'details',
-        '#title' => t('Cache settings'),
-        'max_age' => array(
-          '#type' => 'select',
-          '#title' => t('Maximum age'),
-          '#description' => t('The maximum time this block may be cached.'),
-          '#default_value' => 0,
-          '#options' => $period,
-        ),
-        'contexts' => array(
-          '#type' => 'checkboxes',
-          '#title' => t('Vary by context'),
-          '#description' => t('The contexts this cached block must be varied by. <em>All</em> blocks are varied by language and theme.'),
-          '#default_value' => array(),
-          '#options' => $contexts,
-          '#states' => array(
-            'disabled' => array(
-              ':input[name="settings[cache][max_age]"]' => array('value' => (string) 0),
-            ),
-          ),
-        ),
-      ),
+      'context_mapping' => array(),
       'display_message' => array(
         '#type' => 'textfield',
         '#title' => t('Display message'),
@@ -125,7 +91,7 @@ class BlockInterfaceTest extends KernelTestBase {
     $actual_form = $display_block->buildConfigurationForm(array(), $form_state);
     // Remove the visibility sections, as that just tests condition plugins.
     unset($actual_form['visibility'], $actual_form['visibility_tabs']);
-    $this->assertIdentical($actual_form, $expected_form, 'Only the expected form elements were present.');
+    $this->assertIdentical($this->castSafeStrings($actual_form), $this->castSafeStrings($expected_form), 'Only the expected form elements were present.');
 
     $expected_build = array(
       '#children' => 'My custom display message.',

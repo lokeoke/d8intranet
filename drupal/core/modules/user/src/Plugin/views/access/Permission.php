@@ -2,12 +2,14 @@
 
 /**
  * @file
- * Definition of Drupal\user\Plugin\views\access\Permission.
+ * Contains \Drupal\user\Plugin\views\access\Permission.
  */
 
 namespace Drupal\user\Plugin\views\access;
 
-use Drupal\Component\Utility\String;
+use Drupal\Core\Cache\Cache;
+use Drupal\Core\Cache\CacheableDependencyInterface;
+use Drupal\Core\Extension\ModuleHandlerInterface;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Session\AccountInterface;
 use Drupal\user\PermissionHandlerInterface;
@@ -26,7 +28,7 @@ use Symfony\Component\Routing\Route;
  *   help = @Translation("Access will be granted to users with the specified permission string.")
  * )
  */
-class Permission extends AccessPluginBase {
+class Permission extends AccessPluginBase implements CacheableDependencyInterface {
 
   /**
    * Overrides Drupal\views\Plugin\Plugin::$usesOptions.
@@ -41,6 +43,13 @@ class Permission extends AccessPluginBase {
   protected $permissionHandler;
 
   /**
+   * The module handler.
+   *
+   * @var \Drupal\Core\Extension\ModuleHandlerInterface
+   */
+  protected $moduleHandler;
+
+  /**
    * Constructs a Permission object.
    *
    * @param array $configuration
@@ -51,10 +60,13 @@ class Permission extends AccessPluginBase {
    *   The plugin implementation definition.
    * @param \Drupal\user\PermissionHandlerInterface $permission_handler
    *   The permission handler.
+   * @param \Drupal\Core\Extension\ModuleHandlerInterface $module_handler
+   *   The module handler.
    */
-  public function __construct(array $configuration, $plugin_id, $plugin_definition, PermissionHandlerInterface $permission_handler) {
+  public function __construct(array $configuration, $plugin_id, $plugin_definition, PermissionHandlerInterface $permission_handler, ModuleHandlerInterface $module_handler) {
     parent::__construct($configuration, $plugin_id, $plugin_definition);
     $this->permissionHandler = $permission_handler;
+    $this->moduleHandler = $module_handler;
   }
 
   /**
@@ -65,7 +77,8 @@ class Permission extends AccessPluginBase {
       $configuration,
       $plugin_id,
       $plugin_definition,
-      $container->get('user.permissions')
+      $container->get('user.permissions'),
+      $container->get('module_handler')
     );
   }
 
@@ -102,15 +115,13 @@ class Permission extends AccessPluginBase {
 
   public function buildOptionsForm(&$form, FormStateInterface $form_state) {
     parent::buildOptionsForm($form, $form_state);
-    $module_info = system_get_info('module');
-
     // Get list of permissions
     $perms = [];
     $permissions = $this->permissionHandler->getPermissions();
     foreach ($permissions as $perm => $perm_item) {
       $provider = $perm_item['provider'];
-      $display_name = $module_info[$provider]['name'];
-      $perms[$display_name][$perm] = String::checkPlain(strip_tags($perm_item['title']));
+      $display_name = $this->moduleHandler->getName($provider);
+      $perms[$display_name][$perm] = strip_tags($perm_item['title']);
     }
 
     $form['perm'] = array(
@@ -120,6 +131,27 @@ class Permission extends AccessPluginBase {
       '#default_value' => $this->options['perm'],
       '#description' => $this->t('Only users with the selected permission flag will be able to access this display.'),
     );
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function getCacheMaxAge() {
+    return Cache::PERMANENT;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function getCacheContexts() {
+    return ['user.permissions'];
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function getCacheTags() {
+    return [];
   }
 
 }

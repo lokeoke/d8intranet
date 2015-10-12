@@ -7,7 +7,12 @@
 
 namespace Drupal\system_test\Controller;
 
+use Drupal\Core\Access\AccessResult;
+use Drupal\Core\Cache\CacheableResponse;
 use Drupal\Core\Controller\ControllerBase;
+use Drupal\Core\Render\RendererInterface;
+use Drupal\Core\Render\Markup;
+use Drupal\Core\Session\AccountInterface;
 use Drupal\Core\Url;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -35,23 +40,48 @@ class SystemTestController extends ControllerBase {
   protected $persistentLock;
 
   /**
+   * The current user.
+   *
+   * @var \Drupal\Core\Session\AccountInterface
+   */
+  protected $currentUser;
+
+  /**
+   * The renderer.
+   *
+   * @var \Drupal\Core\Render\RendererInterface
+   */
+  protected $renderer;
+
+  /**
    * Constructs the SystemTestController.
    *
    * @param \Drupal\Core\Lock\LockBackendInterface $lock
    *   The lock service.
    * @param \Drupal\Core\Lock\LockBackendInterface $persistent_lock
    *   The persistent lock service.
+   * @param \Drupal\Core\Session\AccountInterface $current_user
+   *   The current user.
+   * @param \Drupal\Core\Render\RendererInterface $renderer
+   *   The renderer.
    */
-  public function __construct(LockBackendInterface $lock, LockBackendInterface $persistent_lock) {
+  public function __construct(LockBackendInterface $lock, LockBackendInterface $persistent_lock, AccountInterface $current_user, RendererInterface $renderer) {
     $this->lock = $lock;
     $this->persistentLock = $persistent_lock;
+    $this->currentUser = $current_user;
+    $this->renderer = $renderer;
   }
 
   /**
    * {@inheritdoc}
    */
   public static function create(ContainerInterface $container) {
-    return new static($container->get('lock'), $container->get('lock.persistent'));
+    return new static(
+      $container->get('lock'),
+      $container->get('lock.persistent'),
+      $container->get('current_user'),
+      $container->get('renderer')
+    );
   }
 
   /**
@@ -73,7 +103,7 @@ class SystemTestController extends ControllerBase {
   public function drupalSetMessageTest() {
     // Set two messages.
     drupal_set_message('First message (removed).');
-    drupal_set_message('Second message (not removed).');
+    drupal_set_message(t('Second message with <em>markup!</em> (not removed).'));
 
     // Remove the first.
     unset($_SESSION['messages']['status'][0]);
@@ -84,6 +114,23 @@ class SystemTestController extends ControllerBase {
 
     drupal_set_message('Duplicated message', 'status', TRUE);
     drupal_set_message('Duplicated message', 'status', TRUE);
+
+    // Add a Markup message.
+    drupal_set_message(Markup::create('Markup with <em>markup!</em>'));
+    // Test duplicate Markup messages.
+    drupal_set_message(Markup::create('Markup with <em>markup!</em>'));
+    // Ensure that multiple Markup messages work.
+    drupal_set_message(Markup::create('Markup2 with <em>markup!</em>'));
+
+    // Test mixing of types.
+    drupal_set_message(Markup::create('Non duplicate Markup / string.'));
+    drupal_set_message('Non duplicate Markup / string.');
+    drupal_set_message(Markup::create('Duplicate Markup / string.'), 'status', TRUE);
+    drupal_set_message('Duplicate Markup / string.', 'status', TRUE);
+
+    // Test auto-escape of non safe strings.
+    drupal_set_message('<em>This<span>markup will be</span> escaped</em>.');
+
     return [];
   }
 
@@ -177,6 +224,19 @@ class SystemTestController extends ControllerBase {
   }
 
   /**
+   * Set cache max-age on the returned render array.
+   */
+  public function system_test_cache_maxage_page() {
+    $build['main'] = array(
+      '#cache' => array('max-age' => 90),
+      'message' => array(
+        '#markup' => 'Cache max-age page example',
+      ),
+    );
+    return $build;
+  }
+
+  /**
    * Sets a cache tag on an element to help test #pre_render and cache tags.
    */
   public static function preRenderCacheTags($elements) {
@@ -200,11 +260,26 @@ class SystemTestController extends ControllerBase {
    */
   public function setHeader(Request $request) {
     $query = $request->query->all();
-    $response = new Response();
+    $response = new CacheableResponse();
     $response->headers->set($query['name'], $query['value']);
+    $response->getCacheableMetadata()->addCacheContexts(['url.query_args:name', 'url.query_args:value']);
     $response->setContent($this->t('The following header was set: %name: %value', array('%name' => $query['name'], '%value' => $query['value'])));
 
     return $response;
+  }
+
+  /**
+   * A simple page callback that uses a plain Symfony response object.
+   */
+  public function respondWithReponse(Request $request) {
+    return new Response('test');
+  }
+
+  /**
+   * A simple page callback that uses a CacheableResponse object.
+   */
+  public function respondWithCacheableReponse(Request $request) {
+    return new CacheableResponse('test');
   }
 
   /**
@@ -233,6 +308,30 @@ class SystemTestController extends ControllerBase {
    */
   public function configureTitle($foo) {
     return 'Bar.' . $foo;
+  }
+
+  /**
+   * Shows permission-dependent content.
+   *
+   * @return array
+   *   A render array.
+   */
+  public function permissionDependentContent() {
+    $build = [];
+
+    // The content depends on the access result.
+    $access = AccessResult::allowedIfHasPermission($this->currentUser, 'pet llamas');
+    $this->renderer->addCacheableDependency($build, $access);
+
+    // Build the content.
+    if ($access->isAllowed()) {
+      $build['allowed'] = ['#markup' => 'Permission to pet llamas: yes!'];
+    }
+    else {
+      $build['forbidden'] = ['#markup' => 'Permission to pet llamas: no!'];
+    }
+
+    return $build;
   }
 
 }

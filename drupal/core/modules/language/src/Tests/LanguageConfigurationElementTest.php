@@ -2,7 +2,7 @@
 
 /**
  * @file
- * Definition of Drupal\language\Tests\LanguageConfigurationElementTest.
+ * Contains \Drupal\language\Tests\LanguageConfigurationElementTest.
  */
 
 namespace Drupal\language\Tests;
@@ -116,7 +116,7 @@ class LanguageConfigurationElementTest extends WebTestBase {
     $configurable_language = entity_load('configurable_language', $old_default->getId());
     $this->assertTrue($configurable_language->isDefault(), 'The en language entity is flagged as the default language.');
 
-    $this->config('system.site')->set('langcode', 'cc')->save();
+    $this->config('system.site')->set('default_langcode', 'cc')->save();
     ContentLanguageSettings::loadByEntityTypeBundle('entity_test','custom_bundle')
       ->setLanguageAlterable(TRUE)
       ->setDefaultLangcode(LanguageInterface::LANGCODE_SITE_DEFAULT)
@@ -152,7 +152,7 @@ class LanguageConfigurationElementTest extends WebTestBase {
   }
 
   /**
-   * Tests that the configuration is updated when the node type is changed.
+   * Tests that the configuration is retained when the node type is updated.
    */
   public function testNodeTypeUpdate() {
     // Create the article content type first if the profile used is not the
@@ -172,16 +172,16 @@ class LanguageConfigurationElementTest extends WebTestBase {
     $uuid = $configuration->uuid();
     $this->assertEqual($configuration->getDefaultLangcode(), 'current_interface', 'The default language configuration has been saved on the Article content type.');
     $this->assertTrue($configuration->isLanguageAlterable(), 'The alterable language configuration has been saved on the Article content type.');
-    // Rename the article content type.
+    // Update the article content type by changing the title label.
     $edit = array(
-      'type' => 'article_2'
+      'title_label' => 'Name'
     );
     $this->drupalPostForm('admin/structure/types/manage/article', $edit, t('Save content type'));
-    // Check that we still have the settings for the new node type.
-    $configuration = ContentLanguageSettings::loadByEntityTypeBundle('node', 'article_2');
-    $this->assertEqual($configuration->getDefaultLangcode(), 'current_interface', 'The default language configuration has been kept on the new Article content type.');
-    $this->assertTrue($configuration->isLanguageAlterable(), 'The alterable language configuration has been kept on the new Article content type.');
-    $this->assertEqual($configuration->uuid(), $uuid, 'The language configuration uuid has been kept on the new Article content type.');
+    // Check that we still have the settings for the updated node type.
+    $configuration = ContentLanguageSettings::loadByEntityTypeBundle('node', 'article');
+    $this->assertEqual($configuration->getDefaultLangcode(), 'current_interface', 'The default language configuration has been kept on the updated Article content type.');
+    $this->assertTrue($configuration->isLanguageAlterable(), 'The alterable language configuration has been kept on the updated Article content type.');
+    $this->assertEqual($configuration->uuid(), $uuid, 'The language configuration uuid has been kept on the updated Article content type.');
   }
 
   /**
@@ -220,7 +220,7 @@ class LanguageConfigurationElementTest extends WebTestBase {
   }
 
   /**
-   * Tests that the configuration is updated when a vocabulary is changed.
+   * Tests that the configuration is retained when a vocabulary is updated.
    */
   public function testTaxonomyVocabularyUpdate() {
     $vocabulary = entity_create('taxonomy_vocabulary', array(
@@ -242,16 +242,16 @@ class LanguageConfigurationElementTest extends WebTestBase {
     $uuid = $configuration->uuid();
     $this->assertEqual($configuration->getDefaultLangcode(), 'current_interface', 'The default language configuration has been saved on the Country vocabulary.');
     $this->assertTrue($configuration->isLanguageAlterable(), 'The alterable language configuration has been saved on the Country vocabulary.');
-    // Rename the vocabulary.
+    // Update the vocabulary.
     $edit = array(
-      'vid' => 'nation'
+      'name' => 'Nation'
     );
     $this->drupalPostForm('admin/structure/taxonomy/manage/country', $edit, t('Save'));
-    // Check that we still have the settings for the new vocabulary.
-    $configuration = ContentLanguageSettings::loadByEntityTypeBundle('taxonomy_term', 'nation');
-    $this->assertEqual($configuration->getDefaultLangcode(), 'current_interface', 'The default language configuration has been kept on the new Country vocabulary.');
-    $this->assertTrue($configuration->isLanguageAlterable(), 'The alterable language configuration has been kept on the new Country vocabulary.');
-    $this->assertEqual($configuration->uuid(), $uuid, 'The language configuration uuid has been kept on the new Country vocabulary.');
+    // Check that we still have the settings for the updated vocabulary.
+    $configuration = ContentLanguageSettings::loadByEntityTypeBundle('taxonomy_term', 'country');
+    $this->assertEqual($configuration->getDefaultLangcode(), 'current_interface', 'The default language configuration has been kept on the updated Country vocabulary.');
+    $this->assertTrue($configuration->isLanguageAlterable(), 'The alterable language configuration has been kept on the updated Country vocabulary.');
+    $this->assertEqual($configuration->uuid(), $uuid, 'The language configuration uuid has been kept on the updated Country vocabulary.');
   }
 
 }

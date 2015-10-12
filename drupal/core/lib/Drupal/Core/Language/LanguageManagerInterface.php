@@ -16,14 +16,6 @@ use Drupal\Core\Url;
 interface LanguageManagerInterface {
 
   /**
-   * Injects the string translation service.
-   *
-   * @param \Drupal\Core\StringTranslation\TranslationInterface $translation
-   *   The string translation service.
-   */
-  public function setTranslation(TranslationInterface $translation);
-
-  /**
    * Returns whether or not the site has more than one language added.
    *
    * @return bool
@@ -207,5 +199,20 @@ interface LanguageManagerInterface {
    *   The current configuration override language.
    */
   public function getConfigOverrideLanguage();
+
+  /**
+   * Some common languages with their English and native names.
+   *
+   * Language codes are defined by the W3C language tags document for
+   * interoperability. Language codes typically have a language and, optionally,
+   * a script or regional variant name. See:
+   * http://www.w3.org/International/articles/language-tags/ for more
+   * information.
+   *
+   * @return array
+   *   An array of language code to language name information. Language name
+   *   information itself is an array of English and native names.
+   */
+  public static function getStandardLanguageList();
 
 }

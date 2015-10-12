@@ -9,7 +9,8 @@ namespace Drupal\views\Tests\Entity;
 
 use Drupal\Component\Utility\Unicode;
 use Drupal\field\Entity\FieldStorageConfig;
-use Drupal\views\Tests\ViewUnitTestBase;
+use Drupal\views\Tests\ViewTestData;
+use Drupal\views\Tests\ViewKernelTestBase;
 use Drupal\views\Views;
 
 /**
@@ -17,7 +18,7 @@ use Drupal\views\Views;
  *
  * @group views
  */
-class ViewEntityDependenciesTest extends ViewUnitTestBase {
+class ViewEntityDependenciesTest extends ViewKernelTestBase {
 
   /**
    * Views used by this test.
@@ -31,22 +32,17 @@ class ViewEntityDependenciesTest extends ViewUnitTestBase {
    *
    * @var array
    */
-  public static $modules = ['node', 'comment', 'user', 'field', 'text', 'entity_reference', 'search'];
+  public static $modules = ['node', 'comment', 'user', 'field', 'text', 'search'];
 
   /**
    * {@inheritdoc}
    */
   protected function setUp() {
-    parent::setUp();
+    parent::setUp(FALSE);
+
     // Install the necessary dependencies for node type creation to work.
     $this->installEntitySchema('node');
     $this->installConfig(array('field', 'node'));
-  }
-
-  /**
-   * Tests the calculateDependencies method.
-   */
-  public function testCalculateDependencies() {
 
     $comment_type = entity_create('comment_type', array(
       'id' => 'comment',
@@ -55,6 +51,7 @@ class ViewEntityDependenciesTest extends ViewUnitTestBase {
       'target_entity_type_id' => 'node',
     ));
     $comment_type->save();
+
     $content_type = entity_create('node_type', array(
       'type' => $this->randomMachineName(),
       'name' => $this->randomString(),
@@ -82,6 +79,13 @@ class ViewEntityDependenciesTest extends ViewUnitTestBase {
       'settings' => array('display_summary' => TRUE),
     ))->save();
 
+    ViewTestData::createTestViews(get_class($this), array('views_test_config'));
+  }
+
+  /**
+   * Tests the getDependencies method.
+   */
+  public function testGetDependencies() {
     $expected = [];
     $expected['test_field_get_entity'] = [
       'module' => [
@@ -131,10 +135,10 @@ class ViewEntityDependenciesTest extends ViewUnitTestBase {
     foreach ($this::$testViews as $view_id) {
       $view = Views::getView($view_id);
 
-      $dependencies = $view->calculateDependencies();
+      $dependencies = $view->getDependencies();
       $this->assertEqual($expected[$view_id], $dependencies);
       $config = $this->config('views.view.' . $view_id);
-      \Drupal::service('config.storage.staging')->write($view_id, $config->get());
+      \Drupal::service('config.storage.sync')->write($view_id, $config->get());
     }
 
     // Ensure that dependencies are calculated on the display level.

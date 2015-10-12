@@ -9,6 +9,7 @@ namespace Drupal\system\Plugin\Block;
 
 use Drupal\Core\Block\BlockBase;
 use Drupal\Core\Block\MainContentBlockPluginInterface;
+use Drupal\Core\Cache\Cache;
 use Drupal\Core\Form\FormStateInterface;
 
 /**
@@ -40,28 +41,6 @@ class SystemMainBlock extends BlockBase implements MainContentBlockPluginInterfa
    */
   public function build() {
     return $this->mainContent;
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  public function buildConfigurationForm(array $form, FormStateInterface $form_state) {
-    $form = parent::buildConfigurationForm($form, $form_state);
-
-    // The main content block is never cacheable, because it may be dynamic.
-    $form['cache']['#disabled'] = TRUE;
-    $form['cache']['#description'] = $this->t('This block is never cacheable, it is not configurable.');
-    $form['cache']['max_age']['#value'] = 0;
-
-    return $form;
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  public function isCacheable() {
-    // The main content block is never cacheable, because it may be dynamic.
-    return FALSE;
   }
 
 }

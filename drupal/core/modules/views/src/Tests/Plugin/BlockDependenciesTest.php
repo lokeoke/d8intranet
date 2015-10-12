@@ -7,14 +7,14 @@
 
 namespace Drupal\views\Tests\Plugin;
 
-use Drupal\views\Tests\ViewUnitTestBase;
+use Drupal\views\Tests\ViewKernelTestBase;
 
 /**
  * Tests views block config dependencies functionality.
  *
  * @group views
  */
-class BlockDependenciesTest extends ViewUnitTestBase {
+class BlockDependenciesTest extends ViewKernelTestBase {
 
   /**
    * Views used by this test.
@@ -37,7 +37,7 @@ class BlockDependenciesTest extends ViewUnitTestBase {
    */
   public function testExposedBlock() {
     $block = $this->createBlock('views_exposed_filter_block:test_exposed_block-page_1');
-    $dependencies = $block->calculateDependencies();
+    $dependencies = $block->calculateDependencies()->getDependencies();
     $expected = array(
       'config' => array('views.view.test_exposed_block'),
       'module' => array('views'),
@@ -53,7 +53,7 @@ class BlockDependenciesTest extends ViewUnitTestBase {
    */
   public function testViewsBlock() {
     $block = $this->createBlock('views_block:content_recent-block_1');
-    $dependencies = $block->calculateDependencies();
+    $dependencies = $block->calculateDependencies()->getDependencies();
     $expected = array(
       'config' => array('views.view.content_recent'),
       'module' => array('views'),
@@ -82,7 +82,6 @@ class BlockDependenciesTest extends ViewUnitTestBase {
    *   - region: 'sidebar_first'.
    *   - theme: The default theme.
    *   - visibility: Empty array.
-   *   - cache: array('max_age' => 0).
    *
    * @return \Drupal\block\Entity\Block
    *   The block entity.
@@ -96,9 +95,6 @@ class BlockDependenciesTest extends ViewUnitTestBase {
       'label' => $this->randomMachineName(8),
       'visibility' => array(),
       'weight' => 0,
-      'cache' => array(
-        'max_age' => 0,
-      ),
     );
     $values = [];
     foreach (array('region', 'id', 'theme', 'plugin', 'weight', 'visibility') as $key) {

@@ -83,36 +83,8 @@ class AccountProxy implements AccountProxyInterface {
   /**
    * {@inheritdoc}
    */
-  public function getHostname() {
-    return $this->getAccount()->getHostname();
-  }
-
-  /**
-   * {@inheritdoc}
-   */
   public function hasPermission($permission) {
     return $this->getAccount()->hasPermission($permission);
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  public function getSessionId() {
-    return $this->getAccount()->getSessionId();
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  public function getSecureSessionId() {
-    return $this->getAccount()->getSecureSessionId();
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  public function getSessionData() {
-    return $this->getAccount()->getSessionData();
   }
 
   /**
@@ -147,7 +119,21 @@ class AccountProxy implements AccountProxyInterface {
    * {@inheritdoc}
    */
   public function getUsername() {
-    return $this->getAccount()->getUsername();
+    return $this->getAccountName();
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function getAccountName() {
+    return $this->getAccount()->getAccountName();
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function getDisplayName() {
+    return $this->getAccount()->getDisplayName();
   }
 
   /**

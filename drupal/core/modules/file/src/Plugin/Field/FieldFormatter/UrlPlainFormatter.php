@@ -25,11 +25,16 @@ class UrlPlainFormatter extends FileFormatterBase {
   /**
    * {@inheritdoc}
    */
-  public function viewElements(FieldItemListInterface $items) {
+  public function viewElements(FieldItemListInterface $items, $langcode) {
     $elements = array();
 
-    foreach ($this->getEntitiesToView($items) as $delta => $file) {
-      $elements[$delta] = array('#markup' => file_create_url($file->getFileUri()));
+    foreach ($this->getEntitiesToView($items, $langcode) as $delta => $file) {
+      $elements[$delta] = array(
+        '#markup' => file_create_url($file->getFileUri()),
+        '#cache' => array(
+          'tags' => $file->getCacheTags(),
+        ),
+      );
     }
 
     return $elements;

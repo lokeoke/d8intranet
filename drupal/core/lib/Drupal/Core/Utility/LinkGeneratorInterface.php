@@ -31,7 +31,7 @@ interface LinkGeneratorInterface {
    * However, for links enclosed in translatable text you should use t() and
    * embed the HTML anchor tag directly in the translated string. For example:
    * @code
-   * $text = t('Visit the <a href="@url">content types</a> page', array('@url' => \Drupal::url('entity.node_type.collection')));
+   * $text = t('Visit the <a href=":url">content types</a> page', array(':url' => \Drupal::url('entity.node_type.collection')));
    * @endcode
    * This keeps the context of the link title ('settings' in the example) for
    * translators.
@@ -41,7 +41,7 @@ interface LinkGeneratorInterface {
    *   Strings will be sanitized automatically. If you need to output HTML in
    *   the link text, use a render array or an already sanitized string such as
    *   the output of \Drupal\Component\Utility\Xss::filter() or
-   *   \Drupal\Component\Utility\String::format().
+   *   \Drupal\Component\Utility\SafeMarkup::format().
    * @param \Drupal\Core\Url $url
    *   The URL object used for the link. Amongst its options, the following may
    *   be set to affect the generated link:
@@ -61,8 +61,9 @@ interface LinkGeneratorInterface {
    *     sparingly since it is usually unnecessary and requires extra
    *     processing.
    *
-   * @return string
-   *   An HTML string containing a link to the given route and parameters.
+   * @return \Drupal\Core\GeneratedLink
+   *   A GeneratedLink object containing a link to the given route and
+   *   parameters and bubbleable metadata.
    *
    * @throws \Symfony\Component\Routing\Exception\RouteNotFoundException
    *   Thrown when the named route doesn't exist.
@@ -80,8 +81,9 @@ interface LinkGeneratorInterface {
    * @param \Drupal\Core\Link $link
    *   A link object to convert to a string.
    *
-   * @return string
-   *   An HTML string containing a link to the given link.
+   * @return \Drupal\Core\GeneratedLink
+   *   A GeneratedLink object containing a link to the given route and
+   *   parameters and bubbleable metadata.
    */
   public function generateFromLink(Link $link);
 

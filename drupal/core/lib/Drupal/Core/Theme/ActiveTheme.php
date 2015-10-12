@@ -67,18 +67,25 @@ class ActiveTheme {
   protected $styleSheetsRemove;
 
   /**
-   * The stylesheets which are overridden by the theme.
-   *
-   * @var array
-   */
-  protected $styleSheetsOverride;
-
-  /**
    * The libraries provided by the theme.
    *
    * @var array
    */
   protected $libraries;
+
+  /**
+   * The regions provided by the theme.
+   *
+   * @var array
+   */
+  protected $regions;
+
+  /**
+   * The libraries or library assets overridden by the theme.
+   *
+   * @var array
+   */
+  protected $librariesOverride;
 
   /**
    * Constructs an ActiveTheme object.
@@ -92,20 +99,25 @@ class ActiveTheme {
       'engine' => 'twig',
       'owner' => 'twig',
       'stylesheets_remove' => [],
-      'stylesheets_override' => [],
       'libraries' => [],
       'extension' => 'html.twig',
       'base_themes' => [],
+      'regions' => [],
+      'libraries_override' => [],
+      'libraries_extend' => [],
     ];
+
     $this->name = $values['name'];
     $this->path = $values['path'];
     $this->engine = $values['engine'];
     $this->owner = $values['owner'];
     $this->styleSheetsRemove = $values['stylesheets_remove'];
-    $this->styleSheetsOverride = $values['stylesheets_override'];
     $this->libraries = $values['libraries'];
     $this->extension = $values['extension'];
     $this->baseThemes = $values['base_themes'];
+    $this->regions = $values['regions'];
+    $this->librariesOverride = $values['libraries_override'];
+    $this->librariesExtend = $values['libraries_extend'];
   }
 
   /**
@@ -165,18 +177,11 @@ class ActiveTheme {
   }
 
   /**
-   * Returns the overridden stylesheets by the theme.
-   *
-   * @return mixed
-   */
-  public function getStyleSheetsOverride() {
-    return $this->styleSheetsOverride;
-  }
-
-  /**
    * Returns the removed stylesheets by the theme.
    *
    * @return mixed
+   *
+   * @deprecated in Drupal 8.0.0, will be removed before Drupal 9.0.0.
    */
   public function getStyleSheetsRemove() {
     return $this->styleSheetsRemove;
@@ -192,6 +197,38 @@ class ActiveTheme {
    */
   public function getBaseThemes() {
     return $this->baseThemes;
+  }
+
+  /**
+   * The regions used by the theme.
+   *
+   * @return string[]
+   *   The list of region machine names supported by the theme.
+   *
+   * @see system_region_list()
+   */
+  public function getRegions() {
+    return array_keys($this->regions);
+  }
+
+  /**
+   * Returns the libraries or library assets overridden by the active theme.
+   *
+   * @return array
+   *   The list of libraries overrides.
+   */
+  public function getLibrariesOverride() {
+    return $this->librariesOverride;
+  }
+
+  /**
+   * Returns the libraries extended by the active theme.
+   *
+   * @return array
+   *   The list of libraries-extend definitions.
+   */
+  public function getLibrariesExtend() {
+    return $this->librariesExtend;
   }
 
 }
