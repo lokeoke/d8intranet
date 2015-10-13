@@ -5,10 +5,10 @@
   @include font-size(14);
   font-family: $fonts-sans-light;
   margin-bottom: 3rem;
-  background: #4a4a4a;
+  background: #263238;
 
   .light & {
-    background: #fff;
+    background: #2B2B2B;
   }
 
   .item {
@@ -38,6 +38,8 @@
 
     // Themes
     @each $theme, $map in $themes {
+
+
       .#{$theme} & {
         color: #fff;
 
@@ -51,9 +53,12 @@
           background: #37474F;
           transition-duration: 0s;
 
-          .light & {
-            background: #fff;
-          }
+        }
+      }
+
+      .light & {
+        &:after {
+          background: #fff;
         }
       }
     }

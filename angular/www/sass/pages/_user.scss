@@ -154,7 +154,8 @@
 }
 
 .holiday-block {
-  @include span(4);
+  @include span(18);
+  padding-top: span(18);
   @include pre(1);
   @each $theme, $map in $themes {
     .#{$theme} & {
@@ -162,11 +163,51 @@
       box-shadow: 0 3px 0 map-get($map, $block-divider);
     }
   }
-  padding-top: span(4);
+
   border-radius: 100%;
-  margin-bottom: 3rem;
+//  margin-bottom: 3rem;
   position: relative;
   font-family: $fonts-sans-light;
+
+  float: none;
+  margin: 0 auto 3rem;
+
+  @include susy-breakpoint(640px) {
+    @include span(12);
+    padding-top: span(12);
+    float: none;
+    margin: 0 auto 3rem;
+  }
+
+  @include susy-breakpoint(640px) {
+    @include span(11);
+    padding-top: span(11);
+    float: none;
+    display: inline-block;
+    margin: 0 1rem 3rem 0;
+
+    &:nth-child(2n) {
+      margin-right: 0;
+    }
+  }
+
+  @include susy-breakpoint(769px) {
+    @include span(6);
+    padding-top: span(6);
+    float: none;
+    display: inline-block;
+    margin: 0 1rem 3rem 0;
+
+    &:nth-child(2n) {
+      margin-right: 1rem;
+    }
+
+  }
+
+  @include susy-breakpoint(1280px) {
+    @include span(4);
+    padding-top: span(4);
+  }
 }
 
 .holiday-info-wrapper {
@@ -175,6 +216,7 @@
   top: 50%;
   transform: translate(-50%, -50%);
   text-align: center;
+  width: 100%;
 }
 
 .holiday-title {
