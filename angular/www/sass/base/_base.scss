@@ -19,7 +19,7 @@ body {
   word-wrap: break-word;
   background: #37474F;
 
-  .light & {
+  &.light  {
     background: #fff;
   }
 

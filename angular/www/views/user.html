@@ -92,24 +92,33 @@
     </div>
 
     <section class="my-holidays group">
-      <h1 class="user-statistics">{{user.field_first_name[0].value}}'s statistics: </h1>
+      <h1 class="user-statistics">{{user.field_first_name[0].value}}'s
+        statistics: </h1>
 
-      <div class="holiday-block" ng-repeat="(key, value) in filteredKeys">
+      <div>
+        <div class="holiday-block" ng-repeat="(key, value) in filteredKeys">
 
-        <div class="vacation-days-left" ng-if="key == 'Vacation'">Left: {{vacationDaysLeft}}</div>
+          <div class="vacation-days-left" ng-if="key == 'Vacation'">Left:
+            {{vacationDaysLeft}}
+          </div>
 
-        <div class="vacation-left" ng-if="key == 'Vacation'">
-          <div vacations-left data-days-left="{{vacationDaysLeft}}" data-days-total="{{totalVacationDays}}" class="vacation-left-progress">&nbsp;</div>
-        </div>
+          <div class="vacation-left" ng-if="key == 'Vacation'">
+            <div vacations-left data-days-left="{{vacationDaysLeft}}"
+                data-days-total="{{totalVacationDays}}"
+                class="vacation-left-progress">&nbsp;</div>
+          </div>
 
-        <div class="holiday-info-wrapper">
-          <h3 class="holiday-title">{{key}}</h3>
-          <div class="days-count" ng-if="key == 'Vacation'">{{value}} <span>of</span> {{totalVacationDays}}</div>
-          <div class="days-count" ng-if="key != 'Vacation'">{{value}}</div>
+          <div class="holiday-info-wrapper">
+            <h3 class="holiday-title">{{key}}</h3>
+
+            <div class="days-count" ng-if="key == 'Vacation'">{{value}}
+              <span>of</span> {{totalVacationDays}}
+            </div>
+            <div class="days-count" ng-if="key != 'Vacation'">{{value}}</div>
+          </div>
         </div>
       </div>
     </section>
-    
 
     <div class="more-come-soon">
       More functionality will come...

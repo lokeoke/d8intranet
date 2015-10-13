@@ -1072,7 +1072,7 @@ body {
   background: #37474F; }
   body *, body *:before, body *:after {
     box-sizing: border-box; }
-  .light body {
+  body.light {
     background: #fff; }
   body.dark {
     color: #cfcfcf; }
@@ -1306,11 +1306,11 @@ hr {
   font-size: 0.875rem;
   font-family: "Open Sans Light", Helvetica, Arial, sans-serif;
   margin-bottom: 3rem;
-  background: #4a4a4a; }
+  background: #263238; }
   .lt-ie9 .employees-tabs {
     font-size: 14px; }
   .light .employees-tabs {
-    background: #fff; }
+    background: #2B2B2B; }
   .employees-tabs .item {
     float: left; }
   .employees-tabs .link {
@@ -1339,8 +1339,8 @@ hr {
       .dark .employees-tabs .link:after {
         background: #37474F;
         transition-duration: 0s; }
-        .light .dark .employees-tabs .link:after {
-          background: #fff; }
+    .light .employees-tabs .link:after {
+      background: #fff; }
     .light .employees-tabs .link {
       color: #fff; }
       .light .employees-tabs .link:hover,
@@ -1350,8 +1350,8 @@ hr {
       .light .employees-tabs .link:after {
         background: #37474F;
         transition-duration: 0s; }
-        .light .light .employees-tabs .link:after {
-          background: #fff; }
+    .light .employees-tabs .link:after {
+      background: #fff; }
 
 .filter-field-container {
   margin: 0 30px 30px 0;
@@ -2029,6 +2029,10 @@ hr {
   .global-wrapper .menu-desktop {
     width: 115px;
     z-index: 999; }
+
+.sidebar {
+  position: relative;
+  z-index: 100; }
 
 .sidebar li {
   transition: all 0.4s ease-in-out; }
@@ -3246,21 +3250,58 @@ form .form-submit {
   border-top: 1px solid #c6c6c6; }
 
 .holiday-block {
-  width: 15.79614%;
+  width: 74.73884%;
   float: left;
   margin-right: 1.04463%;
+  padding-top: 74.73884%;
   margin-left: 4.21019%;
-  padding-top: 15.79614%;
   border-radius: 100%;
-  margin-bottom: 3rem;
   position: relative;
-  font-family: "Open Sans Light", Helvetica, Arial, sans-serif; }
+  font-family: "Open Sans Light", Helvetica, Arial, sans-serif;
+  float: none;
+  margin: 0 auto 3rem; }
   .dark .holiday-block {
     background: #263238;
     box-shadow: 0 3px 0 #2d3d43; }
   .light .holiday-block {
     background: #f6f6f6;
     box-shadow: 0 3px 0 #DCDCDC; }
+  @media (min-width: 640px) {
+    .holiday-block {
+      width: 49.47768%;
+      float: left;
+      margin-right: 1.04463%;
+      padding-top: 49.47768%;
+      float: none;
+      margin: 0 auto 3rem; } }
+  @media (min-width: 640px) {
+    .holiday-block {
+      width: 45.26749%;
+      float: left;
+      margin-right: 1.04463%;
+      padding-top: 45.26749%;
+      float: none;
+      display: inline-block;
+      margin: 0 1rem 3rem 0; }
+      .holiday-block:nth-child(2n) {
+        margin-right: 0; } }
+  @media (min-width: 769px) {
+    .holiday-block {
+      width: 24.21652%;
+      float: left;
+      margin-right: 1.04463%;
+      padding-top: 24.21652%;
+      float: none;
+      display: inline-block;
+      margin: 0 1rem 3rem 0; }
+      .holiday-block:nth-child(2n) {
+        margin-right: 1rem; } }
+  @media (min-width: 1280px) {
+    .holiday-block {
+      width: 15.79614%;
+      float: left;
+      margin-right: 1.04463%;
+      padding-top: 15.79614%; } }
 
 .holiday-info-wrapper {
   position: absolute;
@@ -3268,7 +3309,8 @@ form .form-submit {
   top: 50%;
   -webkit-transform: translate(-50%, -50%);
           transform: translate(-50%, -50%);
-  text-align: center; }
+  text-align: center;
+  width: 100%; }
 
 .holiday-title {
   margin-bottom: 10px; }

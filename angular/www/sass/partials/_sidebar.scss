@@ -10,6 +10,11 @@
   }
 }
 
+.sidebar {
+  position: relative;
+  z-index: 100;
+}
+
 .sidebar li {
   transition: all .4s ease-in-out;
 
