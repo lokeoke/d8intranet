@@ -19,7 +19,6 @@ angular.module('d8intranetApp')
       var cameToCompany = '';
 
       angular.forEach($scope.users, function (user, title) {
-        var calendarMonths = {};
 
         // Get current user
         if (user.uid[0].value == $routeParams.userId) {

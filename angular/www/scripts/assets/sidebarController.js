@@ -8,7 +8,7 @@
  * Controller of the d8intranetApp
  */
 angular.module('d8intranetApp')
-  .controller('sidebarController', function (config, $scope, $rootScope, $location) {
+  .controller('sidebarController', function (config, checkState, $scope, $rootScope, $location) {
     $scope.menuStates = {};
     $scope.menuStates.activeItem = '#'+($location.$$url).slice(1);
 
@@ -40,4 +40,11 @@ angular.module('d8intranetApp')
       $scope.menuStates.activeItem = menuItemUrl;
       $scope.menuIsOpen = menuState;
     };
+
+    $rootScope.jira = '';
+
+    checkState.getState(config.status).then(function(data){
+      $scope.logged = data.logged;
+      $rootScope.jira = data.jira;
+    })
   });

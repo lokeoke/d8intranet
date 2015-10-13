@@ -6,8 +6,6 @@ $sprite: '../images/sprite.png';
 // Fonts
 
 // Fallback fonts
-
-
 $fonts-sans: 'Open Sans', Helvetica, Arial, sans-serif;
 $fonts-sans-light: 'Open Sans Light', Helvetica, Arial, sans-serif;
 $fonts-serif: Georgia, serif;
@@ -26,7 +24,7 @@ $table-row-bg: #282828;
 $table-row-bg-odd: #383838;
 
 // Define variables
-$site-bg: #fff;
+
 $block-bg: #282828;
 $dark-red: #DE1B1B;
 
@@ -50,7 +48,9 @@ $light-gray: #f6f6f6;
 
 $active-elements: #FF3D00;
 $checkin-bg: #DE1B1B;
+
 $light-links: #fff;
+//$site-bg: #fff;
 
 $themes: (
     dark: (
@@ -58,7 +58,7 @@ $themes: (
         $light-gray: #263238,
         $active-elements: #FF9E80,
         $checkin-bg: #DE1B1B,
-        $site-bg: #37474F,
+//        $site-bg: #37474F,
         $block-bg: #263238,
         $sidebar-bg: #263238,
         $menu-hover: #37474F,263238
@@ -79,7 +79,7 @@ $themes: (
         $light-gray: #f6f6f6,
         $active-elements: #DE1B1B,
         $checkin-bg: #DE1B1B,
-        $site-bg: #fff,
+//        $site-bg: #fff,
         $block-bg: #f6f6f6,
         $sidebar-bg: #2B2B2B,
         $menu-hover: #fff,
@@ -95,3 +95,4 @@ $themes: (
         $tabs-color-active: #2e2e2e,
   )
 );
+

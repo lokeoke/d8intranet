@@ -9,7 +9,7 @@
  */
 angular.module('d8intranetApp')
 
-  .controller('CheckInController', function ($scope, $http, $rootScope) {
+  .controller('CheckInController', function ($scope, $http, $rootScope, config) {
 
     var colors = new Array([62, 35, 255], [60, 255, 60], [255, 35, 98], [45, 175, 230], [255, 0, 255], [255, 128, 0]);
 
@@ -67,21 +67,26 @@ angular.module('d8intranetApp')
     $rootScope.messageRequest = false;
 
     $scope.checkIn = function () {
-      $rootScope.messageRequest = true;
-      setInterval(updateGradient, 10);
 
-      var dataObj = {"message": "Yo! Bitch"};
+      if (!$rootScope.jira) {
+        $rootScope.showModalWindow = true;
+      }
+      else {
+        $rootScope.messageRequest = true;
+        setInterval(updateGradient, 10);
 
-      var res = $http.post(constant.checkInUrl, dataObj);
+        var dataObj = {"message": "Yo! Bitch"};
+        var res = $http.post(config.checkInUrl, dataObj);
 
-      res.success(function (data, status, headers, config) {
-        $scope.message = data;
-        $rootScope.messageRequest = false;
-      });
+        res.success(function (data, status, headers, config) {
+          $scope.message = data;
+          $rootScope.messageRequest = false;
+        });
 
-      res.error(function (data, status, headers, config) {
-        console.log("failure message: " + JSON.stringify({data: data}));
-        $rootScope.messageRequest = false;
-      });
+        res.error(function (data, status, headers, config) {
+          console.log("failure message: " + JSON.stringify({data: data}));
+          $rootScope.messageRequest = false;
+        });
+      }
     };
   });

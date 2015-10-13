@@ -10,23 +10,26 @@ $phone: 320px 12 !default;
 //------------------------------------------------------------------------------
 //Page
 body {
+  @include border-box-sizing;
   font-family: $sans;
   font-weight: 300;
   font-size: 16px;
   min-width: 320px;
   -webkit-text-size-adjust: 100%;
   word-wrap: break-word;
-  @include border-box-sizing;
-//  transition: background  .1s ease-in-out;
+  background: #37474F;
+
+  .light & {
+    background: #fff;
+  }
 
   @each $theme, $map in $themes {
     &.#{$theme} {
-      background: map-get($map, $site-bg);
       color: map-get($map, $site-font-color);
     }
   }
 
-  background-color: rgba(0, 0, 0, .9);
+//  background-color: rgba(0, 0, 0, .9);
 }
 
 
@@ -49,18 +52,11 @@ a {
       color: map-get($map, $active-elements);
     }
   }
-
-
-  // .no-touch & { }
-
   &:focus { outline: medium none;  }
-//  &:hover {
-//    @each $theme, $map in $themes {
-//      .#{$theme} & {
-//        color: map-get($map, $link-hover);
-//      }
-//    }
-//  }
+}
+
+strong {
+  font-weight: 600;
 }
 
 // -----------------------------------------------------------------------------
