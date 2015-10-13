@@ -3,14 +3,12 @@
 .employees-tabs {
   @extend %group;
   @include font-size(14);
-  background: #4a4a4a;
   font-family: $fonts-sans-light;
   margin-bottom: 3rem;
+  background: #4a4a4a;
 
-  @each $theme, $map in $themes {
-    .#{$theme} & {
-      background: map-get($map, $sidebar-bg);
-    }
+  .light & {
+    background: #fff;
   }
 
   .item {
@@ -50,11 +48,14 @@
         }
 
         &:after {
-          background: map-get($map, $site-bg);
+          background: #37474F;
           transition-duration: 0s;
+
+          .light & {
+            background: #fff;
+          }
         }
       }
     }
-
   }
 }

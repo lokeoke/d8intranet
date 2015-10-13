@@ -55,16 +55,24 @@ angular.module('d8intranetApp', [
   })
 
   .constant('config', {
-    frontUrl: "#main",
+    frontUrl: "#dashboard",
     employeesUrl: "#employees",
     vacationsUrl: "#vacation",
     checkInUrl: "http://drupal.d8pp.dev:8888/checkin",
+    status: "../../jsons/state.json",
     totalVacation: "20"
   })
-  
+
   .controller('GetDateCtrl', function ($scope) {
     $scope.date = new Date();
-  });
+  })
+
+  .controller('getUserStateController', function($scope, $http, checkState, config) {
+    checkState.getState(config.status).then(function(data){
+      $scope.logged = data.logged;
+      console.log($scope.logged);
+    })
+  })
 
 
 

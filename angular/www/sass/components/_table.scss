@@ -77,10 +77,10 @@
   }
 
   .user-dates {
-    @each $theme, $map in $themes {
-      .#{$theme} & {
-        background: map-get($map, $site-bg);
-      }
+    background: #37474F;
+
+    .light & {
+      background: #fff;
     }
   }
 
@@ -128,10 +128,10 @@
   // Name of User styles
   .user-name {
     @include font-size(18);
-    @each $theme, $map in $themes {
-      .#{$theme} & {
-        background: map-get($map, $site-bg);
-      }
+    background: #37474F;
+
+    .light & {
+      background: #fff;
     }
 
     padding: 11px;
@@ -264,11 +264,10 @@
   // Total user dates in year
   .total {
     transition: none ease-out 0s;
+    background: #37474F;
 
-    @each $theme, $map in $themes {
-      .#{$theme} & {
-        background: map-get($map, $site-bg);
-      }
+    .light & {
+      background: #fff;
     }
 
     @include susy-breakpoint(1280px) {

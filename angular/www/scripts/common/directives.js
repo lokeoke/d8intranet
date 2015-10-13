@@ -85,4 +85,39 @@ angular.module('d8intranetApp')
         link: hideShowElement
       }
   })
+
+.directive('modal', function(){
+    return{
+      template: '<div class="modal view-animate">' +
+                  '<div class="modal-dialog slide-top">' +
+                    '<div class="modal-content">' +
+                      '<div class="modal-header">' +
+                        '<h4 class="modal-title">{{ title }}</h4>' +
+                      '</div>' +
+                      '<div class="modal-body" ng-transclude>' +  '</div>' +
+                      '<div class="modal-footer">' +
+                      '<button class="close-modal" ng-click="closeModal();">Got it!</button>'+
+                      '</div>' +
+                    '</div>' +
+                  '</div>'+
+                '</div>',
+      restrict: 'E',
+      transclude: true,
+      replace: true,
+      scope: true,
+      link: function posLink(scope, element, attrs) {
+        scope.title = attrs.title;
+
+        scope.$watch(attrs.visible, function(value){
+          if(!value) {
+            element.hide();
+          }
+          else {
+            element.show();
+          }
+        });
+
+      }
+    }
+  })
 ;

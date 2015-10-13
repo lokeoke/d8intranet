@@ -28,6 +28,7 @@ angular.module('d8intranetApp')
     $scope.setCookieData = function () {
       // Switch theme
       $scope.isDark = !$scope.isDark;
+
       // Get current cookie value
       var themeCookie = $cookies.get('current-theme');
 

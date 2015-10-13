@@ -40,6 +40,15 @@
 
 </div>
 
+<div ng-controller="modalController">
+  <modal title="Attention" visible="showModalWindow">
+    <p>
+      <strong> Whoa! Seems don't filled JIRA at yesterday!</strong> <br/> Please fill JIRA and try again.
+    </p>
+  </modal>
+</div>
+
+
 <div class="global-wrapper">
   <div class="wrapper container">
     <!-- Site header-->
@@ -48,19 +57,25 @@
     <!-- Site main container-->
     <main role="main" class="main-content">
 
-      <aside class="sidebar" ng-controller="sidebarController">
+      <aside class="sidebar" ng-controller="sidebarController" ng-cloak>
+
         <div class="menu-desktop">
           <a class="logo" href="#main">
             <img src="images/logo-blue.png" alt="FFW"/>
           </a>
+
+          <span class="user-pic" ng-if="!logged">
+            <img src="../images/anonymus.png" alt="anonymus"/>
+          </span>
           <a class="user-pic" ng-href="#user/5"
               ng-click="setActiveMenuItem('#user/5')"
-              ng-class="{'active': '#user/5' == menuStates.activeItem}">
+              ng-class="{'active': '#user/5' == menuStates.activeItem}"
+              ng-if="logged">
             <img src="../images/employees/alex.jpg"
                 ng-src="../images/employees/alex.jpg" alt="Alexander Mikhutkin">
           </a>
 
-          <div ng-controller="CheckInController">
+          <div ng-controller="CheckInController" ng-if="logged">
             <form ng-submit="checkIn()">
               <button type="submit" class="checkin" data-checked="false">Check
                 in
@@ -93,9 +108,7 @@
         <!--<div class="page-container">-->
 
         <!-- Page headline -->
-        <div class="page-header page-container group"
-            ng-controller="sidebarController">
-
+        <div class="page-header page-container group">
           <div class="current-date-wrapper" ng-cloak>
             <div class="theme-switcher" ng-click="setCookieData()">
               <div class="theme-switcher-btn"></div>
@@ -197,9 +210,11 @@
 
 <script src="scripts/services/getUsers.js"></script>
 <script src="scripts/services/formatUser.js"></script>
+<script src="scripts/services/getState.js"></script>
 
 <script src="scripts/assets/cookieController.js"></script>
 <script src="scripts/assets/sidebarController.js"></script>
+<script src="scripts/assets/modalController.js"></script>
 
 <script src="scripts/common/directives.js"></script>
 <script src="scripts/common/filters.js"></script>

@@ -4,7 +4,7 @@
 
 //------------------------------------------------------------------------------
 // Grid
-@import '../../bower_components/susy/sass/susy';
+@import '../libs/susy/sass/susy';
 
 //------------------------------------------------------------------------------
 // Mixins & variables
@@ -41,6 +41,7 @@
 //@import 'partials/wysiwyg';
 @import 'partials/forms';
 @import 'partials/mobile-menu';
+@import 'partials/modal-dialog';
 
 //------------------------------------------------------------------------------
 // Pages
