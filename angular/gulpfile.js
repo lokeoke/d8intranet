@@ -57,7 +57,7 @@ gulp.task('html', function (done) {
   gulp.src(paths.html)
     .pipe(livereload())
     .pipe(connect.reload())
-    .pipe(gulp.dest('app/'))
+    .pipe(gulp.dest('www/'))
     .on('end', done);
 });
 
@@ -86,7 +86,7 @@ gulp.task('scripts', function(){
 
 // SCSS lint
 gulp.task('scss-lint', function () {
-  gulp.src(['app/sass/**/*.scss', '!app/sass/vendor/**/*.scss', '!app/sass/base/utils/**/*.scss', '!app/sass/base/_base.scss'])
+  gulp.src(['www/sass/**/*.scss', '!www/sass/vendor/**/*.scss', '!www/sass/base/utils/**/*.scss', '!www/sass/base/_base.scss'])
     .pipe(scsslint({
       'config': 'lint.yml'
     }));
