@@ -8,14 +8,15 @@ use Drupal\Core\Flood\FloodInterface;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\user\UserAuthInterface;
 use Drupal\user\UserStorageInterface;
+use Drupal\Core\Render\RendererInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
 class FluffyLoginForm extends UserLoginForm {
 
   protected $sessionManager;
 
-  public function __construct(FloodInterface $flood, UserStorageInterface $user_storage, UserAuthInterface $user_auth) {
-    parent::__construct($flood, $user_storage, $user_auth);
+  public function __construct(FloodInterface $flood, UserStorageInterface $user_storage, UserAuthInterface $user_auth, RendererInterface $renderer) {
+    parent::__construct($flood, $user_storage, $user_auth, $renderer);
 
     $this->sessionManager = \Drupal::service('session_manager');
   }
