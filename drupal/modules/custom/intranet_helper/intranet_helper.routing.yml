@@ -1,12 +1,27 @@
 intranet_helper.user_statuses:
-  path: '/user-statuses'
+  path: '/api/user/statuses'
   defaults:
     _controller: '\Drupal\intranet_helper\Controller\UsersStatusController::view'
   requirements:
     _access: 'TRUE'
 intranet_helper.jira_rest_worklog:
-  path: '/user-worklog'
+  path: '/api/user/worklog'
   defaults:
     _controller: '\Drupal\intranet_helper\Controller\JiraRestWorkLogController::view'
   requirements:
     _access: 'TRUE'
+intranet_helper.user_login:
+  path: '/api/user/login'
+  defaults:
+    _form: '\Drupal\intranet_helper\Form\FluffyLoginForm'
+    _title: 'Log in'
+  requirements:
+    _user_is_logged_in: 'FALSE'
+  options:
+    _maintenance_access: TRUE
+intranet_helper.user_logout:
+  path: '/api/user/logout'
+  defaults:
+    _controller: '\Drupal\user\Controller\UserController::logout'
+  requirements:
+    _user_is_logged_in: 'TRUE'
