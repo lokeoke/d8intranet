@@ -19,6 +19,7 @@ intranet_helper.user_login:
     _user_is_logged_in: 'FALSE'
   options:
     _maintenance_access: TRUE
+  methods: [POST]
 intranet_helper.user_logout:
   path: '/api/user/logout'
   defaults:
