@@ -1,7 +1,5 @@
-<!doctype html><!--[if IE 8]>
-<html class="no-js lt-ie9"> <![endif]--><!--[if IE 9]>
-<html class="no-js ie9"> <![endif]--><!--[if gt IE 8]><!-->
-<html class="no-js"> <!--<![endif]-->
+<!doctype html>
+<html ng-app="d8intranetApp">
 <head lang="en">
   <meta charset="utf-8">
   <title>Propeople Intranet</title>
@@ -22,7 +20,7 @@
   <![endif]-->
 
 </head>
-<body ng-app="d8intranetApp" ng-controller="cookieController"
+<body ng-controller="cookieController"
     ng-class="isDark ? 'dark' : 'light'">
 
 <!--[if lt IE 7]>
@@ -40,7 +38,7 @@
 
 </div>
 
-<div ng-controller="modalController">
+<div ng-cloak ng-controller="modalController">
   <modal title="Attention" visible="showModalWindow">
     <p>
       <strong> Whoa! Seems don't filled JIRA at yesterday!</strong> <br/> Please fill JIRA and try again.
@@ -48,8 +46,16 @@
   </modal>
 </div>
 
+<div class="preloader" ng-hide="dataLoaded">
+  <span></span>
+  <span></span>
+  <span></span>
+  <span></span>
+</div>
 
-<div class="global-wrapper">
+
+
+<div class="global-wrapper" ng-show="dataLoaded">
   <div class="wrapper container">
     <!-- Site header-->
     <header role="banner" class="header group"></header>
@@ -102,6 +108,9 @@
         </div>
 
       </aside>
+
+
+
 
       <!-- Page contentainer -->
       <div class="page-content-container">

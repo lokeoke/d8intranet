@@ -8,27 +8,30 @@
  */
 
 angular.module('d8intranetApp')
-  .service('getJsonData', function ($http, $timeout) {
+  .service('getJsonData', function ($http, $timeout, $rootScope) {
     var url = '../../jsons/users.json';
     var users = [];
     var promise;
 
+
     var getJsonData = {
       getUsers: function () {
+
         if (users.length > 0) {
           console.log('I have users');
           return promise;
         }
         else {
           console.log('Don\'t have users... request');
+          console.log('in')
+          $rootScope.dataLoaded = false;
           return getJsonData.async(url);
         }
       },
       async: function (url) {
-        console.log('Getting users');
         // $http returns a promise, which has a then function, which also returns a promise
-
         promise = $http.get(url).then(function (response) {
+          console.log('Getting users');
           // The then function here is an opportunity to modify the response
           // The return value gets picked up by the then in the controller.
           users = response.data;
@@ -39,6 +42,7 @@ angular.module('d8intranetApp')
           console.log('Users are sent');
           return users;
         });
+        $rootScope.dataLoaded = true;
         // Return the promise to the controller
         return promise;
       }
