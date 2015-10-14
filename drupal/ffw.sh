@@ -5,4 +5,4 @@
 # sudo apt-get update
 # sudo apt-get install ansible
 # sudo apt-get install python-mysqldb
-time ansible-playbook -vvvv reinstall.yml --tags=all --extra-vars="installation_profile_name=pp"
+time ansible-playbook -vvvv reinstall.yml --tags=all --extra-vars="installation_profile_name=pp mysql_host=localhost mysql_db=ffw_intranet mysql_user=ffw_intranet mysql_pass=hyb8M73UpvBqHT4Q"
