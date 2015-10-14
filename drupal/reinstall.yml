@@ -19,7 +19,6 @@
     php_env_vars: ''
 
   tasks:
-
   - name: Droping drupal database
     mysql_db: name={{ mysql_db }} state=absent login_user={{ mysql_user }} login_password={{ mysql_pass }}
 
@@ -41,8 +40,5 @@
   - name: Installing drupal
     sudo: yes
     shell: "{{ php_env_vars }} drush -y si {{ installation_profile_name }} --db-url=mysql://{{ mysql_user }}:{{ mysql_pass }}@127.0.0.1:/{{ mysql_db }} --account-name={{ drupal_user }} --account-pass={{ drupal_pass }}"
-
-  - name: Generate users
-    shell: drush generate-users 10 --pass=1
 
   handlers:
