@@ -1,3 +1,4 @@
+uuid: c1871521-bd1a-41c4-ba03-032a80cfd99d
 langcode: en
 status: true
 dependencies:
@@ -7,18 +8,13 @@ dependencies:
 id: user.field_team
 field_name: field_team
 entity_type: user
-type: taxonomy_term_reference
+type: entity_reference
 settings:
-  allowed_values:
-    -
-      vocabulary: teams
-      parent: 0
   target_type: taxonomy_term
-  options_list_callback: null
-  target_bundle: null
-module: taxonomy
+module: core
 locked: false
 cardinality: 1
 translatable: true
 indexes: {  }
 persist_with_no_fields: false
+custom_storage: false

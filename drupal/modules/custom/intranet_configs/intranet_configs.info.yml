@@ -5,6 +5,8 @@ type: module
 version: 1.0
 core: 8.x
 
-dependecies:
+dependencies:
   - intranet_helper
   - path
+  - rest
+  - user
