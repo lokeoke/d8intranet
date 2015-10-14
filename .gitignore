@@ -1,4 +1,5 @@
 .idea/*
-.vagrant/*
+.vagrant
 angular/.idea
 drupal/.idea
+drupal/sites/default/files/php

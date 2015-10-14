@@ -45,7 +45,5 @@ dependencies:
   - tour
   # CONTRIB
   - field_group
-  - devel
-  - devel_generate
   - jira_rest
   # CUSTOM
