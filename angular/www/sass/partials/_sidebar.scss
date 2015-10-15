@@ -12,7 +12,7 @@
 
 .sidebar {
   position: relative;
-  z-index: 100;
+  z-index: 10000;
 }
 
 .sidebar li {
@@ -290,7 +290,7 @@
   width: 40px;
   height: 40px;
   cursor: pointer;
-  z-index: 101;
+  z-index: 100001;
 
   @include susy-breakpoint(0 767px) {
     top: 10px;
@@ -419,6 +419,6 @@
 
 .mobile-menu-open {
   opacity: 1;
-  z-index: 100;
+  z-index: 99999;
   visibility: visible;
 }

@@ -9,7 +9,7 @@
  */
 angular.module('d8intranetApp')
 
-  .controller('CheckInController', function ($scope, $http, $rootScope, config) {
+  .controller('CheckInController', function ($scope, $http, $rootScope, $compile, config) {
 
     var colors = new Array([62, 35, 255], [60, 255, 60], [255, 35, 98], [45, 175, 230], [255, 0, 255], [255, 128, 0]);
 
@@ -70,7 +70,12 @@ angular.module('d8intranetApp')
 
       if (!$rootScope.jira) {
         $rootScope.showModalWindow = true;
+
+        $rootScope.modalMessageType = 'error';
+        $rootScope.modalMessageSubtitle = 'Seems don\'t filled JIRA at yesterday!';
+        $rootScope.modalMessage = 'Please fill JIRA and reload page.';
       }
+
       else {
         $rootScope.messageRequest = true;
         setInterval(updateGradient, 10);
