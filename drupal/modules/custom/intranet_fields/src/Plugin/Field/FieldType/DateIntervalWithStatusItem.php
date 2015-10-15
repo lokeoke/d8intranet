@@ -47,9 +47,9 @@ class DateIntervalWithStatusItem extends FieldItemBase {
   }
 
   public static function propertyDefinitions(FieldStorageDefinitionInterface $field_definition) {
-    $properties['start_date'] = DataDefinition::create('datetime_iso8601')
+    $properties['start_date'] = DataDefinition::create('timestamp')
       ->setLabel(t('Start date'));
-    $properties['end_date'] = DataDefinition::create('datetime_iso8601')
+    $properties['end_date'] = DataDefinition::create('timestamp')
       ->setLabel(t('End date'));
     $properties['state'] = DataDefinition::create('string')
       ->setLabel(t('State'));
