@@ -1,0 +1,25 @@
+uuid: 6cf62ae6-6f91-45ad-b900-e65e9d851668
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.user.field_user_vacation
+  module:
+    - intranet_fields
+    - user
+id: user.user.field_user_vacation
+field_name: field_user_vacation
+entity_type: user
+bundle: user
+label: 'User vacation'
+description: ''
+required: false
+translatable: false
+default_value:
+  -
+    start_date: ''
+    end_date: ''
+    state: '0'
+default_value_callback: ''
+settings: {  }
+field_type: date_interval_with_status

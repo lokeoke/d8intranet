@@ -7,6 +7,7 @@ core: 8.x
 
 dependencies:
   - intranet_helper
+  - intranet_fields
   - path
   - rest
   - datetime

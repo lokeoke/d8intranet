@@ -11,7 +11,7 @@ module: views
 description: 'User list for anonymous access'
 tag: ''
 base_table: users_field_data
-base_field: nid
+base_field: uid
 core: 8.x
 display:
   default:
@@ -21,9 +21,8 @@ display:
     position: 0
     display_options:
       access:
-        type: perm
-        options:
-          perm: 'access user profiles'
+        type: none
+        options: {  }
       cache:
         type: none
         options: {  }
@@ -146,10 +145,16 @@ display:
       empty: {  }
       relationships: {  }
       arguments: {  }
+      display_extenders: {  }
     cache_metadata:
       contexts:
-        - languages
+        - 'languages:language_content'
+        - 'languages:language_interface'
+        - request_format
+        - url.query_args
       cacheable: false
+      max-age: -1
+      tags: {  }
   rest_export_1:
     display_plugin: rest_export
     id: rest_export_1
@@ -174,5 +179,9 @@ display:
         options: {  }
     cache_metadata:
       contexts:
-        - languages
+        - 'languages:language_content'
+        - 'languages:language_interface'
+        - request_format
       cacheable: false
+      max-age: -1
+      tags: {  }

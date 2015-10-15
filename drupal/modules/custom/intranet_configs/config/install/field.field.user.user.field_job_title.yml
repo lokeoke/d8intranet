@@ -1,22 +1,20 @@
-uuid: f54dd1e1-99e8-4751-bd2e-46247d129ed2
+uuid: 4017b639-1f6e-4472-9900-b8275611fe89
 langcode: en
 status: true
 dependencies:
   config:
-    - field.storage.user.field_github_id
+    - field.storage.user.field_job_title
   module:
     - user
-id: user.user.field_github_id
-field_name: field_github_id
+id: user.user.field_job_title
+field_name: field_job_title
 entity_type: user
 bundle: user
-label: 'GitHub ID'
+label: 'Job title'
 description: ''
 required: false
 translatable: false
-default_value:
-  -
-    value: ''
+default_value: {  }
 default_value_callback: ''
 settings: {  }
 field_type: string

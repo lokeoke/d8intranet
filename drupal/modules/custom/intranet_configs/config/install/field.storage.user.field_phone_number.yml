@@ -1,3 +1,4 @@
+uuid: 1a7978eb-63b1-4a27-9634-522c52cc61c5
 langcode: en
 status: true
 dependencies:
@@ -10,9 +11,11 @@ type: string
 settings:
   max_length: 255
   case_sensitive: false
+  is_ascii: false
 module: core
 locked: false
 cardinality: 1
 translatable: true
 indexes: {  }
 persist_with_no_fields: false
+custom_storage: false

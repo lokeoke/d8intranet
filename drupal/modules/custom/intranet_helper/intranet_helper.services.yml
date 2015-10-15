@@ -1,3 +1,9 @@
 services:
     intranet_helper.services.status:
         class: Drupal\intranet_helper\IntranetHelperServicesStatus
+
+    intranet_helper.normalizer.entity_reference_item.hal:
+        class: Drupal\intranet_helper\Normalizer\TermReferenceNormalizer
+        arguments: ['@rest.link_manager', '@serializer.entity_resolver']
+        tags:
+          - { name: normalizer, priority: 50 }
