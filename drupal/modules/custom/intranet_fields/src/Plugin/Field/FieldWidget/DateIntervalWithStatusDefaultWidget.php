@@ -23,7 +23,7 @@ class DateIntervalWithStatusDefaultWidget extends WidgetBase {
     $element['start_date'] = array(
       '#type' => 'date',
       '#title' => t('Start date'),
-      '#default_value' => !empty($items[$delta]->start_date),
+      '#default_value' => $items[$delta]->start_date,
       '#date_increment' => 1,
       '#date_timezone' => drupal_get_user_timezone(),
     );
@@ -31,7 +31,7 @@ class DateIntervalWithStatusDefaultWidget extends WidgetBase {
     $element['end_date'] = array(
       '#type' => 'date',
       '#title' => t('End date'),
-      '#default_value' => !empty($items[$delta]->end_date),
+      '#default_value' => $items[$delta]->end_date,
       '#date_increment' => 1,
       '#date_timezone' => drupal_get_user_timezone(),
     );
@@ -39,8 +39,11 @@ class DateIntervalWithStatusDefaultWidget extends WidgetBase {
     $element['state'] = array(
       '#type' => 'select',
       '#title' => t('State'),
-      '#options' => array('paid-leave', 'unpaid-leave'),
-      '#default_value' => !empty($items[$delta]->state),
+      '#options' => array(
+        'paid-leave' => 'paid-leave',
+        'unpaid-leave' => 'unpaid-leave'
+      ),
+      '#default_value' => $items[$delta]->state,
     );
 
     return $element;
