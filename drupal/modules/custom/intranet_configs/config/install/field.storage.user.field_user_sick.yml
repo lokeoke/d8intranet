@@ -1,0 +1,19 @@
+uuid: 62501b78-4a3a-45d3-ba01-1e2822209425
+langcode: en
+status: true
+dependencies:
+  module:
+    - intranet_fields
+    - user
+id: user.field_user_sick
+field_name: field_user_sick
+entity_type: user
+type: date_interval_with_status
+settings: {  }
+module: intranet_fields
+locked: false
+cardinality: -1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false
