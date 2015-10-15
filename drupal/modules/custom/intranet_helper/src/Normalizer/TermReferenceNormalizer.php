@@ -19,7 +19,7 @@ class TermReferenceNormalizer extends EntityReferenceFieldItemNormalizer {
 
     if (($entity = $field_item->get('entity')->getValue()) && ($entity->url('canonical'))) {
       $values['target_id'] = $entity->id();
-      $values['name'] = $entity->name->getValue()[0]['value'];
+      $values['name'] = $entity->name->value;
     }
 
     return $values;
