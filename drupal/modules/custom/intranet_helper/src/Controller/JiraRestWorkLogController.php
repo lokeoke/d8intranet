@@ -12,7 +12,7 @@ use \Drupal\jira_rest\Controller\JiraRestController;
 
 class JiraRestWorkLogController extends ControllerBase {
 
-  public function view(Request $request) {
+  public function jireRest(Request $request) {
     try {
 
 
@@ -27,29 +27,33 @@ class JiraRestWorkLogController extends ControllerBase {
       $interval = "-2d";
       $res = $jira->jira_rest_searchissue("updated >= " . $interval . " AND assignee in (" . $author_name . ")");
 
-    } catch(JiraRestException $e) {
+    } catch (JiraRestException $e) {
       $responce['messages'][] = $e->getMessage();
     }
-      $responce = array();
+    $responce = array();
 
-      $interval = abs(intval($interval));
-      $sub_days = "$interval days";
-      $date = date_create();
-      $toDate = date_format($date, 'Y-m-d');
-      date_sub($date, date_interval_create_from_date_string($sub_days));
-      $fromDate = date_format($date, 'Y-m-d');
+    $interval = abs(intval($interval));
+    $sub_days = "$interval days";
+    $date = date_create();
+    $toDate = date_format($date, 'Y-m-d');
+    date_sub($date, date_interval_create_from_date_string($sub_days));
+    $fromDate = date_format($date, 'Y-m-d');
 
-      foreach ($res->issues as $issue) {
-        $worklog = $jira->jira_rest_get_worklog($issue->key);
-        foreach ($worklog->worklogs as $entry) {
-          $shortDate = substr($entry->started, 0, 10);
-          # keep a worklog entry on $key item,
-          # iff within the search time period
-          if ($entry->author->name == $author_name && $shortDate >= $fromDate && $shortDate <= $toDate)
-            $responce[$issue->key] += $entry->timeSpentSeconds;
+    foreach ($res->issues as $issue) {
+      $worklog = $jira->jira_rest_get_worklog($issue->key);
+      foreach ($worklog->worklogs as $entry) {
+        $shortDate = substr($entry->started, 0, 10);
+        # keep a worklog entry on $key item,
+        # iff within the search time period
+        if ($entry->author->name == $author_name && $shortDate >= $fromDate && $shortDate <= $toDate) {
+          $responce[$issue->key] += $entry->timeSpentSeconds;
         }
       }
-    return new JsonResponse($responce);
+    }
+  }
+  public function view(Request $request) {
+    $jireRest = JiraRestWorkLogController::jireRest($request);
+    return new JsonResponse($jireRest);
   }
 
 }

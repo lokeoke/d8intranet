@@ -18,7 +18,6 @@ class IntranetUserController extends ControllerBase {
     $this->userAuth = \Drupal::getContainer()->get('user.auth');
     $this->userStorage = \Drupal::getContainer()->get('entity.manager')->getStorage('user');
   }
-
   public function view(Request $request) {
     $users = User::loadMultiple();
 
