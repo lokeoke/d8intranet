@@ -1,3 +1,4 @@
+uuid: d7100863-b6a7-4c5f-8e05-5bcb6f6c59ea
 langcode: en
 status: true
 dependencies:
@@ -6,10 +7,16 @@ dependencies:
     - field.field.user.user.field_drupal_org_id
     - field.field.user.user.field_first_name
     - field.field.user.user.field_github_id
+    - field.field.user.user.field_job_title
     - field.field.user.user.field_last_name
     - field.field.user.user.field_phone_number
     - field.field.user.user.field_position
     - field.field.user.user.field_team
+    - field.field.user.user.field_user_birthday
+    - field.field.user.user.field_user_email
+    - field.field.user.user.field_user_position
+    - field.field.user.user.field_user_skype
+    - field.field.user.user.field_user_status
     - field.field.user.user.user_picture
   module:
     - datetime
@@ -57,6 +64,13 @@ content:
       size: 60
       placeholder: ''
     third_party_settings: {  }
+  field_job_title:
+    weight: 8
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: string_textfield
   field_last_name:
     type: string_textfield
     weight: 0
@@ -81,6 +95,36 @@ content:
     weight: 0
     settings: {  }
     third_party_settings: {  }
+  field_user_birthday:
+    weight: 10
+    settings: {  }
+    third_party_settings: {  }
+    type: datetime_default
+  field_user_email:
+    weight: 11
+    settings:
+      placeholder: ''
+    third_party_settings: {  }
+    type: email_default
+  field_user_position:
+    weight: 9
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: string_textfield
+  field_user_skype:
+    weight: 12
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: string_textfield
+  field_user_status:
+    weight: 13
+    settings: {  }
+    third_party_settings: {  }
+    type: options_select
   language:
     weight: 0
     settings: {  }

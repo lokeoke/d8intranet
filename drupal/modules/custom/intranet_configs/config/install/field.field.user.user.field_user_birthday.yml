@@ -1,19 +1,19 @@
-uuid: 48401b72-671d-4ef4-aa0e-14c1ce033c39
+uuid: 5db43664-354a-44bb-a63e-62e900eca8a7
 langcode: en
 status: true
 dependencies:
   config:
-    - field.storage.user.field_came_to_propeople
+    - field.storage.user.field_user_birthday
   module:
     - datetime
     - user
-id: user.user.field_came_to_propeople
-field_name: field_came_to_propeople
+id: user.user.field_user_birthday
+field_name: field_user_birthday
 entity_type: user
 bundle: user
-label: 'Came to Propeople'
+label: 'User birthday'
 description: ''
-required: true
+required: false
 translatable: false
 default_value: {  }
 default_value_callback: ''

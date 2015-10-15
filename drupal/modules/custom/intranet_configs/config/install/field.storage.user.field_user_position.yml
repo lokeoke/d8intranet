@@ -1,17 +1,17 @@
-uuid: 41ec7195-e4b6-4ec9-b400-0f4b2c5a0c3b
+uuid: 4a1227a1-4815-42aa-b700-f25af955e903
 langcode: en
 status: true
 dependencies:
   module:
     - user
-id: user.field_last_name
-field_name: field_last_name
+id: user.field_user_position
+field_name: field_user_position
 entity_type: user
 type: string
 settings:
   max_length: 255
-  case_sensitive: false
   is_ascii: false
+  case_sensitive: false
 module: core
 locked: false
 cardinality: 1

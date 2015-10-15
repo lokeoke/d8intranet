@@ -1,3 +1,4 @@
+uuid: 1ad0cae6-ee8d-4078-9008-8d5441a9216e
 langcode: en
 status: true
 dependencies:
@@ -32,6 +33,6 @@ settings:
     title: ''
     width: null
     height: null
-  handler: 'default:node'
+  handler: 'default:file'
   handler_settings: {  }
 field_type: image

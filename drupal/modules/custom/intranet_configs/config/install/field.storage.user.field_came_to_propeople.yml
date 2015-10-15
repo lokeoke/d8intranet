@@ -1,3 +1,4 @@
+uuid: e3828f96-6502-42d0-a400-ead3062f4951
 langcode: en
 status: true
 dependencies:
@@ -16,3 +17,4 @@ cardinality: 1
 translatable: true
 indexes: {  }
 persist_with_no_fields: false
+custom_storage: false
