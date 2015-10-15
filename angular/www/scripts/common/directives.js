@@ -95,7 +95,6 @@ angular.module('d8intranetApp')
       scope: true,
       link: function posLink(scope, element, attrs) {
         scope.modalTitle = attrs.title;
-
         scope.$watch(attrs.visible, function (value) {
           if (!value) {
             element.hide();
@@ -113,7 +112,7 @@ angular.module('d8intranetApp')
       element.bind('click', function () {
         angular.element(document.getElementById('modal-wrapper'))
           .append(
-          $compile('<modal title="Whoa!" data-type="{{modalMessageType}}" visible="showModalWindow"></modal>')(scope)
+          $compile('<modal title="{{modalHeaderTitle}}" data-type="{{modalMessageType}}" visible="showModalWindow"></modal>')(scope)
         );
       })
     }

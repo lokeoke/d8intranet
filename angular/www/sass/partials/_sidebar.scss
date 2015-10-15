@@ -76,7 +76,8 @@
   }
 }
 
-.checkin {
+.checkin,
+.user-login {
   @include font-size(15);
   @each $theme, $map in $themes {
     .#{$theme} & {
@@ -94,6 +95,11 @@
   margin: 0 auto 30px;
   border: 0;
   cursor: pointer;
+  transition: all ease .3s;
+
+  &:hover {
+    background: $success;
+  }
 }
 
 .checked {

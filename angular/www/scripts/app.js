@@ -19,8 +19,8 @@ angular.module('d8intranetApp', [
 ])
   .config(function ($routeProvider, $httpProvider, $compileProvider) {
     $routeProvider
-      .when('/', {
-        url: "/main",
+      .when('/dashboard', {
+        url: "/dashboard",
         templateUrl: 'views/dashboard.html',
         controller: 'dashboardController'
       })
@@ -67,11 +67,6 @@ angular.module('d8intranetApp', [
     $scope.date = new Date();
   })
 
-  .controller('getUserStateController', function($scope, $http, checkState, config, $rootScope) {
-    checkState.getState(config.status).then(function(data){
-      $scope.logged = data.logged;
-    })
-  })
 ;
 
 

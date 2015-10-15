@@ -46,5 +46,6 @@ angular.module('d8intranetApp')
     checkState.getState(config.status).then(function(data){
       $scope.logged = data.logged;
       $rootScope.jira = data.jira;
+      $scope.currentUserId = data.uid;
     })
   });

@@ -2076,7 +2076,8 @@ hr {
     .menu-desktop .user-pic.active img {
       box-shadow: 0 0 10px 2px #46575d; }
 
-.checkin {
+.checkin,
+.user-login {
   font-size: 0.9375rem;
   width: 80%;
   outline: none;
@@ -2086,15 +2087,22 @@ hr {
   text-align: center;
   margin: 0 auto 30px;
   border: 0;
-  cursor: pointer; }
-  .lt-ie9 .checkin {
+  cursor: pointer;
+  transition: all ease 0.3s; }
+  .lt-ie9 .checkin,
+  .lt-ie9 .user-login {
     font-size: 15px; }
-  .dark .checkin {
+  .dark .checkin,
+  .dark .user-login {
     background: #DE1B1B;
     color: #fff; }
-  .light .checkin {
+  .light .checkin,
+  .light .user-login {
     background: #DE1B1B;
     color: #fff; }
+  .checkin:hover,
+  .user-login:hover {
+    background: #3A9E49; }
 
 .checked {
   background: #23a170; }
@@ -2595,7 +2603,14 @@ hr {
   -webkit-transform: rotate(-15deg);
           transform: rotate(-15deg); }
 
-.preloader span {
+.preloader:after,
+.preloader:before {
+  content: ''; }
+
+.preloader span,
+.preloader span:after,
+.preloader:after,
+.preloader:before {
   width: 20px;
   height: 20px;
   position: absolute;
@@ -2605,25 +2620,26 @@ hr {
   -webkit-animation: preloader_element 1s infinite linear;
           animation: preloader_element 1s infinite linear; }
 
-.preloader span:nth-child(1) {
-  background: #4CAF50; }
+.preloader:before {
+  background: #4caf50; }
 
-.preloader span:nth-child(2) {
+.preloader:after {
   left: 22px;
-  background: #FF5722;
+  background: #ff5722;
   -webkit-animation-delay: .2s;
           animation-delay: .2s; }
 
-.preloader span:nth-child(3) {
+.preloader span {
   top: 22px;
-  background: #E91E63;
+  background: #e91e63;
   -webkit-animation-delay: .4s;
           animation-delay: .4s; }
 
-.preloader span:nth-child(4) {
+.preloader span:nth-child(2) {
+  content: '';
   top: 22px;
   left: 22px;
-  background: #286B90;
+  background: #286b90;
   -webkit-animation-delay: .6s;
           animation-delay: .6s; }
 
