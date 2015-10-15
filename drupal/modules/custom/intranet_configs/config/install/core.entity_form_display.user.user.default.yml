@@ -13,14 +13,21 @@ dependencies:
     - field.field.user.user.field_position
     - field.field.user.user.field_team
     - field.field.user.user.field_user_birthday
+    - field.field.user.user.field_user_dayoff
+    - field.field.user.user.field_user_duty_journey
     - field.field.user.user.field_user_email
     - field.field.user.user.field_user_position
+    - field.field.user.user.field_user_remote_work
+    - field.field.user.user.field_user_sick
     - field.field.user.user.field_user_skype
     - field.field.user.user.field_user_status
+    - field.field.user.user.field_user_vacation
+    - field.field.user.user.field_user_work_off
     - field.field.user.user.user_picture
   module:
     - datetime
     - image
+    - intranet_fields
     - user
 id: user.user.default
 targetEntityType: user
@@ -100,6 +107,16 @@ content:
     settings: {  }
     third_party_settings: {  }
     type: datetime_default
+  field_user_dayoff:
+    weight: 19
+    settings: {  }
+    third_party_settings: {  }
+    type: date_interval_with_status_default
+  field_user_duty_journey:
+    weight: 16
+    settings: {  }
+    third_party_settings: {  }
+    type: date_interval_with_status_default
   field_user_email:
     weight: 11
     settings:
@@ -113,6 +130,16 @@ content:
       placeholder: ''
     third_party_settings: {  }
     type: string_textfield
+  field_user_remote_work:
+    weight: 17
+    settings: {  }
+    third_party_settings: {  }
+    type: date_interval_with_status_default
+  field_user_sick:
+    weight: 15
+    settings: {  }
+    third_party_settings: {  }
+    type: date_interval_with_status_default
   field_user_skype:
     weight: 12
     settings:
@@ -125,6 +152,16 @@ content:
     settings: {  }
     third_party_settings: {  }
     type: options_select
+  field_user_vacation:
+    weight: 14
+    settings: {  }
+    third_party_settings: {  }
+    type: date_interval_with_status_default
+  field_user_work_off:
+    weight: 18
+    settings: {  }
+    third_party_settings: {  }
+    type: date_interval_with_status_default
   language:
     weight: 0
     settings: {  }
