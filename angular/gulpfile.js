@@ -36,7 +36,7 @@ gulp.task('connect', function () {
   connect.server({
     port: 8888,
     livereload: true,
-    host: 'localhost',
+    host: 'angular.d8pp.dev',
     root: './www',
 
     middleware: function (connect, opt) {
@@ -56,7 +56,7 @@ gulp.task('connect', function () {
 gulp.task('html', function (done) {
   gulp.src(paths.html)
     .pipe(livereload())
-    .pipe(connect.reload())
+    //.pipe(connect.reload())
     .pipe(gulp.dest('www/'))
     .on('end', done);
 });

@@ -45,16 +45,23 @@ angular.module('d8intranetApp')
       async: function (url) {
         // $http returns a promise, which has a then function, which also returns a promise
         promise = $http.get(url).then(function (response) {
+          console.log(response)
           console.log('Getting users');
           // The then function here is an opportunity to modify the response
           // The return value gets picked up by the then in the controller.
           users = response.data;
+
           // Clear users each 2 minutes
           $timeout(function () {
             users = [];
           }, '120000');
+
           console.log('Users are sent');
           return users;
+        },
+          function errorCallback(response) {
+            // TODO add fallback code for different statuses
+            console.log(response);
         });
         $rootScope.dataLoaded = true;
         // Return the promise to the controller
