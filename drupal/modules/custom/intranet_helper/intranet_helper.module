@@ -20,6 +20,14 @@ function intranet_helper_entity_base_field_info_alter(&$fields, EntityTypeInterf
       ->setTranslatable(FALSE)
       ->setQueryable(FALSE)
       ->setComputed(TRUE);
+    $fields['field_vacation'] = BaseFieldDefinition::create('list_string')
+      ->setName('field_vacation')
+      ->setLabel(t('Vacation'))
+      ->setDescription(t('Vacation List.'))
+      ->setTranslatable(FALSE)
+      ->setQueryable(FALSE)
+      ->setComputed(TRUE);
+
   }
 }
 

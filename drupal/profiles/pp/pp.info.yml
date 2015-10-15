@@ -38,6 +38,12 @@ dependencies:
   - views_ui
   - tour
   - automated_cron
+  # CONTRIB
+  - field_group
+  - jira_rest
+  # CUSTOM
+  - intranet_helper
+  - intranet_configs
 themes:
   - bartik
   - seven

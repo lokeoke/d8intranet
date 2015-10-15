@@ -1,18 +1,20 @@
+uuid: 62f70c28-9886-4355-9e06-062749a3d18c
 langcode: en
 status: true
 dependencies:
   module:
     - datetime
-    - user
-id: user.field_vacation
-field_name: field_vacation
-entity_type: user
+    - node
+id: node.field_start_date
+field_name: field_start_date
+entity_type: node
 type: datetime
 settings:
   datetime_type: date
 module: datetime
 locked: false
-cardinality: -1
+cardinality: 1
 translatable: true
 indexes: {  }
 persist_with_no_fields: false
+custom_storage: false

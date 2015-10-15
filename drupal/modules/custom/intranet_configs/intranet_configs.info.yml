@@ -9,4 +9,7 @@ dependencies:
   - intranet_helper
   - path
   - rest
+  - datetime
+  - entity_reference
+  - title
   - user

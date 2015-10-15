@@ -9,6 +9,8 @@ class SpesialData {
       $this->{$key} = $value;
     }
   }
+
+  // This object was create for the sake of this function
   function __toString() {
     return serialize($this);
   }

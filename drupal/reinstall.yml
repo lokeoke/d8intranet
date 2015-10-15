@@ -21,9 +21,12 @@
   tasks:
   - name: Droping drupal database
     mysql_db: name={{ mysql_db }} state=absent login_user={{ mysql_user }} login_password={{ mysql_pass }}
-
+    tags:
+      - db
   - name: Creating drupal database
     mysql_db: name={{ mysql_db }} state=present login_user={{ mysql_user }} login_password={{ mysql_pass }}
+    tags:
+      - db
 
   - name: Creating cache folder
     sudo: yes

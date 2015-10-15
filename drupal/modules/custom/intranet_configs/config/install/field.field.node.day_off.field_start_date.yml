@@ -1,17 +1,19 @@
+uuid: 91c02580-a8b8-443f-9b14-20348b1bfd81
 langcode: en
 status: true
 dependencies:
   config:
-    - field.storage.user.field_vacation
+    - field.storage.node.field_start_date
+    - node.type.day_off
   module:
     - datetime
-id: user.user.field_vacation
-field_name: field_vacation
-entity_type: user
-bundle: user
-label: Vacation
+id: node.day_off.field_start_date
+field_name: field_start_date
+entity_type: node
+bundle: day_off
+label: 'Start Date'
 description: ''
-required: false
+required: true
 translatable: false
 default_value:
   -

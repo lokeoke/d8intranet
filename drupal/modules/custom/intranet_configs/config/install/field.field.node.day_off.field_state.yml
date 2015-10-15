@@ -1,0 +1,23 @@
+uuid: 86adf604-99eb-4229-861a-2647caf46525
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_state
+    - node.type.day_off
+  module:
+    - options
+id: node.day_off.field_state
+field_name: field_state
+entity_type: node
+bundle: day_off
+label: State
+description: ''
+required: true
+translatable: false
+default_value:
+  -
+    value: unpaid-leave
+default_value_callback: ''
+settings: {  }
+field_type: list_string
