@@ -17,38 +17,30 @@ angular.module('d8intranetApp')
       $scope.users = d;
 
       $scope.states = {};
-      $scope.availableEmployees = {};
+      $scope.availableEmployees = {available:{'count': 0}};
 
       var haveStatus;
 
       angular.forEach($scope.users, function (user) {
-        haveStatus = false;
 
-        angular.forEach(user.statuses[0], function (key, statusName) {
-          if (key == 1) {
+        if(user.statuses.length > 0) {
+          angular.forEach(user.statuses, function (status) {
+            var statusKey = status.value;
+            var statusName = cardName(statusKey)
 
-            haveStatus = true;
+            $scope.states[statusName] = $scope.states[statusName] || {
+                  'count': 0
+                };
+            $scope.states[statusName][user.uid[0].value] = user;
+            $scope.states[statusName]['count'] += 1;
 
-            if (typeof $scope.states[cardName(statusName)] != 'undefined') {
-              $scope.states[cardName(statusName)][user.uid[0].value] = user;
-              $scope.states[cardName(statusName)]['count'] += 1;
-            } else {
-              $scope.states[cardName(statusName)] = {};
-              $scope.states[cardName(statusName)][user.uid[0].value] = user;
-              $scope.states[cardName(statusName)]['count'] = 1;
-            }
-          }
-        });
+          });
+        }
 
-        if(!haveStatus) {
-          if (typeof $scope.availableEmployees.available != 'undefined') {
+        else {
+          if(!haveStatus) {
             $scope.availableEmployees.available[user.uid[0].value] = user;
             $scope.availableEmployees.available['count'] += 1;
-          }
-          else {
-            $scope.availableEmployees.available = {};
-            $scope.availableEmployees.available[user.uid[0].value] = user;
-            $scope.availableEmployees.available['count'] = 1;
           }
         }
       });
@@ -73,7 +65,7 @@ angular.module('d8intranetApp')
             return 'Vacation';
             break;
           default:
-            return '';
+            return status;
             break;
         }
       }
