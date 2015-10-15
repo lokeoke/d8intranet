@@ -10,7 +10,7 @@ intranet_helper.jira_rest_worklog:
   defaults:
     _controller: '\Drupal\intranet_helper\Controller\JiraRestWorkLogController::view'
   requirements:
-    _access: 'TRUE'
+    _user_is_logged_in: 'TRUE'
 
 intranet_helper.user_login:
   path: '/api/user/login'

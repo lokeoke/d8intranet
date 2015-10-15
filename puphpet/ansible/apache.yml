@@ -15,6 +15,10 @@
         servername: "drupal.d8pp.dev",
         documentroot: "/var/www/drupal"
       }
+      - {
+        servername: "angular.d8pp.dev",
+        documentroot: "/var/www/angular/www"
+      }
     apache_mods_enabled:
       - rewrite.load
       - headers.load

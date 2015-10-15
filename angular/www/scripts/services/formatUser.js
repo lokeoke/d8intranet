@@ -116,15 +116,15 @@ angular.module('d8intranetApp')
           // Get Vacation days
           // ---------------------------------------------------------------------
           angular.forEach(employee.field_vacation, function (vacation) {
-            var month = formatUserData.getMonthNumber(vacation.start_date);
-            months[month].vacationDays = formatUserData.formatStatisticsData(vacationDays, vacation);
+            var month = formatUserData.getMonthNumber(vacation.value.start_date);
+            months[month].vacationDays = formatUserData.formatStatisticsData(vacationDays, vacation.value);
           });
 
           // Get DaysOff days
           // ---------------------------------------------------------------------
           angular.forEach(employee.field_dayoff, function (dayoff) {
-            var month = formatUserData.getMonthNumber(dayoff.start_date);
-            months[month].dayOffDays = formatUserData.formatStatisticsData(dayOffDays, dayoff);
+            var month = formatUserData.getMonthNumber(dayoff.value.start_date);
+            months[month].dayOffDays = formatUserData.formatStatisticsData(dayOffDays, dayoff.value);
           });
           //
           // Get Sick days

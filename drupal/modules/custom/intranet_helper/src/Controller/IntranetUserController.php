@@ -21,16 +21,18 @@ class IntranetUserController extends ControllerBase {
 
   public function view(Request $request) {
     $users = User::loadMultiple();
-    var_dump($users);
+
 
     foreach ($users as &$user) {
-      $user->status = [
+      $user = get_object_vars($user);
+
+      /*$user['statuses'] = [
         'day_off' => 0,
         'sick' => 1,
         'business_trip' => 0,
         'remote_work' => 1,
         'vacation' => 0,
-      ];
+      ];*/
     }
 
     return new JsonResponse(['users' => $users]);

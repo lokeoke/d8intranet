@@ -1,0 +1,46 @@
+<?php
+
+use Drupal\Core\Entity\EntityTypeInterface;
+use Drupal\Core\Field\BaseFieldDefinition;
+
+function intranet_helper_entity_base_field_info_alter(&$fields, EntityTypeInterface $entity_type) {
+  // Alter the field to use a custom class.
+  if ($entity_type->id() == 'user') {
+    $fields['statuses'] = BaseFieldDefinition::create('list_string')
+      ->setName('statuses')
+      ->setLabel(t('Statuses'))
+      ->setDescription(t('Statuses ID.'))
+      ->setTranslatable(FALSE)
+      ->setQueryable(FALSE)
+      ->setComputed(TRUE);
+    $fields['field_dayoff'] = BaseFieldDefinition::create('list_string')
+      ->setName('field_dayoff')
+      ->setLabel(t('Dayoff'))
+      ->setDescription(t('Dayoff List.'))
+      ->setTranslatable(FALSE)
+      ->setQueryable(FALSE)
+      ->setComputed(TRUE);
+    $fields['field_vacation'] = BaseFieldDefinition::create('list_string')
+      ->setName('field_vacation')
+      ->setLabel(t('Vacation'))
+      ->setDescription(t('Vacation List.'))
+      ->setTranslatable(FALSE)
+      ->setQueryable(FALSE)
+      ->setComputed(TRUE);
+
+  }
+}
+
+function intranet_helper_entity_load(array $entities, $entity_type_id) {
+
+  if ($entity_type_id == "user") {
+    foreach ($entities as $entity) {
+
+      \Drupal::service("intranet_helper.services.status")
+        ->setStatus($entity);
+
+    }
+  }
+
+}
+
