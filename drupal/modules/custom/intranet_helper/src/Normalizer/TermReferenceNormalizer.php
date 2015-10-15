@@ -15,11 +15,14 @@ use Drupal\serialization\Normalizer\EntityReferenceFieldItemNormalizer;
 class TermReferenceNormalizer extends EntityReferenceFieldItemNormalizer {
 
   public function normalize($field_item, $format = NULL, array $context = array()) {
-    $values = array();
+    $values = parent::normalize($field_item, $format, $context);
 
     if (($entity = $field_item->get('entity')->getValue()) && ($entity->url('canonical'))) {
       $values['target_id'] = $entity->id();
-      $values['name'] = $entity->name->value;
+
+      if ($entity->name->value) {
+        $values['name'] = $entity->name->value;
+      }
     }
 
     return $values;
