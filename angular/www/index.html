@@ -30,30 +30,21 @@
 <![endif]-->
 
 <!-- Add your site or application content here -->
-<div class="overlay" ng-if="messageRequest" ng-cloak>
-  <div class="message">
-    <div class="spinner" id="gradient"></div>
-    <span>Sending data</span>
-  </div>
+<!--<div class="overlay" ng-if="messageRequest" ng-cloak>-->
+  <!--<div class="message">-->
+    <!--<div class="spinner" id="gradient"></div>-->
+    <!--<span>Sending data</span>-->
+  <!--</div>-->
+<!--</div>-->
 
-</div>
+<div ng-cloak ng-controller="modalController" id="modal-wrapper"></div>
 
-<div ng-cloak ng-controller="modalController">
-  <modal title="Attention" visible="showModalWindow">
-    <p>
-      <strong> Whoa! Seems don't filled JIRA at yesterday!</strong> <br/> Please fill JIRA and try again.
-    </p>
-  </modal>
-</div>
-
-<div class="preloader" ng-hide="dataLoaded">
+<div class="preloader" ng-hide="dataLoaded || messageRequest">
   <span></span>
   <span></span>
   <span></span>
   <span></span>
 </div>
-
-
 
 <div class="global-wrapper" ng-show="dataLoaded">
   <div class="wrapper container">
@@ -83,7 +74,7 @@
 
           <div ng-controller="CheckInController" ng-if="logged">
             <form ng-submit="checkIn()">
-              <button type="submit" class="checkin" data-checked="false">Check
+              <button insert-modal type="submit" class="checkin" data-checked="false">Check
                 in
               </button>
             </form>
@@ -135,7 +126,7 @@
           <nav id="mobile-menu" class="mobile-menu"
               ng-class="menuIsOpen ? 'mobile-menu-open' : ' ' ">
 
-            <ul class="menu-mobile">
+            <ul class="menu-mobile" ng-controller="sidebarController">
               <li class="user-data">
                 <a class="user-pic" ng-href="#user/5"
                     ng-click="setActiveMenuItem('#user/5')">
@@ -183,17 +174,17 @@
 </div>
 
 <!-- Google Analytics: change UA-XXXXX-X to be your site's ID -->
-<script>
-  !function (A, n, g, u, l, a, r) {
-    A.GoogleAnalyticsObject = l, A[l] = A[l] || function () {
-      (A[l].q = A[l].q || []).push(arguments)
-    }, A[l].l = +new Date, a = n.createElement(g),
-        r = n.getElementsByTagName(g)[0], a.src = u, r.parentNode.insertBefore(a, r)
-  }(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+<!--<script>-->
+  <!--!function (A, n, g, u, l, a, r) {-->
+    <!--A.GoogleAnalyticsObject = l, A[l] = A[l] || function () {-->
+      <!--(A[l].q = A[l].q || []).push(arguments)-->
+    <!--}, A[l].l = +new Date, a = n.createElement(g),-->
+        <!--r = n.getElementsByTagName(g)[0], a.src = u, r.parentNode.insertBefore(a, r)-->
+  <!--}(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');-->
 
-  ga('create', 'UA-XXXXX-X');
-  ga('send', 'pageview');
-</script>
+  <!--ga('create', 'UA-XXXXX-X');-->
+  <!--ga('send', 'pageview');-->
+<!--</script>-->
 
 <!-- build:js(.) scripts/vendor.js -->
 <!-- bower:js -->

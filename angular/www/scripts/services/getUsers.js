@@ -19,11 +19,11 @@ angular.module('d8intranetApp')
 
         if (users.length > 0) {
           console.log('I have users');
+          $rootScope.dataLoaded = true;
           return promise;
         }
         else {
           console.log('Don\'t have users... request');
-          console.log('in')
           $rootScope.dataLoaded = false;
           return getJsonData.async(url);
         }

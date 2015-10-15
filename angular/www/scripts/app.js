@@ -67,12 +67,12 @@ angular.module('d8intranetApp', [
     $scope.date = new Date();
   })
 
-  .controller('getUserStateController', function($scope, $http, checkState, config) {
+  .controller('getUserStateController', function($scope, $http, checkState, config, $rootScope) {
     checkState.getState(config.status).then(function(data){
       $scope.logged = data.logged;
-      console.log($scope.logged);
     })
   })
+;
 
 
 

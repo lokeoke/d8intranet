@@ -90,12 +90,12 @@
     transition: all 0.8s ease; }
   .view-animate.ng-enter {
     opacity: 0;
-    z-index: 8888; }
+    z-index: 888; }
   .view-animate.ng-enter-active {
     opacity: 1; }
   .view-animate.ng-leave {
     opacity: 1;
-    z-index: 9999; }
+    z-index: 999; }
   .view-animate.ng-leave-active {
     opacity: 0; }
 
@@ -2032,7 +2032,7 @@ hr {
 
 .sidebar {
   position: relative;
-  z-index: 100; }
+  z-index: 10000; }
 
 .sidebar li {
   transition: all 0.4s ease-in-out; }
@@ -2246,7 +2246,7 @@ hr {
   width: 40px;
   height: 40px;
   cursor: pointer;
-  z-index: 101; }
+  z-index: 100001; }
   @media (min-width: 0) and (max-width: 767px) {
     .bt-menu-trigger {
       top: 10px; } }
@@ -2351,7 +2351,7 @@ hr {
 
 .mobile-menu-open {
   opacity: 1;
-  z-index: 100;
+  z-index: 99999;
   visibility: visible; }
 
 .page-title {
@@ -2750,19 +2750,36 @@ form .form-submit {
   left: 0;
   width: 100%;
   height: 100%;
-  z-index: 10000; }
+  z-index: 100002; }
+  .dark .modal {
+    background: rgba(38, 50, 56, 0.8); }
+  .light .modal {
+    background: rgba(246, 246, 246, 0.8); }
 
 .modal-title {
   font-size: 1.375rem;
   padding: 15px 30px;
   font-weight: 600;
-  background: #f13145;
   color: #fff; }
   .lt-ie9 .modal-title {
     font-size: 22px; }
 
+.modal-header {
+  background: #404040;
+  border-top-left-radius: 15px; }
+
+.modal-error {
+  background: #f13145; }
+
+.modal-warning {
+  background: #de741b; }
+
+.modal-success {
+  background: #3A9E49; }
+
 .modal-dialog {
   background: #f4f4f4;
+  border-radius: 15px 0;
   max-width: 600px;
   position: fixed;
   top: 50%;
@@ -2789,12 +2806,20 @@ form .form-submit {
   cursor: pointer;
   margin: 0 auto;
   display: block;
-  background: #2395C2;
   color: #fff;
   border: 0;
-  padding: 10px 20px; }
+  padding: 10px 20px;
+  transition: all ease 0.3s; }
   .lt-ie9 .close-modal {
     font-size: 14px; }
+  .dark .close-modal {
+    background: #66d5e9; }
+  .light .close-modal {
+    background: #498baf; }
+  .dark .close-modal:hover {
+    background: #e9c366; }
+  .light .close-modal:hover {
+    background: #537786; }
 
 .available-users {
   margin: 4rem 0;
