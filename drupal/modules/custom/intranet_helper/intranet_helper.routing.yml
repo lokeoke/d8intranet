@@ -26,3 +26,10 @@ intranet_helper.user_logout:
     _controller: '\Drupal\user\Controller\UserController::logout'
   requirements:
     _user_is_logged_in: 'TRUE'
+
+intranet_helper.current_user_info:
+  path: '/api/check-stage'
+  defaults:
+    _controller: '\Drupal\intranet_helper\Controller\IntranetUserStatus::status'
+  requirements:
+    _access: 'TRUE'

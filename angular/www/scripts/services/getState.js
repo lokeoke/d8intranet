@@ -9,7 +9,7 @@
 
 angular.module('d8intranetApp')
   .service('checkState', function ($http) {
-    var url = '../../jsons/state.json';
+    var url = '/admin/api/check-stage';
 
     var checkState = {
       getState: function (url) {
