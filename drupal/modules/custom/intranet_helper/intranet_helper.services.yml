@@ -1,0 +1,3 @@
+services:
+    intranet_helper.services.status:
+        class: Drupal\intranet_helper\IntranetHelperServicesStatus
