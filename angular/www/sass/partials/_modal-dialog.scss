@@ -24,20 +24,11 @@
   color: #fff;
 }
 
-.modal-header {
-  background: #404040;
-  border-top-left-radius: 15px;
-}
-
-.modal-error { background: $attention; }
-.modal-warning { background: $warning; }
-.modal-success { background: $success; }
-
-
 .modal-dialog {
-  background: rgb(244, 244, 244);
-  border-radius: 15px 0;
-  max-width: 600px;
+  background: rgb(0, 0, 28);
+  color: #fff;
+  border-radius: 0 15px;
+  max-width: 400px;
   position: fixed;
   top: 50%;
   left: 50%;
@@ -50,7 +41,6 @@
   @include font-size(15);
   padding: 30px;
   line-height: 1.5;
-  color: $black;
 }
 
 .modal-footer {
@@ -61,26 +51,46 @@
   @include font-size(14);
   border-radius: 3px;
   cursor: pointer;
-  margin: 0 auto;
+  margin: 30px auto 0;
   display: block;
-//  background: #2395C2;
   color: #fff;
   border: 0;
   padding: 10px 20px;
   transition: all ease .3s;
+}
 
-  // Theme
-  @each $theme, $map in $themes {
-    .#{$theme} & {
-      background: map-get($map, $link);
+.modal-error { 
+  background: $attention;
+
+  .close-modal {
+    background: #620d0d;
+
+    &:hover {
+      background: #4e1313;
     }
   }
+}
 
-  &:hover {
-    @each $theme, $map in $themes {
-      .#{$theme} & {
-        background: map-get($map, $link-hover);
-      }
+.modal-warning { 
+  background: $warning;
+
+  .close-modal {
+    background: #62280d;
+
+    &:hover {
+      background: #4a2515;
+    }
+  }
+}
+
+.modal-success { 
+  background: $success;
+
+  .close-modal {
+    background: #0d622f;
+    
+    &:hover {
+      background: #194b2d;
     }
   }
 }

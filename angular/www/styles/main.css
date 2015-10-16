@@ -2780,23 +2780,11 @@ form .form-submit {
   .lt-ie9 .modal-title {
     font-size: 22px; }
 
-.modal-header {
-  background: #404040;
-  border-top-left-radius: 15px; }
-
-.modal-error {
-  background: #f13145; }
-
-.modal-warning {
-  background: #de741b; }
-
-.modal-success {
-  background: #3A9E49; }
-
 .modal-dialog {
-  background: #f4f4f4;
-  border-radius: 15px 0;
-  max-width: 600px;
+  background: #00001c;
+  color: #fff;
+  border-radius: 0 15px;
+  max-width: 400px;
   position: fixed;
   top: 50%;
   left: 50%;
@@ -2808,8 +2796,7 @@ form .form-submit {
 .modal-body {
   font-size: 0.9375rem;
   padding: 30px;
-  line-height: 1.5;
-  color: #000; }
+  line-height: 1.5; }
   .lt-ie9 .modal-body {
     font-size: 15px; }
 
@@ -2820,7 +2807,7 @@ form .form-submit {
   font-size: 0.875rem;
   border-radius: 3px;
   cursor: pointer;
-  margin: 0 auto;
+  margin: 30px auto 0;
   display: block;
   color: #fff;
   border: 0;
@@ -2828,14 +2815,27 @@ form .form-submit {
   transition: all ease 0.3s; }
   .lt-ie9 .close-modal {
     font-size: 14px; }
-  .dark .close-modal {
-    background: #66d5e9; }
-  .light .close-modal {
-    background: #498baf; }
-  .dark .close-modal:hover {
-    background: #e9c366; }
-  .light .close-modal:hover {
-    background: #537786; }
+
+.modal-error {
+  background: #99212D; }
+  .modal-error .close-modal {
+    background: #620d0d; }
+    .modal-error .close-modal:hover {
+      background: #4e1313; }
+
+.modal-warning {
+  background: #de741b; }
+  .modal-warning .close-modal {
+    background: #62280d; }
+    .modal-warning .close-modal:hover {
+      background: #4a2515; }
+
+.modal-success {
+  background: #3A9E49; }
+  .modal-success .close-modal {
+    background: #0d622f; }
+    .modal-success .close-modal:hover {
+      background: #194b2d; }
 
 .available-users {
   margin: 4rem 0;

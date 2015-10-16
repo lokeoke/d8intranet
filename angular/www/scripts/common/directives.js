@@ -94,7 +94,6 @@ angular.module('d8intranetApp')
       replace: true,
       scope: true,
       link: function posLink(scope, element, attrs) {
-        scope.modalTitle = attrs.title;
         scope.$watch(attrs.visible, function (value) {
           if (!value) {
             element.hide();
