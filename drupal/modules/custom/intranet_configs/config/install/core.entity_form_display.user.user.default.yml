@@ -14,7 +14,7 @@ dependencies:
     - field.field.user.user.field_position
     - field.field.user.user.field_team
     - field.field.user.user.field_user_birthday
-    - field.field.user.user.field_user_check_in
+    - field.field.user.user.field_user_check_in_and_out
     - field.field.user.user.field_user_dayoff
     - field.field.user.user.field_user_duty_journey
     - field.field.user.user.field_user_email
@@ -114,12 +114,11 @@ content:
     settings: {  }
     third_party_settings: {  }
     type: datetime_default
-  field_user_check_in:
-    weight: 20
-    settings:
-      placeholder: ''
+  field_user_check_in_and_out:
+    weight: 22
+    settings: {  }
     third_party_settings: {  }
-    type: number
+    type: check_in_and_out_default
   field_user_dayoff:
     weight: 19
     settings: {  }
