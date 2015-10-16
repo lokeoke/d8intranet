@@ -30,9 +30,12 @@ angular.module('d8intranetApp')
       },
       {
         icon: 'logout',
-        title: 'Logout'
+        title: 'Logout',
+        url: config.logoutUrl
       }
     ];
+
+    $scope.loginUrl = config.loginPathUrl;
 
     $scope.menuIsOpen = false;
 
@@ -47,5 +50,6 @@ angular.module('d8intranetApp')
       $scope.logged = data.logged;
       $rootScope.jira = data.jira;
       $scope.currentUserId = data.uid;
+      $scope.currentUserPic = data.field_image;
     })
   });
