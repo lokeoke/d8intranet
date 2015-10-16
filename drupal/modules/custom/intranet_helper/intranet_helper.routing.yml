@@ -1,16 +1,17 @@
-intranet_helper.user_statuses:
-  path: '/api/user/statuses'
-  defaults:
-    _controller: '\Drupal\intranet_helper\Controller\IntranetUserController::view'
-  requirements:
-    _access: 'TRUE'
-
 intranet_helper.jira_rest_worklog:
   path: '/api/user/worklog'
   defaults:
     _controller: '\Drupal\intranet_helper\Controller\JiraRestWorkLogController::view'
   requirements:
     _user_is_logged_in: 'TRUE'
+
+intranet_helper.user_check_in:
+  path: '/api/user/check-in'
+  defaults:
+    _controller: '\Drupal\intranet_helper\Controller\IntranetUserController::checkIn'
+  requirements:
+    _access: 'TRUE'
+  methods: [POST, GET]
 
 intranet_helper.user_login:
   path: '/api/user/login'
