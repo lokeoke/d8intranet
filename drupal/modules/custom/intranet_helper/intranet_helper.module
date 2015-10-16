@@ -6,9 +6,11 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
  * Implements hook_user_login().
  */
 function intranet_helper_user_login($account) {
-  global $base_root;
+  if (Drupal::request()->query->get('login_from_angular')) {
+    global $base_root;
 
-  // Set redirect headers to Drupal response.
-  $response = new RedirectResponse($base_root);
-  $response->send();
+    // Set redirect headers to Drupal response.
+    $response = new RedirectResponse($base_root);
+    $response->send();
+  }
 }
