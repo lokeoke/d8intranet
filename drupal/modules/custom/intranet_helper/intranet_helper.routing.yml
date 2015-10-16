@@ -13,6 +13,14 @@ intranet_helper.user_check_in:
     _access: 'TRUE'
   methods: [POST]
 
+intranet_helper.user_check_out:
+  path: '/api/user/check-out'
+  defaults:
+    _controller: '\Drupal\intranet_helper\Controller\IntranetUserController::checkOut'
+  requirements:
+    _access: 'TRUE'
+  methods: [POST]
+
 intranet_helper.user_login:
   path: '/api/user/login'
   defaults:

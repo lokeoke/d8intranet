@@ -2,7 +2,7 @@
 
 /**
  * @file
- * Contains \Drupal\intranet_fields\Plugin\field\field_type\CountryItem.
+ * Contains \Drupal\intranet_fields\Plugin\field\field_type\DateIntervalWithStatusItem.
  */
 
 namespace Drupal\intranet_fields\Plugin\Field\FieldType;
