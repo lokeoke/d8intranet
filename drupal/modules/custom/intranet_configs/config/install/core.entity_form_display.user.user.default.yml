@@ -7,6 +7,7 @@ dependencies:
     - field.field.user.user.field_drupal_org_id
     - field.field.user.user.field_first_name
     - field.field.user.user.field_github_id
+    - field.field.user.user.field_jira_required
     - field.field.user.user.field_job_title
     - field.field.user.user.field_last_name
     - field.field.user.user.field_phone_number
@@ -71,6 +72,12 @@ content:
       size: 60
       placeholder: ''
     third_party_settings: {  }
+  field_jira_required:
+    weight: 21
+    settings:
+      display_label: false
+    third_party_settings: {  }
+    type: boolean_checkbox
   field_job_title:
     weight: 8
     settings:
