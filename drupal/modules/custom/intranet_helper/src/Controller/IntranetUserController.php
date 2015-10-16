@@ -50,12 +50,52 @@ class IntranetUserController extends ControllerBase {
   public function checkIn(Request $request) {
     $user = \Drupal::service('current_user');
     $uid = $user->id();
-    $response = new JsonResponse(array('status' => (boolean) $uid));
+    $response = new JsonResponse();
 
     if ($uid) {
       $account = User::load($uid);
-      $account->field_user_check_in->set(count($account->field_user_check_in->getValue()), $request->server->get('REQUEST_TIME'));
-      $account->save();
+      $new_field_value_index = count($account->field_user_check_in_and_out);
+
+      // Set check-in value only if it is first user's check-in or
+      // user has been already checked-out.
+      if ($new_field_value_index == 0 || $account->field_user_check_in_and_out->get($new_field_value_index - 1)->check_out) {
+        $account->field_user_check_in_and_out->set($new_field_value_index, array(
+          'check_in' => $request->server->get('REQUEST_TIME'),
+          'check_out' => NULL
+        ));
+        $account->save();
+        $response->setData(array('status' => TRUE));
+      }
+      else {
+        $response->setData(array('status' => FALSE));
+      }
+    }
+
+    return $response;
+  }
+
+  public function checkOut(Request $request) {
+    $user = \Drupal::service('current_user');
+    $uid = $user->id();
+    $response = new JsonResponse();
+
+    if ($uid) {
+      $account = User::load($uid);
+      $field_value_index = count($account->field_user_check_in_and_out) - 1;
+
+      // Set check-out time only if user has been checked-in and
+      // hasn't been checked-out yet.
+      if ($account->field_user_check_in_and_out->get($field_value_index)->check_in && !$account->field_user_check_in_and_out->get($field_value_index)->check_out) {
+        $account->field_user_check_in_and_out->set($field_value_index, array(
+          'check_in' => $account->field_user_check_in_and_out->get($field_value_index)->check_in,
+          'check_out' => $request->server->get('REQUEST_TIME')
+        ));
+        $account->save();
+        $response->setData(array('status' => TRUE));
+      }
+      else {
+        $response->setData(array('status' => FALSE));
+      }
     }
 
     return $response;
