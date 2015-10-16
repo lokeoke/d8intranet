@@ -1,0 +1,51 @@
+<?php
+
+/**
+ * @file
+ * Contains intranet_jira.module.
+ */
+
+use Drupal\Core\Routing\RouteMatchInterface;
+use Drupal\intranet_jira\IntranetJiraProjectTask;
+use Drupal\intranet_jira\Plugin\QueueWorker\IntranetJiraAggregator;
+
+/**
+ * Implements hook_help().
+ */
+function intranet_jira_help($route_name, RouteMatchInterface $route_match) {
+  switch ($route_name) {
+    // Main module help for the intranet_jira module.
+    case 'help.page.intranet_jira':
+      $output = '';
+      $output .= '<h3>' . t('About') . '</h3>';
+      $output .= '<p>' . t('Intranet Jira Integration') . '</p>';
+      return $output;
+
+    default:
+  }
+}
+
+
+/**
+ * Implements hook_cron().
+ *
+ */
+function intranet_jira_cron() {
+
+
+
+  $queue = \Drupal::queue('intranet_jira_aggregator');
+
+  $jira = \Drupal::service("intranet_jira.api_rest");
+
+  /**
+   * @var IntranetJiraProjectTask $project_task
+   */
+  foreach ($jira->loadMultiple() as $project_task) {
+    if ($project_task->timeExists() || $project_task->timeUpdated()) {
+      IntranetJiraAggregator::processItem($project_task);
+      //$queue->createItem($project_task);
+    }
+  }
+
+}

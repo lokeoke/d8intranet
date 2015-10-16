@@ -1,0 +1,5 @@
+services:
+  intranet_jira.api_rest:
+    class: Drupal\intranet_jira\IntranetJiraApiRest
+    arguments: ["@jira_rest.jira_rest_service"]
+
