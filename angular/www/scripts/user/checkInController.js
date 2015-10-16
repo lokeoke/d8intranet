@@ -29,21 +29,34 @@ angular.module('d8intranetApp')
       else {
         $rootScope.dataLoaded = false;
 
-        console.log($rootScope.dataLoaded)
-
         var dataObj = {"message": "Yo! Bitch"};
         var res = $http.post(config.checkInUrl, dataObj);
 
         res.success(function (data, status, headers, config) {
           $scope.message = data;
+
           $rootScope.dataLoaded = true;
+          $rootScope.showModalWindow = true;
+
+          if (data.status) {
+            $rootScope.modalHeaderTitle = 'Success!';
+            $rootScope.modalMessageType = 'success';
+            $rootScope.modalMessageSubtitle = 'Checkin success';
+            $rootScope.modalMessage = 'You have successfully checked in.';
+          }
+          else {
+            $rootScope.modalHeaderTitle = 'Fail!';
+            $rootScope.modalMessageType = 'error';
+            $rootScope.modalMessageSubtitle = 'You are not authorized for check in.';
+            $rootScope.modalMessage = 'Please login and try again';
+          }
+
         });
 
         res.error(function (data, status, headers, config) {
           console.log("failure message: " + JSON.stringify({data: data}));
 
           $rootScope.showModalWindow = true;
-
           $rootScope.modalHeaderTitle = 'Whoops!';
           $rootScope.modalMessageType = 'error';
           $rootScope.modalMessageSubtitle = 'Can\'t get data from server';

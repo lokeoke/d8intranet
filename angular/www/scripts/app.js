@@ -58,7 +58,7 @@ angular.module('d8intranetApp', [
     frontUrl: "#dashboard",
     employeesUrl: "#employees",
     vacationsUrl: "#vacation",
-    checkInUrl: "http://drupal.d8pp.dev:8888/checkin",
+    checkInUrl: "admin/api/user/check-in",
     status: "../../jsons/state.json",
     totalVacation: "20"
   })
