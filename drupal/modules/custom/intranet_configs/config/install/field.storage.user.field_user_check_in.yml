@@ -1,20 +1,19 @@
-uuid: 4a1227a1-4815-42aa-b700-f25af955e903
+uuid: 87cbd52a-b537-4736-b722-34bd383559e4
 langcode: en
 status: true
 dependencies:
   module:
     - user
-id: user.field_user_position
-field_name: field_user_position
+id: user.field_user_check_in
+field_name: field_user_check_in
 entity_type: user
-type: string
+type: integer
 settings:
-  max_length: 255
-  is_ascii: false
-  case_sensitive: false
+  unsigned: false
+  size: normal
 module: core
 locked: false
-cardinality: 1
+cardinality: -1
 translatable: true
 indexes: {  }
 persist_with_no_fields: false

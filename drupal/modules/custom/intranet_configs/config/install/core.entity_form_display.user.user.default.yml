@@ -13,10 +13,10 @@ dependencies:
     - field.field.user.user.field_position
     - field.field.user.user.field_team
     - field.field.user.user.field_user_birthday
+    - field.field.user.user.field_user_check_in
     - field.field.user.user.field_user_dayoff
     - field.field.user.user.field_user_duty_journey
     - field.field.user.user.field_user_email
-    - field.field.user.user.field_user_position
     - field.field.user.user.field_user_remote_work
     - field.field.user.user.field_user_sick
     - field.field.user.user.field_user_skype
@@ -107,6 +107,12 @@ content:
     settings: {  }
     third_party_settings: {  }
     type: datetime_default
+  field_user_check_in:
+    weight: 20
+    settings:
+      placeholder: ''
+    third_party_settings: {  }
+    type: number
   field_user_dayoff:
     weight: 19
     settings: {  }
@@ -123,13 +129,6 @@ content:
       placeholder: ''
     third_party_settings: {  }
     type: email_default
-  field_user_position:
-    weight: 9
-    settings:
-      size: 60
-      placeholder: ''
-    third_party_settings: {  }
-    type: string_textfield
   field_user_remote_work:
     weight: 17
     settings: {  }

@@ -18,24 +18,6 @@ class IntranetUserController extends ControllerBase {
     $this->userAuth = \Drupal::getContainer()->get('user.auth');
     $this->userStorage = \Drupal::getContainer()->get('entity.manager')->getStorage('user');
   }
-  public function view(Request $request) {
-    $users = User::loadMultiple();
-
-
-    foreach ($users as &$user) {
-      $user = get_object_vars($user);
-
-      /*$user['statuses'] = [
-        'day_off' => 0,
-        'sick' => 1,
-        'business_trip' => 0,
-        'remote_work' => 1,
-        'vacation' => 0,
-      ];*/
-    }
-
-    return new JsonResponse(['users' => $users]);
-  }
 
   public function login(Request $request) {
     $name = $request->request->get('name');
@@ -63,6 +45,20 @@ class IntranetUserController extends ControllerBase {
 
     return $response;
 
+  }
+
+  public function checkIn(Request $request) {
+    $user = \Drupal::service('current_user');
+    $uid = $user->id();
+    $response = new JsonResponse(array('status' => (boolean) $uid));
+
+    if ($uid) {
+      $account = User::load($uid);
+      $account->field_user_check_in->set(count($account->field_user_check_in->getValue()), $request->server->get('REQUEST_TIME'));
+      $account->save();
+    }
+
+    return $response;
   }
 
 }
