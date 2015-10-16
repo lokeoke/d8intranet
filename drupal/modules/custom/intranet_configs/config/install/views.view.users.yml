@@ -162,7 +162,7 @@ display:
     position: 1
     display_options:
       display_extenders: {  }
-      path: user-list
+      path: api/user
       pager:
         type: some
         options:

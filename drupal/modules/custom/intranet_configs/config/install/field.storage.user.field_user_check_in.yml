@@ -1,16 +1,16 @@
-uuid: e4c1675d-5b0a-4ff7-8800-c6a26bc43dc7
+uuid: 87cbd52a-b537-4736-b722-34bd383559e4
 langcode: en
 status: true
 dependencies:
   module:
-    - node
-    - taxonomy
-id: node.field_tags
-field_name: field_tags
-entity_type: node
-type: entity_reference
+    - user
+id: user.field_user_check_in
+field_name: field_user_check_in
+entity_type: user
+type: integer
 settings:
-  target_type: taxonomy_term
+  unsigned: false
+  size: normal
 module: core
 locked: false
 cardinality: -1
