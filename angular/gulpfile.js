@@ -98,7 +98,7 @@ gulp.task('scss-lint', function () {
 gulp.task('watch', function () {
   livereload.listen();
   gulp.watch(paths.html, ['html']);
-  gulp.watch(paths.sass, ['sass']);
+  gulp.watch(paths.sass, ['sass']).on('change', livereload.changed);
   //gulp.watch(paths.scripts, ['scripts']);
 });
 

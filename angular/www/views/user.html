@@ -2,7 +2,7 @@
 
   <div class="page-bg">
     <div class="welcome-block">
-      <img ng-src="{{user.field_user_image[0].value}}" alt=""/>
+      <img ng-src="{{user.user_picture[0].url}}" alt=""/>
       <div class="name">
         {{user.field_first_name[0].value}} {{user.field_last_name[0].value}}
       </div>
@@ -36,7 +36,7 @@
         <div class="user-data-group">
           <span class="user-info-title">Birthday: </span>
             <span
-                class="user-info-value">{{user.field_user_birthday[0].value}}</span>
+                class="user-info-value">{{userBirthday}}</span>
         </div>
 
         <div class="user-data-group">

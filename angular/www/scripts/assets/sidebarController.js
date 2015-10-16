@@ -47,5 +47,6 @@ angular.module('d8intranetApp')
       $scope.logged = data.logged;
       $rootScope.jira = data.jira;
       $scope.currentUserId = data.uid;
+
     })
   });

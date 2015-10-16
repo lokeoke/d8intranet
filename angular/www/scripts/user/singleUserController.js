@@ -8,27 +8,26 @@
  * Controller of the d8intranetApp
  */
 angular.module('d8intranetApp')
-  .controller('singleUserController', function ($scope, $http, $routeParams, getJsonData, formatUserData, config) {
+  .controller('singleUserController', function ($scope, $rootScope, $http, $routeParams, getJsonData, formatUserData, config) {
 
     getJsonData.getUsers().then(function (data) {
       $scope.users = data;
 
       formatUserData.formattedUser($scope.users);
 
-      $scope.user = {};
+      $rootScope.user = {};
       var cameToCompany = '';
 
       angular.forEach($scope.users, function (user, title) {
 
         // Get current user
         if (user.uid[0].value == $routeParams.userId) {
-          $scope.user = user;
+
+          $rootScope.user = user;
           $scope.filteredKeys = {};
+          $scope.userBirthday = (user.field_user_birthday[0].value).replace(/-/g, ".");
 
-
-          var stamp = user.field_came_to_propeople[0].value;
-
-          cameToCompany = formatUserData.getYearNumber(stamp) + ',' + formatUserData.getMonthNumber(stamp) + ',' + formatUserData.getDateNumber(stamp);
+          cameToCompany = (user.field_came_to_propeople[0].value).replace(/-/g, ",");
 
           var today = new Date(),
               past = new Date(cameToCompany);
@@ -37,9 +36,9 @@ angular.module('d8intranetApp')
             $scope.filteredKeys[setStiaticTitle(key)] = value;
           });
 
-
           // Get current days of user vacation
           var totalMonthOfWork = calcDate(today, past);
+
 
           $scope.totalVacationDays = 0;
 
@@ -62,6 +61,7 @@ angular.module('d8intranetApp')
           return $scope.user;
         }
       });
+
 
       function setStiaticTitle(title) {
         switch (title) {
@@ -89,12 +89,9 @@ angular.module('d8intranetApp')
         }
       }
 
-      // Create new variable where we replace all '-' with ','
-      //var formattedDate = ;
       var today = new Date();
       var past = new Date(cameToCompany);
       var months;
-      var vacationForNow = 0;
 
       // Calculate amount of months from user started to work in company
       function calcDate(date1, date2) {

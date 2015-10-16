@@ -15,29 +15,30 @@ angular.module('d8intranetApp')
 
 
     var getJsonData = {
+      //getUsers: function () {
+      //  return this.requestUsers().then(function(users){
+      //    angular.forEach(users, function (user) {
+      //      //console.log(users);
+      //      // This live hack was added for compatibility
+      //      // This function takes default value and add the user value to it
+      //      //$.extend(true, userDefaultSettings, user);
+      //      // This store changes to user's object
+      //      // I guess that it cna be changed to more correct approach
+      //      //$.extend(true, user, userDefaultSettings);
+      //      return user;
+      //    });
+      //    console.log(users);
+      //    return users;
+      //  })
+      //},
       getUsers: function () {
-        return this.requestUsers().then(function(users){
-          angular.forEach(users, function (user) {
-            // This live hack was added for compatibility
-            // This function takes default value and add the user value to it
-            $.extend(true, userDefaultSettings, user);
-            // This store changes to user's object
-            // I guess that it cna be changed to more correct approach
-            $.extend(true, user, userDefaultSettings);
-            return user;
-          });
-          return users;
-        })
-      },
-      requestUsers: function () {
-
         if (users.length > 0) {
-          console.log('I have users');
+          //console.log('I have users');
           $rootScope.dataLoaded = true;
           return promise;
         }
         else {
-          console.log('Don\'t have users... request');
+          //console.log('Don\'t have users... request');
           $rootScope.dataLoaded = false;
           return getJsonData.async(url);
         }
@@ -45,8 +46,7 @@ angular.module('d8intranetApp')
       async: function (url) {
         // $http returns a promise, which has a then function, which also returns a promise
         promise = $http.get(url).then(function (response) {
-          console.log(response)
-          console.log('Getting users');
+          //console.log('Getting users');
           // The then function here is an opportunity to modify the response
           // The return value gets picked up by the then in the controller.
           users = response.data;
@@ -56,12 +56,12 @@ angular.module('d8intranetApp')
             users = [];
           }, '120000');
 
-          console.log('Users are sent');
+          //console.log('Users are sent');
           return users;
         },
           function errorCallback(response) {
             // TODO add fallback code for different statuses
-            console.log(response);
+            //console.log(response);
         });
         $rootScope.dataLoaded = true;
         // Return the promise to the controller

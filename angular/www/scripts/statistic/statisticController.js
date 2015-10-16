@@ -29,8 +29,8 @@ angular.module('d8intranetApp')
       // Create teams array for filtering
       $scope.teams = [];
       angular.forEach($scope.users, function (emplyee) {
-        if (!$scope.teams[emplyee.field_team[0].value]) {
-          $scope.teams[emplyee.field_team[0].value] = emplyee.field_team[0]
+        if (!$scope.teams[emplyee.field_team.target_id]) {
+          $scope.teams[emplyee.field_team.target_id] = emplyee.field_team.target_id
         }
       });
 

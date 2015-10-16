@@ -25,10 +25,10 @@
           ng-repeat="user in people | teamsOnly:filterBy.selectedOption | filter:user | orderBy:'user' ">
         <div class="user-info">
           <a href="#user/{{user.uid[0].value}}">
-            <div class="user-pic">
-              <img ng-src="{{user.field_user_image[0].value}}" alt="{{user.field_first_name[0].value}}
-                     {{user.field_last_name[0].value}}"/>
-            </div>
+              <span class="user-pic">
+              <img ng-src="{{user.user_picture[0].url}}" alt="{{user.field_first_name[0].value}}
+                     {{user.user_picture[0].url}}"/>
+                </span>
             <h3 class="user-name">
               {{user.field_last_name[0].value}}
               {{user.field_first_name[0].value}} </h3>
@@ -52,15 +52,15 @@
               {{user.field_phone_number[0].value}}
             </div>
           </div>
-          <div class="skype">
+          <div class="skype" ng-if="user.field_user_skype[0].value">
             <div class="table-cell-container">
               <span class="font-icon skype-icon">&nbsp;</span>
               <a ng-href="skype:{{user.field_user_skype[0].value}}" class="link">{{user.field_user_skype[0].value}}</a>
             </div>
           </div>
         </div>
+
       </li>
     </ul>
-
   </div>
 </div>
