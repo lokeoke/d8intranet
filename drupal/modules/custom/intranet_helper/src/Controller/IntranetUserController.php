@@ -108,12 +108,14 @@ class IntranetUserController extends ControllerBase {
     $result = Database::getConnection()->select('user__field_user_check_in_and_out', 'c')
       ->fields('c')
       ->condition('field_user_check_in_and_out_check_in', strtotime(date('d F Y')), '>=')
+      ->isNull('field_user_check_in_and_out_check_out')
       ->execute()
       ->fetchAll();
 
     foreach ($result as $key => $row) {
       $account = User::load($row->entity_id);
 
+      // Return not checked out users.
       $users[$key]['field_first_name'] = $account->field_first_name->value;
       $users[$key]['field_last_name'] = $account->field_last_name->value;
       $users[$key]['time'] = $row->field_user_check_in_and_out_check_in;
