@@ -1,0 +1,24 @@
+uuid: e233c33d-50a8-431d-9100-d31ba0d676d5
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.user.field_jira_required
+  module:
+    - user
+id: user.user.field_jira_required
+field_name: field_jira_required
+entity_type: user
+bundle: user
+label: 'Jira required'
+description: ''
+required: true
+translatable: false
+default_value:
+  -
+    value: 0
+default_value_callback: ''
+settings:
+  on_label: 'Jira required'
+  off_label: 'Jira not required'
+field_type: boolean
