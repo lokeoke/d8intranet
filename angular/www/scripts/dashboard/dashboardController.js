@@ -15,22 +15,21 @@ angular.module('d8intranetApp')
 
     getJsonData.getUsers().then(function (d) {
       $scope.users = d;
-
       $scope.states = {};
-      $scope.availableEmployees = {available:{'count': 0}};
+
+      $scope.availableEmployees = {available: {'count': 0}};
 
       var haveStatus;
 
       angular.forEach($scope.users, function (user) {
 
-        if(user.statuses.length > 0) {
+        if (user.statuses.length > 0) {
+
           angular.forEach(user.statuses, function (status) {
             var statusKey = status.value;
-            var statusName = cardName(statusKey)
+            var statusName = cardName(statusKey);
 
-            $scope.states[statusName] = $scope.states[statusName] || {
-                  'count': 0
-                };
+            $scope.states[statusName] = $scope.states[statusName] || {'count': 0};
             $scope.states[statusName][user.uid[0].value] = user;
             $scope.states[statusName]['count'] += 1;
 
@@ -38,7 +37,7 @@ angular.module('d8intranetApp')
         }
 
         else {
-          if(!haveStatus) {
+          if (!haveStatus) {
             $scope.availableEmployees.available[user.uid[0].value] = user;
             $scope.availableEmployees.available['count'] += 1;
           }

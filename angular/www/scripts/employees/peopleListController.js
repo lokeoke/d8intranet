@@ -22,15 +22,18 @@ angular.module('d8intranetApp')
       };
 
       $scope.teams = [];
-      angular.forEach($scope.people, function(emplyee){
-        if (!$scope.teams[emplyee.field_team[0].value]) {
-          $scope.teams[emplyee.field_team[0].value] = emplyee.field_team[0]
+
+      angular.forEach($scope.people, function(employee){
+        //console.log(employee);
+
+        if (!$scope.teams[employee.field_team.target_id]) {
+          $scope.teams[employee.field_team.target_id] = employee.field_team.target_id
         }
       });
 
       $scope.teams = $scope.teams.filter(function(n){ return n != undefined });
       $scope.teams.unshift({"team_name":'all', "value": "0"});
-      $scope.teamFilter = {selectedOption : $scope.teams[0].value}
+      $scope.teamFilter = {selectedOption : $scope.teams.target_id}
     });
   });
 
