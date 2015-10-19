@@ -42,7 +42,10 @@ class IntranetJiraStorage {
    * @param IntranetJiraWorklog $worklog_class
    */
   public function storeWorkLog($worklog_class) {
-
+    // @TODO
+    if(time() - (86400 * 3) > strtotime($worklog_class->started())) {
+      return;
+    }
     $query = \Drupal::entityQuery('node')
       ->condition('type', 'jira_worklog')
       ->condition('field_jira_id', $worklog_class->getId());

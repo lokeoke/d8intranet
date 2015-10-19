@@ -46,4 +46,5 @@ dependencies:
   # CONTRIB
   - field_group
   - jira_rest
+  - intranet_jira
   # CUSTOM

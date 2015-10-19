@@ -1,0 +1,24 @@
+uuid: 8643e602-dd5d-4d81-a823-35da8a61f2a7
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_jira_started
+    - node.type.jira_worklog
+  module:
+    - datetime
+id: node.jira_worklog.field_jira_started
+field_name: field_jira_started
+entity_type: node
+bundle: jira_worklog
+label: 'Jira Started'
+description: ''
+required: true
+translatable: false
+default_value:
+  -
+    default_date_type: now
+    default_date: now
+default_value_callback: ''
+settings: {  }
+field_type: datetime

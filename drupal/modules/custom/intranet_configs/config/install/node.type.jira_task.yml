@@ -1,0 +1,17 @@
+uuid: cdbc0c86-7b1e-40db-8a00-f5433da63a2d
+langcode: en
+status: true
+dependencies:
+  module:
+    - menu_ui
+third_party_settings:
+  menu_ui:
+    available_menus: {  }
+    parent: ''
+name: 'Jira Tasks'
+type: jira_task
+description: ''
+help: ''
+new_revision: false
+preview_mode: 0
+display_submitted: false

@@ -45,7 +45,8 @@ class IntranetJiraTestRouter extends ControllerBase {
     foreach ($jira->loadMultiple() as $project_task) {
 
       if (!$project_task->timeExists() || !$project_task->timeUpdated()) {
-        IntranetJiraAggregator::processItem($project_task);
+        $project_task->setTime();
+        $project_task->refreshItems();
       }
     }
     return [

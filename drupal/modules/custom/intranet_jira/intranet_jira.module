@@ -38,7 +38,7 @@ function intranet_jira_entity_load(array $entities, $entity_type_id) {
     $storage = \Drupal::service("intranet_jira.storage");
 
     foreach ($entities as $entity) {
-      $res = $storage->getLoggedTime($entity);
+      $res = $storage->getLoggedTime($entity->name->value);
 
       $entity->field_jira_worklog = array($res);
 
@@ -79,7 +79,7 @@ function intranet_jira_cron() {
   /**
    * @var IntranetJiraProjectTask $project_task
    */
-  foreach ($jira->loadMultiple() as $project_task) {
+  foreach ($jira->loadMultiple(-3) as $project_task) {
 
     if (!$project_task->timeExists() || !$project_task->timeUpdated()) {
       /**

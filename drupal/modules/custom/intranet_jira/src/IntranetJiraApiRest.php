@@ -39,7 +39,18 @@ class IntranetJiraApiRest {
 
 
   }
+  public function forceUpdate($day = 0) {
+    /**
+     * @var IntranetJiraProjectTask $project_task
+     */
+    foreach ($this->loadMultiple($day) as $project_task) {
 
+      if (!$project_task->timeExists() || !$project_task->timeUpdated()) {
+        $project_task->setTime();
+        $project_task->refreshItems();
+      }
+    }
+  }
   /**
    * Return all projects by criteria
    *
@@ -47,12 +58,12 @@ class IntranetJiraApiRest {
    * @throws \Drupal\jira_rest\JiraRestException
    * @throws \Exception
    */
-  public function loadMultiple() {
+  public function loadMultiple($day = 0) {
 
     $search = new IntranetJiraApiSearch();
 
-    $search->addProjects(array("PUI"));
-    $search->addUpdated(-3, 0);
+    /*$search->addProjects(array("PUI"));*/
+    $search->addUpdated($day, +1);
 
     return $this->search($search);
 
