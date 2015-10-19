@@ -1,0 +1,39 @@
+<?php
+
+use Drupal\Core\Database\Database;
+
+/**
+ * Implements hook_entity_update().
+ */
+function intranet_user_status_entity_update(Drupal\Core\Entity\EntityInterface $entity) {
+  if ($entity->getEntityTypeId() == 'user' && !isset($entity->prevent_loop)) {
+    $current_time = time();
+
+    $field_tables_and_statuses = array(
+      'user__field_user_remote_work' => 'remote_work',
+      'user__field_user_sick' => 'sick',
+      'user__field_user_duty_journey' => 'business_trip',
+      'user__field_user_vacation' => 'vacation',
+      'user__field_user_work_off' => 'work_off',
+      'user__field_user_dayoff' => 'day_off',
+    );
+
+    foreach ($field_tables_and_statuses as $field_table => $user_status) {
+      $field_name = str_replace('user__', '', $field_table);
+
+      $result = Database::getConnection()->select($field_table, 'tf')
+        ->fields('tf')
+        ->where('UNIX_TIMESTAMP(CAST(' . $field_name . '_start_date AS DATE)) <= ' . $current_time . ' AND UNIX_TIMESTAMP(CAST(' . $field_name . '_end_date AS DATE)) >= ' . $current_time)
+        ->execute()
+        ->fetchAll();
+
+      if ($result) {
+        $entity->field_user_status->value = $user_status;
+        $entity->prevent_loop = TRUE;
+        $entity->save();
+
+        break;
+      }
+    }
+  }
+}
