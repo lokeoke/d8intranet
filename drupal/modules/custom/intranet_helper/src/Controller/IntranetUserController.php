@@ -7,6 +7,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Drupal\user\Entity\User;
 use Drupal\Core\Database\Database;
+use Drupal\file\Entity\File;
 
 class IntranetUserController extends ControllerBase {
 
@@ -118,10 +119,33 @@ class IntranetUserController extends ControllerBase {
       // Return not checked out users.
       $users[$key]['field_first_name'] = $account->field_first_name->value;
       $users[$key]['field_last_name'] = $account->field_last_name->value;
+      $users[$key]['field_image'] = file_create_url(File::load($account->user_picture->target_id)->uri->value);
       $users[$key]['time'] = $row->field_user_check_in_and_out_check_in;
     }
 
     return new JsonResponse($users);
+  }
+
+  public function checkState(Request $request) {
+    $user = \Drupal::service('current_user');
+
+    $uid = $user->id();
+    $account = User::load($uid);
+
+    // If field "Jira not required" checked then '$jira' should be TRUE.
+    if ((boolean) $account->field_jira_required->value) {
+      $jira = (boolean) $account->field_jira_required->value;
+    }
+    else {
+      // TODO: get '$jira' value from jira.
+    }
+
+    return new JsonResponse(array(
+      'logged' => $uid ? TRUE : FALSE,
+      'jira' => $jira,
+      'field_image' => $account->user_picture->target_id ? file_create_url(File::load($account->user_picture->target_id)->uri->value) : '../images/anonymus.png',
+      'uid' => $uid
+    ));
   }
 
 }

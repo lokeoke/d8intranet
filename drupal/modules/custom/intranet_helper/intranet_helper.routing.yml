@@ -43,9 +43,9 @@ intranet_helper.user_logout:
   requirements:
     _user_is_logged_in: 'TRUE'
 
-intranet_helper.current_user_info:
-  path: '/api/check-stage'
+intranet_helper.user_status:
+  path: '/api/user/check-state'
   defaults:
-    _controller: '\Drupal\intranet_helper\Controller\IntranetUserStatus::status'
+    _controller: '\Drupal\intranet_helper\Controller\IntranetUserController::checkState'
   requirements:
     _access: 'TRUE'
