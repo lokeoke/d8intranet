@@ -23,6 +23,7 @@ function intranet_user_status_user_load($users) {
 
       $result = Database::getConnection()->select($field_table, 'tf')
         ->fields('tf')
+        ->condition('entity_id', $user->id())
         ->where('UNIX_TIMESTAMP(CAST(' . $field_name . '_start_date AS DATE)) <= ' . $current_time . ' AND UNIX_TIMESTAMP(DATE_ADD(CAST(' . $field_name . '_end_date AS DATE), INTERVAL 1 DAY)) >= ' . $current_time)
         ->execute()
         ->fetchAll();
