@@ -43,7 +43,7 @@ class IntranetJiraApiRest implements IntranetJiraApiRestInterface {
     // project in (PUI) AND updated >= "2015-10-16" AND updated < "2015-10-17"
     $search = new IntranetJiraApiSearch();
 
-    $search->addProjects(array("PUI"));
+    //$search->addProjects(array("PUI"));
 
     $search->addUpdated(-1, 0);
 
@@ -61,6 +61,19 @@ class IntranetJiraApiRest implements IntranetJiraApiRestInterface {
 
     } catch (JiraRestException $e) {
 
+      throw $e;
+    }
+  }
+  public function getWorklog($task) {
+    try {
+
+      $response = $this->jira->jira_rest_get_worklog($task->getHumanName());
+      return new IntranetJiraWorkLogResponse($response, $task);
+
+
+
+    } catch (JiraRestException $e) {
+      throw $e;
     }
   }
 }

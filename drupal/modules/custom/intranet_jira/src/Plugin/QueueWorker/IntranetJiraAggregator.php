@@ -17,10 +17,18 @@ use Drupal\intranet_jira\IntranetJiraProjectTask;
  */
 class IntranetJiraAggregator extends QueueWorkerBase {
 
+  /**
+   * @param mixed $project_task
+   */
+  public function processItem($project_task) {
 
-  public function processItem($data) {
-    if ($data instanceof IntranetJiraProjectTask) {
-      $data->refreshItems();
+    if ($project_task instanceof IntranetJiraProjectTask) {
+
+      /**
+       * @var IntranetJiraProjectTask $data
+       */
+      $project_task->setTime();
+      $project_task->refreshItems();
     }
   }
 
