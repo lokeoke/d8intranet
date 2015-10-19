@@ -16,16 +16,20 @@ use Drupal\jira_rest\JiraRestService;
  *
  * @package Drupal\intranet_jira
  */
-class IntranetJiraApiRest implements IntranetJiraApiRestInterface {
+class IntranetJiraApiRest {
 
   /**
-   * Drupal\jira_rest\JiraRestService definition
+   * @var JiraRestService
    */
-  protected $jira_rest_jira_rest_service;
+  protected $jira_service;
 
   /**
-   * Constructor.
-   * @param \Drupal\jira_rest\JiraRestService $jira_rest_jira_rest_service
+   * @var JiraRestController
+   */
+  protected $jira;
+
+  /**
+   * @param \Drupal\jira_rest\JiraRestService $jira_service
    */
   public function __construct(JiraRestService $jira_service) {
     $this->jira_service = $jira_service;
@@ -37,42 +41,55 @@ class IntranetJiraApiRest implements IntranetJiraApiRestInterface {
   }
 
   /**
+   * Return all projects by criteria
+   *
    * @return \Drupal\intranet_jira\IntranetJiraResponse
+   * @throws \Drupal\jira_rest\JiraRestException
+   * @throws \Exception
    */
   public function loadMultiple() {
-    // project in (PUI) AND updated >= "2015-10-16" AND updated < "2015-10-17"
+
     $search = new IntranetJiraApiSearch();
 
     $search->addProjects(array("PUI"));
-
     $search->addUpdated(-3, 0);
 
     return $this->search($search);
 
   }
 
+  /**
+   * Jira rest get search issue function
+   *
+   * @param $search
+   * @return \Drupal\intranet_jira\IntranetJiraResponse
+   * @throws \Drupal\jira_rest\JiraRestException
+   * @throws \Exception
+   */
   private function search($search) {
     try {
 
       $response = $this->jira->jira_rest_searchissue((string)$search);
       return new IntranetJiraResponse($response);
 
-
-
     } catch (JiraRestException $e) {
-
       throw $e;
     }
   }
+
+  /**
+   * Jira rest get worklog function
+   *
+   * @param $task
+   * @return \Drupal\intranet_jira\IntranetJiraWorkLogResponse
+   * @throws \Drupal\jira_rest\JiraRestException
+   * @throws \Exception
+   */
   public function getWorklog($task) {
     try {
 
-
-
       $response = $this->jira->jira_rest_get_worklog($task->getHumanName());
       return new IntranetJiraWorkLogResponse($response, $task);
-
-
 
     } catch (JiraRestException $e) {
       throw $e;

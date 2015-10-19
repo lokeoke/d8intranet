@@ -13,7 +13,7 @@ namespace Drupal\intranet_jira;
  *
  * @package Drupal\intranet_jira
  */
-class IntranetJiraStorage implements IntranetJiraStorageInterface {
+class IntranetJiraStorage {
 
   /**
    * @var \Drupal\Core\Entity\EntityStorageInterface

@@ -14,7 +14,7 @@ use Drupal\Core;
  * Class IntranetJiraStorageTask
  * @deprecated
  */
-class IntranetJiraStorageTask implements IntranetJiraStorageTaskInterface {
+class IntranetJiraStorageTask {
   /**
    * @param IntranetJiraWorklog $workinglog
    */

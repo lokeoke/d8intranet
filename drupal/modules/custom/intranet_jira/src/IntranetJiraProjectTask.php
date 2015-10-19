@@ -8,19 +8,38 @@
 
 namespace Drupal\intranet_jira;
 
-
+/**
+ * Class IntranetJiraProjectTask
+ * @package Drupal\intranet_jira
+ */
 class IntranetJiraProjectTask {
+
+  /**
+   * @var mixed
+   */
   private $task;
+
+  /**
+   * @var mixed
+   */
+  private $storage;
+
   /**
    * IntranetJiraProjectTask constructor.
    * @param mixed $task
    */
   public function __construct($task) {
     $this->task = $task;
+    $this->storage = \Drupal::service("intranet_jira.storage");
   }
+
   public function get() {
     return $this->task;
   }
+
+  /**
+   * @TODO change to $this->storage
+   */
   public function setTime() {
     $time = IntranetJiraStorageTask::getTime($this);
     if (!$time->check()) {
@@ -31,9 +50,6 @@ class IntranetJiraProjectTask {
     }
   }
 
-  /**
-   * @return bool If time is already stored
-   */
   public function timeExists() {
     $time = IntranetJiraStorageTask::getTime($this);
     /**
@@ -41,6 +57,7 @@ class IntranetJiraProjectTask {
      */
     return ($time->check() ? FALSE : TRUE);
   }
+
   public function getUpdated() {
     return strtotime(substr($this->task->fields->updated, 0 ,19));
   }
@@ -48,9 +65,11 @@ class IntranetJiraProjectTask {
   public function getName() {
     return $this->task->id;
   }
+
   public function getHumanName  () {
     return $this->task->key;
   }
+
   public function timeUpdated() {
     $time = IntranetJiraStorageTask::getTime($this);
 
@@ -64,14 +83,6 @@ class IntranetJiraProjectTask {
     $jira = \Drupal::service("intranet_jira.api_rest");
     $worklog = $jira->getWorklog($this);
     $worklog->save();
-    /*foreach ($worklog->worklogs as $entry) {
-      $shortDate = substr($entry->started, 0, 10);
-      # keep a worklog entry on $key item,
-      # iff within the search time period
-      if ($entry->author->name == $user_name && $shortDate >= $fromDate && $shortDate <= $toDate) {
-        $response[$issue->key] += $entry->timeSpentSeconds;
-      }
-    }*/
   }
 
 }
