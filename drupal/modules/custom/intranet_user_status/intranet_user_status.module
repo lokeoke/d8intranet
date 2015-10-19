@@ -3,12 +3,12 @@
 use Drupal\Core\Database\Database;
 
 /**
- * Implements hook_entity_update().
+ * Implements hook_user_load().
  */
-function intranet_user_status_entity_update(Drupal\Core\Entity\EntityInterface $entity) {
-  if ($entity->getEntityTypeId() == 'user' && !isset($entity->prevent_loop)) {
-    $current_time = time();
+function intranet_user_status_user_load($users) {
+  $current_time = time();
 
+  foreach ($users as $user) {
     $field_tables_and_statuses = array(
       'user__field_user_remote_work' => 'remote_work',
       'user__field_user_sick' => 'sick',
@@ -28,9 +28,7 @@ function intranet_user_status_entity_update(Drupal\Core\Entity\EntityInterface $
         ->fetchAll();
 
       if ($result) {
-        $entity->field_user_status->value = $user_status;
-        $entity->prevent_loop = TRUE;
-        $entity->save();
+        $user->field_user_status->value = $user_status;
 
         break;
       }
