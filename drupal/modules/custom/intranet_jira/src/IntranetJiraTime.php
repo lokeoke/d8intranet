@@ -20,10 +20,10 @@ class IntranetJiraTime {
   }
 
   public function check() {
-    return is_null($this->time);
+    return is_null($this->time->value);
   }
 
   public function getTime() {
-    return $this->time->field_jira_updated->value;
+    return $this->time->value;
   }
 }

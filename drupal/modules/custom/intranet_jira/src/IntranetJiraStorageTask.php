@@ -10,42 +10,28 @@ namespace Drupal\intranet_jira;
 use Symfony\Component\Validator\Constraints\True;
 use Drupal\Core;
 
-
+/**
+ * Class IntranetJiraStorageTask
+ * @deprecated
+ */
 class IntranetJiraStorageTask implements IntranetJiraStorageTaskInterface {
   /**
    * @param IntranetJiraWorklog $workinglog
    */
   public static function storeWorkLog($workinglog) {
+    $task = $workinglog->getTask();
     \Drupal::configFactory()->getEditable('modulename.settings')
       ->set('cache.workinglog.' . $workinglog->getId(), $workinglog->timeSpent())
       ->save();
 
   }
   public static function updateTime($task) {
-    $node = IntranetJiraStorageTask::getTime($task);
-    $node->field_jira_updated = substr($task->get()->fields->updated, 0, 19);
-    $node->save();
+    IntranetJiraStorageTask::setTime($task);
   }
   public static function setTime($task) {
-    $node = (object)array();
-    $node->field_jira_key = $task->get()->key;
-    $node->field_jira_id = $task->get()->id;
-    $node->field_jira_summary = $task->get()->fields->summary;
-    $node->field_jira_updated = substr($task->get()->fields->updated, 0, 19);
-    $node->title = sprintf("%s - %s", $node->field_jira_key, $node->field_jira_summary);
-    $edit_node = (array)$node;
-    $edit_node += array(
-      'nid' => NULL,
-      'type' => 'jiratask',
-      'uid' => 1,
-      'revision' => 0,
-      'status' => TRUE,
-      'promote' => 0,
-      'created' => REQUEST_TIME,
-    );
-
-    $node = entity_create('node', $edit_node);
-    $node->save();
+    \Drupal::configFactory()->getEditable('modulename.settings')
+      ->set('cache.tasks.' . $task->getName(), $task->getUpdated())
+      ->save();
 
 
   }
@@ -56,14 +42,10 @@ class IntranetJiraStorageTask implements IntranetJiraStorageTaskInterface {
    */
   public static function getTime(IntranetJiraProjectTask $task) {
 
-    $storage = \Drupal::entityManager()->getStorage('node');
-    $query = \Drupal::entityQuery('node')
-      ->condition('status', 1)
-      ->condition('type', 'jiratask')
-      ->condition('field_jira_key', $task->getHumanName());
+    $config = \Drupal::config('modulename.settings');
+    $value = $config->get('cache.tasks.' . $task->getName());
 
-    $nids = $query->execute();
-    $node = array_shift($storage->loadMultiple($nids));
-    return new IntranetJiraTime($node);
+
+    return new IntranetJiraTime((object)array('value' => $value));
   }
 }

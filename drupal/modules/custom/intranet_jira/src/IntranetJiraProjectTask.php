@@ -54,7 +54,7 @@ class IntranetJiraProjectTask {
   public function timeUpdated() {
     $time = IntranetJiraStorageTask::getTime($this);
 
-    if(!$time->check() && $this->getUpdated() != strtotime($time->getTime())) {
+    if(!$time->check() && $this->getUpdated() != $time->getTime()) {
       return FALSE;
     }
     return TRUE;

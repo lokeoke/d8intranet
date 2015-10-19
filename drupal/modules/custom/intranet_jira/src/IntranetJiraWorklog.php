@@ -8,17 +8,36 @@
 
 namespace Drupal\intranet_jira;
 
+use stdClass;
 
 class IntranetJiraWorklog {
-  private $worklog;
-  private $task;
   /**
-   * IntranetJiraWorklog constructor.
-   * @param $worklog
+   * @var \stdClass
    */
-  public function __construct($worklog, $task) {
+  private $worklog;
+
+  /**
+   * @var \Drupal\intranet_jira\IntranetJiraProjectTask
+   */
+  private $task;
+
+  /**
+   * @param \stdClass $worklog
+   * @param \Drupal\intranet_jira\IntranetJiraProjectTask $task
+   */
+  public function __construct(stdClass $worklog, IntranetJiraProjectTask $task) {
     $this->worklog = $worklog;
     $this->task = $task;
+  }
+
+  /**
+   * @return \Drupal\intranet_jira\IntranetJiraProjectTask
+   */
+  public function getTask() {
+    return $this->task;
+  }
+  public function getWork() {
+    return $this->worklog;
   }
   public function getId() {
     return $this->worklog->id;

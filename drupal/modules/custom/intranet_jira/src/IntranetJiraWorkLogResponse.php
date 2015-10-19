@@ -13,15 +13,24 @@ class IntranetJiraWorkLogResponse {
 
   private $response;
   private $task;
+  /**
+   * @var IntranetJiraStorage
+   */
+  private $storage;
 
   public function __construct($response, $task) {
     $this->response = $response;
     $this->task = $task;
+
+    $this->storage = \Drupal::service("intranet_jira.storage");
   }
+
   public function save() {
     foreach ($this->response->worklogs as $worklog) {
       $worklog_class = new IntranetJiraWorklog($worklog, $this->task);
-      IntranetJiraStorageTask::storeWorkLog($worklog_class);
+
+      $this->storage->storeWorkLog($worklog_class);
+      //IntranetJiraStorageTask::storeWorkLog($worklog_class);
     }
 
   }
