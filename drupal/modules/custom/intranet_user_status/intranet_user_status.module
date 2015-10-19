@@ -1,0 +1,38 @@
+<?php
+
+use Drupal\Core\Database\Database;
+
+/**
+ * Implements hook_user_load().
+ */
+function intranet_user_status_user_load($users) {
+  $current_time = time();
+
+  foreach ($users as $user) {
+    $field_tables_and_statuses = array(
+      'user__field_user_remote_work' => 'remote_work',
+      'user__field_user_sick' => 'sick',
+      'user__field_user_duty_journey' => 'business_trip',
+      'user__field_user_vacation' => 'vacation',
+      'user__field_user_work_off' => 'work_off',
+      'user__field_user_dayoff' => 'day_off',
+    );
+
+    foreach ($field_tables_and_statuses as $field_table => $user_status) {
+      $field_name = str_replace('user__', '', $field_table);
+
+      $result = Database::getConnection()->select($field_table, 'tf')
+        ->fields('tf')
+        ->condition('entity_id', $user->id())
+        ->where('UNIX_TIMESTAMP(CAST(' . $field_name . '_start_date AS DATE)) <= ' . $current_time . ' AND UNIX_TIMESTAMP(DATE_ADD(CAST(' . $field_name . '_end_date AS DATE), INTERVAL 1 DAY)) >= ' . $current_time)
+        ->execute()
+        ->fetchAll();
+
+      if ($result) {
+        $user->field_user_status->value = $user_status;
+
+        break;
+      }
+    }
+  }
+}

@@ -1,19 +1,17 @@
-uuid: 87cbd52a-b537-4736-b722-34bd383559e4
+uuid: 9352a0a7-45fb-45ed-ae00-ea684d71ec6b
 langcode: en
 status: true
 dependencies:
   module:
     - user
-id: user.field_user_check_in
-field_name: field_user_check_in
+id: user.field_jira_required
+field_name: field_jira_required
 entity_type: user
-type: integer
-settings:
-  unsigned: false
-  size: normal
+type: boolean
+settings: {  }
 module: core
 locked: false
-cardinality: -1
+cardinality: 1
 translatable: true
 indexes: {  }
 persist_with_no_fields: false

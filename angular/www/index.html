@@ -54,10 +54,10 @@
           </a>
 
           <div ng-cloak ng-if="!logged">
-            <span class="user-pic" >
+            <span class="user-pic">
             <img src="../images/anonymus.png" alt="anonymus"/>
           </span>
-            <a class="user-login" href="admin/user/login">
+            <a class="user-login" href="{{loginUrl}}">
               Login
             </a>
           </div>
@@ -66,8 +66,7 @@
               ng-click="setActiveMenuItem('#user/{{currentUserId}}')"
               ng-class="{'active': '#user/{{currentUserId}}' == menuStates.activeItem}"
               ng-if="logged">
-            <img src="../images/employees/alex.jpg"
-                ng-src="../images/employees/alex.jpg" alt="Alexander Mikhutkin">
+            <img src="{{currentUserPic}}" ng-src="{{currentUserPic}}" alt="">
           </a>
 
           <div ng-controller="CheckInController" ng-if="logged">
@@ -86,9 +85,9 @@
                 ng-click="setActiveMenuItem(menuItem.url, false)">
               <a class="sidebar-icon" ng-href="{{menuItem.url}}">
                 <span class="{{menuItem.icon}}-icon"></span>
-            <span class="menu-item-title">
-              {{menuItem.title}}
-            </span>
+                <span class="menu-item-title">
+                  {{menuItem.title}}
+                </span>
               </a>
             </li>
           </ul>

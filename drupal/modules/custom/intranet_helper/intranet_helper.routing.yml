@@ -13,6 +13,21 @@ intranet_helper.user_check_in:
     _access: 'TRUE'
   methods: [POST]
 
+intranet_helper.user_check_out:
+  path: '/api/user/check-out'
+  defaults:
+    _controller: '\Drupal\intranet_helper\Controller\IntranetUserController::checkOut'
+  requirements:
+    _access: 'TRUE'
+  methods: [POST]
+
+intranet_helper.user_checked_in:
+  path: '/api/user/checked-in'
+  defaults:
+    _controller: '\Drupal\intranet_helper\Controller\IntranetUserController::checkedIn'
+  requirements:
+    _access: 'TRUE'
+
 intranet_helper.user_login:
   path: '/api/user/login'
   defaults:
@@ -28,9 +43,9 @@ intranet_helper.user_logout:
   requirements:
     _user_is_logged_in: 'TRUE'
 
-intranet_helper.current_user_info:
-  path: '/api/check-stage'
+intranet_helper.user_status:
+  path: '/api/user/check-state'
   defaults:
-    _controller: '\Drupal\intranet_helper\Controller\IntranetUserStatus::status'
+    _controller: '\Drupal\intranet_helper\Controller\IntranetUserController::checkState'
   requirements:
     _access: 'TRUE'

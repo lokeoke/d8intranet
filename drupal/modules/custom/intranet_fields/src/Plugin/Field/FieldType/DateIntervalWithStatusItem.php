@@ -2,7 +2,7 @@
 
 /**
  * @file
- * Contains \Drupal\intranet_fields\Plugin\field\field_type\CountryItem.
+ * Contains \Drupal\intranet_fields\Plugin\field\field_type\DateIntervalWithStatusItem.
  */
 
 namespace Drupal\intranet_fields\Plugin\Field\FieldType;
@@ -63,8 +63,7 @@ class DateIntervalWithStatusItem extends FieldItemBase {
   public function isEmpty() {
     $start_date = $this->get('start_date')->getValue();
     $end_date = $this->get('end_date')->getValue();
-    $state = $this->get('state')->getValue();
 
-    return ($start_date === NULL || $start_date === '') && ($end_date === NULL || $end_date === '') && ($state === NULL || $state === '');
+    return ($start_date === NULL || $start_date === '') && ($end_date === NULL || $end_date === '');
   }
 }

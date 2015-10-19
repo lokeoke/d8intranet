@@ -1,0 +1,11 @@
+name: Intranet user status
+description: Evaluating user status.
+package: Intranet
+type: module
+version: 1.0
+core: 8.x
+
+dependencies:
+  # CONTRIB
+  # CUSTOM
+  - intranet_fields

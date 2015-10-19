@@ -1,17 +1,13 @@
 <div class="modal view-animate">
-  <div class="modal-dialog slide-top">
+  <div class="modal-dialog slide-top modal-{{modalMessageType}}">
     <div class="modal-content">
-      <div class="modal-header modal-{{modalMessageType}}">
-        <h4 class="modal-title">{{ modalTitle }}</h4>
-      </div>
       <div class="modal-body">
         <p>
           <strong ng-if="modalMessageSubtitle">{{modalMessageSubtitle}}</strong>
           <br/>
           <span ng-if="modalMessage">{{modalMessage}}</span>
         </p>
-      </div>
-      <div class="modal-footer">
+
         <button class="close-modal" remove-modal ng-click="closeModal();">Got it!</button>
       </div>
     </div>
