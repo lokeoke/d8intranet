@@ -65,6 +65,6 @@ class DateIntervalWithStatusItem extends FieldItemBase {
     $end_date = $this->get('end_date')->getValue();
     $state = $this->get('state')->getValue();
 
-    return ($start_date === NULL || $start_date === '') && ($end_date === NULL || $end_date === '') && ($state === NULL || $state === '');
+    return ($start_date === NULL || $start_date === '') && ($end_date === NULL || $end_date === '');
   }
 }
