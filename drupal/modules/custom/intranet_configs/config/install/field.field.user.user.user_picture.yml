@@ -23,7 +23,7 @@ settings:
   max_filesize: '30 KB'
   alt_field: false
   title_field: false
-  max_resolution: 85x85
+  max_resolution: 180x180
   min_resolution: ''
   default_image:
     uuid: null
