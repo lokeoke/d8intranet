@@ -36,16 +36,16 @@ bundle: user
 mode: default
 content:
   account:
-    weight: -10
+    weight: 0
     settings: {  }
     third_party_settings: {  }
   contact:
-    weight: 5
+    weight: 11
     settings: {  }
     third_party_settings: {  }
   field_came_to_propeople:
     type: datetime_datelist
-    weight: 0
+    weight: 4
     settings:
       increment: 15
       date_order: YMD
@@ -53,33 +53,33 @@ content:
     third_party_settings: {  }
   field_drupal_org_id:
     type: string_textfield
-    weight: 0
+    weight: 10
     settings:
       size: 60
       placeholder: ''
     third_party_settings: {  }
   field_first_name:
     type: string_textfield
-    weight: 0
+    weight: 8
     settings:
       size: 60
       placeholder: ''
     third_party_settings: {  }
   field_github_id:
     type: string_textfield
-    weight: 0
+    weight: 7
     settings:
       size: 60
       placeholder: ''
     third_party_settings: {  }
   field_jira_required:
-    weight: 21
+    weight: 23
     settings:
       display_label: false
     third_party_settings: {  }
     type: boolean_checkbox
   field_job_title:
-    weight: 8
+    weight: 13
     settings:
       size: 60
       placeholder: ''
@@ -87,92 +87,87 @@ content:
     type: string_textfield
   field_last_name:
     type: string_textfield
-    weight: 0
+    weight: 9
     settings:
       size: 60
       placeholder: ''
     third_party_settings: {  }
   field_phone_number:
     type: string_textfield
-    weight: 0
+    weight: 5
     settings:
       size: 60
       placeholder: ''
     third_party_settings: {  }
   field_position:
     type: options_select
-    weight: 0
+    weight: 3
     settings: {  }
     third_party_settings: {  }
   field_team:
     type: options_select
-    weight: 0
+    weight: 2
     settings: {  }
     third_party_settings: {  }
   field_user_birthday:
-    weight: 10
+    weight: 14
     settings: {  }
     third_party_settings: {  }
     type: datetime_default
   field_user_check_in_and_out:
-    weight: 22
+    weight: 24
     settings: {  }
     third_party_settings: {  }
     type: check_in_and_out_default
   field_user_dayoff:
-    weight: 19
+    weight: 22
     settings: {  }
     third_party_settings: {  }
     type: date_interval_with_status_default
   field_user_duty_journey:
-    weight: 16
+    weight: 19
     settings: {  }
     third_party_settings: {  }
     type: date_interval_with_status_default
   field_user_email:
-    weight: 11
+    weight: 15
     settings:
       placeholder: ''
     third_party_settings: {  }
     type: email_default
   field_user_remote_work:
-    weight: 17
+    weight: 20
     settings: {  }
     third_party_settings: {  }
     type: date_interval_with_status_default
   field_user_sick:
-    weight: 15
+    weight: 18
     settings: {  }
     third_party_settings: {  }
     type: date_interval_with_status_default
   field_user_skype:
-    weight: 12
+    weight: 16
     settings:
       size: 60
       placeholder: ''
     third_party_settings: {  }
     type: string_textfield
-  field_user_status:
-    weight: 13
-    settings: {  }
-    third_party_settings: {  }
-    type: options_select
   field_user_vacation:
-    weight: 14
+    weight: 17
     settings: {  }
     third_party_settings: {  }
     type: date_interval_with_status_default
   field_user_work_off:
-    weight: 18
+    weight: 21
     settings: {  }
     third_party_settings: {  }
     type: date_interval_with_status_default
   language:
-    weight: 0
+    weight: 6
     settings: {  }
     third_party_settings: {  }
   timezone:
-    weight: 6
+    weight: 12
     settings: {  }
     third_party_settings: {  }
   user_picture:
@@ -181,5 +176,6 @@ content:
       progress_indicator: throbber
       preview_image_style: thumbnail
     third_party_settings: {  }
-    weight: -1
-hidden: {  }
+    weight: 1
+hidden:
+  field_user_status: true
