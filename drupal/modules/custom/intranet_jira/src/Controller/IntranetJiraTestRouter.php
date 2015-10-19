@@ -28,7 +28,10 @@ class IntranetJiraTestRouter extends ControllerBase {
     if(1) {
       \Drupal::configFactory()->getEditable('modulename.settings')
         ->delete();
-
+      return [
+        '#type' => 'markup',
+        '#markup' => $this->t('Implement method: index')
+      ];
     }
 
     /**

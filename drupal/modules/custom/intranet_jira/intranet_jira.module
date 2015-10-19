@@ -1,23 +1,23 @@
 <?php
+use Drupal\Core\Entity\EntityTypeInterface;
+use Drupal\Core\Field\BaseFieldDefinition;
+use Drupal\Core\Routing\RouteMatchInterface;
+use Drupal\intranet_jira\IntranetJiraApiRest;
+use Drupal\intranet_jira\IntranetJiraProjectTask;
 
 /**
- * @file
- * Contains intranet_jira.module.
+ * Add jira field to user entity
+ *
+ * @param $fields
+ * @param \Drupal\Core\Entity\EntityTypeInterface $entity_type
  */
-namespace Drupal\intranet_jira;
-
-use Drupal\Core\Routing\RouteMatchInterface;
-use Drupal\intranet_jira\IntranetJiraProjectTask;
-use Drupal\intranet_jira\Plugin\QueueWorker\IntranetJiraAggregator;
-
-
 function intranet_jira_entity_base_field_info_alter(&$fields, EntityTypeInterface $entity_type) {
   // Alter the field to use a custom class.
   if ($entity_type->id() == 'user') {
     $fields['field_jira_worklog'] = BaseFieldDefinition::create('list_string')
-      ->setName('statuses')
-      ->setLabel(t('Statuses'))
-      ->setDescription(t('Statuses ID.'))
+      ->setName('field_jira_worklog')
+      ->setLabel(t('field_jira_worklog'))
+      ->setDescription(t('field_jira_worklog.'))
       ->setTranslatable(FALSE)
       ->setQueryable(FALSE)
       ->setComputed(TRUE);
@@ -25,13 +25,22 @@ function intranet_jira_entity_base_field_info_alter(&$fields, EntityTypeInterfac
   }
 }
 
+/**
+ * Add worklog time to entity
+ *
+ * @param array $entities
+ * @param $entity_type_id
+ */
 function intranet_jira_entity_load(array $entities, $entity_type_id) {
 
   if ($entity_type_id == "user") {
-    foreach ($entities as $entity) {
 
-      \Drupal::service("intranet_jira.services.status")
-        ->setStatus($entity);
+    $storage = \Drupal::service("intranet_jira.storage");
+
+    foreach ($entities as $entity) {
+      $res = $storage->getLoggedTime($entity);
+
+      $entity->field_jira_worklog = array($res);
 
     }
   }
@@ -54,8 +63,6 @@ function intranet_jira_help($route_name, RouteMatchInterface $route_match) {
     default:
   }
 }
-
-
 /**
  * Implements hook_cron().
  *

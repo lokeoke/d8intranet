@@ -26,7 +26,18 @@ class IntranetJiraStorage {
   public function __construct() {
     $this->storage = \Drupal::entityManager()->getStorage('node');
   }
-
+  public function getLoggedTime($jira_name){
+    if(date('N',$format = strtotime( "today" )) === 1) {
+      $format = strtotime( "previous friday" );
+    }
+    $format =  date("Y-m-d", $format);
+    $query = \Drupal::entityQuery('node')
+      ->condition('type', 'jira_worklog')
+      ->condition('field_jira_author', $jira_name)
+      ->condition('field_jira_started', $format);
+    $nids = $query->execute();
+    return (count($nids) > 0 ? TRUE : FALSE);
+  }
   /**
    * @param IntranetJiraWorklog $worklog_class
    */
