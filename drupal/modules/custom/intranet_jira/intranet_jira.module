@@ -10,6 +10,35 @@ use Drupal\Core\Routing\RouteMatchInterface;
 use Drupal\intranet_jira\IntranetJiraProjectTask;
 use Drupal\intranet_jira\Plugin\QueueWorker\IntranetJiraAggregator;
 
+
+function intranet_jira_entity_base_field_info_alter(&$fields, EntityTypeInterface $entity_type) {
+  // Alter the field to use a custom class.
+  if ($entity_type->id() == 'user') {
+    $fields['field_jira_worklog'] = BaseFieldDefinition::create('list_string')
+      ->setName('statuses')
+      ->setLabel(t('Statuses'))
+      ->setDescription(t('Statuses ID.'))
+      ->setTranslatable(FALSE)
+      ->setQueryable(FALSE)
+      ->setComputed(TRUE);
+
+  }
+}
+
+function intranet_jira_entity_load(array $entities, $entity_type_id) {
+
+  if ($entity_type_id == "user") {
+    foreach ($entities as $entity) {
+
+      \Drupal::service("intranet_jira.services.status")
+        ->setStatus($entity);
+
+    }
+  }
+
+}
+
+
 /**
  * Implements hook_help().
  */
