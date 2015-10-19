@@ -89,4 +89,19 @@ function intranet_jira_cron() {
     }
   }
 
+  /**
+   * Clean up old worklogs
+   */
+  $query = \Drupal::entityQuery('node')
+    ->condition('type', 'jira_worklog')
+    ->condition('field_jira_started', date("Y-m-d", REQUEST_TIME - (86400 * 4)), '<');
+    //->condition('field_jira_started', date("Y-m-d", REQUEST_TIME), '<=');
+  $nids = $query->execute();
+  if ($nids) {
+    $nodes = entity_load_multiple('node', $nids);
+    foreach ($nodes as $node) {
+      $node->delete();
+    }
+  }
+
 }

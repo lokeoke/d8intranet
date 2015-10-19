@@ -20,6 +20,25 @@ class IntranetJiraStorage {
    */
   private $storage;
 
+  const SETTINGS_NAME = 'modulename.settings';
+  const SETTINGS_NAME_PREFIX = 'cache.tasks.';
+
+  public static function getProjectTask(IntranetJiraProjectTask $task) {
+
+    $config = \Drupal::config(self::SETTINGS_NAME);
+    $value = $config->get(self::SETTINGS_NAME_PREFIX . $task->getName());
+
+
+    return new IntranetJiraTime((object)array('value' => $value));
+  }
+
+  public static function saveProjectTask($task) {
+    \Drupal::configFactory()->getEditable(self::SETTINGS_NAME)
+      ->set(self::SETTINGS_NAME_PREFIX . $task->getName(), $task->getUpdated())
+      ->save();
+
+
+  }
   /**
    * Constructor.
    */
@@ -43,7 +62,7 @@ class IntranetJiraStorage {
    */
   public function storeWorkLog($worklog_class) {
     // @TODO
-    if(time() - (86400 * 3) > strtotime($worklog_class->started())) {
+    if(time() - (86400 * 4) > strtotime($worklog_class->started())) {
       return;
     }
     $query = \Drupal::entityQuery('node')
@@ -55,7 +74,7 @@ class IntranetJiraStorage {
     if(count($nids) == 0) {
 
       $edit_node = $this->defaultNode("jira_worklog");
-      $edit_node['title'] = sprintf("%s (%s)", $worklog_class->author(), $worklog_class->timeSpent());
+      $edit_node['title'] = sprintf("%s (%s)", $worklog_class->getId(), $worklog_class->timeSpent());
       $edit_node['field_jira_id'] = $worklog_class->getId();
       $edit_node['field_jira_author'] = $worklog_class->author();
       $edit_node['field_jira_time'] = $worklog_class->timeSpent();

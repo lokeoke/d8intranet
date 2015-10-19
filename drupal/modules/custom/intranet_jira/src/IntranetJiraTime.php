@@ -1,29 +1,38 @@
 <?php
 /**
- * Created by PhpStorm.
- * User: spheresh
- * Date: 10/17/15
- * Time: 11:23 PM
+ * $file
+ * Describe IntranetJiraTime class
  */
 
 namespace Drupal\intranet_jira;
 
-
+/**
+ * Class IntranetJiraTime
+ * @package Drupal\intranet_jira
+ */
 class IntranetJiraTime {
 
   /**
    * IntranetJiraTime constructor.
-   * @param mixed $node
+   * @param $time
    */
-  public function __construct($node) {
-    $this->time = $node;
+  public function __construct($time) {
+    $this->time = $time;
   }
 
-  public function check() {
+  /**
+   * Check that the value is empty
+   * @return bool
+   */
+  public function isNonExists() {
     return is_null($this->time->value);
   }
 
-  public function getTime() {
+  /**
+   * Retrun the value of time
+   * @return string
+   */
+  public function getValue() {
     return $this->time->value;
   }
 }

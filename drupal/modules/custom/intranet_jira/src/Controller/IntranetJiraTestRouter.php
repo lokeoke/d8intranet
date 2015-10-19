@@ -18,40 +18,23 @@ use Drupal\intranet_jira\Plugin\QueueWorker\IntranetJiraAggregator;
  * @package Drupal\intranet_jira\Controller
  */
 class IntranetJiraTestRouter extends ControllerBase {
+
+  const SETTINGS_NAME = 'modulename.settings';
+  const SETTINGS_NAME_PREFIX = 'cache.tasks.';
+
   /**
-   * Index.
+   * Helper function
+   * It shoul be deleted in the features
+   * (use it just for testing)
    *
    * @return string
-   *   Return Hello string.
    */
   public function index() {
-    if(1) {
-      \Drupal::configFactory()->getEditable('modulename.settings')
-        ->delete();
-      return [
-        '#type' => 'markup',
-        '#markup' => $this->t('Implement method: index')
-      ];
-    }
-
-    /**
-     * @var IntranetJiraApiRest $jira
-     */
-    $jira = \Drupal::service("intranet_jira.api_rest");
-
-    /**
-     * @var IntranetJiraProjectTask $project_task
-     */
-    foreach ($jira->loadMultiple() as $project_task) {
-
-      if (!$project_task->timeExists() || !$project_task->timeUpdated()) {
-        $project_task->setTime();
-        $project_task->refreshItems();
-      }
-    }
+    \Drupal::configFactory()->getEditable(self::SETTINGS_NAME)
+      ->delete();
     return [
-        '#type' => 'markup',
-        '#markup' => $this->t('Implement method: index')
+      '#type' => 'markup',
+      '#markup' => $this->t('Intranet jira cache: cleared')
     ];
   }
 

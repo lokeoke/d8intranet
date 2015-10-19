@@ -41,21 +41,15 @@ class IntranetJiraProjectTask {
    * @TODO change to $this->storage
    */
   public function setTime() {
-    $time = IntranetJiraStorageTask::getTime($this);
-    if (!$time->check()) {
-      IntranetJiraStorageTask::setTime($this);
-    }
-    else {
-      IntranetJiraStorageTask::updateTime($this);
-    }
+    $this->storage->saveProjectTask($this);
   }
 
   public function timeExists() {
-    $time = IntranetJiraStorageTask::getTime($this);
+    $time = $this->storage->getProjectTask($this);
     /**
      * @TODO Rename check function
      */
-    return ($time->check() ? FALSE : TRUE);
+    return ($time->isNonExists() ? FALSE : TRUE);
   }
 
   public function getUpdated() {
@@ -71,9 +65,9 @@ class IntranetJiraProjectTask {
   }
 
   public function timeUpdated() {
-    $time = IntranetJiraStorageTask::getTime($this);
+    $time = $this->storage->getProjectTask($this);
 
-    if(!$time->check() && $this->getUpdated() != $time->getTime()) {
+    if(!$time->isNonExists() && $this->getUpdated() != $time->getValue()) {
       return FALSE;
     }
     return TRUE;
