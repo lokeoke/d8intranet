@@ -26,6 +26,9 @@ settings:
     -
       value: vacation
       label: Vacation
+    -
+      value: work_off
+      label: 'Work off'
   allowed_values_function: ''
 module: options
 locked: false
