@@ -1,0 +1,24 @@
+uuid: af90f018-720b-40e5-9811-17ef5c07c1f2
+langcode: en
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.node.teaser
+    - node.type.jira_worklog
+  module:
+    - user
+id: node.jira_worklog.teaser
+targetEntityType: node
+bundle: jira_worklog
+mode: teaser
+content:
+  links:
+    weight: 100
+  title:
+    label: hidden
+    type: string
+    weight: -5
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+hidden: {  }
