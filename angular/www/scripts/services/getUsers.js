@@ -9,7 +9,7 @@
 
 angular.module('d8intranetApp')
   .service('getJsonData', function ($http, $timeout, $rootScope) {
-    var url = 'http://angular.d8pp.dev/admin/api/user';
+    var url = '/admin/api/user';
     var users = [];
     var promise;
 
