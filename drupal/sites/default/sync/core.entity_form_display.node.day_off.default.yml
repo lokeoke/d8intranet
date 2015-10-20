@@ -1,0 +1,79 @@
+uuid: 6007b0f4-c9fe-4344-8408-8f9a2255d3ad
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.node.day_off.field_employee
+    - field.field.node.day_off.field_end_date
+    - field.field.node.day_off.field_start_date
+    - field.field.node.day_off.field_state
+    - node.type.day_off
+  module:
+    - datetime
+    - path
+id: node.day_off.default
+targetEntityType: node
+bundle: day_off
+mode: default
+content:
+  created:
+    type: datetime_timestamp
+    weight: 10
+    settings: {  }
+    third_party_settings: {  }
+  field_employee:
+    type: entity_reference_autocomplete
+    weight: 0
+    settings:
+      match_operator: CONTAINS
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  field_end_date:
+    type: datetime_default
+    weight: 0
+    settings: {  }
+    third_party_settings: {  }
+  field_start_date:
+    type: datetime_default
+    weight: 0
+    settings: {  }
+    third_party_settings: {  }
+  field_state:
+    type: options_select
+    weight: 0
+    settings: {  }
+    third_party_settings: {  }
+  path:
+    type: path
+    weight: 30
+    settings: {  }
+    third_party_settings: {  }
+  promote:
+    type: boolean_checkbox
+    settings:
+      display_label: true
+    weight: 15
+    third_party_settings: {  }
+  sticky:
+    type: boolean_checkbox
+    settings:
+      display_label: true
+    weight: 16
+    third_party_settings: {  }
+  title:
+    type: string_textfield
+    weight: -5
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  uid:
+    type: entity_reference_autocomplete
+    weight: 5
+    settings:
+      match_operator: CONTAINS
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+hidden: {  }

@@ -1,0 +1,22 @@
+uuid: 71745711-ba52-4fe0-a001-011d44fe7b1b
+langcode: en
+status: true
+dependencies:
+  config:
+    - node.type.jira_worklog
+id: node.jira_worklog.promote
+field_name: promote
+entity_type: node
+bundle: jira_worklog
+label: 'Promoted to front page'
+description: ''
+required: false
+translatable: true
+default_value:
+  -
+    value: 0
+default_value_callback: ''
+settings:
+  on_label: 'On'
+  off_label: 'Off'
+field_type: boolean

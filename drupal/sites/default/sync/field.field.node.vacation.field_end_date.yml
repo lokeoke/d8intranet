@@ -1,0 +1,24 @@
+uuid: 1ea6e5ee-119f-4b27-814b-75f420993f2c
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_end_date
+    - node.type.vacation
+  module:
+    - datetime
+id: node.vacation.field_end_date
+field_name: field_end_date
+entity_type: node
+bundle: vacation
+label: 'End Date'
+description: ''
+required: true
+translatable: true
+default_value:
+  -
+    default_date_type: relative
+    default_date: '+14'
+default_value_callback: ''
+settings: {  }
+field_type: datetime

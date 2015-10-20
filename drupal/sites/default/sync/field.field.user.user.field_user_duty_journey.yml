@@ -1,0 +1,29 @@
+uuid: 15025294-e85f-409e-9500-e53be7ceeaaf
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.user.field_user_duty_journey
+  module:
+    - intranet_fields
+    - user
+id: user.user.field_user_duty_journey
+field_name: field_user_duty_journey
+entity_type: user
+bundle: user
+label: 'User duty journey'
+description: ''
+required: false
+translatable: false
+default_value:
+  -
+    start_date: ''
+    end_date: ''
+    state: paid-leave
+  -
+    start_date: ''
+    end_date: ''
+    state: paid-leave
+default_value_callback: ''
+settings: {  }
+field_type: date_interval_with_status

@@ -1,0 +1,19 @@
+uuid: 1da0c507-6c4b-44b2-bc3d-611e4a7a6a80
+langcode: en
+status: true
+dependencies:
+  module:
+    - intranet_fields
+    - user
+id: user.field_user_remote_work
+field_name: field_user_remote_work
+entity_type: user
+type: date_interval_with_status
+settings: {  }
+module: intranet_fields
+locked: false
+cardinality: -1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

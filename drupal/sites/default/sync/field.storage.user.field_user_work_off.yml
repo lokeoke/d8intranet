@@ -1,0 +1,19 @@
+uuid: 102aab8a-126c-484d-ba00-f3a2eaf4713f
+langcode: en
+status: true
+dependencies:
+  module:
+    - intranet_fields
+    - user
+id: user.field_user_work_off
+field_name: field_user_work_off
+entity_type: user
+type: date_interval_with_status
+settings: {  }
+module: intranet_fields
+locked: false
+cardinality: -1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

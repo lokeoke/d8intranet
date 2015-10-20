@@ -1,0 +1,26 @@
+uuid: 008a75f4-ef64-4731-ae06-6c4e9d57c64e
+langcode: en
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.node.teaser
+    - field.field.node.jira_task.field_jira_id
+    - node.type.jira_task
+  module:
+    - user
+id: node.jira_task.teaser
+targetEntityType: node
+bundle: jira_task
+mode: teaser
+content:
+  links:
+    weight: 100
+  title:
+    label: hidden
+    type: string
+    weight: -5
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+hidden:
+  field_jira_id: true

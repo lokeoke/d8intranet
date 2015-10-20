@@ -1,0 +1,21 @@
+uuid: 48401b72-671d-4ef4-aa0e-14c1ce033c39
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.user.field_came_to_propeople
+  module:
+    - datetime
+    - user
+id: user.user.field_came_to_propeople
+field_name: field_came_to_propeople
+entity_type: user
+bundle: user
+label: 'Came to Propeople'
+description: ''
+required: true
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: datetime
