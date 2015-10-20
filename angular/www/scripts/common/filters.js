@@ -36,7 +36,7 @@ angular.module('d8intranetApp')
     return function (teamName, param) {
       var filteredTeam = [];
       angular.forEach(teamName, function (team) {
-        if (team.field_team.target_id == param) {
+        if (team.field_team[0].target_id == param) {
           filteredTeam.push(team);
         }
 

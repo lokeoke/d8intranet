@@ -17,23 +17,26 @@ angular.module('d8intranetApp')
         $scope.filterBy = newValue;
       });
 
+
       $scope.updateSearchField = function(name){
         $scope.filterKeyword = name;
       };
 
       $scope.teams = [];
 
-      angular.forEach($scope.people, function(employee){
-        //console.log(employee);
+      function isInArray(element, index, array) {
+        return element.name != this.name;
+      }
 
-        if (!$scope.teams[employee.field_team.target_id]) {
-          $scope.teams[employee.field_team.target_id] = employee.field_team.target_id
+      angular.forEach($scope.people, function(employee){
+        var tempObj = {"name": employee.field_team[0].name, "target_id": parseInt(employee.field_team[0].target_id)};
+        if ($scope.teams.length == 0 || $scope.teams.every(isInArray, tempObj)) {
+          $scope.teams.push(tempObj);
         }
       });
 
-      $scope.teams = $scope.teams.filter(function(n){ return n != undefined });
-      $scope.teams.unshift({"team_name":'all', "value": "0"});
-      $scope.teamFilter = {selectedOption : $scope.teams.target_id}
+      $scope.teams.unshift({"name":'all', "target_id": 0});
+      $scope.teamFilter = {selectedOption : $scope.teams[0].target_id}
     });
   });
 

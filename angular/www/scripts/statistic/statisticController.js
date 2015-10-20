@@ -25,20 +25,21 @@ angular.module('d8intranetApp')
         $scope.filterBy = newValue;
       });
 
-      // Create teams array for filtering
       $scope.teams = [];
-      angular.forEach($scope.users, function (emplyee) {
-        if (!$scope.teams[emplyee.field_team.target_id]) {
-          $scope.teams[emplyee.field_team.target_id] = emplyee.field_team.target_id
+
+      function isInArray(element, index, array) {
+        return element.name != this.name;
+      }
+
+      angular.forEach($scope.users, function(employee){
+        var tempObj = {"name": employee.field_team[0].name, "target_id": parseInt(employee.field_team[0].target_id)};
+        if ($scope.teams.length == 0 || $scope.teams.every(isInArray, tempObj)) {
+          $scope.teams.push(tempObj);
         }
       });
 
-      $scope.teams = $scope.teams.filter(function (n) {
-        return n != undefined
-      });
-
-      $scope.teams.unshift({"team_name": 'all', "value": "0"});
-      $scope.teamFilter = {selectedOption: $scope.teams[0].value};
+      $scope.teams.unshift({"name":'all', "target_id": 0});
+      $scope.teamFilter = {selectedOption : $scope.teams[0].target_id}
     });
 
     $scope.tabs = [
