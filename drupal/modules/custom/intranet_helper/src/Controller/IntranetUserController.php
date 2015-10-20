@@ -132,6 +132,14 @@ class IntranetUserController extends ControllerBase {
     $uid = $user->id();
     $account = User::load($uid);
 
+    $checked_in = Database::getConnection()->select('user__field_user_check_in_and_out', 'c')
+      ->fields('c')
+      ->condition('entity_id', $uid)
+      ->condition('field_user_check_in_and_out_check_in', strtotime(date('d F Y')), '>=')
+      ->isNull('field_user_check_in_and_out_check_out')
+      ->execute()
+      ->fetchAll();
+
     // If field "Jira not required" checked then '$jira' should be TRUE.
     if ((boolean) $account->field_jira_required->value) {
       $jira = (boolean) $account->field_jira_required->value;
@@ -144,7 +152,8 @@ class IntranetUserController extends ControllerBase {
       'logged' => $uid ? TRUE : FALSE,
       'jira' => $jira,
       'field_image' => $account->user_picture->target_id ? file_create_url(File::load($account->user_picture->target_id)->uri->value) : '../images/anonymus.png',
-      'uid' => $uid
+      'uid' => $uid,
+      'checked_in' => (boolean) $checked_in
     ));
   }
 
