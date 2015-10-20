@@ -17,7 +17,7 @@
     backup_folder: /var/www/backup
     pp_environment: 'default'
     php_env_vars: ''
-    type: "profile"
+    type: "dev"
     latest_remote: "intranet_remote.sql.gz"
     latest: "intranet.sql.gz"
     source_database: http://intranet.loc/admin/{{ latest }}
@@ -35,24 +35,36 @@
   - name: Getting timestamp
     shell: date +'%Y_%m_%d_%H_%M'
     register: backup_name_raw
+    tags: 
+      - prod
 
   - name: Getting name for backup
     set_fact: backup_name={{ pp_environment }}-{{ mysql_db }}-{{ backup_name_raw.stdout }}
+    tags: 
+      - prod
 
   - name: Checking a backup directory is exists
     stat: path={{ backup_folder }}
     register: st
+    tags: 
+      - prod
 
   - name: Creating backup folder
     file: path={{ backup_folder }} state=directory mode=0777 recurse=yes
+    tags: 
+      - prod
 
   - name: Check dump exist
     stat: path={{ backup_folder }}/{{ backup_name }}.sql.gz
     register: backup_exist
+    tags: 
+      - prod
 
   - name: Making regular backup
     mysql_db: name={{ mysql_db }} state=dump target={{ backup_folder }}/{{ backup_name }}.sql.gz login_user={{ mysql_user }} login_password={{ mysql_pass }} login_host={{ mysql_host }}
     when: backup_exist.stat.exists == false
+    tags: 
+      - prod
 
 
 
@@ -97,19 +109,29 @@
 
   - set_fact: sync_dir={{ sync_dir_raw.stdout }}
 
-  #- shell: rsync -avz sites/default/sync/ {{ sync_dir }}
+  - shell: rsync -avz sites/default/sync/ {{ sync_dir }}
+    tags: 
+      - prod
 
-  #- name: The configuration import.
-  #  shell: drush config-import sync -y || true
+  - name: The configuration import.
+    shell: drush config-import sync -y || true
+    tags: 
+      - prod
 
   - name: Cache clear.
     shell: drush cr -y || true
+    tags: 
+      - prod
 
   - name: Run Cron.
     shell: drush cron -y || true
+    tags: 
+      - prod
 
   - name: Making lastest backup
     mysql_db: name={{ mysql_db }} state=dump target={{ backup_folder }}/latest.sql.gz login_user={{ mysql_user }} login_password={{ mysql_pass }} login_host={{ mysql_host }}
+    tags: 
+      - prod
 
 
 
