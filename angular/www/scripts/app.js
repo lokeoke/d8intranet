@@ -59,9 +59,11 @@ angular.module('d8intranetApp', [
     employeesUrl: "#employees",
     vacationsUrl: "#vacation",
     checkInUrl: "admin/api/user/check-in",
+    checkOutUrl: "admin/api/user/check-out",
+    checkedInList: "admin/api/user/checked-in",
     loginPathUrl: "admin/user/login?redirect=true",
-    logoutUrl: "admin/user/logout",
-    status: "admin/api/check-stage",
+    logoutPathUrl: "admin/user/logout?redirect=true",
+    status: "admin/api/user/check-state",
     totalVacation: "20"
   })
 
