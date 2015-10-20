@@ -26,6 +26,9 @@
   - name: check if DB exists
     shell: mysql -u{{ mysql_user }} -p{{ mysql_pass }} -h{{ mysql_host }} -e 'SHOW DATABASES;' | grep -c {{ mysql_db }} || true
     register: dbstatus
+    tags: 
+      - all
+      - prod
 
   - name: Creating drupal database
     mysql_db: name={{ mysql_db }} state=dump login_user={{ mysql_user }} login_password={{ mysql_pass }} login_host={{ mysql_host }}
@@ -94,16 +97,24 @@
 
   - shell: ls -la sites/default/settings.php | grep -c settings.php || true
     register: settings_raw
+    tags: 
+      - all
+      - prod
 
 
   - shell: "chmod 0755 sites/default"
     when: settings_raw.stdout == "0"
+    tags: 
+      - all
 
 
   - name: Installing drupal
     shell: "{{ php_env_vars }} drush -y si {{ installation_profile_name }} --db-url=mysql://{{ mysql_user }}:{{ mysql_pass }}@127.0.0.1:/{{ mysql_db }} --account-name={{ drupal_user }} --account-pass={{ drupal_pass }}"
     when: settings_raw.stdout == "0" or dbstatus.stdout == "0"
     register: installed
+    tags: 
+      - all
+      - prod
 
 
   - shell: php -r 'include "sites/default/settings.php"; $s = (object)$config_directories; echo $s->sync;'
