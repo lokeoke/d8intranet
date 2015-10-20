@@ -6,7 +6,7 @@
       <div class="filter-field-container"
           ng-class="inputSelected ? 'input-filled' : ' ' ">
         <input type="text" class="filter-field" id="filter-people" ng-blur
-            ng-model="user">
+            ng-model="query">
         <label class="filter-label" for="filter-people">Quick filter</label>
       </div>
       <select chosen ng-model='teamFilter.selectedOption' name="Group filter"
@@ -21,7 +21,7 @@
 
     <ul class="people-list">
       <li class="item"
-          ng-repeat="user in people |  teamsOnly:filterBy.selectedOption | filter:user ">
+          ng-repeat="user in people |  teamsOnly:filterBy.selectedOption | filter:query ">
         <div class="user-info">
           <a href="#user/{{user.uid[0].value}}">
               <span class="user-pic">
