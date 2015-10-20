@@ -37,9 +37,11 @@ angular.module('d8intranetApp')
       formatStatisticsData: function (formattedObject, statisticType) {
         var datesStatesCollection = {};
 
-        var month = formatUserData.getMonthNumber(statisticType.start_date);
-        var dateStart = formatUserData.getDateNumber(statisticType.start_date);
-        var dateEnd = formatUserData.getDateNumber(statisticType.end_date);
+        var month = formatUserData.getMonthNumber(formatUserData.reformatDate(statisticType.start_date));
+        var dateStart = formatUserData.getDateNumber(formatUserData.reformatDate(statisticType.start_date));
+        var dateEnd = formatUserData.getDateNumber(formatUserData.reformatDate(statisticType.end_date));
+
+        console.log(month);
 
         // If future formatted object is undefined, create it
         if (formattedObject[month] == undefined) {
@@ -113,45 +115,48 @@ angular.module('d8intranetApp')
 
           var months = formatUserData.setMonths(calendarMonths);
 
+          //console.log(employee);
+
           // Get Vacation days
           // ---------------------------------------------------------------------
-          angular.forEach(employee.field_vacation, function (vacation) {
-            var month = formatUserData.getMonthNumber(vacation.value.start_date);
-            months[month].vacationDays = formatUserData.formatStatisticsData(vacationDays, vacation.value);
+          angular.forEach(employee.field_user_vacation, function (vacation) {
+            //console.log(formatUserData.reformatDate(vacation.start_date));
+            var month = formatUserData.getMonthNumber(formatUserData.reformatDate(vacation.start_date));
+            months[month].vacationDays = formatUserData.formatStatisticsData(vacationDays, vacation);
           });
 
           // Get DaysOff days
           // ---------------------------------------------------------------------
-          angular.forEach(employee.field_dayoff, function (dayoff) {
-            var month = formatUserData.getMonthNumber(dayoff.value.start_date);
-            months[month].dayOffDays = formatUserData.formatStatisticsData(dayOffDays, dayoff.value);
+          angular.forEach(employee.field_user_dayoff, function (dayoff) {
+            var month = formatUserData.getMonthNumber(formatUserData.reformatDate(dayoff.start_date));
+            months[month].dayOffDays = formatUserData.formatStatisticsData(dayOffDays, dayoff);
           });
           //
           // Get Sick days
           // ---------------------------------------------------------------------
-          angular.forEach(employee.field_sick, function (sick) {
-            var month = formatUserData.getMonthNumber(sick.start_date);
+          angular.forEach(employee.field_user_sick, function (sick) {
+            var month = formatUserData.getMonthNumber(formatUserData.reformatDate(sick.start_date));
             months[month].sickDays = formatUserData.formatStatisticsData(sickDays, sick);
           });
 
           // Get Duty Journey days
           // -------------------------------------------------------------------
-          angular.forEach(employee.field_duty_journey, function (journey) {
-            var month = formatUserData.getMonthNumber(journey.start_date);
+          angular.forEach(employee.field_user_duty_journey, function (journey) {
+            var month = formatUserData.getMonthNumber(formatUserData.reformatDate(journey.start_date));
             months[month].journeyDays = formatUserData.formatStatisticsData(journeyDays, journey);
           });
 
           // Get Remote work days
           // -------------------------------------------------------------------
-          angular.forEach(employee.field_remote_work, function (remoteWork) {
-            var month = formatUserData.getMonthNumber(remoteWork.start_date);
+          angular.forEach(employee.field_user_remote_work, function (remoteWork) {
+            var month = formatUserData.getMonthNumber(formatUserData.reformatDate(remoteWork.start_date));
             months[month].remoteWorkDays = formatUserData.formatStatisticsData(remoteWorkDays, remoteWork);
           });
 
           // Get WorkOff work days
           // -------------------------------------------------------------------
-          angular.forEach(employee.field_work_off, function (workOff) {
-            var month = formatUserData.getMonthNumber(workOff.start_date);
+          angular.forEach(employee.field_user_work_off, function (workOff) {
+            var month = formatUserData.getMonthNumber(formatUserData.reformatDate(workOff.start_date));
             months[month].workOffDays = formatUserData.formatStatisticsData(workOffDays, workOff);
           });
 
@@ -167,6 +172,10 @@ angular.module('d8intranetApp')
           employee.timeRanges.totalJourney = formatUserData.getTotalDays(months, 'journeyDays');
           employee.timeRanges.totalRemoteWork = formatUserData.getTotalDays(months, 'remoteWorkDays');
         });
+      },
+
+      reformatDate: function(stringDate) {
+        return new Date(stringDate).getTime() / 1000;
       },
 
 

@@ -3,6 +3,22 @@
 
   <div class="page-content" ng-controller="dashboardController">
 
+    <article class="checked-in-users-list" ng-cloak>
+      <h2>Check in</h2>
+      <ul>
+        <li ng-repeat="user in checkedInUserList" class="checked-user">
+          <span class="user-pic">
+          <img ng-src="{{user.field_image}}"
+               alt="{{user.field_first_name}} {{user.field_last_name}}"
+               title="{{user.field_first_name}} {{user.field_last_name}}"/>
+          </span>
+            <span class="check-in-time">
+              {{user.time * 1000 | date:'h:mma'}}
+            </span>
+        </li>
+      </ul>
+    </article>
+
     <div class="boxes-wrapper group">
       <article class="info-box" ng-repeat="(key, user) in states">
         <div class="info-box-headline">
@@ -14,16 +30,15 @@
 
         <div class="employee-columns">
           <div class="employee" ng-repeat="(employee_key, employee) in user "
-              ng-if='employee_key != "count"'>
+               ng-if='employee_key != "count"'>
 
             <a href="#user/{{employee.uid[0].value}}" class="employee-link">
               <span class="flipper-container">
                 <span class="flipper">
                   <span class="front">
                     <span class="user-pic">
-                      <img ng-src="{{employee.field_user_image[0].value}}"
-                          alt="{{employee.field_first_name[0].value}} {{employee.field_last_name[0].value}}"/>
-
+                      <img ng-src="{{employee.user_picture[0].url}}"
+                           alt="{{employee.field_first_name[0].value}} {{employee.field_last_name[0].value}}"/>
                     </span>
                   </span>
                   <span class="back">
@@ -42,7 +57,7 @@
     </div>
 
     <article class="available-users"
-        ng-repeat="(key, availableUser) in availableEmployees">
+             ng-repeat="(key, availableUser) in availableEmployees">
 
       <h2>{{availableUser.title}}</h2>
 
@@ -51,14 +66,14 @@
       </div>
 
       <div class="av-user"
-          ng-repeat="(avEmployee_key, avEmployee) in availableUser"
-          ng-if='avEmployee_key != "count" && avEmployee_key != "title"'>
+           ng-repeat="(avEmployee_key, avEmployee) in availableUser"
+           ng-if='avEmployee_key != "count" && avEmployee_key != "title"'>
 
         <a href="#user/{{avEmployee.uid[0].value}}" class="employee-link">
 
                   <span class="user-pic">
-                    <img ng-src="{{avEmployee.field_user_image[0].value}}"
-                        alt="{{avEmployee.field_first_name[0].value}} {{avEmployee.field_last_name[0].value}}"/>
+                    <img ng-src="{{avEmployee.user_picture[0].url}}"
+                         alt="{{avEmployee.field_first_name[0].value}} {{avEmployee.field_last_name[0].value}}"/>
 
                   </span>
             <span class="user-name">

@@ -22,13 +22,6 @@
 </head>
 <body ng-controller="cookieController" ng-class="isDark ? 'dark' : 'light'">
 
-<!-- Add your site or application content here -->
-<!--<div class="overlay" ng-if="messageRequest" ng-cloak>-->
-<!--<div class="message">-->
-<!--<div class="spinner" id="gradient"></div>-->
-<!--<span>Sending data</span>-->
-<!--</div>-->
-<!--</div>-->
 
 <div ng-cloak ng-controller="modalController" id="modal-wrapper"></div>
 
@@ -63,17 +56,24 @@
           </div>
 
           <a class="user-pic" ng-href="#user/{{currentUserId}}"
-              ng-click="setActiveMenuItem('#user/{{currentUserId}}')"
-              ng-class="{'active': '#user/{{currentUserId}}' == menuStates.activeItem}"
-              ng-if="logged">
-            <img src="{{currentUserPic}}" ng-src="{{currentUserPic}}" alt="">
+             ng-click="setActiveMenuItem('#user/{{currentUserId}}')"
+             ng-class="{'active': '#user/{{currentUserId}}' == menuStates.activeItem}"
+             ng-if="logged">
+            <img ng-src="{{currentUserPic}}" alt="">
           </a>
 
           <div ng-controller="CheckInController" ng-if="logged">
-            <form ng-submit="checkIn()">
+
+
+            <form ng-submit="checkIn()" ng-if="!checkedIn">
               <button insert-modal type="submit" class="checkin"
-                  data-checked="false">Check
-                in
+                      data-checked="false">Check in
+              </button>
+            </form>
+
+            <form ng-submit="checkOut()" ng-if="checkedIn">
+              <button insert-modal type="submit" class="checkin"
+                      data-checked="false"> Check out
               </button>
             </form>
           </div>
@@ -90,11 +90,65 @@
                 </span>
               </a>
             </li>
+
+            <li ng-if="logged">
+              <a class="sidebar-icon" ng-href="admin/user/logout?redirect=true">
+                <span class="logout-icon"></span>
+                <span class="menu-item-title">
+                  Logout
+                </span>
+              </a>
+            </li>
           </ul>
           <a class="sidebar-icon roll-icon" roll-menu>
             <span class="roll-menu-icon"></span>
           </a>
         </div>
+
+        <!-- Mobile menu -->
+
+        <nav id="mobile-menu" class="mobile-menu" ng-class="menuIsOpen ? 'mobile-menu-open' : ' ' ">
+
+          <ul class="menu-mobile">
+            <li class="user-data">
+              <a class="user-pic" ng-href="#user/{{currentUserId}}"
+                 ng-click="setActiveMenuItem('#user/{{currentUserId}}')"
+                 ng-class="{'active': '#user/{{currentUserId}}' == menuStates.activeItem}"
+                 ng-if="logged">
+                <img ng-src="{{currentUserPic}}" alt="">
+              </a>
+            </li>
+
+            <li>
+              <div ng-controller="CheckInController" ng-if="logged">
+                <form ng-submit="checkIn()">
+                  <button type="submit" class="checkin" data-checked="false">
+                    Check in
+                  </button>
+                </form>
+              </div>
+            </li>
+            <li ng-repeat="menuItem in menuItemsList"
+                ng-class="{'active': menuItem.url == menuStates.activeItem}"
+                ng-click="setActiveMenuItem(menuItem.url, false)">
+              <a class="sidebar-icon" ng-href="{{menuItem.url}}">
+                {{menuItem.title}}
+              </a>
+            </li>
+            <li ng-if="logged">
+              <a class="sidebar-icon" ng-href="admin/user/logout?redirect=true">
+                <span class="logout-icon"></span>
+                <span class="menu-item-title">
+                  Logout
+                </span>
+              </a>
+            </li>
+          </ul>
+          <div class="bt-overlay" ng-click="menuIsOpen=!menuIsOpen"></div>
+        </nav>
+
+        <a class="bt-menu-trigger" ng-click="menuIsOpen=!menuIsOpen"
+           ng-class="menuIsOpen ? 'menu-close' : ' ' "><span>Menu</span></a>
 
       </aside>
 
@@ -115,41 +169,6 @@
 
           </div>
 
-          <a class="bt-menu-trigger" ng-click="menuIsOpen=!menuIsOpen"
-              ng-class="menuIsOpen ? 'menu-close' : ' ' "><span>Menu</span></a>
-
-          <nav id="mobile-menu" class="mobile-menu"
-              ng-class="menuIsOpen ? 'mobile-menu-open' : ' ' ">
-
-            <ul class="menu-mobile" ng-controller="sidebarController">
-              <li class="user-data">
-                <a class="user-pic" ng-href="#user/5"
-                    ng-click="setActiveMenuItem('#user/5')">
-                  <img src="../images/employees/alex.jpg"
-                      ng-src="../images/employees/alex.jpg"
-                      alt="Alexander Mikhutkin">
-                </a>
-              </li>
-
-              <li>
-                <div ng-controller="CheckInController">
-                  <form ng-submit="checkIn()">
-                    <button type="submit" class="checkin" data-checked="false">
-                      Check in
-                    </button>
-                  </form>
-                </div>
-              </li>
-              <li ng-repeat="menuItem in menuItemsList"
-                  ng-class="{'active': menuItem.url == menuStates.activeItem}"
-                  ng-click="setActiveMenuItem(menuItem.url, false)">
-                <a class="sidebar-icon" ng-href="{{menuItem.url}}">
-                  {{menuItem.title}}
-                </a>
-              </li>
-            </ul>
-            <div class="bt-overlay" ng-click="menuIsOpen=!menuIsOpen"></div>
-          </nav>
 
         </div>
 
@@ -205,6 +224,7 @@
 <script src="scripts/services/getUsers.js"></script>
 <script src="scripts/services/formatUser.js"></script>
 <script src="scripts/services/getState.js"></script>
+<script src="scripts/services/getCheckedInUsers.js"></script>
 
 <script src="scripts/assets/cookieController.js"></script>
 <script src="scripts/assets/sidebarController.js"></script>

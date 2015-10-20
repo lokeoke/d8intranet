@@ -2837,8 +2837,52 @@ form .form-submit {
     .modal-success .close-modal:hover {
       background: #194b2d; }
 
+.available-users,
+.checked-in-users-list {
+  margin: 4rem 0; }
+  .available-users h2,
+  .checked-in-users-list h2 {
+    font-size: 2.25rem;
+    margin-bottom: 2rem; }
+    .lt-ie9 .available-users h2,
+    .lt-ie9 .checked-in-users-list h2 {
+      font-size: 36px; }
+  .available-users .user-pic,
+  .checked-in-users-list .user-pic {
+    width: 32px;
+    height: 32px;
+    display: inline-block;
+    vertical-align: middle;
+    margin-right: 5px; }
+
+.av-user,
+.checked-user {
+  font-size: 0.875rem;
+  margin-bottom: .5rem; }
+  .lt-ie9 .av-user,
+  .lt-ie9 .checked-user {
+    font-size: 14px; }
+  @media (min-width: 580px) {
+    .av-user,
+    .checked-user {
+      display: inline-block;
+      margin: 0 1rem 1rem 0;
+      padding: .3rem; } }
+
+.checked-user {
+  padding: 0.3rem;
+  position: relative;
+  background: #286b90;
+  border-radius: 20px 5px 5px 20px;
+  color: #fff;
+  box-shadow: -2px 2px 0px #124663; }
+
+.check-in-time {
+  display: inline-block;
+  vertical-align: middle;
+  margin-right: 5px; }
+
 .available-users {
-  margin: 4rem 0;
   padding-top: 3rem;
   position: relative; }
   .dark .available-users {
@@ -2849,27 +2893,6 @@ form .form-submit {
     position: absolute;
     top: 20px;
     right: 0; }
-  .available-users .av-user {
-    font-size: 0.875rem;
-    margin-bottom: .5rem; }
-    .lt-ie9 .available-users .av-user {
-      font-size: 14px; }
-    @media (min-width: 580px) {
-      .available-users .av-user {
-        display: inline-block;
-        margin: 0 1rem 1rem 0;
-        padding: .3rem; } }
-  .available-users h2 {
-    font-size: 2.25rem;
-    margin-bottom: 2rem; }
-    .lt-ie9 .available-users h2 {
-      font-size: 36px; }
-  .available-users .user-pic {
-    width: 32px;
-    height: 32px;
-    display: inline-block;
-    vertical-align: middle;
-    margin-right: 5px; }
 
 .user-pic img {
   transition: all 0.2s ease-out; }

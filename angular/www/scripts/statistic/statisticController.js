@@ -15,12 +15,11 @@ angular.module('d8intranetApp')
 
     getJsonData.getUsers().then(function (data) {
       $scope.users = data;
-      var calendarMonths = {};
 
+      var calendarMonths = {};
       formatUserData.formattedUser($scope.users);
 
       $scope.months = formatUserData.setMonths(calendarMonths);
-
 
       $scope.$watch('teamFilter', function (newValue, oldValue) {
         $scope.filterBy = newValue;

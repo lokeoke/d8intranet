@@ -221,10 +221,10 @@
     "default_langcode": [{"value": "1"}],
     "statuses": [
       {
-        "day_off": 0,
+        "value": 0,
         "sick": 0,
         "business_trip": 0,
-        "remote_work": 0,
+        "remote_work": 1,
         "vacation": 0
       }
     ],
