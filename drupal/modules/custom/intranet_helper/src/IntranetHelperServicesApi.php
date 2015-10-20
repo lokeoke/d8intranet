@@ -5,9 +5,17 @@ namespace Drupal\intranet_helper;
 use Drupal\Core\Database\Database;
 use Symfony\Component\HttpFoundation\Request;
 use Drupal\user\Entity\User;
+use Drupal\taxonomy\Entity\Term;
 use Drupal\file\Entity\File;
 
 class IntranetHelperServicesApi {
+
+  const TEAM_VOCABULARY_NAME = 'teams';
+  protected $termStorage;
+
+  public function __construct() {
+    $this->termStorage = \Drupal::entityManager()->getStorage('taxonomy_term');
+  }
 
   public function getCheckedInUsers() {
     $result = array();
@@ -114,6 +122,56 @@ class IntranetHelperServicesApi {
       'uid' => $uid,
       'checked_in' => $checked_in
     );
+  }
+
+  public function getTeamUserIds($teamId) {
+    $query = \Drupal::entityQuery('user')
+      ->condition('field_team', $teamId);
+    $uids = $query->execute();
+
+    return array_values($uids);
+  }
+
+  public function getTeam($teamId) {
+    $result = array();
+    $team = Term::load($teamId);
+
+    if ($team) {
+      $result['team_title'] = $team->name->value;
+      $result['team_type'] = $team->field_team_type->value;
+      $result['weight'] = $team->getWeight();
+
+      // Generate list of team members.
+      foreach ($this->getTeamUserIds($teamId) as $user_key => $uid) {
+        $account = User::load($uid);
+
+        // Exclude admin and anonymous users.
+        if (!in_array($account->id(), array(0, 1))) {
+          $result['members'][$user_key]['uid'] = $account->id();
+          $result['members'][$user_key]['field_first_name'] = $account->field_first_name->value;
+          $result['members'][$user_key]['field_last_name'] = $account->field_last_name->value;
+          $result['members'][$user_key]['field_job_title'] = $account->field_job_title->value;
+          $result['members'][$user_key]['field_image'] = $account->user_picture->target_id ? file_create_url(File::load($account->user_picture->target_id)->uri->value) : NULL;
+          $result['members'][$user_key]['field_position'] = Term::load($account->field_position->target_id)->name->value;
+        }
+      }
+    }
+
+    return $result;
+  }
+
+  public function getTeams() {
+    $result = array();
+
+    // Get all existing teams.
+    $teams = $this->termStorage->loadTree(self::TEAM_VOCABULARY_NAME);
+
+    // Generate teams.
+    foreach ($teams as $key => $team) {
+      $result[] = $this->getTeam($team->tid);
+    }
+
+    return $result;
   }
 
 }
