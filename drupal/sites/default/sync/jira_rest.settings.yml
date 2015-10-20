@@ -1,0 +1,6 @@
+jira_rest:
+  instanceurl: 'http://jira.propeople.com.ua'
+  username: 'api_user'
+  password: '4a<qS~F83EwUN&'
+  close_issue_transition_id: 2
+  resolve_issue_transition_id: 5
