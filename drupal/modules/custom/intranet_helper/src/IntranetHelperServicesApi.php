@@ -97,7 +97,14 @@ class IntranetHelperServicesApi {
       $jira = (boolean) $account->field_jira_required->value;
     }
     else {
-      // TODO: get '$jira' value from jira.
+      // @TODO TEST MODE
+      $need_update = TRUE;
+      $jira_rest = \Drupal::service("intranet_jira.api_rest");
+      if($need_update == TRUE) {
+        $jira_rest->forceUpdate();
+      }
+      // @TODO update data
+      $jira = (boolean) $account->field_jira_worklog->value;
     }
 
     return array(

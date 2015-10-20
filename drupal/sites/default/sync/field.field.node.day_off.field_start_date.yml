@@ -1,0 +1,24 @@
+uuid: 91c02580-a8b8-443f-9b14-20348b1bfd81
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_start_date
+    - node.type.day_off
+  module:
+    - datetime
+id: node.day_off.field_start_date
+field_name: field_start_date
+entity_type: node
+bundle: day_off
+label: 'Start Date'
+description: ''
+required: true
+translatable: false
+default_value:
+  -
+    default_date_type: now
+    default_date: now
+default_value_callback: ''
+settings: {  }
+field_type: datetime

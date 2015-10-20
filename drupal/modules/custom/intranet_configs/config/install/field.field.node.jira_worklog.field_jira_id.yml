@@ -1,0 +1,23 @@
+uuid: f25a0261-9825-4b5d-a603-3d930b6f1f07
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_jira_id
+    - node.type.jira_worklog
+id: node.jira_worklog.field_jira_id
+field_name: field_jira_id
+entity_type: node
+bundle: jira_worklog
+label: 'Jira ID'
+description: ''
+required: true
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  min: null
+  max: null
+  prefix: ''
+  suffix: ''
+field_type: integer

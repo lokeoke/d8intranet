@@ -1,0 +1,24 @@
+uuid: 22694369-7a96-4e89-9f00-0ab6abec32c6
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_end_date
+    - node.type.day_off
+  module:
+    - datetime
+id: node.day_off.field_end_date
+field_name: field_end_date
+entity_type: node
+bundle: day_off
+label: 'End Date'
+description: ''
+required: true
+translatable: false
+default_value:
+  -
+    default_date_type: relative
+    default_date: '+0'
+default_value_callback: ''
+settings: {  }
+field_type: datetime

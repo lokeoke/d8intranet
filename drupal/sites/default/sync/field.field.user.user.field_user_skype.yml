@@ -1,0 +1,20 @@
+uuid: ed139e06-a21d-4651-9f42-6607248b708b
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.user.field_user_skype
+  module:
+    - user
+id: user.user.field_user_skype
+field_name: field_user_skype
+entity_type: user
+bundle: user
+label: 'User skype'
+description: ''
+required: true
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

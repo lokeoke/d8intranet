@@ -1,0 +1,59 @@
+uuid: 6b762e9e-0b09-4ae7-9a35-539ff9e369d3
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.node.jira_worklog.field_jira_author
+    - field.field.node.jira_worklog.field_jira_id
+    - field.field.node.jira_worklog.field_jira_started
+    - field.field.node.jira_worklog.field_jira_time
+    - node.type.jira_worklog
+  module:
+    - datetime
+    - user
+id: node.jira_worklog.default
+targetEntityType: node
+bundle: jira_worklog
+mode: default
+content:
+  field_jira_author:
+    weight: 102
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    type: string
+  field_jira_id:
+    weight: 101
+    label: above
+    settings:
+      thousand_separator: ''
+      prefix_suffix: true
+    third_party_settings: {  }
+    type: number_integer
+  field_jira_started:
+    weight: 104
+    label: above
+    settings:
+      format_type: medium
+      timezone_override: ''
+    third_party_settings: {  }
+    type: datetime_default
+  field_jira_time:
+    weight: 103
+    label: above
+    settings:
+      thousand_separator: ''
+      prefix_suffix: true
+    third_party_settings: {  }
+    type: number_integer
+  links:
+    weight: 100
+  title:
+    label: hidden
+    type: string
+    weight: -5
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+hidden: {  }

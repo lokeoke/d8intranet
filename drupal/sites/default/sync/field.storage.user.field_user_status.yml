@@ -1,0 +1,39 @@
+uuid: 035f93a3-4a8c-4303-8f26-387eee4234a0
+langcode: en
+status: true
+dependencies:
+  module:
+    - options
+    - user
+id: user.field_user_status
+field_name: field_user_status
+entity_type: user
+type: list_string
+settings:
+  allowed_values:
+    -
+      value: day_off
+      label: 'Day off'
+    -
+      value: sick
+      label: Sick
+    -
+      value: business_trip
+      label: 'Business trip'
+    -
+      value: remote_work
+      label: 'Remote work'
+    -
+      value: vacation
+      label: Vacation
+    -
+      value: work_off
+      label: 'Work off'
+  allowed_values_function: ''
+module: options
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

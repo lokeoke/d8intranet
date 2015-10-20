@@ -17,31 +17,142 @@
     backup_folder: /var/www/backup
     pp_environment: 'default'
     php_env_vars: ''
+    type: "profile" # install
+    latest_remote: "intranet_remote.sql.gz"
+    latest: "intranet.sql.gz"
+    source_database: http://intranet.loc/admin/{{ latest }}
 
   tasks:
-  - name: Droping drupal database
-    mysql_db: name={{ mysql_db }} state=absent login_user={{ mysql_user }} login_password={{ mysql_pass }}
-    tags:
-      - db
+  - name: check if DB exists
+    shell: mysql -u{{ mysql_user }} -p{{ mysql_pass }} -h{{ mysql_host }} -e 'SHOW DATABASES;' | grep -c {{ mysql_db }} || true
+    register: dbstatus
+    tags: 
+      - all
+      - prod
+
   - name: Creating drupal database
-    mysql_db: name={{ mysql_db }} state=present login_user={{ mysql_user }} login_password={{ mysql_pass }}
-    tags:
-      - db
+    mysql_db: name={{ mysql_db }} state=dump login_user={{ mysql_user }} login_password={{ mysql_pass }} login_host={{ mysql_host }}
+    when: dbstatus.stdout == "0"
+    register: created
 
-  - name: Creating cache folder
-    sudo: yes
-    file: path={{ cache_folder }} state=directory recurse=yes
+  - name: Getting timestamp
+    shell: date +'%Y_%m_%d_%H_%M'
+    register: backup_name_raw
+    tags: 
+      - prod
 
-  - name: Removing tmp folder
-    sudo: yes
-    shell: "chmod -R 777 sites/default && rm -rf sites/default/files && rm -f sites/default/services.yml && rm -f sites/default/settings.php"
+  - name: Getting name for backup
+    set_fact: backup_name={{ pp_environment }}-{{ mysql_db }}-{{ backup_name_raw.stdout }}
+    tags: 
+      - prod
 
-  - name: Cooking defaults
-    sudo: yes
-    shell: "cp sites/default/default.services.yml sites/default/services.yml"
+  - name: Checking a backup directory is exists
+    stat: path={{ backup_folder }}
+    register: st
+    tags: 
+      - prod
+
+  - name: Creating backup folder
+    file: path={{ backup_folder }} state=directory mode=0777 recurse=yes
+    tags: 
+      - prod
+
+  - name: Check dump exist
+    stat: path={{ backup_folder }}/{{ backup_name }}.sql.gz
+    register: backup_exist
+    tags: 
+      - prod
+
+  - name: Making regular backup
+    mysql_db: name={{ mysql_db }} state=dump target={{ backup_folder }}/{{ backup_name }}.sql.gz login_user={{ mysql_user }} login_password={{ mysql_pass }} login_host={{ mysql_host }}
+    when: backup_exist.stat.exists == false
+    tags: 
+      - prod
+
+
+
+
+  - name: Downloading latest backup
+    get_url: url={{ source_database }} dest={{ backup_folder }}/{{ latest_remote }} force=yes
+
+  - name: Droping drupal database
+    mysql_db: name={{ mysql_db }} state=absent login_user={{ mysql_user }} login_password={{ mysql_pass }} login_host={{ mysql_host }}
+    when: (created.skipped is not defined)
+    register: dropped
+
+
+
+  - name: Creating drupal database
+    mysql_db: name={{ mysql_db }} state=present login_user={{ mysql_user }} login_password={{ mysql_pass }} login_host={{ mysql_host }}
+    when: (dropped.skipped is not defined)
+
+  - name: Importing from remote backup
+    mysql_db: name={{ mysql_db }} state=import target={{ backup_folder }}/{{ latest_remote }} login_user={{ mysql_user }} login_password={{ mysql_pass }} login_host={{ mysql_host }}
+
+
+
+
+
+
+
+  - shell: ls -la sites/default/settings.php | grep -c settings.php || true
+    register: settings_raw
+    tags: 
+      - all
+      - prod
+
+
+  - shell: "chmod 0755 sites/default"
+    when: settings_raw.stdout == "0"
+    tags: 
+      - all
+
 
   - name: Installing drupal
-    sudo: yes
     shell: "{{ php_env_vars }} drush -y si {{ installation_profile_name }} --db-url=mysql://{{ mysql_user }}:{{ mysql_pass }}@127.0.0.1:/{{ mysql_db }} --account-name={{ drupal_user }} --account-pass={{ drupal_pass }}"
+    when: settings_raw.stdout == "0" or dbstatus.stdout == "0"
+    register: installed
+    tags: 
+      - all
+      - prod
+
+
+  - shell: php -r 'include "sites/default/settings.php"; $s = (object)$config_directories; echo $s->sync;'
+    register: sync_dir_raw
+    tags: 
+      - prod
+
+  - set_fact: sync_dir={{ sync_dir_raw.stdout }}
+    tags: 
+      - prod
+
+
+  - shell: rsync -avz sites/default/sync/ {{ sync_dir }}
+    when: (installed.skipped is defined)
+    tags: 
+      - prod
+
+  - name: The configuration import.
+    shell: drush config-import sync -y || true
+    when: (installed.skipped is defined)
+    tags: 
+      - prod
+
+  - name: Cache clear.
+    shell: drush cr -y || true
+    tags: 
+      - prod
+
+  - name: Run Cron.
+    shell: drush cron -y || true
+    tags: 
+      - prod
+
+  - name: Making lastest backup
+    mysql_db: name={{ mysql_db }} state=dump target={{ backup_folder }}/{{ latest }} login_user={{ mysql_user }} login_password={{ mysql_pass }} login_host={{ mysql_host }}
+    tags: 
+      - prod
+
+
 
   handlers:

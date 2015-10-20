@@ -1,0 +1,20 @@
+uuid: 910c0091-a4f2-4687-a700-c087338a5cdc
+langcode: en
+status: true
+dependencies:
+  module:
+    - menu_ui
+    - title
+third_party_settings:
+  menu_ui:
+    available_menus: {  }
+    parent: ''
+  title:
+    display_configurable_title: true
+name: 'Day Off'
+type: day_off
+description: ''
+help: ''
+new_revision: false
+preview_mode: 0
+display_submitted: false

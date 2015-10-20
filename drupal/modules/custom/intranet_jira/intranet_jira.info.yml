@@ -1,0 +1,7 @@
+name: intranet_jira
+type: module
+description: Intranet Jira Integration
+core: 8.x
+package: Intranet
+dependencies:
+  - jira_rest
