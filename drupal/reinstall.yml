@@ -126,9 +126,6 @@
     tags: 
       - prod
 
-  - debug: var=installed
-    tags: 
-      - prod
 
   - shell: rsync -avz sites/default/sync/ {{ sync_dir }}
     when: (installed.skipped is defined)
