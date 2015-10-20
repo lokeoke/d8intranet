@@ -4,3 +4,6 @@ services:
         arguments: ['@rest.link_manager', '@serializer.entity_resolver']
         tags:
           - { name: normalizer, priority: 50 }
+
+    intranet_helper.services.api:
+        class: Drupal\intranet_helper\IntranetHelperServicesApi

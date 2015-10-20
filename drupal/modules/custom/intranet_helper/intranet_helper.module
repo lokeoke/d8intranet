@@ -19,6 +19,9 @@ function intranet_helper_user_login($account) {
  * Implements hook_user_logout().
  */
 function intranet_helper_user_logout($account) {
+  // Check out user.
+  \Drupal::service('intranet_helper.services.api')->checkUserOut(Drupal::request(), $account->id());
+
   if (Drupal::request()->query->get('redirect')) {
     global $base_root;
 
