@@ -41,8 +41,6 @@ angular.module('d8intranetApp')
         var dateStart = formatUserData.getDateNumber(formatUserData.reformatDate(statisticType.start_date));
         var dateEnd = formatUserData.getDateNumber(formatUserData.reformatDate(statisticType.end_date));
 
-        console.log(month);
-
         // If future formatted object is undefined, create it
         if (formattedObject[month] == undefined) {
           formattedObject[month] = {
@@ -115,12 +113,10 @@ angular.module('d8intranetApp')
 
           var months = formatUserData.setMonths(calendarMonths);
 
-          //console.log(employee);
 
           // Get Vacation days
           // ---------------------------------------------------------------------
           angular.forEach(employee.field_user_vacation, function (vacation) {
-            //console.log(formatUserData.reformatDate(vacation.start_date));
             var month = formatUserData.getMonthNumber(formatUserData.reformatDate(vacation.start_date));
             months[month].vacationDays = formatUserData.formatStatisticsData(vacationDays, vacation);
           });

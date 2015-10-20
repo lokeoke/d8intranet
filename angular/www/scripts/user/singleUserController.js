@@ -33,7 +33,6 @@ angular.module('d8intranetApp')
               past = new Date(cameToCompany);
 
           console.log('Past Data:' + past);
-          console.log('Past Data:' + past);
 
           angular.forEach(user.timeRanges, function (value, key) {
             $scope.filteredKeys[setStiaticTitle(key)] = value;

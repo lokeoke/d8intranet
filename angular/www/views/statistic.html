@@ -13,8 +13,8 @@
     </div>
 
     <select chosen ng-model='teamFilter.selectedOption' name="Group filter"
-        id="teamFilter"
-        ng-options="option.value as option.team_name for option in teams">
+            id="teamFilter"
+            ng-options="option.target_id as option.name for option in teams">
     </select>
 
     <ul class="legend">
@@ -27,7 +27,7 @@
       <div class="year-table">
         <div table-headline></div>
         <div class="view-animate-container">
-          <div ng-include="currentTab" class="slide-down"></div>
+          <div ng-include="currentTab" class="view-animate"></div>
         </div>
 
       </div>
