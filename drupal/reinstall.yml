@@ -106,8 +106,12 @@
 
   - shell: php -r 'include "sites/default/settings.php"; $s = (object)$config_directories; echo $s->sync;'
     register: sync_dir_raw
+    tags: 
+      - prod
 
   - set_fact: sync_dir={{ sync_dir_raw.stdout }}
+    tags: 
+      - prod
 
   - shell: rsync -avz sites/default/sync/ {{ sync_dir }}
     tags: 
