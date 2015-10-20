@@ -1,0 +1,23 @@
+uuid: 61e398d3-1d42-49e6-9e11-1739b215a780
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_jira_time
+    - node.type.jira_worklog
+id: node.jira_worklog.field_jira_time
+field_name: field_jira_time
+entity_type: node
+bundle: jira_worklog
+label: 'Jira Time'
+description: ''
+required: true
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  min: null
+  max: null
+  prefix: ''
+  suffix: ''
+field_type: integer

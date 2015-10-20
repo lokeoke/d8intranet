@@ -1,0 +1,23 @@
+uuid: 12e35634-5bf2-4985-a600-d095698bfdcb
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_jira_id
+    - node.type.jira_task
+id: node.jira_task.field_jira_id
+field_name: field_jira_id
+entity_type: node
+bundle: jira_task
+label: 'Jira ID'
+description: ''
+required: true
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  min: null
+  max: null
+  prefix: ''
+  suffix: ''
+field_type: integer

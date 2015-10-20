@@ -1,0 +1,8 @@
+
+intranet_jira.intranet_jira_test_router_index:
+  path: '/intranet_jira/index'
+  defaults:
+    _controller: '\Drupal\intranet_jira\Controller\IntranetJiraTestRouter::index'
+    _title: 'IntranetJiraTestRouter'
+  requirements:
+    _permission: 'access content'

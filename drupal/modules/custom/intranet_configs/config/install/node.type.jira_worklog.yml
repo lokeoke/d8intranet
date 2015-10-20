@@ -1,0 +1,17 @@
+uuid: ae9b3d44-c485-42bf-9f4c-76080c51b111
+langcode: en
+status: true
+dependencies:
+  module:
+    - menu_ui
+third_party_settings:
+  menu_ui:
+    available_menus: {  }
+    parent: ''
+name: 'Jira WorkLogs'
+type: jira_worklog
+description: ''
+help: ''
+new_revision: false
+preview_mode: 0
+display_submitted: false
