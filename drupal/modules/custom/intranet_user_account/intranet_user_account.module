@@ -44,6 +44,7 @@ function intranet_user_account_form_alter(&$form, \Drupal\Core\Form\FormStateInt
     case 'user_register_form':
       // Default user role.
       $form['account']['roles']['employee']['#default_value'] = 'employee';
+      $form['account']['mail']['#required'] = TRUE;
 
       break;
   }
