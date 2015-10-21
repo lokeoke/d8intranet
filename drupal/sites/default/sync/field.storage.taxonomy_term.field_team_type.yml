@@ -1,0 +1,30 @@
+uuid: 74f6dfae-8489-4070-8409-9bdf272392af
+langcode: en
+status: true
+dependencies:
+  module:
+    - options
+    - taxonomy
+id: taxonomy_term.field_team_type
+field_name: field_team_type
+entity_type: taxonomy_term
+type: list_string
+settings:
+  allowed_values:
+    -
+      value: managers
+      label: Managers
+    -
+      value: leads
+      label: Leads
+    -
+      value: team
+      label: Team
+  allowed_values_function: ''
+module: options
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false
