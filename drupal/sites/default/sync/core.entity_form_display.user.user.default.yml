@@ -152,12 +152,9 @@ content:
     settings: {  }
     third_party_settings: {  }
   field_came_to_propeople:
-    type: datetime_datelist
+    type: datetime_default
     weight: 4
-    settings:
-      increment: 15
-      date_order: YMD
-      time_type: '24'
+    settings: {  }
     third_party_settings: {  }
   field_drupal_org_id:
     type: string_textfield
@@ -208,14 +205,20 @@ content:
       placeholder: ''
     third_party_settings: {  }
   field_position:
-    type: options_select
+    type: entity_reference_autocomplete_tags
     weight: 3
-    settings: {  }
+    settings:
+      match_operator: CONTAINS
+      size: 60
+      placeholder: ''
     third_party_settings: {  }
   field_team:
-    type: options_select
+    type: entity_reference_autocomplete_tags
     weight: 2
-    settings: {  }
+    settings:
+      match_operator: CONTAINS
+      size: 60
+      placeholder: ''
     third_party_settings: {  }
   field_user_birthday:
     weight: 14
