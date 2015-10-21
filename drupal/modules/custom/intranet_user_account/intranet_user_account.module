@@ -1,0 +1,51 @@
+<?php
+
+use Drupal\user\Entity\User;
+
+/**
+ * Implements hook_form_alter().
+ */
+function intranet_user_account_form_alter(&$form, \Drupal\Core\Form\FormStateInterface $form_state, $form_id) {
+  switch ($form_id) {
+    case 'user_form':
+      $check = array(
+        'employee' => array(
+          'field_came_to_propeople',
+          'field_drupal_org_id',
+          'field_github_id',
+          'field_jira_required',
+          'field_job_title',
+          'field_position',
+          'field_team',
+          'field_user_birthday',
+          'field_user_check_in_and_out',
+          'field_user_dayoff',
+          'field_user_duty_journey',
+          'field_user_remote_work',
+          'field_user_sick',
+          'field_user_vacation',
+          'field_user_work_off',
+        ),
+      );
+
+      foreach ($check as $role => $field_names) {
+        if (User::load(\Drupal::service('current_user')->id())->hasRole($role)) {
+          $form['contact']['#access'] = FALSE;
+          $form['account']['mail']['#access'] = FALSE;
+
+          foreach ($field_names as $field_name) {
+            $form[$field_name]['#access'] = FALSE;
+          }
+        }
+      }
+
+    break;
+
+    case 'user_register_form':
+      // Default user role.
+      $form['account']['roles']['employee']['#default_value'] = 'employee';
+      $form['account']['mail']['#required'] = TRUE;
+
+      break;
+  }
+}

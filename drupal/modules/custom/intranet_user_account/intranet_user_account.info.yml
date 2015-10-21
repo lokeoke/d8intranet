@@ -1,0 +1,6 @@
+name: Intranet user account
+description: Restrict access for some roles to fields.
+package: Intranet
+type: module
+version: 1.0
+core: 8.x
