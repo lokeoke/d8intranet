@@ -44,3 +44,13 @@ intranet_helper.user_status:
     _access: 'TRUE'
   options:
      no_cache: TRUE
+
+
+intranet_helper.teams:
+  path: '/api/user/team'
+  defaults:
+    _controller: '\Drupal\intranet_helper\Controller\IntranetUserController::teams'
+  requirements:
+    _access: 'TRUE'
+  options:
+     no_cache: TRUE

@@ -30,4 +30,8 @@ class IntranetUserController extends ControllerBase {
     return new JsonResponse($this->intranetApi->getUserState(\Drupal::service('current_user')->id()));
   }
 
+  public function teams(Request $request) {
+    return new JsonResponse($this->intranetApi->getTeams());
+  }
+
 }
