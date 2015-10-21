@@ -49,6 +49,9 @@ class IntranetJiraStorage {
     if(date('N',$format = strtotime( "today" )) === 1) {
       $format = strtotime( "previous friday" );
     }
+    else {
+      $format = strtotime( "-1 day" );
+    }
     $format =  date("Y-m-d", $format);
     $query = \Drupal::entityQuery('node')
       ->condition('type', 'jira_worklog')
