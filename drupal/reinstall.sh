@@ -5,4 +5,4 @@
 # sudo apt-get update
 # sudo apt-get install ansible
 # sudo apt-get install python-mysqldb
-time ansible-playbook -vvvv reinstall.yml --tags=all --extra-vars="installation_profile_name=pp mysql_db=drupal4"
+time ansible-playbook -vvvv reinstall.yml --tags=all --extra-vars="installation_profile_name=pp mysql_db=drupal"

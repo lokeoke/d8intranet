@@ -20,7 +20,7 @@
     type: "profile" # install
     latest_remote: "intranet_remote.sql.gz"
     latest: "intranet.sql.gz"
-    source_database: http://intranet.loc/admin/{{ latest }}
+    source_database: http://backup.intranet.loc/{{ latest }}
 
   tasks:
   - name: check if DB exists
@@ -115,6 +115,15 @@
     tags: 
       - all
       - prod
+
+
+  - name: Set some kernel parameters
+    lineinfile:
+      dest: sites/default/settings.php
+      regexp: ^\$config_directories
+      line: "$config_directories['sync'] = 'sites/default/sync';"
+    tags:
+      - dev
 
 
   - shell: php -r 'include "sites/default/settings.php"; $s = (object)$config_directories; echo $s->sync;'
