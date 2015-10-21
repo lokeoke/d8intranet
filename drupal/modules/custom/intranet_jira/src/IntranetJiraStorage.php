@@ -20,7 +20,7 @@ class IntranetJiraStorage {
    */
   private $storage;
 
-  const SETTINGS_NAME = 'modulename.settings';
+  const SETTINGS_NAME = 'intranet_jira.settings';
   const SETTINGS_NAME_PREFIX = 'cache.tasks.';
 
   public static function getProjectTask(IntranetJiraProjectTask $task) {

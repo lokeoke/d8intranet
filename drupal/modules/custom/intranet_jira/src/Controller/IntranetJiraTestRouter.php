@@ -19,7 +19,7 @@ use Drupal\intranet_jira\Plugin\QueueWorker\IntranetJiraAggregator;
  */
 class IntranetJiraTestRouter extends ControllerBase {
 
-  const SETTINGS_NAME = 'modulename.settings';
+  const SETTINGS_NAME = 'intranet_jira.settings';
   const SETTINGS_NAME_PREFIX = 'cache.tasks.';
 
   /**
