@@ -14,7 +14,7 @@ angular.module('d8intranetApp')
       title: 'Teams',
       url: 'templates/teams.html'
     }, {
-      title: 'People',
+      title: 'Employees list',
       url: 'templates/people.html'
     }];
 

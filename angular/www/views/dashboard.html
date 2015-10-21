@@ -5,7 +5,10 @@
 
     <article class="checked-in-users-list" ng-cloak>
       <h2>Check in</h2>
-      <ul>
+      <span class="no-logged-users" ng-if="checkedInUserList.length == 0">
+        There are no logged users yet
+      </span>
+      <ul ng-if="checkedInUserList.length != 0">
         <li ng-repeat="user in checkedInUserList" class="checked-user">
           <span class="user-pic">
           <img ng-src="{{user.field_image}}"

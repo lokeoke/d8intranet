@@ -2050,15 +2050,23 @@ hr {
     .light .sidebar li:hover:not(.active) {
       background: transparent; } }
 
+.sidebar .menu-desktop {
+  left: -20px;
+  opacity: 0;
+  z-index: -9999; }
+
+.loaded-bar .menu-desktop {
+  left: 0;
+  opacity: 1;
+  z-index: 80; }
+
 .menu-desktop {
   position: fixed;
   top: 0;
-  left: 0;
   height: 100%;
   overflow: hidden;
-  transition: all 0.2s ease-in-out;
+  transition: all 1s ease-in-out, width 0.2s ease-in-out;
   box-shadow: -3px 0 2px rgba(0, 0, 0, 0.2) inset;
-  z-index: 80;
   display: none; }
   @media (min-width: 1280px) {
     .menu-desktop {
@@ -2250,6 +2258,7 @@ hr {
 .bt-menu-trigger {
   position: relative;
   top: 15px;
+  left: 30px;
   display: block;
   width: 40px;
   height: 40px;
@@ -2836,6 +2845,14 @@ form .form-submit {
     background: #0d622f; }
     .modal-success .close-modal:hover {
       background: #194b2d; }
+
+.no-logged-users {
+  font-size: 1.25rem;
+  color: #5C6B71; }
+  .lt-ie9 .no-logged-users {
+    font-size: 20px; }
+  .light .no-logged-users {
+    color: #9E9E9E; }
 
 .available-users,
 .checked-in-users-list {
