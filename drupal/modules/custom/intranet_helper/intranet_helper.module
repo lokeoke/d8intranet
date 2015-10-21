@@ -1,6 +1,7 @@
 <?php
 
 use Symfony\Component\HttpFoundation\RedirectResponse;
+use Drupal\user\Entity\User;
 
 /**
  * Implements hook_user_login().
@@ -20,7 +21,7 @@ function intranet_helper_user_login($account) {
  */
 function intranet_helper_user_logout($account) {
   // Check out user.
-  \Drupal::service('intranet_helper.services.api')->checkUserOut(Drupal::request(), $account->id());
+  \Drupal::service('intranet_helper.services.api')->checkUserOut(time(), $account->id());
 
   if (Drupal::request()->query->get('redirect')) {
     global $base_root;
@@ -28,5 +29,33 @@ function intranet_helper_user_logout($account) {
     // Set redirect headers to Drupal response.
     $response = new RedirectResponse($base_root);
     $response->send();
+  }
+}
+
+
+/**
+ * Implements hook_cron().
+ */
+function intranet_helper_cron() {
+  $intranetApi = \Drupal::service('intranet_helper.services.api');
+  $users = User::loadMultiple();
+
+  foreach ($users as $user) {
+    $uid = $user->id();
+
+    if (!in_array($uid, array(0, 1))) {
+      $checked_in_user = $intranetApi->isUserCheckedIn($uid);
+
+      if ($checked_in_user) {
+        $current_date = new DateTime();
+        $check_in_date = new DateTime(date('Y-m-d', $checked_in_user->field_user_check_in_and_out_check_in));
+        $days_diff = $current_date->diff($check_in_date)->days;
+
+        // Check out user only if current_date - check_in_date == 1 day.
+        if ($days_diff) {
+          $intranetApi->checkUserOut(time(), $uid);
+        }
+      }
+    }
   }
 }

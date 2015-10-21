@@ -15,11 +15,11 @@ class IntranetUserController extends ControllerBase {
   }
 
   public function checkIn(Request $request) {
-    return new JsonResponse($this->intranetApi->checkUserIn($request, \Drupal::service('current_user')->id()));
+    return new JsonResponse($this->intranetApi->checkUserIn($request->server->get('REQUEST_TIME'), \Drupal::service('current_user')->id()));
   }
 
   public function checkOut(Request $request) {
-    return new JsonResponse($this->intranetApi->checkUserOut($request, \Drupal::service('current_user')->id()));
+    return new JsonResponse($this->intranetApi->checkUserOut($request->server->get('REQUEST_TIME'), \Drupal::service('current_user')->id()));
   }
 
   public function checkedIn(Request $request) {
