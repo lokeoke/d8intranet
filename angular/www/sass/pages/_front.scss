@@ -1,5 +1,15 @@
 // -----------------------------------------------------------------------------
 // Front page
+
+.no-logged-users {
+  @include font-size(20);
+  color: #5C6B71;
+
+   .light & {
+     color: #9E9E9E;
+   }
+}
+
 .available-users,
 .checked-in-users-list {
   margin: 4rem 0;
@@ -17,6 +27,7 @@
     margin-right: 5px;
   }
 }
+
 
 .av-user,
 .checked-user {

@@ -49,6 +49,10 @@ angular.module('d8intranetApp')
         $rootScope.jira = data.jira;
         $scope.currentUserId = data.uid;
         $scope.currentUserPic = data.field_image;
+
+        $scope.sidebarLoaded = true;
+
+        console.log($scope.sidebarLoaded);
       });
 
     });

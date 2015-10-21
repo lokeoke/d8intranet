@@ -1,0 +1,113 @@
+<!-- Sidebar -->
+<aside class="sidebar" ng-controller="sidebarController" ng-class="sidebarLoaded ? 'loaded-bar' : '' ">
+
+  <div class="menu-desktop">
+    <a class="logo" href="#main">
+      <img src="images/logo-blue.png" alt="FFW"/>
+    </a>
+
+    <div ng-cloak ng-if="!logged">
+            <span class="user-pic">
+            <img src="../images/anonymus.png" alt="anonymus"/>
+          </span>
+      <a class="user-login" href="{{loginUrl}}">
+        Login
+      </a>
+    </div>
+
+    <a class="user-pic" ng-href="#user/{{currentUserId}}"
+       ng-click="setActiveMenuItem('#user/{{currentUserId}}')"
+       ng-class="{'active': '#user/{{currentUserId}}' == menuStates.activeItem}"
+       ng-if="logged">
+      <img ng-src="{{currentUserPic}}" alt="">
+    </a>
+
+    <div ng-controller="CheckInController" ng-if="logged">
+
+
+      <form ng-submit="checkIn()" ng-if="!checkedIn">
+        <button insert-modal type="submit" class="checkin"
+                data-checked="false">Check in
+        </button>
+      </form>
+
+      <form ng-submit="checkOut()" ng-if="checkedIn">
+        <button insert-modal type="submit" class="checkin"
+                data-checked="false"> Check out
+        </button>
+      </form>
+    </div>
+
+    <ul>
+      <li ng-repeat="menuItem in menuItemsList"
+          ui-route="{{menuItem.url}}"
+          ng-class="{'active': menuItem.url == menuStates.activeItem}"
+          ng-click="setActiveMenuItem(menuItem.url, false)">
+        <a class="sidebar-icon" ng-href="{{menuItem.url}}">
+          <span class="{{menuItem.icon}}-icon"></span>
+                <span class="menu-item-title">
+                  {{menuItem.title}}
+                </span>
+        </a>
+      </li>
+
+      <li ng-if="logged">
+        <a class="sidebar-icon" ng-href="admin/user/logout?redirect=true">
+          <span class="logout-icon"></span>
+                <span class="menu-item-title">
+                  Logout
+                </span>
+        </a>
+      </li>
+    </ul>
+    <a class="sidebar-icon roll-icon" roll-menu>
+      <span class="roll-menu-icon"></span>
+    </a>
+  </div>
+
+  <!-- Mobile menu -->
+
+  <nav id="mobile-menu" class="mobile-menu" ng-class="menuIsOpen ? 'mobile-menu-open' : ' ' ">
+
+    <ul class="menu-mobile">
+      <li class="user-data">
+        <a class="user-pic" ng-href="#user/{{currentUserId}}"
+           ng-click="setActiveMenuItem('#user/{{currentUserId}}')"
+           ng-class="{'active': '#user/{{currentUserId}}' == menuStates.activeItem}"
+           ng-if="logged">
+          <img ng-src="{{currentUserPic}}" alt="">
+        </a>
+      </li>
+
+      <li>
+        <div ng-controller="CheckInController" ng-if="logged">
+          <form ng-submit="checkIn()">
+            <button type="submit" class="checkin" data-checked="false">
+              Check in
+            </button>
+          </form>
+        </div>
+      </li>
+      <li ng-repeat="menuItem in menuItemsList"
+          ng-class="{'active': menuItem.url == menuStates.activeItem}"
+          ng-click="setActiveMenuItem(menuItem.url, false)">
+        <a class="sidebar-icon" ng-href="{{menuItem.url}}">
+          {{menuItem.title}}
+        </a>
+      </li>
+      <li ng-if="logged">
+        <a class="sidebar-icon" ng-href="admin/user/logout?redirect=true">
+          <span class="logout-icon"></span>
+                <span class="menu-item-title">
+                  Logout
+                </span>
+        </a>
+      </li>
+    </ul>
+    <div class="bt-overlay" ng-click="menuIsOpen=!menuIsOpen"></div>
+  </nav>
+
+  <a class="bt-menu-trigger" ng-click="menuIsOpen=!menuIsOpen"
+     ng-class="menuIsOpen ? 'menu-close' : ' ' "><span>Menu</span></a>
+
+</aside>
