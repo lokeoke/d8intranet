@@ -3,7 +3,6 @@
 namespace Drupal\intranet_helper;
 
 use Drupal\Core\Database\Database;
-use Symfony\Component\HttpFoundation\Request;
 use Drupal\user\Entity\User;
 use Drupal\taxonomy\Entity\Term;
 use Drupal\file\Entity\File;
@@ -49,10 +48,10 @@ class IntranetHelperServicesApi {
       ->execute()
       ->fetchAll();
 
-    return (boolean) $result;
+    return reset($result);
   }
 
-  public function checkUserIn(Request $request, $uid) {
+  public function checkUserIn($time, $uid) {
     $result = array('status' => FALSE);
     $account = User::load($uid);
 
@@ -63,7 +62,7 @@ class IntranetHelperServicesApi {
       // user has been already checked-out.
       if ($new_field_value_index == 0 || $account->field_user_check_in_and_out->get($new_field_value_index - 1)->check_out) {
         $account->field_user_check_in_and_out->set($new_field_value_index, array(
-          'check_in' => $request->server->get('REQUEST_TIME'),
+          'check_in' => $time,
           'check_out' => NULL
         ));
         $account->save();
@@ -74,7 +73,7 @@ class IntranetHelperServicesApi {
     return $result;
   }
 
-  public function checkUserOut(Request $request, $uid) {
+  public function checkUserOut($time, $uid) {
     $result = array('status' => FALSE);
     $account = User::load($uid);
 
@@ -86,7 +85,7 @@ class IntranetHelperServicesApi {
       if ($account->field_user_check_in_and_out->get($field_value_index)->check_in && !$account->field_user_check_in_and_out->get($field_value_index)->check_out) {
         $account->field_user_check_in_and_out->set($field_value_index, array(
           'check_in' => $account->field_user_check_in_and_out->get($field_value_index)->check_in,
-          'check_out' => $request->server->get('REQUEST_TIME')
+          'check_out' => $time
         ));
         $account->save();
         $result = array('status' => TRUE);
