@@ -106,9 +106,9 @@ class IntranetHelperServicesApi {
     }
     else {
       // @TODO TEST MODE
-      $need_update = TRUE;
-      $jira_rest = \Drupal::service("intranet_jira.api_rest");
+      $need_update = FALSE;
       if($need_update == TRUE) {
+        $jira_rest = \Drupal::service("intranet_jira.api_rest");
         $jira_rest->forceUpdate();
       }
       // @TODO update data
