@@ -4,6 +4,8 @@ intranet_helper.jira_rest_worklog:
     _controller: '\Drupal\intranet_helper\Controller\JiraRestWorkLogController::view'
   requirements:
     _user_is_logged_in: 'TRUE'
+  options:
+     no_cache: TRUE
 
 intranet_helper.user_check_in:
   path: '/api/user/check-in'
@@ -12,6 +14,8 @@ intranet_helper.user_check_in:
   requirements:
     _access: 'TRUE'
   methods: [POST]
+  options:
+     no_cache: TRUE
 
 intranet_helper.user_check_out:
   path: '/api/user/check-out'
@@ -20,6 +24,8 @@ intranet_helper.user_check_out:
   requirements:
     _access: 'TRUE'
   methods: [POST]
+  options:
+     no_cache: TRUE
 
 intranet_helper.user_checked_in:
   path: '/api/user/checked-in'
@@ -27,6 +33,8 @@ intranet_helper.user_checked_in:
     _controller: '\Drupal\intranet_helper\Controller\IntranetUserController::checkedIn'
   requirements:
     _access: 'TRUE'
+  options:
+     no_cache: TRUE
 
 intranet_helper.user_status:
   path: '/api/user/check-state'
@@ -34,3 +42,5 @@ intranet_helper.user_status:
     _controller: '\Drupal\intranet_helper\Controller\IntranetUserController::checkState'
   requirements:
     _access: 'TRUE'
+  options:
+     no_cache: TRUE
