@@ -1,0 +1,21 @@
+uuid: e2bfc39c-0011-45d4-a709-9d295980f906
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.taxonomy_term.field_team_type
+    - taxonomy.vocabulary.teams
+  module:
+    - options
+id: taxonomy_term.teams.field_team_type
+field_name: field_team_type
+entity_type: taxonomy_term
+bundle: teams
+label: 'Team type'
+description: ''
+required: true
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: list_string
