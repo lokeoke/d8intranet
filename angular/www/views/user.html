@@ -2,7 +2,9 @@
 
   <div class="page-bg">
     <div class="welcome-block">
-      <img ng-src="{{user.user_picture[0].url}}" alt=""/>
+      <img ng-src="{{user.user_picture[0].url}}"
+           err-SRC="images/anonymus.png"
+           alt="{{user.field_first_name[0].value}} {{user.field_last_name[0].value}}"/>
       <div class="name">
         {{user.field_first_name[0].value}} {{user.field_last_name[0].value}}
       </div>
@@ -67,8 +69,7 @@
 
       <div class="user-social-data">
         <div class="experience">
-          Working at company: {{yearsOfWork + ' year' | plural}} {{monthsOfWork
-          + ' month' | plural}}
+          Working at company: {{yearsOfWork + ' year' | plural}} {{monthsOfWork + ' month' | plural}}
         </div>
         <div class="social-list">
           <h3>Social</h3>
