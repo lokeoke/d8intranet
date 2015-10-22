@@ -68,7 +68,7 @@ function intranet_jira_help($route_name, RouteMatchInterface $route_match) {
  *
  */
 function intranet_jira_cron() {
-
+  return;
   $queue = \Drupal::queue('intranet_jira_aggregator');
 
   /**
