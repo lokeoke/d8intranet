@@ -26,6 +26,9 @@ function intranet_user_account_form_alter(&$form, \Drupal\Core\Form\FormStateInt
           'field_user_vacation',
           'field_user_work_off',
         ),
+        'administrator' => array(
+          'field_user_check_in_and_out',
+        ),
       );
 
       foreach ($check as $role => $field_names) {
