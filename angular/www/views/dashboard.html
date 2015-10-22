@@ -12,6 +12,7 @@
         <li ng-repeat="user in checkedInUserList" class="checked-user">
           <span class="user-pic">
           <img ng-src="{{user.field_image}}"
+               err-SRC="images/anonymus.png"
                alt="{{user.field_first_name}} {{user.field_last_name}}"
                title="{{user.field_first_name}} {{user.field_last_name}}"/>
           </span>
@@ -41,6 +42,7 @@
                   <span class="front">
                     <span class="user-pic">
                       <img ng-src="{{employee.user_picture[0].url}}"
+                           err-SRC="images/anonymus.png"
                            alt="{{employee.field_first_name[0].value}} {{employee.field_last_name[0].value}}"/>
                     </span>
                   </span>
@@ -76,7 +78,9 @@
 
                   <span class="user-pic">
                     <img ng-src="{{avEmployee.user_picture[0].url}}"
-                         alt="{{avEmployee.field_first_name[0].value}} {{avEmployee.field_last_name[0].value}}"/>
+                         err-SRC="images/anonymus.png"
+                         alt="{{avEmployee.field_first_name[0].value}} {{avEmployee.field_last_name[0].value}}"
+                         />
 
                   </span>
             <span class="user-name">
