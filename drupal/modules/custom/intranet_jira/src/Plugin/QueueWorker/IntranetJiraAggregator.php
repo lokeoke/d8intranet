@@ -22,7 +22,11 @@ class IntranetJiraAggregator extends QueueWorkerBase {
    */
   public function processItem($project_task) {
 
+    // Actually this part is not using
+    // @see IntranetJiraApiRest::forceUpdate()
     if ($project_task instanceof IntranetJiraProjectTask) {
+      $logger = \Drupal::logger('queue');
+      $logger->info("Jira %task in process", array("%task" => $project_task->getHumanName()));
 
       /**
        * @var IntranetJiraProjectTask $data

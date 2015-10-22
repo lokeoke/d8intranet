@@ -60,7 +60,7 @@ class IntranetJiraProjectTask {
     return $this->task->id;
   }
 
-  public function getHumanName  () {
+  public function getHumanName() {
     return $this->task->key;
   }
 

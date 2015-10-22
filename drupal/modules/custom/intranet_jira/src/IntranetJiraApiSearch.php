@@ -59,9 +59,11 @@ class IntranetJiraApiSearch {
    * @param int $to
    */
   public function addUpdated($from, $to = 0) {
+    // it allow make a responce a smaller than before
+    $format = 'Y-m-d' . ($from == 0 ? ' H:m' : '');
     $from = $this->calcDay($from);
     $to = $this->calcDay($to);
-    $this->conditional[] = "updated >= \"" . date_format($from, 'Y-m-d') . "\"";
+    $this->conditional[] = "updated >= \"" . date_format($from, $format) . "\"";
     $this->conditional[] = "updated < \"" . date_format($to, 'Y-m-d') . "\"";
   }
 

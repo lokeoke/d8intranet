@@ -33,17 +33,10 @@ function intranet_jira_entity_base_field_info_alter(&$fields, EntityTypeInterfac
  */
 function intranet_jira_entity_load(array $entities, $entity_type_id) {
 
-  if ($entity_type_id == "user") {
-
-    $storage = \Drupal::service("intranet_jira.storage");
-
-    foreach ($entities as $entity) {
-      $res = $storage->getLoggedTime($entity->name->value);
-
-      $entity->field_jira_worklog = array($res);
-
-    }
-  }
+  /**
+   * This code was removed because this hook had been called so muth times
+   * $entity->field_jira_worklog = array($res);
+   */
 
 }
 
@@ -69,39 +62,84 @@ function intranet_jira_help($route_name, RouteMatchInterface $route_match) {
  */
 function intranet_jira_cron() {
 
-  $queue = \Drupal::queue('intranet_jira_aggregator');
+  /**
+   * It is a frequency in days
+   */
+  $frequency_days = 1;
 
   /**
-   * @var IntranetJiraApiRest $jira
+   * It is a frequency when worklogs should be deleted
    */
-  $jira = \Drupal::service("intranet_jira.api_rest");
+  $worklogs_clean_days = 4;
 
   /**
-   * @var IntranetJiraProjectTask $project_task
+   * Just interval
    */
-  foreach ($jira->loadMultiple(-3) as $project_task) {
+  $interval = 60 * 60 * 24;
 
-    if (!$project_task->timeExists() || !$project_task->timeUpdated()) {
-      /**
-       * @see IntranetJiraAggregator::processItem($project_task)
-       */
-      $queue->createItem($project_task);
+  /**
+   * We will store the last check value in store API
+   */
+  $last_check = \Drupal::state()->get('intranet_jira.last_check') ?: 0;
+
+  /**
+   * Just default logger
+   */
+  $logger = \Drupal::logger('cron');
+
+  // Checking if cron should be started it will do it
+  if ((REQUEST_TIME - $last_check) > ($interval * $frequency_days)) {
+    /**
+     * queue was removed, there was problems with performance
+     */
+
+    /**
+     * @var IntranetJiraApiRest $jira
+     */
+    $jira = \Drupal::service("intranet_jira.api_rest");
+
+    $logger->info("Jira get tasks");
+
+    foreach ($jira->loadMultiple(-3) as $project_task) {
+
+      if (!$project_task->timeExists() || !$project_task->timeUpdated()) {
+        $logger->info("Jira %task in process", array("%task" => $project_task->getHumanName()));
+
+        // it store a task
+        $project_task->setTime();
+        $project_task->refreshItems();
+      }
+
     }
-  }
+    $logger->info("Jira process was ended correctly");
 
-  /**
-   * Clean up old worklogs
-   */
-  $query = \Drupal::entityQuery('node')
-    ->condition('type', 'jira_worklog')
-    ->condition('field_jira_started', date("Y-m-d", REQUEST_TIME - (86400 * 4)), '<');
-    //->condition('field_jira_started', date("Y-m-d", REQUEST_TIME), '<=');
-  $nids = $query->execute();
-  if ($nids) {
-    $nodes = entity_load_multiple('node', $nids);
-    foreach ($nodes as $node) {
-      $node->delete();
+
+
+    /**
+     * Clean up old worklogs
+     */
+    $logger->info("Worklog cleaning up");
+    $query = \Drupal::entityQuery('node')
+      ->condition('type', 'jira_worklog')
+      ->condition('field_jira_started', date("Y-m-d", REQUEST_TIME - ($interval * $worklogs_clean_days)), '<');
+    $nids = $query->execute();
+    if (count($nids)) {
+      $nodes = entity_load_multiple('node', $nids);
+      foreach ($nodes as $node) {
+
+        $logger->info("Worklog %title will be deleted", array('%title' => $node->title));
+        $node->delete();
+        $logger->info("Worklog was deleted");
+
+      }
     }
+    $logger->info("Clean up was done correctly");
+
+    /**
+     * I beliave the cron will finished correctly
+     * and save last_check variable
+     */
+    \Drupal::state()->set('intranet_jira.last_check', REQUEST_TIME);
   }
 
 }

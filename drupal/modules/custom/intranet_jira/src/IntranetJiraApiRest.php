@@ -43,12 +43,24 @@ class IntranetJiraApiRest {
     /**
      * @var IntranetJiraProjectTask $project_task
      */
-    foreach ($this->loadMultiple($day) as $project_task) {
+    // May be it will be useful for performance
+    //$queue = \Drupal::queue('inranet_jira_aggregator');
+    $last_check = \Drupal::state()->get('intranet_jira.jira_delay') ?: 0;
+    // 15 second hardcore cache
+    // We beliave in performance
+    if ((REQUEST_TIME - $last_check) > 15) {
 
-      if (!$project_task->timeExists() || !$project_task->timeUpdated()) {
-        $project_task->setTime();
-        $project_task->refreshItems();
+      foreach ($this->loadMultiple($day) as $project_task) {
+
+        if (!$project_task->timeExists() || !$project_task->timeUpdated()) {
+          //$queue->createItem($project_task);
+
+          $project_task->setTime();
+          $project_task->refreshItems();
+        }
       }
+      \Drupal::state()->set('intranet_jira.jira_delay', REQUEST_TIME);
+
     }
   }
   /**

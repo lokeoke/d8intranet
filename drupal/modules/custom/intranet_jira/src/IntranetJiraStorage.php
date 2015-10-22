@@ -25,18 +25,17 @@ class IntranetJiraStorage {
 
   public static function getProjectTask(IntranetJiraProjectTask $task) {
 
-    $config = \Drupal::config(self::SETTINGS_NAME);
-    $value = $config->get(self::SETTINGS_NAME_PREFIX . $task->getName());
+    $value = \Drupal::state()->get(self::SETTINGS_NAME) ?: array();
+    // @TODO FIX NOTICE
+    return new IntranetJiraTime((object)array('value' => $value[$task->getName()]));
 
-
-    return new IntranetJiraTime((object)array('value' => $value));
   }
 
   public static function saveProjectTask($task) {
-    \Drupal::configFactory()->getEditable(self::SETTINGS_NAME)
-      ->set(self::SETTINGS_NAME_PREFIX . $task->getName(), $task->getUpdated())
-      ->save();
 
+    $value = \Drupal::state()->get(self::SETTINGS_NAME) ?: array();
+    $value[$task->getName()] = $task->getUpdated();
+    \Drupal::state()->set(self::SETTINGS_NAME, $value);
 
   }
   /**
@@ -64,10 +63,12 @@ class IntranetJiraStorage {
    * @param IntranetJiraWorklog $worklog_class
    */
   public function storeWorkLog($worklog_class) {
-    // @TODO
+    $logger = \Drupal::logger('store');
+
     if(time() - (86400 * 4) > strtotime($worklog_class->started())) {
       return;
     }
+    $logger->info("Jira work log %task in process", array("%task" => $worklog_class->getId()));
     $query = \Drupal::entityQuery('node')
       ->condition('type', 'jira_worklog')
       ->condition('field_jira_id', $worklog_class->getId());

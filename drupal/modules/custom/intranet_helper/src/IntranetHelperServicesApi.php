@@ -107,10 +107,21 @@ class IntranetHelperServicesApi {
       // @TODO TEST MODE
       $need_update = TRUE;
       if($need_update == TRUE) {
+        $logger = \Drupal::logger('state');
+        $logger->info("Looks like %name is needed in force updating", array("%name" => $account->name->value));
+
         $jira_rest = \Drupal::service("intranet_jira.api_rest");
+        // maybe a little hard for site
         $jira_rest->forceUpdate();
+
+        $logger = \Drupal::logger('state');
+        $logger->info("%name loading new value", array("%name" => $account->name->value));
+
+        $storage = \Drupal::service("intranet_jira.storage");
+        $res = $storage->getLoggedTime($account->name->value);
+        $account->field_jira_worklog = $res;
+
       }
-      // @TODO update data
       $jira = (boolean) $account->field_jira_worklog->value;
     }
 
