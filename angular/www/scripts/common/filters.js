@@ -11,6 +11,7 @@ angular.module('d8intranetApp')
   .filter('plural', function () {
     return function (string) {
 
+
       // Get number from the string
       var matches = string.match(/\d+/g);
 
@@ -25,7 +26,7 @@ angular.module('d8intranetApp')
           return string;
         }
 
-        if (lastDigit >= 2) {
+        if (lastDigit >= 2 || lastDigit === 0) {
           return string + 's';
         }
       }
