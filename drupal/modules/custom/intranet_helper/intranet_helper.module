@@ -37,7 +37,7 @@ function intranet_helper_user_logout($account) {
  * Implements hook_cron().
  */
 function intranet_helper_cron() {
-  /*$intranetApi = \Drupal::service('intranet_helper.services.api');
+  $intranetApi = \Drupal::service('intranet_helper.services.api');
   $users = User::loadMultiple();
 
   foreach ($users as $user) {
@@ -57,5 +57,5 @@ function intranet_helper_cron() {
         }
       }
     }
-  }*/
+  }
 }
