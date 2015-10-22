@@ -84,7 +84,7 @@ class IntranetJiraApiRest {
       return new IntranetJiraResponse($response);
 
     } catch (JiraRestException $e) {
-      throw $e;
+      watchdog_exception($e);
     }
   }
 
@@ -103,7 +103,7 @@ class IntranetJiraApiRest {
       return new IntranetJiraWorkLogResponse($response, $task);
 
     } catch (JiraRestException $e) {
-      throw $e;
+      watchdog_exception($e);
     }
   }
 }

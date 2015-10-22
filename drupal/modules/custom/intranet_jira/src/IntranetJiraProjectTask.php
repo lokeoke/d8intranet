@@ -20,7 +20,7 @@ class IntranetJiraProjectTask {
   private $task;
 
   /**
-   * @var mixed
+   * @var IntranetJiraStorage
    */
   private $storage;
 
@@ -74,6 +74,9 @@ class IntranetJiraProjectTask {
   }
 
   public function refreshItems() {
+    /**
+     * @var IntranetJiraApiRest $jira
+     */
     $jira = \Drupal::service("intranet_jira.api_rest");
     $worklog = $jira->getWorklog($this);
     $worklog->save();
