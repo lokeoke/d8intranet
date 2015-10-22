@@ -51,8 +51,6 @@ angular.module('d8intranetApp')
         $scope.currentUserPic = data.field_image;
 
         $scope.sidebarLoaded = true;
-
-        console.log($scope.sidebarLoaded);
       });
 
     });
