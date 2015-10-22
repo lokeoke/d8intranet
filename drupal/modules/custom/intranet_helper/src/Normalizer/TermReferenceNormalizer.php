@@ -17,14 +17,14 @@ class TermReferenceNormalizer extends EntityReferenceFieldItemNormalizer {
   public function normalize($field_item, $format = NULL, array $context = array()) {
     $values = parent::normalize($field_item, $format, $context);
 
-    /*if (($entity = $field_item->get('entity')->getValue()) && ($entity->url('canonical'))) {
+    if (($entity = $field_item->get('entity')->getValue()) && ($entity->url('canonical'))) {
       $values['target_id'] = $entity->id();
 
       if (!is_null($entity->name) && $entity->name->value) {
         $values['name'] = $entity->name->value;
       }
-    }*/
-    $values['name'] = "Sometext";
+    }
+
     return $values;
   }
 
