@@ -37,25 +37,24 @@ function intranet_helper_user_logout($account) {
  * Implements hook_cron().
  */
 function intranet_helper_cron() {
-  $intranetApi = \Drupal::service('intranet_helper.services.api');
-  $users = User::loadMultiple();
+  $config = \Drupal::configFactory()->getEditable('intranet_helper.settings');
+  $last_cron_timestamp = $config->get('interval');
+  $current_date = new DateTime();
+  $last_cron_date = new DateTime(date('Y-m-d', $last_cron_timestamp));
+  $days_diff = $current_date->diff($last_cron_date)->days;
 
-  foreach ($users as $user) {
-    $uid = $user->id();
+  if ($days_diff) {
+    $intranetApi = \Drupal::service('intranet_helper.services.api');
+    $users = $intranetApi->getCheckedInUsers();
 
-    if (!in_array($uid, array(0, 1))) {
-      $checked_in_user = $intranetApi->isUserCheckedIn($uid);
+    foreach ($users as $user) {
+      $uid = (int) $user['uid'];
 
-      if ($checked_in_user) {
-        $current_date = new DateTime();
-        $check_in_date = new DateTime(date('Y-m-d', $checked_in_user->field_user_check_in_and_out_check_in));
-        $days_diff = $current_date->diff($check_in_date)->days;
-
-        // Check out user only if current_date - check_in_date == 1 day.
-        if ($days_diff) {
-          $intranetApi->checkUserOut(time(), $uid);
-        }
+      if (!in_array($uid, array(0, 1))) {
+        $intranetApi->checkUserOut(time(), $uid);
       }
     }
+
+    $config->set('interval', time())->save();
   }
 }
