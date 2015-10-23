@@ -2024,6 +2024,24 @@ hr {
   .light .chosen-with-drop .chosen-drop {
     background: #f6f6f6; }
 
+.notice {
+  margin: 3rem 0;
+  padding: 1.5rem;
+  background: #F6F6D4;
+  color: #000;
+  line-height: 1.2;
+  max-width: 50%; }
+  .notice h2 {
+    font-size: 2.25rem;
+    margin-bottom: 1rem; }
+    .lt-ie9 .notice h2 {
+      font-size: 36px; }
+  .notice p {
+    margin-bottom: .75rem;
+    font-size: 0.875rem; }
+    .lt-ie9 .notice p {
+      font-size: 14px; }
+
 .global-wrapper {
   transition: all 0.3s ease-in-out; }
   .global-wrapper .menu-desktop {

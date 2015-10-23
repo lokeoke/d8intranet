@@ -5,6 +5,7 @@
       <img ng-src="{{user.user_picture[0].url}}"
            err-SRC="images/anonymus.png"
            alt="{{user.field_first_name[0].value}} {{user.field_last_name[0].value}}"/>
+
       <div class="name">
         {{user.field_first_name[0].value}} {{user.field_last_name[0].value}}
       </div>
@@ -16,6 +17,7 @@
   <div class="page-container">
     <div class="page-content">
       <h1>Employee data</h1>
+
       <div class="user-info">
         <div class="user-data-group">
           <span class="user-info-title">Position</span>
@@ -60,7 +62,7 @@
         </div>
 
         <div class="user-data-group"
-            ng-show="user.field_user_edu[0].value.length">
+             ng-show="user.field_user_edu[0].value.length">
           <span class="user-info-title">Education: </span>
             <span
                 class="user-info-value">{{user.field_user_edu[0].value}}</span>
@@ -75,15 +77,15 @@
           <h3>Social</h3>
           <ul class="font-icon">
             <li class="icon"><a ng-href="{{user.field_user_drupal[0].value}}"
-                class="drupal-icon"></a></li>
+                                class="drupal-icon"></a></li>
             <li class="icon"><a ng-href="{{user.field_user_facebook[0].value}}"
-                class="facebook-icon"></a></li>
+                                class="facebook-icon"></a></li>
             <li class="icon"><a ng-href="{{user.field_user_gplus[0].value}}"
-                class="gplus-icon"></a></li>
+                                class="gplus-icon"></a></li>
             <li class="icon"><a ng-href="{{user.field_user_linkedin[0].value}}"
-                class="linkedin-icon"></a></li>
+                                class="linkedin-icon"></a></li>
             <li class="icon"><a ng-href="{{user.field_user_twitter[0].value}}"
-                class="twitter-icon"></a></li>
+                                class="twitter-icon"></a></li>
           </ul>
         </div>
       </div>
@@ -92,6 +94,16 @@
     <section class="my-holidays group">
       <h1 class="user-statistics">{{user.field_first_name[0].value}}'s
         statistics: </h1>
+
+      <div class="notice">
+        <h2> Attention </h2>
+
+        <p>Please keep in mind that we now have the total number of calendar days of leave compared to 20 working days.
+        </p>
+        <p> So please, do not panic if you see a strange calculations. </p>
+        <p>We are working to fix it.</p>
+
+      </div>
 
       <div>
         <div class="holiday-block" ng-repeat="(key, value) in filteredKeys">
@@ -102,8 +114,8 @@
 
           <div class="vacation-left" ng-if="key == 'Vacation'">
             <div vacations-left data-days-left="{{vacationDaysLeft}}"
-                data-days-total="{{totalVacationDays}}"
-                class="vacation-left-progress">&nbsp;</div>
+                 data-days-total="{{totalVacationDays}}"
+                 class="vacation-left-progress">&nbsp;</div>
           </div>
 
           <div class="holiday-info-wrapper">
