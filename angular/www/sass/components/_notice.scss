@@ -1,0 +1,22 @@
+// Here base styles for Web form and for Comments form
+// Elements which similar and styled - Input text, Text area, Submit buttons
+// labels for them.
+  .notice {
+    margin: 3rem 0;
+    padding: 1.5rem;
+    background: #F6F6D4;
+    color: #000;
+    line-height: 1.2;
+    max-width: 50%;
+    
+    h2 {
+      @include font-size(36);
+      margin-bottom: 1rem;
+    }
+
+    p {
+      margin-bottom: .75rem;
+      @include font-size(14);
+    }
+  }
+
