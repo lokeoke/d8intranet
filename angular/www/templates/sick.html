@@ -1,22 +1,25 @@
 <div class="table-data">
-  <div class="user-dates" ng-repeat="user in users  | teamsOnly:filterBy.selectedOption">
-    <div class="user-name" show-table-data>{{user.field_last_name[0].value}}
-      {{user.field_first_name[0].value}}
+  <div class="user-dates" ng-repeat="user in users | orderBy:'field_last_name[0].value' | teamsOnly:filterBy.selectedOption">
+    <div class="user-name" show-table-data>
+      <a ng-href="#user/{{user.uid[0].value}}">
+        {{user.field_last_name[0].value}}
+        {{user.field_first_name[0].value}}
+      </a>
     </div>
 
     <div class="months">
       <div class="month"
 
-          ng-click="date.showDetailsSick= !date.showDetailsSick"
-          data-month="{{date.monthName}}"
-          ng-repeat="date in user.calendarMonths">
+           ng-click="date.showDetailsSick= !date.showDetailsSick"
+           data-month="{{date.monthName}}"
+           ng-repeat="date in user.calendarMonths">
 
         <div class="dates-popup"
-            ng-class="{hidden: !date.showDetailsSick}"
-            ng-if="date.sickDays.multipleDates">
+             ng-class="{hidden: !date.showDetailsSick}"
+             ng-if="date.sickDays.multipleDates">
           <span class="popup-label">Dates:</span>
                 <span class="no-state sick-state"
-                    ng-repeat="dates in date.sickDays.multipleDates">
+                      ng-repeat="dates in date.sickDays.multipleDates">
                     {{dates.date}}
                 </span>
 
@@ -26,15 +29,15 @@
         </div>
 
               <span class="dates dates-numbers"
-                  ng-class="{selectedDate: date.showDetailsSick}"
-                  ng-if="date.sickDays.totalMonthDays">
+                    ng-class="{selectedDate: date.showDetailsSick}"
+                    ng-if="date.sickDays.totalMonthDays">
                 {{date.sickDays.totalMonthDays}}
               </span>
       </div>
 
       <div class="month total" data-month="Total:">
 
-        <span class="dates dates-total">{{user.timeRanges.totalSick}}</span>
+        <span class="dates dates-total">{{user.timeRanges.totalSick.totalDaysYear}}</span>
       </div>
     </div>
   </div>

@@ -1,21 +1,23 @@
 <div class="table-data">
   <div class="user-dates"
-      ng-repeat="user in users  | teamsOnly:filterBy.selectedOption">
+       ng-repeat="user in users | orderBy:'field_last_name[0].value' | teamsOnly:filterBy.selectedOption">
     <div class="user-name" show-table-data>
-      {{user.field_last_name[0].value}}
-      {{user.field_first_name[0].value}}
+      <a ng-href="#user/{{user.uid[0].value}}">
+        {{user.field_last_name[0].value}}
+        {{user.field_first_name[0].value}}
+      </a>
     </div>
 
     <div class="months">
       <div class="month"
-          ng-click="date.showDetailsDayoff = !date.showDetailsDayoff"
-          data-month="{{date.monthName}}"
-          ng-repeat="date in user.calendarMonths">
+           ng-click="date.showDetailsDayoff = !date.showDetailsDayoff"
+           data-month="{{date.monthName}}"
+           ng-repeat="date in user.calendarMonths">
         <div class="dates-popup" ng-class="{hidden: !date.showDetailsDayoff}"
-            ng-if="date.dayOffDays.multipleDates">
+             ng-if="date.dayOffDays.multipleDates">
           <span class="popup-label">Dates:</span>
                 <span class="{{dates.statusDate}}"
-                    ng-repeat="dates in date.dayOffDays.multipleDates">
+                      ng-repeat="dates in date.dayOffDays.multipleDates">
                     {{dates.date}}
                 </span>
 
@@ -25,14 +27,14 @@
         </div>
 
               <span class="dates dates-numbers"
-                  ng-class="{selectedDate: date.showDetailsDayoff}"
-                  ng-if="date.dayOffDays.totalMonthDays">
+                    ng-class="{selectedDate: date.showDetailsDayoff}"
+                    ng-if="date.dayOffDays.totalMonthDays">
                 {{date.dayOffDays.totalMonthDays}}
               </span>
       </div>
 
       <div class="month total" data-month="Total:">
-        <span class="dates dates-total">{{user.timeRanges.totalDaysOff}}</span>
+        <span class="dates dates-total">{{user.timeRanges.totalDaysOff.totalDaysYear}}</span>
       </div>
     </div>
   </div>
