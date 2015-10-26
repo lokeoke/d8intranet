@@ -45,7 +45,7 @@ class IntranetJiraStorage {
     $this->storage = \Drupal::entityManager()->getStorage('node');
   }
   public function getLoggedTime($jira_name){
-    if(date('N',$format = strtotime( "today" )) === 1) {
+    if(date('N',$format = strtotime( "today" )) == 1) {
       $format = strtotime( "previous friday" );
     }
     else {
