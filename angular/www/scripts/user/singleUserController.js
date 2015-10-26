@@ -37,6 +37,7 @@ angular.module('d8intranetApp')
             $scope.filteredKeys[setStiaticTitle(key)] = value;
           });
 
+
           // Get current days of user vacation
           var totalMonthOfWork = calcDate(today, past);
 
@@ -48,8 +49,8 @@ angular.module('d8intranetApp')
           if (totalMonthOfWork < 12) {
             $scope.totalVacationDays = Math.floor(getWorkPeriod(calcDate(today, past)));
 
-            if ($scope.totalVacationDays > $scope.filteredKeys['Vacation']) {
-              $scope.vacationDaysLeft = $scope.totalVacationDays - $scope.filteredKeys['Vacation'];
+            if ($scope.totalVacationDays > $scope.filteredKeys['Vacation'].totalVacationYear) {
+              $scope.vacationDaysLeft = $scope.totalVacationDays - $scope.filteredKeys['Vacation'].totalVacationYear;
             }
             else {
               $scope.vacationDaysLeft = 0;
@@ -57,7 +58,7 @@ angular.module('d8intranetApp')
           }
           else {
             $scope.totalVacationDays = config.totalVacation;
-            $scope.vacationDaysLeft = config.totalVacation - $scope.filteredKeys['Vacation'];
+            $scope.vacationDaysLeft = config.totalVacation - $scope.filteredKeys['Vacation'].totalVacationYear;
           }
           return $scope.user;
         }

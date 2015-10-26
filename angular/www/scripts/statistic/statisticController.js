@@ -56,7 +56,7 @@ angular.module('d8intranetApp')
         url: 'templates/sick.html'
       },
       {
-        title: 'Duty Journey',
+        title: 'Business trips',
         url: 'templates/journey.html'
       },
       {

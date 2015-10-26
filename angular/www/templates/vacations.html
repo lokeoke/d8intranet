@@ -1,36 +1,38 @@
 <div class="table-data">
   <div class="user-dates"
-      ng-repeat="user in users  | teamsOnly:filterBy.selectedOption">
+       ng-repeat="user in users  |  orderBy:'field_last_name[0].value' | teamsOnly:filterBy.selectedOption">
     <div class="user-name" show-table-data>
-      {{user.field_last_name[0].value}}
-      {{user.field_first_name[0].value}}
+      <a ng-href="#user/{{user.uid[0].value}}">
+        {{user.field_last_name[0].value}}
+        {{user.field_first_name[0].value}}
+      </a>
     </div>
 
     <div class="months">
       <div class="month"
-          ng-click="date.showDetailsVacation = !date.showDetailsVacation"
-          data-month="{{date.monthName}}"
-          ng-repeat="date in user.calendarMonths">
+           ng-click="date.showDetailsVacation = !date.showDetailsVacation"
+           data-month="{{date.monthName}}"
+           ng-repeat="date in user.calendarMonths">
         <div class="dates-popup" ng-class="{hidden: !date.showDetailsVacation}"
-            ng-if="date.vacationDays.multipleDates">
+             ng-if="date.vacationDays.multipleDates">
                 <span class="popup-label">
                   Dates:
                 </span>
 
                 <span class="{{dates.statusDate}}"
-                    ng-repeat="dates in date.vacationDays.multipleDates">
+                      ng-repeat="dates in date.vacationDays.multipleDates">
                     {{dates.date}}
                 </span>
         </div>
               <span class="dates dates-numbers"
-                  ng-class="{selectedDate: date.showDetailsVacation}"
-                  ng-if="date.vacationDays.totalMonthDays">
+                    ng-class="{selectedDate: date.showDetailsVacation}"
+                    ng-if="date.vacationDays.totalMonthDays">
                 {{date.vacationDays.totalMonthDays}}
               </span>
       </div>
 
       <div class="month total" data-month="Total:">
-        <span class="dates dates-total">{{user.timeRanges.totalVacation}}</span>
+        <span class="dates dates-total">{{user.timeRanges.totalVacation.totalVacationYear}}</span>
       </div>
     </div>
   </div>
