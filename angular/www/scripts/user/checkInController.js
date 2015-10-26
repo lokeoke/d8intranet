@@ -9,7 +9,7 @@
  */
 angular.module('d8intranetApp')
 
-    .controller('CheckInController', function ($scope, $http, $rootScope, $compile, $cookies, $timeout, config, getCheckedInUsers, checkState) {
+    .controller('CheckInController', function ($scope, $http, $rootScope, $compile, $cookies, $timeout, modalWindow, config, getCheckedInUsers, checkState) {
 
       getCheckedInUsers.getCheckedIn(config.checkedInList).then(function (data) {
         $rootScope.checkedInUserList = data;
@@ -17,13 +17,15 @@ angular.module('d8intranetApp')
 
       $scope.checkIn = function () {
 
-        if (!$rootScope.jira) {
-          $rootScope.showModalWindow = true;
+        console.log('check IN');
 
-          $rootScope.modalHeaderTitle = 'Whoa!';
-          $rootScope.modalMessageType = 'error';
-          $rootScope.modalMessageSubtitle = 'Oops..it seems that you haven\'t filled in a JIRA for the past day.';
-          $rootScope.modalMessage = 'Please fill it in and refresh the page.';
+        if (!$rootScope.jira) {
+
+          modalWindow.setMessage(
+              'error',
+              'Oops..it seems that you haven\'t filled in a JIRA for the past day.',
+              'Please fill it in and refresh the page.'
+          );
         }
 
         else {
@@ -34,13 +36,13 @@ angular.module('d8intranetApp')
 
           res.success(function (data) {
             $scope.message = data;
-            //$rootScope.dataLoaded = true;
-            $rootScope.showModalWindow = true;
 
             if (data.status) {
-              $rootScope.modalMessageType = 'success';
-              $rootScope.modalMessageSubtitle = 'Check-in is done.';
-              $rootScope.modalMessage = 'You have successfully signed in.';
+              modalWindow.setMessage(
+                  'success',
+                  'Check-in is done.',
+                  'You have successfully signed in.'
+              );
 
               getCheckedInUsers.getCheckedIn(config.checkedInList).then(function (d) {
                 $rootScope.checkedInUserList = d;
@@ -52,22 +54,21 @@ angular.module('d8intranetApp')
 
             }
             else {
-              $rootScope.modalMessageType = 'error';
-              $rootScope.modalMessageSubtitle = 'You are not authorized for check in.';
-              $rootScope.modalMessage = 'Please login and try again';
+              modalWindow.setMessage(
+                  'error',
+                  'Something went wrong!',
+                  'Please report about an issue, thanks :)'
+              );
             }
-
           });
 
-          res.error(function (data, status, headers, config) {
-            console.log("failure message: " + JSON.stringify({data: data}));
-
-            $rootScope.showModalWindow = true;
-            $rootScope.modalMessageType = 'error';
-            $rootScope.modalMessageSubtitle = 'Can\'t get data from server';
-            $rootScope.modalMessage = 'Please contact system administrator or developers :)';
-
-            //$rootScope.dataLoaded = true;
+          res.error(function (data) {
+            //console.log("failure message: " + JSON.stringify({data: data}));
+            modalWindow.setMessage(
+                'error',
+                'Can\'t get data from server',
+                'Please contact system administrator or developers :)'
+            );
           });
         }
       };
@@ -76,19 +77,28 @@ angular.module('d8intranetApp')
         var requestObject = {"message": "Check me out!"};
         var req = $http.post(config.checkOutUrl, requestObject);
 
-        $rootScope.showModalWindow = false;
-
         req.success(function (data) {
+          modalWindow.setMessage(
+              'success',
+              'Check-out is done.',
+              'You have successfully signed out!'
+          );
+
           getCheckedInUsers.getCheckedIn(config.checkedInList).then(function (d) {
             $rootScope.checkedInUserList = d;
           });
+
           checkState.getState(config.status).then(function (data) {
             $rootScope.checkedIn = data.checked_in;
           });
         });
 
         req.error(function (data, status, headers) {
-          console.log(data);
+          modalWindow.setMessage(
+              'error',
+              'Something went wrong!',
+              'Please report about an issue, thanks :)'
+          );
         });
       }
     });
