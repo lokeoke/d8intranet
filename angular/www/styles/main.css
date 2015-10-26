@@ -2029,8 +2029,10 @@ hr {
   padding: 1.5rem;
   background: #F6F6D4;
   color: #000;
-  line-height: 1.2;
-  max-width: 50%; }
+  line-height: 1.2; }
+  @media (min-width: 1200px) {
+    .notice {
+      max-width: 50%; } }
   .notice h2 {
     font-size: 2.25rem;
     margin-bottom: 1rem; }
