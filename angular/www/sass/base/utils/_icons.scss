@@ -45,18 +45,21 @@
     content: '\e802';
   }
 }
+
 .facebook-icon {
   &::before {
     @include font-size(30);
     content: '\e803';
   }
 }
+
 .linkedin-icon {
   &::before {
     @include font-size(30);
     content: '\e804';
   }
 }
+
 .twitter-icon {
   &::before {
     @include font-size(30);
@@ -64,4 +67,10 @@
   }
 }
 
+.icon-arrows-cw {
+  &::before {
+    @include font-size(14);
+    content: '\e812';
+  }
+}
 

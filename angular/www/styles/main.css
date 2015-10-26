@@ -1015,6 +1015,12 @@
   .lt-ie9 .twitter-icon::before {
     font-size: 30px; }
 
+.icon-arrows-cw::before {
+  font-size: 0.875rem;
+  content: '\e812'; }
+  .lt-ie9 .icon-arrows-cw::before {
+    font-size: 14px; }
+
 /**
  * Eric Meyer's Reset CSS v2.0 (http://meyerweb.com/eric/tools/css/reset/)
  * http://cssreset.com
@@ -2894,6 +2900,49 @@ form .form-submit {
     display: inline-block;
     vertical-align: middle;
     margin-right: 5px; }
+
+.checked-in-users-list ul {
+  clear: both; }
+
+.refresh-list {
+  overflow: hidden;
+  float: right; }
+
+.refresh-title {
+  font-size: 0.875rem; }
+  .lt-ie9 .refresh-title {
+    font-size: 14px; }
+
+.update-checkin {
+  display: inline-block;
+  border: 1px solid transparent;
+  cursor: pointer;
+  background: #DE1B1B none repeat scroll 0% 0%;
+  border-radius: 100%;
+  width: 30px;
+  height: 30px;
+  color: #fff;
+  outline: none; }
+  .update-checkin::before {
+    font-size: 0.875rem;
+    line-height: 0;
+    display: block;
+    -webkit-transform-origin: center;
+            transform-origin: center; }
+    .lt-ie9 .update-checkin::before {
+      font-size: 14px; }
+
+.checkin-progress::before {
+  -webkit-animation: rotating 1s linear infinite;
+          animation: rotating 1s linear infinite; }
+
+@keyframes rotating {
+  from {
+    -webkit-transform: rotate(0deg);
+            transform: rotate(0deg); }
+  to {
+    -webkit-transform: rotate(360deg);
+            transform: rotate(360deg); } }
 
 .av-user,
 .checked-user {

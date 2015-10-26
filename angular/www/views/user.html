@@ -71,7 +71,7 @@
 
       <div class="user-social-data">
         <div class="experience">
-          Working at company: {{yearsOfWork + ' year' | plural}} {{monthsOfWork + ' month' | plural}}
+          Working at company: <span ng-if="yearsOfWork != 0"> {{yearsOfWork + ' year' | plural}} </span> {{monthsOfWork + ' month' | plural}}
         </div>
         <div class="social-list">
           <h3>Social</h3>
