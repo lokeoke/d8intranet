@@ -22,8 +22,8 @@ angular.module('d8intranetApp')
 
           $rootScope.modalHeaderTitle = 'Whoa!';
           $rootScope.modalMessageType = 'error';
-          $rootScope.modalMessageSubtitle = 'Seems don\'t filled JIRA at yesterday!';
-          $rootScope.modalMessage = 'Please fill JIRA and reload page.';
+          $rootScope.modalMessageSubtitle = 'Oops..it seems that you haven\'t filled in a JIRA for the past day.';
+          $rootScope.modalMessage = 'Please fill it in and refresh the page.';
         }
 
         else {
@@ -39,8 +39,8 @@ angular.module('d8intranetApp')
 
             if (data.status) {
               $rootScope.modalMessageType = 'success';
-              $rootScope.modalMessageSubtitle = 'Checkin success';
-              $rootScope.modalMessage = 'You have successfully checked in.';
+              $rootScope.modalMessageSubtitle = 'Check-in is done.';
+              $rootScope.modalMessage = 'You have successfully signed in.';
 
               getCheckedInUsers.getCheckedIn(config.checkedInList).then(function (d) {
                 $rootScope.checkedInUserList = d;
