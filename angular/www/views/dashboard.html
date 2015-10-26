@@ -4,7 +4,14 @@
   <div class="page-content" ng-controller="dashboardController">
 
     <article class="checked-in-users-list" ng-cloak>
-      <h2>Check in</h2>
+      <h2>Check in
+
+        <span class="refresh-list">
+          <span class="refresh-title">Refresh list</span>
+            <button update-status class="update-checkin font-icon icon-arrows-cw"></button>
+          </span>
+      </h2>
+
       <span class="no-logged-users" ng-if="checkedInUserList.length == 0">
         There are no logged users yet
       </span>
@@ -80,7 +87,7 @@
                     <img ng-src="{{avEmployee.user_picture[0].url}}"
                          err-SRC="images/anonymus.png"
                          alt="{{avEmployee.field_first_name[0].value}} {{avEmployee.field_last_name[0].value}}"
-                         />
+                        />
 
                   </span>
             <span class="user-name">

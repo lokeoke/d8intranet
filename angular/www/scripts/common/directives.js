@@ -125,6 +125,22 @@ angular.module('d8intranetApp')
       }
     })
 
+    .directive('updateStatus', function ($rootScope, $timeout, config, getCheckedInUsers) {
+      return function (scope, element, attr) {
+        element.bind('click', function () {
+          element.prop('disabled', true).addClass('checkin-progress');
+          getCheckedInUsers.getCheckedIn(config.checkedInList).then(function (data) {
+            $rootScope.checkedInUserList = data;
+
+            $timeout(function(){
+              element.prop('disabled', false).removeClass('checkin-progress');
+            }, 863);
+
+          });
+        });
+      }
+    })
+
     .directive('errSrc', function () {
       return {
         link: function (scope, element, attrs) {

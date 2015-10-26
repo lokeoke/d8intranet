@@ -28,6 +28,53 @@
   }
 }
 
+.checked-in-users-list {
+  ul {
+    clear: both;
+  }
+}
+
+.refresh-list {
+  overflow: hidden;
+  float: right;
+}
+
+.refresh-title {
+  @include font-size(14);
+}
+
+.update-checkin {
+  display: inline-block;
+  border: 1px solid transparent;
+  cursor: pointer;
+  background: #DE1B1B none repeat scroll 0% 0%;
+  border-radius: 100%;
+  width: 30px;
+  height: 30px;
+  color: #fff;
+  outline: none;
+
+  &::before {
+    @include font-size(14);
+    line-height: 0;
+    display: block;
+    transform-origin: center;
+  }
+}
+
+.checkin-progress::before {
+  animation: rotating 1s linear infinite;
+}
+
+@keyframes rotating {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}
 
 .av-user,
 .checked-user {
