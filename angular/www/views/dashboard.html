@@ -1,11 +1,10 @@
-<div class="page-container">
+<div class="page-container dashboard">
   <h1 class="page-title">Dashboard</h1>
 
   <div class="page-content" ng-controller="dashboardController">
 
     <article class="checked-in-users-list" ng-cloak>
       <h2>Check in
-
         <span class="refresh-list">
           <span class="refresh-title">Refresh list</span>
             <button update-status class="update-checkin font-icon icon-arrows-cw"></button>
@@ -30,8 +29,10 @@
       </ul>
     </article>
 
-    <div class="boxes-wrapper group">
-      <article class="info-box" ng-repeat="(key, user) in states">
+    <article class="boxes-wrapper group">
+
+      <h2>Absent employees</h2>
+      <div class="info-box" ng-repeat="(key, user) in states">
         <div class="info-box-headline">
           <div class="counter">
             {{user.count + ' employee' | plural }}
@@ -70,8 +71,8 @@
             </a>
           </div>
         </div>
-      </article>
-    </div>
+      </div>
+    </article>
 
     <article class="available-users"
              ng-repeat="(key, availableUser) in availableEmployees">

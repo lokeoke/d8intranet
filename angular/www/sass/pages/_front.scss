@@ -1,6 +1,24 @@
 // -----------------------------------------------------------------------------
 // Front page
 
+.dashboard {
+  h2 {
+    @include font-size(36);
+    margin-bottom: 2rem;
+  }
+
+  article {
+    padding-bottom: 4rem;
+
+    // Themes
+    @each $theme, $map in $themes {
+      .#{$theme} & {
+        border-bottom: 1px solid map-get($map, $header-divider);
+      }
+    }
+  }
+}
+
 .no-logged-users {
   @include font-size(20);
   color: #5C6B71;
@@ -13,11 +31,6 @@
 .available-users,
 .checked-in-users-list {
   margin: 4rem 0;
-
-  h2 {
-    @include font-size(36);
-    margin-bottom: 2rem;
-  }
 
   .user-pic {
     width: 32px;
@@ -108,13 +121,6 @@
   padding-top: 3rem;
   position: relative;
   @extend %group;
-
-  // Themes
-  @each $theme, $map in $themes {
-    .#{$theme} & {
-      border-top: 1px solid map-get($map, $header-divider);
-    }
-  }
 
   .av-users-count {
     position: absolute;

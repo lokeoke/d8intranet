@@ -2575,9 +2575,11 @@ hr {
     vertical-align: middle; }
   .info-box .till-date {
     font-size: 0.75rem;
-    color: #000; }
+    color: #cfcfcf; }
     .lt-ie9 .info-box .till-date {
       font-size: 12px; }
+    .light .info-box .till-date {
+      color: #2e2e2e; }
   .info-box .till-date,
   .info-box .user-name {
     display: block;
@@ -2887,6 +2889,19 @@ form .form-submit {
     .modal-success .close-modal:hover {
       background: #194b2d; }
 
+.dashboard h2 {
+  font-size: 2.25rem;
+  margin-bottom: 2rem; }
+  .lt-ie9 .dashboard h2 {
+    font-size: 36px; }
+
+.dashboard article {
+  padding-bottom: 4rem; }
+  .dark .dashboard article {
+    border-bottom: 1px solid; }
+  .light .dashboard article {
+    border-bottom: 1px solid #c6c6c6; }
+
 .no-logged-users {
   font-size: 1.25rem;
   color: #5C6B71; }
@@ -2898,13 +2913,6 @@ form .form-submit {
 .available-users,
 .checked-in-users-list {
   margin: 4rem 0; }
-  .available-users h2,
-  .checked-in-users-list h2 {
-    font-size: 2.25rem;
-    margin-bottom: 2rem; }
-    .lt-ie9 .available-users h2,
-    .lt-ie9 .checked-in-users-list h2 {
-      font-size: 36px; }
   .available-users .user-pic,
   .checked-in-users-list .user-pic {
     width: 32px;
@@ -2986,10 +2994,6 @@ form .form-submit {
 .available-users {
   padding-top: 3rem;
   position: relative; }
-  .dark .available-users {
-    border-top: 1px solid; }
-  .light .available-users {
-    border-top: 1px solid #c6c6c6; }
   .available-users .av-users-count {
     position: absolute;
     top: 20px;

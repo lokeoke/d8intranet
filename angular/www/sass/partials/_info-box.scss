@@ -89,7 +89,12 @@
 
   .till-date {
     @include font-size(12);
-    color: #000;
+
+    color: $site-font-color;
+
+    .light & {
+      color: #2e2e2e;
+    }
   }
 
   .till-date,
