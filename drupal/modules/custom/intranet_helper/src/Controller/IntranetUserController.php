@@ -26,6 +26,10 @@ class IntranetUserController extends ControllerBase {
     return new JsonResponse($this->intranetApi->getCheckedInUsers());
   }
 
+  public function checkedOut(Request $request) {
+    return new JsonResponse($this->intranetApi->getCheckedOutUsers());
+  }
+
   public function checkState(Request $request) {
     return new JsonResponse($this->intranetApi->getUserState(\Drupal::service('current_user')->id()));
   }
