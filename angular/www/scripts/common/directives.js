@@ -132,7 +132,7 @@ angular.module('d8intranetApp')
           getCheckedInUsers.getCheckedIn(config.checkedInList).then(function (data) {
             $rootScope.checkedInUserList = data;
 
-            $timeout(function(){
+            $timeout(function () {
               element.prop('disabled', false).removeClass('checkin-progress');
             }, 863);
 
@@ -156,6 +156,26 @@ angular.module('d8intranetApp')
             }
           });
         }
+      }
+    })
+
+    .directive('staticHeader', function ($window) {
+      return function (scope, element, attrs) {
+        var headerTop = element.offset().top;
+
+        angular.element($window).bind('scroll', function () {
+          if (this.pageYOffset >= headerTop) {
+            var tableWidth = angular.element('.table-data').outerWidth();
+            element.css({
+              width: tableWidth,
+              position: 'fixed',
+              top: 0
+            })
+          }
+          else {
+            element.removeAttr('style');
+          }
+        })
       }
     })
 
