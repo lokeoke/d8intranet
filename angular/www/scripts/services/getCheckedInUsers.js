@@ -20,6 +20,19 @@ angular.module('d8intranetApp')
           });
           // Return the promise to the controller
           return promise;
+        },
+
+        getCheckedOut: function(url) {
+          var promise = $http.get(url).then(function(response) {
+              var checkedOut = response.data;
+            return checkedOut;
+          });
+
+          return promise;
+        },
+
+        getObjectSize: function(obj) {
+           return Object.keys(obj).length;
         }
 
       };

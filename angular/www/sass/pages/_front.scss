@@ -91,13 +91,13 @@
 
 .av-user,
 .checked-user {
-  @include font-size(14);
+  @include font-size(13);
   margin-bottom: .5rem;
 
 
   @include susy-breakpoint(580px) {
     display: inline-block;
-    margin: 0 1rem 1rem 0;
+    margin: 0 .2rem .2rem 0;
     padding: .3rem;
   }
 }
@@ -118,11 +118,11 @@
 }
 
 .available-users {
-  padding-top: 3rem;
   position: relative;
   @extend %group;
 
   .av-users-count {
+    @include font-size(14);
     position: absolute;
     top: 20px;
     right: 0;

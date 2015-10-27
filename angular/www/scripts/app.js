@@ -61,6 +61,7 @@ angular.module('d8intranetApp', [
       checkInUrl: "admin/api/user/check-in",
       checkOutUrl: "admin/api/user/check-out",
       checkedInList: "admin/api/user/checked-in",
+      checkedOutList: "admin/api/user/checked-out",
       teamsUrl: "admin/api/user/team",
       loginPathUrl: "admin/user/login?redirect=true",
       logoutPathUrl: "admin/user/logout?redirect=true",
