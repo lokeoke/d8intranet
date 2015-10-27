@@ -2570,6 +2570,18 @@ hr {
       top: 50%;
       left: 11px;
       margin-top: -3px; }
+  .info-box .user-name-date {
+    display: inline-block;
+    vertical-align: middle; }
+  .info-box .till-date {
+    font-size: 0.75rem;
+    color: #000; }
+    .lt-ie9 .info-box .till-date {
+      font-size: 12px; }
+  .info-box .till-date,
+  .info-box .user-name {
+    display: block;
+    line-height: 1.5; }
 
 .employee {
   font-size: 0.9375rem;
