@@ -16,9 +16,6 @@ angular.module('d8intranetApp')
       });
 
       $scope.checkIn = function () {
-
-        console.log('check IN');
-
         if (!$rootScope.jira) {
 
           modalWindow.setMessage(
@@ -29,7 +26,6 @@ angular.module('d8intranetApp')
         }
 
         else {
-          //$rootScope.dataLoaded = false;
 
           var dataObj = {"message": "Check me in"};
           var res = $http.post(config.checkInUrl, dataObj);

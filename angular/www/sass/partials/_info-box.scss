@@ -82,6 +82,22 @@
     }
   }
 
+  .user-name-date {
+    display: inline-block;
+    vertical-align: middle;
+  }
+
+  .till-date {
+    @include font-size(12);
+    color: #000;
+  }
+
+  .till-date,
+  .user-name {
+    display: block;
+    line-height: 1.5;
+  }
+
 }
 
 .employee {

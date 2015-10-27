@@ -42,7 +42,6 @@
         <div class="employee-columns">
           <div class="employee" ng-repeat="(employee_key, employee) in user "
                ng-if='employee_key != "count"'>
-
             <a href="#user/{{employee.uid[0].value}}" class="employee-link">
               <span class="flipper-container">
                 <span class="flipper">
@@ -54,13 +53,19 @@
                     </span>
                   </span>
                   <span class="back">
-
                   </span>
                   </span>
                 </span>
-            <span class="user-name">
-              {{employee.field_first_name[0].value}} {{employee.field_last_name[0].value}}
-            </span>
+
+              <span class="user-name-date">
+                <span class="user-name">
+                  {{employee.field_first_name[0].value}} {{employee.field_last_name[0].value}}
+                </span>
+
+                <span class="till-date" ng-if="employee.vacationTillDate">Till: {{employee.vacationTillDate | date:'dd MMM' }}</span>
+                <span class="till-date" ng-if="employee.tripTillDate">Till: {{employee.tripTillDate | date:'dd MMM' }}</span>
+              </span>
+
 
             </a>
           </div>
