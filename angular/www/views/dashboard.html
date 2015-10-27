@@ -4,7 +4,7 @@
   <div class="page-content" ng-controller="dashboardController">
 
     <article class="checked-in-users-list" ng-cloak>
-      <h2>Check in
+      <h2>Checked in
         <span class="refresh-list">
           <span class="refresh-title">Refresh list</span>
             <button update-status class="update-checkin font-icon icon-arrows-cw"></button>
@@ -12,7 +12,7 @@
       </h2>
 
       <span class="no-logged-users" ng-if="checkedInUserList.length == 0">
-        There are no logged users yet
+        There are no checked in users yet
       </span>
       <ul ng-if="checkedInUserList.length != 0">
         <li ng-repeat="user in checkedInUserList" class="checked-user">
@@ -29,9 +29,33 @@
       </ul>
     </article>
 
-    <article class="boxes-wrapper group">
+    <article class="available-users">
+      <h2>Not checked in</h2>
+      <div class="av-users-count" ng-cloak>
+        {{checkedOutUserCount + ' employee' | plural}}
+      </div>
 
-      <h2>Absent employees</h2>
+      <ul ng-if="checkedOutUserList.length != 0">
+        <li ng-repeat="users in checkedOutUserList" class="av-user" >
+          <a href="#user/{{users.uid}}" class="employee-link">
+        <span class="user-pic">
+          <img ng-src="{{users.field_image}}"
+               err-SRC="images/anonymus.png"
+               alt="{{users.field_last_name}}"
+               title="{{users.field_last_name}}"/>
+          </span>
+            <span class="user-name">{{users.field_last_name}}</span>
+          </a>
+        </li>
+      </ul>
+      <span class="no-logged-users" ng-if="checkedOutUserList.length == 0">
+        All the employees have been checked in.
+      </span>
+
+    </article>
+
+    <h2>Absent employees</h2>
+    <article class="boxes-wrapper group">
       <div class="info-box" ng-repeat="(key, user) in states">
         <div class="info-box-headline">
           <div class="counter">
@@ -64,7 +88,8 @@
                 </span>
 
                 <span class="till-date" ng-if="employee.vacationTillDate">Till: {{employee.vacationTillDate | date:'dd MMM' }}</span>
-                <span class="till-date" ng-if="employee.tripTillDate">Till: {{employee.tripTillDate | date:'dd MMM' }}</span>
+                <span class="till-date"
+                      ng-if="employee.tripTillDate">Till: {{employee.tripTillDate | date:'dd MMM' }}</span>
               </span>
 
 
@@ -74,35 +99,6 @@
       </div>
     </article>
 
-    <article class="available-users"
-             ng-repeat="(key, availableUser) in availableEmployees">
 
-      <h2>{{availableUser.title}}</h2>
-
-      <div class="av-users-count">
-        {{availableUser.count + ' employee' | plural }}
-      </div>
-
-      <div class="av-user"
-           ng-repeat="(avEmployee_key, avEmployee) in availableUser"
-           ng-if='avEmployee_key != "count" && avEmployee_key != "title"'>
-
-        <a href="#user/{{avEmployee.uid[0].value}}" class="employee-link">
-
-                  <span class="user-pic">
-                    <img ng-src="{{avEmployee.user_picture[0].url}}"
-                         err-SRC="images/anonymus.png"
-                         alt="{{avEmployee.field_first_name[0].value}} {{avEmployee.field_last_name[0].value}}"
-                        />
-
-                  </span>
-            <span class="user-name">
-              {{avEmployee.field_first_name[0].value}} {{avEmployee.field_last_name[0].value}}
-            </span>
-
-        </a>
-
-      </div>
-    </article>
   </div>
 </div>

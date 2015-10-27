@@ -44,6 +44,10 @@ angular.module('d8intranetApp')
                 $rootScope.checkedInUserList = d;
               });
 
+              getCheckedInUsers.getCheckedOut(config.checkedOutList).then(function(d){
+                $rootScope.checkedOutUserList = d;
+              });
+
               checkState.getState(config.status).then(function (data) {
                 $rootScope.checkedIn = data.checked_in;
               });
@@ -82,6 +86,11 @@ angular.module('d8intranetApp')
 
           getCheckedInUsers.getCheckedIn(config.checkedInList).then(function (d) {
             $rootScope.checkedInUserList = d;
+          });
+
+          getCheckedInUsers.getCheckedOut(config.checkedOutList).then(function(d){
+            $rootScope.checkedOutUserList = d;
+            $rootScope.checkedOutUserCount = getCheckedInUsers.getObjectSize(d);
           });
 
           checkState.getState(config.status).then(function (data) {

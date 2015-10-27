@@ -12,7 +12,7 @@
       <h2 class="team-title">{{team.team_title}}</h2>
 
       <div class="container">
-        <div class="member" ng-repeat="member in team.members track by $index">
+        <div class="member" ng-repeat="member in team.members | orderBy:'field_position' track by $index">
           <a ng-href="#user/{{member.uid}}">
             <span class="user-pic">
             <img ng-src="{{member.field_image}}"
