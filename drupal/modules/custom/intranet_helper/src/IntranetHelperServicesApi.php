@@ -39,6 +39,30 @@ class IntranetHelperServicesApi {
     return $result;
   }
 
+  public function getCheckedOutUsers() {
+    $users = User::loadMultiple();
+    $checked_in_users = $this->getCheckedInUsers();
+    $result = array();
+
+    // Unset checked in users.
+    foreach ($checked_in_users as $user) {
+      unset($users[$user['uid']]);
+    }
+
+    // Set up result array.
+    foreach ($users as $key => $user) {
+      $account = User::load($user->id());
+
+      // Return not checked out users.
+      $result[$key]['uid'] = $user->id();
+      $result[$key]['field_first_name'] = $account->field_first_name->value;
+      $result[$key]['field_last_name'] = $account->field_last_name->value;
+      $result[$key]['field_image'] = $account->user_picture->target_id ? file_create_url(File::load($account->user_picture->target_id)->uri->value) : NULL;
+    }
+
+    return $result;
+  }
+
   public function isUserCheckedIn($uid) {
     $result = Database::getConnection()->select('user__field_user_check_in_and_out', 'c')
       ->fields('c')

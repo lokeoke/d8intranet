@@ -36,6 +36,15 @@ intranet_helper.user_checked_in:
   options:
      no_cache: TRUE
 
+intranet_helper.user_checked_out:
+  path: '/api/user/checked-out'
+  defaults:
+    _controller: '\Drupal\intranet_helper\Controller\IntranetUserController::checkedOut'
+  requirements:
+    _access: 'TRUE'
+  options:
+    no_cache: TRUE
+
 intranet_helper.user_status:
   path: '/api/user/check-state'
   defaults:
