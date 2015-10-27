@@ -5,8 +5,12 @@
   cursor: default;
 
   &:hover {
-    .front { transform: rotateY(180deg); }
-    .back { transform: rotateY(0deg); }
+    .front {
+      transform: rotateY(180deg);
+    }
+    .back {
+      transform: rotateY(0deg);
+    }
   }
 }
 
@@ -52,7 +56,6 @@
     text-align: right;
   }
 
-
   &:before {
     content: '';
     display: inline-block;
@@ -90,6 +93,8 @@
   @include susy-breakpoint(1280px) {
     @extend %group;
     display: block;
+    z-index: 4;
+    box-shadow: 0 0 35px rgba(0, 0, 0, 0.45);
 
     .month {
       font-size: 14px;
@@ -305,9 +310,6 @@
     }
   }
 
-
-
-
   @include susy-breakpoint(0 1279px) {
     // Add color to selected table item
     .active-table-data {
@@ -436,15 +438,25 @@
   background: #e91e63;
 }
 
-.journey-state { background: #286b90; }
+.journey-state {
+  background: #286b90;
+}
 
-.sick-state { background: #5f7f15; }
+.sick-state {
+  background: #5f7f15;
+}
 
-.sick-remote { background: #139f71; }
+.sick-remote {
+  background: #139f71;
+}
 
-.state-work-off { background: #ff8063; }
+.state-work-off {
+  background: #ff8063;
+}
 
-.not-approved { background: #b71c1c; }
+.not-approved {
+  background: #b71c1c;
+}
 
 .dates-numbers .paid,
 .dates-numbers .unpaid,
