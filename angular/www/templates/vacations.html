@@ -1,6 +1,7 @@
 <div class="table-data">
+  <!--|  orderBy:'field_last_name[0].value' | teamsOnly:filterBy.selectedOption-->
   <div class="user-dates"
-       ng-repeat="user in users  |  orderBy:'field_last_name[0].value' | teamsOnly:filterBy.selectedOption">
+       ng-repeat="user in users">
     <div class="user-name" show-table-data>
       <a ng-href="#user/{{user.uid[0].value}}">
         {{user.field_last_name[0].value}}

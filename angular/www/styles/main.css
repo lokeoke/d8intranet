@@ -2507,6 +2507,64 @@ hr {
   .light .theme-switcher-btn {
     background: #373f43; }
 
+.flipper-container {
+  display: inline-block;
+  vertical-align: middle;
+  margin-right: 5px;
+  position: relative;
+  cursor: pointer; }
+  .flipper-container .flipper {
+    width: 32px;
+    height: 32px;
+    display: inline-block;
+    vertical-align: middle; }
+  .flipper-container .back,
+  .flipper-container .user-pic {
+    width: 32px;
+    height: 32px;
+    float: left;
+    left: 0; }
+  .flipper-container .back {
+    border-radius: 100%;
+    overflow: hidden; }
+    .dark .flipper-container .back {
+      background: #FF9E80; }
+    .light .flipper-container .back {
+      background: #DE1B1B; }
+    .flipper-container .back:before {
+      left: 57%;
+      top: 50%;
+      border: solid transparent;
+      content: '';
+      height: 0;
+      width: 0;
+      position: absolute;
+      pointer-events: none;
+      border-color: rgba(213, 38, 38, 0);
+      border-left-color: #fff;
+      border-width: 6px;
+      margin-top: -6px; }
+    .flipper-container .back:after {
+      content: '';
+      width: 9px;
+      height: 6px;
+      background: #fff;
+      display: block;
+      position: absolute;
+      top: 50%;
+      left: 11px;
+      margin-top: -3px; }
+
+.employee-link {
+  cursor: pointer;
+  overflow: hidden; }
+  .employee-link:hover .front {
+    -webkit-transform: rotateY(-180deg);
+            transform: rotateY(-180deg); }
+  .employee-link:hover .back {
+    -webkit-transform: rotateY(0deg);
+            transform: rotateY(0deg); }
+
 .info-box {
   padding: 20px;
   margin-bottom: 20px; }
@@ -2526,50 +2584,6 @@ hr {
   .light .info-box {
     background: #f6f6f6;
     box-shadow: 3px 3px 0 #DCDCDC; }
-  .info-box .back,
-  .info-box .user-pic {
-    width: 32px;
-    height: 32px;
-    float: left;
-    left: 0; }
-  .info-box .flipper-container {
-    display: inline-block;
-    vertical-align: middle;
-    margin-right: 5px; }
-  .info-box .flipper {
-    width: 32px;
-    height: 32px;
-    display: block; }
-  .info-box .back {
-    border-radius: 100%;
-    overflow: hidden; }
-    .dark .info-box .back {
-      background: #FF9E80; }
-    .light .info-box .back {
-      background: #DE1B1B; }
-    .info-box .back:before {
-      left: 57%;
-      top: 50%;
-      border: solid transparent;
-      content: '';
-      height: 0;
-      width: 0;
-      position: absolute;
-      pointer-events: none;
-      border-color: rgba(213, 38, 38, 0);
-      border-left-color: #fff;
-      border-width: 6px;
-      margin-top: -6px; }
-    .info-box .back:after {
-      content: '';
-      width: 9px;
-      height: 6px;
-      background: #fff;
-      display: block;
-      position: absolute;
-      top: 50%;
-      left: 11px;
-      margin-top: -3px; }
   .info-box .user-name-date {
     display: inline-block;
     vertical-align: middle; }
@@ -2598,16 +2612,6 @@ hr {
     .employee {
       display: inline-block;
       width: 50%; } }
-
-.employee-link {
-  cursor: pointer;
-  overflow: hidden; }
-  .employee-link:hover .front {
-    -webkit-transform: rotateY(-180deg);
-            transform: rotateY(-180deg); }
-  .employee-link:hover .back {
-    -webkit-transform: rotateY(0deg);
-            transform: rotateY(0deg); }
 
 .info-box-headline {
   border-bottom: 1px solid;

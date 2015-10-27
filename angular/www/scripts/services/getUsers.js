@@ -34,7 +34,7 @@ angular.module('d8intranetApp')
 
           // Clear users each 2 minutes
           $timeout(function () {
-            users.splice(0, users.length);
+            users = [];
           }, '120000');
           return users;
         },

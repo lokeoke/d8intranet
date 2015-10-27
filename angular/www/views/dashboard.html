@@ -31,20 +31,28 @@
 
     <article class="available-users">
       <h2>Not checked in</h2>
+
       <div class="av-users-count" ng-cloak>
         {{checkedOutUserCount + ' employee' | plural}}
       </div>
 
       <ul ng-if="checkedOutUserList.length != 0">
-        <li ng-repeat="users in checkedOutUserList" class="av-user" >
+        <li ng-repeat="users in checkedOutUserList" class="av-user">
           <a href="#user/{{users.uid}}" class="employee-link">
-        <span class="user-pic">
-          <img ng-src="{{users.field_image}}"
-               err-SRC="images/anonymus.png"
-               alt="{{users.field_last_name}}"
-               title="{{users.field_last_name}}"/>
-          </span>
-            <span class="user-name">{{users.field_last_name}}</span>
+            <span class="flipper-container">
+              <span class="flipper">
+              <span class="front">
+                <span class="user-pic">
+                  <img ng-src="{{users.field_image}}"
+                       err-SRC="images/anonymus.png"
+                       alt="{{users.field_last_name}}"
+                       title="{{users.field_last_name}}"/>
+                  </span>
+                </span>
+              <span class="back"></span>
+                </span>
+              <span class="user-name">{{users.field_last_name}}</span>
+              </span>
           </a>
         </li>
       </ul>
@@ -77,8 +85,7 @@
                            alt="{{employee.field_first_name[0].value}} {{employee.field_last_name[0].value}}"/>
                     </span>
                   </span>
-                  <span class="back">
-                  </span>
+                  <span class="back"></span>
                   </span>
                 </span>
 
