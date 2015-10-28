@@ -183,7 +183,7 @@ angular.module('d8intranetApp')
             element.removeAttr('style');
           }
         });
-        
+
         w.bind('resize', function(){
           if (this.pageYOffset >= headerTop) {
             element.css({

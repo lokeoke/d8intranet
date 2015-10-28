@@ -16,10 +16,11 @@
 
   .user-pic {
     border-radius: 100%;
+    overflow: hidden;
   }
 
   &:hover img {
-    transform: scale(.85);
+    transform: scale(1.1);
   }
 }
 

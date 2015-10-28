@@ -2,11 +2,6 @@
      ng-controller="teamsController">
 
   <div class="container group">
-    <!--<div class="more-come-soon">-->
-    <!--Section in development...-->
-    <!--</div>-->
-
-    <!--<div style="font-size: 15px; line-height: 1.4;"> {{regularTeams}} </div>-->
 
     <div class="team-list" ng-repeat="team in teams | orderBy:'-weight'" ng-class="'{{team.team_type}}'">
       <h2 class="team-title">{{team.team_title}}</h2>
