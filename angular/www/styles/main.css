@@ -1306,7 +1306,8 @@ hr {
     left: 0;
     top: 0;
     right: 0;
-    bottom: 0; }
+    bottom: 0;
+    z-index: 100; }
 
 .employees-tabs {
   font-size: 0.875rem;
@@ -3019,11 +3020,12 @@ form .form-submit {
     color: #000; }
   .member a .user-pic,
   .user-info > a .user-pic {
-    border-radius: 100%; }
+    border-radius: 100%;
+    overflow: hidden; }
   .member a:hover img,
   .user-info > a:hover img {
-    -webkit-transform: scale(0.85);
-            transform: scale(0.85); }
+    -webkit-transform: scale(1.1);
+            transform: scale(1.1); }
 
 .leads,
 .managers {

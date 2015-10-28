@@ -104,31 +104,56 @@ angular.module('d8intranetApp')
         },
 
         calcBusinessDays: function (start, end) {
+
+          var holidays = [
+            new Date('01/01/2015'),
+            new Date('01/07/2015'),
+            new Date('03/09/2015'),
+            new Date('04/13/2015'),
+            new Date('05/01/2015'),
+            new Date('05/04/2015'),
+            new Date('05/11/2015'),
+            new Date('06/01/2015'),
+            new Date('06/29/2015'),
+            new Date('08/24/2015'),
+            new Date('10/14/2015')
+          ];
+
           // This makes no effort to account for holidays
           // Counts end day, does not count start day
           // make copies we can normalize without changing passed in objects
-          var start = new Date(start);
-          var end = new Date(end);
+          var start = new Date(start),
+              end = new Date(end),
+              day,
+              totalDays = 0,
+              paidCount = 0;
 
-          // initial total
-          var totalBusinessDays = 0;
 
           // normalize both start and end to beginning of the day
           start.setHours(0, 0, 0, 0);
           end.setHours(0, 0, 0, 0);
 
+          for (var i =0; i < holidays.length; i++) {
+            var holiday = holidays[i].getDay();
+
+            if (holidays[i] >= new Date(start) && holidays[i] <= new Date(end) && holiday != 0 && holiday != 6) {
+              paidCount ++;
+            }
+          }
+
           var current = new Date(start);
           current.setDate(current.getDate());
-          var day;
+
           // loop through each day, checking
           while (current <= end) {
             day = current.getDay();
             if (day >= 1 && day <= 5) {
-              ++totalBusinessDays;
+              ++totalDays;
             }
             current.setDate(current.getDate() + 1);
           }
-          return totalBusinessDays;
+
+          return totalDays - paidCount;
         },
 
         // -----------------------------------------------------------------------
