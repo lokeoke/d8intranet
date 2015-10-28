@@ -160,14 +160,21 @@ angular.module('d8intranetApp')
     })
 
     .directive('staticHeader', function ($window) {
-      return function (scope, element, attrs) {
-        var headerTop = element.offset().top;
+      return function (scope, element) {
+        var headerTop = element.offset().top,
+            tableWidth = angular.element('.table-data'),
+            w = angular.element($window);
 
-        angular.element($window).bind('scroll', function () {
+
+        scope.getTableWidth = function() {
+          return tableWidth.outerWidth();
+        };
+
+
+        w.bind('scroll', function () {
           if (this.pageYOffset >= headerTop) {
-            var tableWidth = angular.element('.table-data').outerWidth();
             element.css({
-              width: tableWidth,
+              width: scope.getTableWidth,
               position: 'fixed',
               top: 0
             })
@@ -175,7 +182,17 @@ angular.module('d8intranetApp')
           else {
             element.removeAttr('style');
           }
+        });
+        
+        w.bind('resize', function(){
+          if (this.pageYOffset >= headerTop) {
+            element.css({
+              width: scope.getTableWidth
+            });
+          }
+          scope.$apply();
         })
+
       }
     })
 
