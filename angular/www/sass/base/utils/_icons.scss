@@ -74,3 +74,10 @@
   }
 }
 
+.github-icon {
+  &::before {
+    @include font-size(33);
+    content: '\e813';
+  }
+}
+

@@ -1,0 +1,20 @@
+uuid: 8ec221f7-8250-4367-9202-02549976e315
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.user.field_google_plus
+  module:
+    - user
+id: user.user.field_google_plus
+field_name: field_google_plus
+entity_type: user
+bundle: user
+label: google_plus
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string
