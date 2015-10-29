@@ -1021,6 +1021,12 @@
   .lt-ie9 .icon-arrows-cw::before {
     font-size: 14px; }
 
+.github-icon::before {
+  font-size: 2.0625rem;
+  content: '\e813'; }
+  .lt-ie9 .github-icon::before {
+    font-size: 33px; }
+
 /**
  * Eric Meyer's Reset CSS v2.0 (http://meyerweb.com/eric/tools/css/reset/)
  * http://cssreset.com

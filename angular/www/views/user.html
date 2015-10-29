@@ -18,6 +18,7 @@
     <div class="page-content">
       <h1>Employee data</h1>
 
+
       <div class="user-info">
         <div class="user-data-group">
           <span class="user-info-title">Position</span>
@@ -71,21 +72,32 @@
 
       <div class="user-social-data">
         <div class="experience">
-          Working at company: <span ng-if="yearsOfWork != 0"> {{yearsOfWork + ' year' | plural}} </span> {{monthsOfWork + ' month' | plural}}
+          Working at company:
+          <span ng-if="yearsOfWork != 0"> {{yearsOfWork + ' year' | plural}} </span>
+          <span ng-if="monthsOfWork != 0"> {{monthsOfWork + ' month' | plural}} </span>
         </div>
         <div class="social-list">
           <h3>Social</h3>
           <ul class="font-icon">
-            <li class="icon"><a ng-href="{{user.field_user_drupal[0].value}}"
-                                class="drupal-icon"></a></li>
-            <li class="icon"><a ng-href="{{user.field_user_facebook[0].value}}"
-                                class="facebook-icon"></a></li>
-            <li class="icon"><a ng-href="{{user.field_user_gplus[0].value}}"
-                                class="gplus-icon"></a></li>
-            <li class="icon"><a ng-href="{{user.field_user_linkedin[0].value}}"
-                                class="linkedin-icon"></a></li>
-            <li class="icon"><a ng-href="{{user.field_user_twitter[0].value}}"
-                                class="twitter-icon"></a></li>
+            <li class="icon" ng-if="user.field_github_id.length != 0">
+              <a ng-href="{{user.field_github_id[0].value}}" class="github-icon" target="_blank"></a>
+            </li>
+            <li class="icon" ng-if="user.field_drupal_org_id.length != 0">
+              <a ng-href="{{user.field_drupal_org_id[0].value}}" class="drupal-icon" target="_blank"></a>
+            </li>
+            <li class="icon" ng-if="user.field_facebook.length != 0">
+              <a ng-href="{{user.field_facebook[0].value}}" class="facebook-icon" target="_blank"></a>
+            </li>
+            <li class="icon" ng-if="user.field_google_plus.length != 0">
+              <a ng-href="{{user.field_google_plus[0].value}}" class="gplus-icon" target="_blank"></a>
+            </li>
+            <li class="icon" ng-if="user.field_linkedin.length != 0">
+              <a ng-href="{{user.field_linkedin[0].value}}" class="linkedin-icon" target="_blank"></a>
+            </li>
+            <li class="icon" ng-if="user.field_twitter.length != 0">
+              <a ng-href="{{user.field_twitter[0].value}}" class="twitter-icon" target="_blank"></a>
+            </li>
+
           </ul>
         </div>
       </div>
