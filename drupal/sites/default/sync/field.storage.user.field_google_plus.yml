@@ -1,0 +1,21 @@
+uuid: ff5d8ae5-4508-4e33-b900-ff20f70c7811
+langcode: en
+status: true
+dependencies:
+  module:
+    - user
+id: user.field_google_plus
+field_name: field_google_plus
+entity_type: user
+type: string
+settings:
+  max_length: 60
+  is_ascii: false
+  case_sensitive: false
+module: core
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

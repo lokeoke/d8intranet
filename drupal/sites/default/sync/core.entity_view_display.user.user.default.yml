@@ -1,0 +1,91 @@
+uuid: caeb2fec-0e00-4120-a800-0ef9b6f14a1f
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.user.user.field_came_to_propeople
+    - field.field.user.user.field_drupal_org_id
+    - field.field.user.user.field_facebook
+    - field.field.user.user.field_first_name
+    - field.field.user.user.field_github_id
+    - field.field.user.user.field_google_plus
+    - field.field.user.user.field_jira_required
+    - field.field.user.user.field_job_title
+    - field.field.user.user.field_last_name
+    - field.field.user.user.field_linkedin
+    - field.field.user.user.field_phone_number
+    - field.field.user.user.field_position
+    - field.field.user.user.field_team
+    - field.field.user.user.field_twitter
+    - field.field.user.user.field_user_birthday
+    - field.field.user.user.field_user_check_in_and_out
+    - field.field.user.user.field_user_dayoff
+    - field.field.user.user.field_user_duty_journey
+    - field.field.user.user.field_user_email
+    - field.field.user.user.field_user_remote_work
+    - field.field.user.user.field_user_sick
+    - field.field.user.user.field_user_skype
+    - field.field.user.user.field_user_status
+    - field.field.user.user.field_user_vacation
+    - field.field.user.user.field_user_work_off
+    - field.field.user.user.user_picture
+  module:
+    - user
+id: user.user.default
+targetEntityType: user
+bundle: user
+mode: default
+content:
+  field_facebook:
+    weight: 12
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    type: string
+  field_google_plus:
+    weight: 11
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    type: string
+  field_linkedin:
+    weight: 13
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    type: string
+  field_twitter:
+    weight: 10
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    type: string
+  member_for:
+    weight: 5
+hidden:
+  field_came_to_propeople: true
+  field_drupal_org_id: true
+  field_first_name: true
+  field_github_id: true
+  field_jira_required: true
+  field_job_title: true
+  field_last_name: true
+  field_phone_number: true
+  field_position: true
+  field_team: true
+  field_user_birthday: true
+  field_user_check_in_and_out: true
+  field_user_dayoff: true
+  field_user_duty_journey: true
+  field_user_email: true
+  field_user_remote_work: true
+  field_user_sick: true
+  field_user_skype: true
+  field_user_status: true
+  field_user_vacation: true
+  field_user_work_off: true
+  user_picture: true
