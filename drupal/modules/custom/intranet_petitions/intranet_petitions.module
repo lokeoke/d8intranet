@@ -7,10 +7,8 @@ use Drupal\user\Entity\User;
  */
 function intranet_petitions_form_alter(&$form, \Drupal\Core\Form\FormStateInterface $form_state, $form_id) {
   if ($form_id == 'node_petition_form') {
-    $current_user_id = \Drupal::service('current_user')->id();
-    $account = User::load($current_user_id);
-
-    $test = $account->getRoles();
+    // Hide expiration date field from non admin users.
+    $account = User::load(\Drupal::service('current_user')->id());
 
     if (!$account->hasRole('administrator')) {
       $form['field_expiration_date']['#access'] = FALSE;
