@@ -1,0 +1,42 @@
+uuid: ebf272eb-0cc6-4610-ac00-bfa43c157381
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.node.holiday.body
+    - field.field.node.holiday.field_holiday_date
+    - node.type.holiday
+  module:
+    - datetime
+    - text
+id: node.holiday.default
+targetEntityType: node
+bundle: holiday
+mode: default
+content:
+  body:
+    type: text_textarea_with_summary
+    weight: 2
+    settings:
+      rows: 9
+      summary_rows: 3
+      placeholder: ''
+    third_party_settings: {  }
+  field_holiday_date:
+    weight: 1
+    settings: {  }
+    third_party_settings: {  }
+    type: datetime_default
+  title:
+    type: string_textfield
+    weight: 0
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+hidden:
+  created: true
+  path: true
+  promote: true
+  sticky: true
+  uid: true
