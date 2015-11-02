@@ -78,21 +78,40 @@ class IntranetHelperServicesApi {
   }
 
   public function checkUserIn($time, $uid) {
-    $result = array('status' => FALSE);
+    $result = array(
+      'status' => FALSE,
+      'message' => t('Invalid user.')->render(),
+    );
     $account = User::load($uid);
 
     if ($account) {
-      $new_field_value_index = count($account->field_user_check_in_and_out);
+      $user_status = $account->field_user_status->value;
+      $exclude_states = array(
+        'vacation',
+        'business_trip',
+        'sick',
+        'day_off',
+      );
 
-      // Set check-in value only if it is first user's check-in or
-      // user has been already checked-out.
-      if ($new_field_value_index == 0 || $account->field_user_check_in_and_out->get($new_field_value_index - 1)->check_out) {
-        $account->field_user_check_in_and_out->set($new_field_value_index, array(
-          'check_in' => $time,
-          'check_out' => NULL
-        ));
-        $account->save();
-        $result = array('status' => TRUE);
+      if (!empty($account->field_user_status) && in_array($user_status, $exclude_states)) {
+        $result['status'] = FALSE;
+        $result['message'] = t('You can not check-in because your status is "' . $user_status . '".')->render();
+      }
+      else {
+        $result['message'] = t('You should to check-out first.')->render();
+        $new_field_value_index = count($account->field_user_check_in_and_out);
+
+        // Set check-in value only if it is first user's check-in or
+        // user has been already checked-out.
+        if ($new_field_value_index == 0 || $account->field_user_check_in_and_out->get($new_field_value_index - 1)->check_out) {
+          $account->field_user_check_in_and_out->set($new_field_value_index, array(
+            'check_in' => $time,
+            'check_out' => NULL
+          ));
+          $account->save();
+          $result['status'] = TRUE;
+          $result['message'] = t('Successful check-in.')->render();
+        }
       }
     }
 
@@ -100,10 +119,14 @@ class IntranetHelperServicesApi {
   }
 
   public function checkUserOut($time, $uid) {
-    $result = array('status' => FALSE);
+    $result = array(
+      'status' => FALSE,
+      'message' => t('Invalid user.')->render(),
+    );
     $account = User::load($uid);
 
     if ($account) {
+      $result['message'] = t('You should to check-in first.')->render();
       $field_value_index = count($account->field_user_check_in_and_out) - 1;
 
       // Set check-out time only if user has been checked-in and
@@ -114,7 +137,8 @@ class IntranetHelperServicesApi {
           'check_out' => $time
         ));
         $account->save();
-        $result = array('status' => TRUE);
+        $result['status'] = TRUE;
+        $result['message'] = t('Successful check-out.')->render();
       }
     }
 
