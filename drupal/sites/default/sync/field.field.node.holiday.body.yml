@@ -1,0 +1,22 @@
+uuid: c39ed8ed-4283-441b-9b47-71ce80da8d9e
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.body
+    - node.type.holiday
+  module:
+    - text
+id: node.holiday.body
+field_name: body
+entity_type: node
+bundle: holiday
+label: Body
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  display_summary: true
+field_type: text_with_summary

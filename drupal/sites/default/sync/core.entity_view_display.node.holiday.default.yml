@@ -1,0 +1,40 @@
+uuid: 03251814-2591-4a09-9323-35d9dd4e2d0b
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.node.holiday.body
+    - field.field.node.holiday.field_holiday_date
+    - node.type.holiday
+  module:
+    - datetime
+    - text
+    - user
+id: node.holiday.default
+targetEntityType: node
+bundle: holiday
+mode: default
+content:
+  body:
+    label: hidden
+    type: text_default
+    weight: 0
+    settings: {  }
+    third_party_settings: {  }
+  field_holiday_date:
+    weight: 1
+    label: above
+    settings:
+      format_type: medium
+      timezone_override: ''
+    third_party_settings: {  }
+    type: datetime_default
+  title:
+    label: hidden
+    type: string
+    weight: 105
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+hidden:
+  links: true

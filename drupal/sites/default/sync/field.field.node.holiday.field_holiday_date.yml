@@ -1,0 +1,24 @@
+uuid: 03f397cf-c7b8-4742-a92d-457600f3efde
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_holiday_date
+    - node.type.holiday
+  module:
+    - datetime
+id: node.holiday.field_holiday_date
+field_name: field_holiday_date
+entity_type: node
+bundle: holiday
+label: 'Holiday date'
+description: ''
+required: true
+translatable: false
+default_value:
+  -
+    default_date_type: now
+    default_date: now
+default_value_callback: ''
+settings: {  }
+field_type: datetime
