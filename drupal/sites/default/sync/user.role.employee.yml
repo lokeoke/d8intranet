@@ -6,4 +6,7 @@ id: employee
 label: Employee
 weight: 3
 is_admin: null
-permissions: {  }
+permissions:
+  - 'create petition content'
+  - 'delete own petition content'
+  - 'edit own petition content'
