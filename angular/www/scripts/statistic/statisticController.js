@@ -11,13 +11,23 @@
 
 angular.module('d8intranetApp')
 
-  .controller('StatisticController', function ($scope, $http, getJsonData, formatUserData) {
+  .controller('StatisticController', function ($scope, $http, getJsonData, config, formatUserData, getHolidays, $rootScope) {
+
+      getHolidays.getDays(config.holidaysUrl).then(function(data){
+        $rootScope.holidays = data;
+      });
 
     getJsonData.getUsers().then(function (data) {
       $scope.users = data;
 
+      var holidaysList = [];
+
+      angular.forEach($rootScope.holidays, function(holiday){
+        holidaysList.push(new Date(holiday.field_holiday_date));
+      });
+
       var calendarMonths = {};
-      formatUserData.formattedUser($scope.users);
+      formatUserData.formattedUser($scope.users, holidaysList);
 
       $scope.months = formatUserData.setMonths(calendarMonths);
 

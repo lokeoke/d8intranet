@@ -58,6 +58,7 @@ angular.module('d8intranetApp', [
       frontUrl: "#dashboard",
       employeesUrl: "#employees",
       vacationsUrl: "#vacation",
+      foodUrl: "#food",
       checkInUrl: "admin/api/user/check-in",
       checkOutUrl: "admin/api/user/check-out",
       checkedInList: "admin/api/user/checked-in",
@@ -66,6 +67,7 @@ angular.module('d8intranetApp', [
       loginPathUrl: "admin/user/login?redirect=true",
       logoutPathUrl: "admin/user/logout?redirect=true",
       status: "admin/api/user/check-state",
+      holidaysUrl: "admin/api/holidays/" + new Date().getFullYear(),
       totalVacation: "20"
     })
 

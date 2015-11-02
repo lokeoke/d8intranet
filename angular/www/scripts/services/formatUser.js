@@ -8,7 +8,8 @@
  */
 
 angular.module('d8intranetApp')
-    .service('formatUserData', function () {
+    .service('formatUserData', function (getHolidays, config) {
+
       var formatUserData = {
         // -----------------------------------------------------------------------
         // Method which return total days of vacations, sick days, etc. for single users
@@ -43,9 +44,10 @@ angular.module('d8intranetApp')
         },
 
         // Format data
-        formatStatisticsData: function (formattedObject, statisticType, isVacation) {
+        formatStatisticsData: function (formattedObject, statisticType, holidays) {
 
           var datesStatesCollection = {};
+          var holidaysList = holidays;
 
           var month = formatUserData.getMonthNumber(formatUserData.reformatDate(statisticType.start_date));
           var dateStart = formatUserData.getDateNumber(formatUserData.reformatDate(statisticType.start_date));
@@ -59,8 +61,6 @@ angular.module('d8intranetApp')
               businessDays: ''
             };
           }
-
-
 
           datesStatesCollection[month] = {
             date: '',
@@ -79,7 +79,7 @@ angular.module('d8intranetApp')
             formattedObject[month].multipleDates.push(datesStatesCollection[month]);
             formattedObject[month].totalMonthDays++;
 
-            if (isVacation) {
+            if (holidaysList != undefined) {
               formattedObject[month].businessDays++
             }
 
@@ -95,29 +95,18 @@ angular.module('d8intranetApp')
               formattedObject[month].multipleDates.push(datesStatesCollection[month]);
             // Vacations only
             // We need to calculate only business days not all calendar
-            if (isVacation) {
-              formattedObject[month].businessDays = formatUserData.calcBusinessDays(statisticType.start_date, statisticType.end_date);
+            if (holidaysList != undefined) {
+                formattedObject[month].businessDays = formatUserData.calcBusinessDays(statisticType.start_date, statisticType.end_date, holidays);
             }
           }
 
           return formattedObject[month];
         },
 
-        calcBusinessDays: function (start, end) {
 
-          var holidays = [
-            new Date('01/01/2015'),
-            new Date('01/07/2015'),
-            new Date('03/09/2015'),
-            new Date('04/13/2015'),
-            new Date('05/01/2015'),
-            new Date('05/04/2015'),
-            new Date('05/11/2015'),
-            new Date('06/01/2015'),
-            new Date('06/29/2015'),
-            new Date('08/24/2015'),
-            new Date('10/14/2015')
-          ];
+        calcBusinessDays: function (start, end, hlDays) {
+
+          var holidays = hlDays;
 
           // This makes no effort to account for holidays
           // Counts end day, does not count start day
@@ -174,7 +163,7 @@ angular.module('d8intranetApp')
         },
 
 
-        formattedUser: function (users) {
+        formattedUser: function (users, holidays) {
           // Go through all users in JSON
           angular.forEach(users, function (employee) {
 
@@ -190,12 +179,11 @@ angular.module('d8intranetApp')
 
             var months = formatUserData.setMonths(calendarMonths);
 
-
             // Get Vacation days
             // ---------------------------------------------------------------------
             angular.forEach(employee.field_user_vacation, function (vacation) {
               var month = formatUserData.getMonthNumber(formatUserData.reformatDate(vacation.start_date));
-              months[month].vacationDays = formatUserData.formatStatisticsData(vacationDays, vacation, true);
+              months[month].vacationDays = formatUserData.formatStatisticsData(vacationDays, vacation, holidays);
             });
 
 
