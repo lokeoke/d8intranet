@@ -8,12 +8,22 @@
  * Controller of the d8intranetApp
  */
 angular.module('d8intranetApp')
-  .controller('singleUserController', function ($scope, $rootScope, $http, $routeParams, getJsonData, formatUserData, config) {
+  .controller('singleUserController', function ($scope, $rootScope, $http, $routeParams, getJsonData, getHolidays, formatUserData, config) {
+      getHolidays.getDays(config.holidaysUrl).then(function(data){
+        $rootScope.holidays = data;
+      });
 
     getJsonData.getUsers().then(function (data) {
       $scope.users = data;
 
-      formatUserData.formattedUser($scope.users);
+
+      var holidaysList = [];
+
+      angular.forEach($rootScope.holidays, function(holiday){
+        holidaysList.push(new Date(holiday.field_holiday_date));
+      });
+
+      formatUserData.formattedUser($scope.users, holidaysList);
 
       $rootScope.user = {};
       var cameToCompany = '';

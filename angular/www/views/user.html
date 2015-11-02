@@ -76,8 +76,17 @@
           <span ng-if="yearsOfWork != 0"> {{yearsOfWork + ' year' | plural}} </span>
           <span ng-if="monthsOfWork != 0"> {{monthsOfWork + ' month' | plural}} </span>
         </div>
-        <div class="social-list">
+        <div class="social-list" ng-cloak>
           <h3>Social</h3>
+          <span  ng-hide="user.field_github_id.length != 0 ||
+                     user.field_drupal_org_id.length != 0 ||
+                     user.field_facebook.length != 0 ||
+                     user.field_google_plus.length != 0 ||
+                     user.field_linkedin.length != 0 ||
+                     user.field_twitter.length != 0">
+            Seems this user is sociopath :)
+          </span>
+          
           <ul class="font-icon">
             <li class="icon" ng-if="user.field_github_id.length != 0">
               <a ng-href="{{user.field_github_id[0].value}}" class="github-icon" target="_blank"></a>

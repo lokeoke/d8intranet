@@ -220,6 +220,12 @@
     content: '\e811';
   }
 }
+.food-icon {
+  &::before {
+    @include font-size(30);
+    content: '\e814';
+  }
+}
 
 .logout-icon {
   &::before {
