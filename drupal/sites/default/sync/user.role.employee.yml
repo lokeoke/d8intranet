@@ -8,5 +8,3 @@ weight: 3
 is_admin: null
 permissions:
   - 'create petition content'
-  - 'delete own petition content'
-  - 'edit own petition content'
