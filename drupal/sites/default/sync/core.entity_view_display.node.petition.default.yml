@@ -1,0 +1,48 @@
+uuid: c2390ddc-d125-4302-b500-b24bca130a84
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.node.petition.body
+    - field.field.node.petition.field_expiration_date
+    - field.field.node.petition.field_likes
+    - node.type.petition
+  module:
+    - datetime
+    - text
+    - user
+id: node.petition.default
+targetEntityType: node
+bundle: petition
+mode: default
+content:
+  body:
+    label: hidden
+    type: text_default
+    weight: 0
+    settings: {  }
+    third_party_settings: {  }
+  field_expiration_date:
+    weight: 1
+    label: above
+    settings:
+      format_type: medium
+      timezone_override: ''
+    third_party_settings: {  }
+    type: datetime_default
+  field_likes:
+    weight: 2
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    type: string
+  title:
+    label: hidden
+    type: string
+    weight: 106
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+hidden:
+  links: true

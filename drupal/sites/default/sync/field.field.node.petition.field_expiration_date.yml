@@ -1,0 +1,24 @@
+uuid: bd9439bf-875a-4a96-b102-2ed4d2a85473
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_expiration_date
+    - node.type.petition
+  module:
+    - datetime
+id: node.petition.field_expiration_date
+field_name: field_expiration_date
+entity_type: node
+bundle: petition
+label: 'Expiration date'
+description: ''
+required: true
+translatable: false
+default_value:
+  -
+    default_date_type: now
+    default_date: now
+default_value_callback: ''
+settings: {  }
+field_type: datetime

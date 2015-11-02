@@ -1,0 +1,37 @@
+uuid: f9795564-2376-4962-9900-c62d8bc2fde4
+langcode: en
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.node.teaser
+    - field.field.node.petition.body
+    - field.field.node.petition.field_expiration_date
+    - field.field.node.petition.field_likes
+    - node.type.petition
+  module:
+    - text
+    - user
+id: node.petition.teaser
+targetEntityType: node
+bundle: petition
+mode: teaser
+content:
+  body:
+    label: hidden
+    type: text_summary_or_trimmed
+    weight: 101
+    settings:
+      trim_length: 600
+    third_party_settings: {  }
+  links:
+    weight: 100
+  title:
+    label: hidden
+    type: string
+    weight: -5
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+hidden:
+  field_expiration_date: true
+  field_likes: true
