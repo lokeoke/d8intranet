@@ -1,0 +1,11 @@
+<?php
+
+/**
+ * Implements hook_entity_presave().
+ */
+function intranet_petitions_node_presave(Drupal\node\Entity\Node $node) {
+  // Hide petition node author.
+  if ($node->getType() == 'petition') {
+    $node->setOwnerId(0);
+  }
+}
