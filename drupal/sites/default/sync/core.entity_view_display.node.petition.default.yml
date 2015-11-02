@@ -8,6 +8,7 @@ dependencies:
     - field.field.node.petition.field_likes
     - node.type.petition
   module:
+    - datetime
     - text
     - user
 id: node.petition.default
@@ -21,14 +22,21 @@ content:
     weight: 0
     settings: {  }
     third_party_settings: {  }
+  field_expiration_date:
+    type: datetime_custom
+    weight: 1
+    label: above
+    settings:
+      timezone_override: ''
+      date_format: d-m-Y
+    third_party_settings: {  }
   title:
-    label: hidden
     type: string
-    weight: 112
     settings:
       link_to_entity: false
+    weight: 10
+    label: above
     third_party_settings: {  }
 hidden:
-  field_expiration_date: true
   field_likes: true
   links: true

@@ -1,11 +1,35 @@
 <?php
 
+use Drupal\user\Entity\User;
+
+/**
+ * Implements hook_form_alter().
+ */
+function intranet_petitions_form_alter(&$form, \Drupal\Core\Form\FormStateInterface $form_state, $form_id) {
+  if ($form_id == 'node_petition_form') {
+    $current_user_id = \Drupal::service('current_user')->id();
+    $account = User::load($current_user_id);
+
+    $test = $account->getRoles();
+
+    if (!$account->hasRole('administrator')) {
+      $form['field_expiration_date']['#access'] = FALSE;
+    }
+  }
+}
+
 /**
  * Implements hook_entity_presave().
  */
 function intranet_petitions_node_presave(Drupal\node\Entity\Node $node) {
-  // Hide petition node author.
   if ($node->getType() == 'petition') {
+    // Hide petition node author.
+    $expiration_days_count = \Drupal::configFactory()->getEditable('intranet_petitions.settings')->get('intranet_petitions_expired_days');
     $node->setOwnerId(0);
+
+    // Only for new nodes we should calculate expires date.
+    if (!isset($node->original)) {
+      $node->field_expiration_date->value = date('Y-m-d', 86400 * $expiration_days_count + $node->created->value);
+    }
   }
 }

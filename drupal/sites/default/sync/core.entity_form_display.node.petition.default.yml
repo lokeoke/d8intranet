@@ -8,6 +8,7 @@ dependencies:
     - field.field.node.petition.field_likes
     - node.type.petition
   module:
+    - datetime
     - text
 id: node.petition.default
 targetEntityType: node
@@ -22,6 +23,11 @@ content:
       summary_rows: 3
       placeholder: ''
     third_party_settings: {  }
+  field_expiration_date:
+    type: datetime_default
+    weight: 2
+    settings: {  }
+    third_party_settings: {  }
   title:
     type: string_textfield
     weight: 0
@@ -31,7 +37,6 @@ content:
     third_party_settings: {  }
 hidden:
   created: true
-  field_expiration_date: true
   field_likes: true
   path: true
   promote: true
