@@ -8,7 +8,7 @@
  * Controller of the d8intranetApp
  */
 angular.module('d8intranetApp')
-  .controller('employeesController', function ($scope, $http, $filter, getJsonData) {
+  .controller('employeesController', function ($scope) {
 
     $scope.tabs = [{
       title: 'Teams',
