@@ -68,6 +68,21 @@
   <!-- Mobile menu -->
 
   <nav id="mobile-menu" class="mobile-menu" ng-class="menuIsOpen ? 'mobile-menu-open' : ' ' ">
+    <a class="logo" ng-href="{{menuItem.url}}"
+       ng-click="setActiveMenuItem(menuItem.url, false)">
+      <img src="images/logo-blue.png" alt="FFW"/>
+    </a>
+
+    <div ng-cloak ng-if="!logged">
+            <span class="user-pic">
+            <img src="../images/anonymus.png" alt="anonymus"/>
+          </span>
+      <a class="user-login" href="{{loginUrl}}">
+        Login
+      </a>
+    </div>
+
+
 
     <ul class="menu-mobile">
       <li class="user-data">
