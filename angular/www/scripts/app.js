@@ -44,6 +44,11 @@ angular.module('d8intranetApp', [
             templateUrl: 'views/statistic.html',
             controller: 'StatisticController'
           })
+          .when('/documents', {
+            url: "/documents",
+            templateUrl: 'views/documents.html',
+            controller: 'documentsController'
+          })
           .otherwise({
             redirectTo: '/dashboard',
             templateUrl: 'views/dashboard.html'
@@ -58,7 +63,7 @@ angular.module('d8intranetApp', [
       frontUrl: "#dashboard",
       employeesUrl: "#employees",
       vacationsUrl: "#vacation",
-      foodUrl: "#food",
+      documentsUrl: "#documents",
       checkInUrl: "admin/api/user/check-in",
       checkOutUrl: "admin/api/user/check-out",
       checkedInList: "admin/api/user/checked-in",

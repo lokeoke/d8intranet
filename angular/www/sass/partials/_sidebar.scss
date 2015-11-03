@@ -5,7 +5,7 @@
   transition: all .3s ease-in-out;
 
   .menu-desktop {
-    width: 115px;
+    width: 65px;
     z-index: 999;
   }
 }
@@ -35,6 +35,15 @@
           background: transparent;
         }
       }
+    }
+
+    &.active {
+      @each $theme, $map in $themes {
+        .#{$theme} & {
+          background: rgba(0, 0, 0, .8);
+        }
+      }
+      border-radius: 5px;
     }
   }
 }
@@ -78,8 +87,8 @@
   // User pic
   .user-pic {
     margin: 0 auto 20px;
-    width: 90px;
-    height: 90px;
+    width: 50px;
+    height: 50px;
 
     &.active img {
       box-shadow: 0 0 10px 2px #46575d;
@@ -89,7 +98,7 @@
 
 .checkin,
 .user-login {
-  @include font-size(15);
+  @include font-size(11);
   @each $theme, $map in $themes {
     .#{$theme} & {
       background: map-get($map, $checkin-bg);
@@ -107,6 +116,7 @@
   border: 0;
   cursor: pointer;
   transition: all ease .3s;
+  max-width: 300px;
 
   &:hover {
     background: $success;
@@ -126,28 +136,28 @@
 }
 
 .logo {
-  margin: 25px auto 65px;
-  max-width: 80px;
+  margin: 25px auto 30px;
+  max-width: 50px;
+  display: block;
 }
 
 // Menu icons
 .sidebar-icon {
   padding: 15px 0;
   @extend %group;
-  min-height: 80px;
+  min-height: 50px;
   transition: all .3s ease-in-out;
   position: relative;
 
   [class$='-icon'] {
     color: #fff;
     font-family: fontello;
-    padding: 10px 25px;
     left: 50%;
     transform: translateX(-50%);
     display: block;
     position: absolute;
     text-align: center;
-    width: 80px;
+    width: 50px;
     transition: all .4s ease-in-out;
 
     .light & {
@@ -169,7 +179,7 @@
     width: 100%;
     left: 100%;
     opacity: 0;
-    top: 26px;
+    top: 11px;
     transition: all .3s ease-in-out;
 
     .light & {
@@ -180,7 +190,7 @@
 
 .rolled-bar {
   .menu-desktop {
-    width: 215px;
+    width: 135px;
   }
 
   .sidebar-icon [class$='-icon'] {
@@ -189,7 +199,7 @@
   }
 
   .menu-item-title {
-    left: 80px;
+    left: 45px;
     width: 65%;
     opacity: 1;
   }
@@ -202,34 +212,34 @@
 
 .dashboard-icon {
   &::before {
-    @include font-size(30);
+    @include font-size(20);
     content: '\e808';
   }
 }
 
 .employees-icon {
   &::before {
-    @include font-size(30);
+    @include font-size(20);
     content: '\e807';
   }
 }
 
 .rest-icon {
   &::before {
-    @include font-size(30);
+    @include font-size(20);
     content: '\e811';
   }
 }
-.food-icon {
+.doc-icon {
   &::before {
-    @include font-size(30);
-    content: '\e814';
+    @include font-size(20);
+    content: '\e815';
   }
 }
 
 .logout-icon {
   &::before {
-    @include font-size(30);
+    @include font-size(20);
     content: '\e809';
   }
 }
@@ -307,7 +317,7 @@
 }
 
 .bt-menu-trigger {
-  position: relative;
+  position: fixed;
   top: 15px;
   left: 30px;
   display: block;
@@ -418,8 +428,8 @@
   .user-pic {
     width: 100px;
     height: 100px;
-    margin: 3rem 0 2rem;
-    display: inline-block;
+    margin: 3rem auto 2rem;
+    display: block;
   }
 
   // Menu items
@@ -433,11 +443,6 @@
       min-height: auto;
       color: #fff;
     }
-  }
-
-  .active {
-    background: rgba(0, 0, 0, .8);
-    border-radius: 5px;
   }
 }
 

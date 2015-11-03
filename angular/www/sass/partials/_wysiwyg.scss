@@ -1,12 +1,26 @@
 //------------------------------------------------------------------------------
 // WYSIWYG styles
-body {
-  font-family: $sans;
+
+.document {
+  @include span(14 of 24);
+  float: none;
+  margin: 0 auto;
+  padding-bottom: 3rem;
+  border-bottom: 1px solid #ccc;
+}
+
+.doc-title {
+  text-align: center;
+}
+
+.content-body {
+  font-family: $fonts-sans-light;
   margin-bottom: 18px;
 
   // Text contnet styles
   p {
     @include font-size(18);
+
     line-height: 1.5;
     margin: 0 0 25px;
   }
@@ -20,15 +34,21 @@ body {
   h5,
   h6 {
     line-height: 1.2;
-//    margin: 0 0 20px;
+    font-family: $fonts-sans;
   }
 
-  h1 { @include font-size(26); }
+  h1 { @include font-size(30); }
   h2 { @include font-size(22); }
   h3 { @include font-size(18); }
   h4 { @include font-size(22); }
   h5 { @include font-size(20); }
   h6 { @include font-size(15); }
+
+  h1 {  margin-bottom: 2.5rem;  }
+
+  h2 {  margin-bottom: 1.8rem;  }
+
+  h3 {  margin-bottom: 1.2rem;  }
 
 
 

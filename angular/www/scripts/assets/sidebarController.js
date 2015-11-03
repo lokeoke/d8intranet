@@ -8,7 +8,7 @@
  * Controller of the d8intranetApp
  */
 angular.module('d8intranetApp')
-    .controller('sidebarController', function (config, checkState, $scope, $rootScope, $cookies, $location, getCheckedInUsers) {
+    .controller('sidebarController', function (config, checkState, $scope, $rootScope, $cookies, $location) {
       $scope.menuStates = {};
       $scope.menuStates.activeItem = '#' + ($location.$$url).slice(1);
 
@@ -32,6 +32,11 @@ angular.module('d8intranetApp')
           icon: 'rest',
           title: 'Statistic',
           url: config.vacationsUrl
+        },
+        {
+          icon: 'doc',
+          title: 'Documents',
+          url: config.documentsUrl
         }
       ];
 
