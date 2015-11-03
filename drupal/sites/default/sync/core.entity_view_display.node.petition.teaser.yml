@@ -34,4 +34,6 @@ content:
     third_party_settings: {  }
 hidden:
   field_expiration_date: true
+  field_like_status: true
   field_likes: true
+  field_time_status: true
