@@ -55,10 +55,15 @@ class IntranetHelperServicesApi {
 
       if (!in_array($uid, array(0, 1))) {
         $account = User::load($uid);
-        $result[$key]['uid'] = $uid;
-        $result[$key]['field_first_name'] = $account->field_first_name->value;
-        $result[$key]['field_last_name'] = $account->field_last_name->value;
-        $result[$key]['field_image'] = $account->user_picture->target_id ? file_create_url(File::load($account->user_picture->target_id)->uri->value) : NULL;
+
+        // Exclude users with some statuses.
+        // (vacation, sick, day_off, business_trip).
+        if (!in_array($account->field_user_status->value, $this->getExcludedUserStatuses())) {
+          $result[$key]['uid'] = $uid;
+          $result[$key]['field_first_name'] = $account->field_first_name->value;
+          $result[$key]['field_last_name'] = $account->field_last_name->value;
+          $result[$key]['field_image'] = $account->user_picture->target_id ? file_create_url(File::load($account->user_picture->target_id)->uri->value) : NULL;
+        }
       }
     }
 
@@ -77,6 +82,15 @@ class IntranetHelperServicesApi {
     return reset($result);
   }
 
+  public function getExcludedUserStatuses() {
+    return array(
+      'vacation',
+      'business_trip',
+      'sick',
+      'day_off',
+    );
+  }
+
   public function checkUserIn($time, $uid) {
     $result = array(
       'status' => FALSE,
@@ -86,14 +100,8 @@ class IntranetHelperServicesApi {
 
     if ($account) {
       $user_status = $account->field_user_status->value;
-      $exclude_states = array(
-        'vacation',
-        'business_trip',
-        'sick',
-        'day_off',
-      );
 
-      if (!empty($account->field_user_status) && in_array($user_status, $exclude_states)) {
+      if (!empty($account->field_user_status) && in_array($user_status, $this->getExcludedUserStatuses())) {
         $result['status'] = FALSE;
         $result['message'] = t('You can not check-in because your status is "' . $user_status . '".')->render();
       }
