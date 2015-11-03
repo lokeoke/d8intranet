@@ -276,24 +276,33 @@ class IntranetHelperServicesApi {
       $nodeType = $node->getType();
 
       if ($nodeType == 'petition') {
-        $key = $this->isUserAlreadyLikePetition($node, $this->currentUser);
+        // Anonymous users can not like petitions.
+        $account = User::load($this->currentUser->id());
 
-        // If user did not like this petition yet.
-        if ($key === FALSE) {
-          // Like this petition.
-          $node->field_likes->set(count($node->field_likes), $this->getUserHash($this->currentUser));
-          $node->save();
+        if (!$account->hasRole('anonymous')) {
+          $key = $this->isUserAlreadyLikePetition($node, $this->currentUser);
 
-          $result['status'] = TRUE;
-          $result['message'] = t('Petition has been liked successfully.')->render();
+          // If user did not like this petition yet.
+          if ($key === FALSE) {
+            // Like this petition.
+            $node->field_likes->set(count($node->field_likes), $this->getUserHash($this->currentUser));
+            $node->save();
+
+            $result['status'] = TRUE;
+            $result['message'] = t('Petition has been liked successfully.')->render();
+          }
+          else {
+            // Unlike this petition.
+            $node->field_likes->set($key, NULL);
+            $node->save();
+
+            $result['status'] = TRUE;
+            $result['message'] = t('Petition has been unliked successfully.')->render();
+          }
         }
         else {
-          // Unlike this petition.
-          $node->field_likes->set($key, NULL);
-          $node->save();
-
-          $result['status'] = TRUE;
-          $result['message'] = t('Petition has been unliked successfully.')->render();
+          $result['status'] = FALSE;
+          $result['message'] = t('Anonymous user can not like petitions.')->render();
         }
       }
       else {

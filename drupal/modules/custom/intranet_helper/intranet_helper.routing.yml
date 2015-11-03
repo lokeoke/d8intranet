@@ -72,5 +72,6 @@ intranet_helper.like_petition:
     _controller: '\Drupal\intranet_helper\Controller\IntranetPetitionController::likePetition'
   requirements:
     _access: 'TRUE'
+  methods: [POST]
   options:
      no_cache: TRUE
