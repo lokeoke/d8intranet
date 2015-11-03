@@ -5,10 +5,13 @@ dependencies:
   config:
     - field.field.node.petition.body
     - field.field.node.petition.field_expiration_date
+    - field.field.node.petition.field_like_status
     - field.field.node.petition.field_likes
+    - field.field.node.petition.field_time_status
     - node.type.petition
   module:
     - datetime
+    - options
     - text
     - user
 id: node.petition.default
@@ -30,6 +33,18 @@ content:
       timezone_override: ''
       date_format: d-m-Y
     third_party_settings: {  }
+  field_like_status:
+    weight: 12
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    type: list_default
+  field_time_status:
+    weight: 11
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    type: list_default
   title:
     type: string
     settings:

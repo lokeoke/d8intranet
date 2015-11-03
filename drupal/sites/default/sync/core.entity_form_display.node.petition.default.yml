@@ -5,7 +5,9 @@ dependencies:
   config:
     - field.field.node.petition.body
     - field.field.node.petition.field_expiration_date
+    - field.field.node.petition.field_like_status
     - field.field.node.petition.field_likes
+    - field.field.node.petition.field_time_status
     - node.type.petition
   module:
     - datetime
@@ -37,7 +39,9 @@ content:
     third_party_settings: {  }
 hidden:
   created: true
+  field_like_status: true
   field_likes: true
+  field_time_status: true
   path: true
   promote: true
   sticky: true

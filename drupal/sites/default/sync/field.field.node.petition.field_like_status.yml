@@ -1,0 +1,23 @@
+uuid: f54d8db2-5f9b-4a62-bf00-aa7cb3f67895
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_like_status
+    - node.type.petition
+  module:
+    - options
+id: node.petition.field_like_status
+field_name: field_like_status
+entity_type: node
+bundle: petition
+label: 'Like status'
+description: ''
+required: false
+translatable: false
+default_value:
+  -
+    value: vote
+default_value_callback: ''
+settings: {  }
+field_type: list_string
