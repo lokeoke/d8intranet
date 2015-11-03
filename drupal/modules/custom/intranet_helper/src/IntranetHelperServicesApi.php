@@ -346,4 +346,25 @@ class IntranetHelperServicesApi {
     return $result;
   }
 
+  public function createPetition($title, $description) {
+    $node = Node::create(array(
+      'type' => 'petition',
+      'title' => $title,
+      'uid' => 0,
+      'status' => 1,
+      'body' => array(
+        array(
+          'value' => $description,
+        ),
+      ),
+    ));
+
+    $node->save();
+
+    return array(
+      'status' => TRUE,
+      'message' => t('Petition has been saved.')->render(),
+    );
+  }
+
 }

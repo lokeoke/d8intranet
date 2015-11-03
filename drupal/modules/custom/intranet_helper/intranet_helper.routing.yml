@@ -66,6 +66,16 @@ intranet_helper.teams:
      no_cache: TRUE
 
 # Petition API
+intranet_helper.create_petition:
+  path: '/api/petition/create'
+  defaults:
+    _controller: '\Drupal\intranet_helper\Controller\IntranetPetitionController::createPetition'
+  requirements:
+    _access: 'TRUE'
+  methods: [POST]
+  options:
+     no_cache: TRUE
+
 intranet_helper.like_petition:
   path: '/api/petition/{nid}/like'
   defaults:
