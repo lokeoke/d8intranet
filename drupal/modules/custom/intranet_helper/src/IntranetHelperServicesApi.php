@@ -332,7 +332,6 @@ class IntranetHelperServicesApi {
           $node->save();
         }
         else {
-          $result['status'] = FALSE;
           $result['message'] = t('Anonymous user can not like petitions.')->render();
         }
       }

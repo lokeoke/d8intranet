@@ -1,6 +1,7 @@
 <?php
 
 use Drupal\user\Entity\User;
+use Drupal\node\Entity\Node;
 
 /**
  * Implements hook_form_alter().
@@ -28,6 +29,29 @@ function intranet_petitions_node_presave(Drupal\node\Entity\Node $node) {
     // Only for new nodes we should calculate expires date.
     if (!isset($node->original)) {
       $node->field_expiration_date->value = date('Y-m-d', 86400 * $expiration_days_count + $node->created->value);
+    }
+  }
+}
+
+/**
+ * Implements hook_cron().
+ */
+function intranet_petitions_cron() {
+  $currentDateTimestamp = time();
+  $query = \Drupal::entityQuery('node')
+    ->condition('type', 'petition')
+    ->condition('field_time_status', 'active');
+
+  // Get all active petitions and update status if needed.
+  $nids = array_values($query->execute());
+  $activePetitions = Node::loadMultiple($nids);
+
+  foreach ($activePetitions as $petition) {
+    $expirationDateTimestamp = strtotime($petition->field_expiration_date->value);
+
+    if ($currentDateTimestamp >= $expirationDateTimestamp) {
+      $petition->field_time_status->set(0, 'expired');
+      $petition->save();
     }
   }
 }
