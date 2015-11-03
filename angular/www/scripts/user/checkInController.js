@@ -37,7 +37,7 @@ angular.module('d8intranetApp')
               modalWindow.setMessage(
                   'success',
                   'Check-in is done.',
-                  'You have successfully signed in.'
+                  data.message
               );
 
               getCheckedInUsers.getCheckedIn(config.checkedInList).then(function (d) {
@@ -57,7 +57,7 @@ angular.module('d8intranetApp')
               modalWindow.setMessage(
                   'error',
                   'Something went wrong!',
-                  'Please report about an issue, thanks :)'
+                  data.message
               );
             }
           });
@@ -78,10 +78,11 @@ angular.module('d8intranetApp')
         var req = $http.post(config.checkOutUrl, requestObject);
 
         req.success(function (data) {
+
           modalWindow.setMessage(
               'success',
               'Check-out is done.',
-              'You have successfully signed out!'
+              data.message
           );
 
           getCheckedInUsers.getCheckedIn(config.checkedInList).then(function (d) {
@@ -102,7 +103,7 @@ angular.module('d8intranetApp')
           modalWindow.setMessage(
               'error',
               'Something went wrong!',
-              'Please report about an issue, thanks :)'
+              data.message
           );
         });
       }
