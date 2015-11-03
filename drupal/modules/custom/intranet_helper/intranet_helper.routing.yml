@@ -1,3 +1,4 @@
+# Jira API
 intranet_helper.jira_rest_worklog:
   path: '/api/user/worklog'
   defaults:
@@ -7,6 +8,7 @@ intranet_helper.jira_rest_worklog:
   options:
      no_cache: TRUE
 
+# User API
 intranet_helper.user_check_in:
   path: '/api/user/check-in'
   defaults:
@@ -54,11 +56,20 @@ intranet_helper.user_status:
   options:
      no_cache: TRUE
 
-
 intranet_helper.teams:
   path: '/api/user/team'
   defaults:
     _controller: '\Drupal\intranet_helper\Controller\IntranetUserController::teams'
+  requirements:
+    _access: 'TRUE'
+  options:
+     no_cache: TRUE
+
+# Petition API
+intranet_helper.like_petition:
+  path: '/api/petition/{nid}/like'
+  defaults:
+    _controller: '\Drupal\intranet_helper\Controller\IntranetPetitionController::likePetition'
   requirements:
     _access: 'TRUE'
   options:

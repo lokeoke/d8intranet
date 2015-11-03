@@ -3,6 +3,7 @@
 namespace Drupal\intranet_helper;
 
 use Drupal\Core\Database\Database;
+use Drupal\node\Entity\Node;
 use Drupal\user\Entity\User;
 use Drupal\taxonomy\Entity\Term;
 use Drupal\file\Entity\File;
@@ -10,10 +11,12 @@ use Drupal\file\Entity\File;
 class IntranetHelperServicesApi {
 
   const TEAM_VOCABULARY_NAME = 'teams';
-  protected $termStorage;
+  private $termStorage;
+  private $currentUser;
 
   public function __construct() {
     $this->termStorage = \Drupal::entityManager()->getStorage('taxonomy_term');
+    $this->currentUser = \Drupal::service('current_user');
   }
 
   public function getCheckedInUsers() {
@@ -237,6 +240,68 @@ class IntranetHelperServicesApi {
     // Generate teams.
     foreach ($teams as $key => $team) {
       $result[] = $this->getTeam($team->tid);
+    }
+
+    return $result;
+  }
+
+  public function isUserAlreadyLikePetition($node, $user) {
+    $result = FALSE;
+
+    if (isset($node->field_likes)) {
+      foreach ($node->field_likes->getValue() as $key => $userHash) {
+        if ($userHash['value'] == $this->getUserHash($user)) {
+          $result = $key;
+
+          break;
+        }
+      }
+    }
+
+    return $result;
+  }
+
+  public function getUserHash($user) {
+    return md5($user->id() . $user->getUserName() . $user->getEmail());
+  }
+
+  public function likePetition($nid) {
+    $result = array(
+      'status' => FALSE,
+      'message' => t('Petition has not been liked.')->render(),
+    );
+    $node = Node::load($nid);
+
+    if ($node) {
+      $nodeType = $node->getType();
+
+      if ($nodeType == 'petition') {
+        $key = $this->isUserAlreadyLikePetition($node, $this->currentUser);
+
+        // If user did not like this petition yet.
+        if ($key === FALSE) {
+          // Like this petition.
+          $node->field_likes->set(count($node->field_likes), $this->getUserHash($this->currentUser));
+          $node->save();
+
+          $result['status'] = TRUE;
+          $result['message'] = t('Petition has been liked successfully.')->render();
+        }
+        else {
+          // Unlike this petition.
+          $node->field_likes->set($key, NULL);
+          $node->save();
+
+          $result['status'] = TRUE;
+          $result['message'] = t('Petition has been unliked successfully.')->render();
+        }
+      }
+      else {
+        $result['message'] = t('You can not like ' . $nodeType . '.')->render();
+      }
+    }
+    else {
+      $result['message'] = t('Petition with nid = ' . $nid . ' does not exists.')->render();
     }
 
     return $result;
