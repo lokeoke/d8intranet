@@ -15,7 +15,7 @@ class PetitionsConfigForm extends ConfigFormBase {
 
     $form['intranet_petitions_expired_days'] = [
       '#type' => 'number',
-      '#title' => $this->t('Number of days to review the petition'),
+      '#title' => $this->t('Number of days petition life'),
       '#default_value' => $config->get('intranet_petitions_expired_days'),
     ];
 

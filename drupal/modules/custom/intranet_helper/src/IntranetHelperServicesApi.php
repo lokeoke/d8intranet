@@ -13,10 +13,12 @@ class IntranetHelperServicesApi {
   const TEAM_VOCABULARY_NAME = 'teams';
   private $termStorage;
   private $currentUser;
+  private $intranetPetitionsConfig;
 
   public function __construct() {
     $this->termStorage = \Drupal::entityManager()->getStorage('taxonomy_term');
     $this->currentUser = \Drupal::service('current_user');
+    $this->intranetPetitionsConfig = \Drupal::configFactory()->getEditable('intranet_petitions.settings');
   }
 
   public function getCheckedInUsers() {
@@ -245,7 +247,7 @@ class IntranetHelperServicesApi {
     return $result;
   }
 
-  public function isUserAlreadyLikePetition($node, $user) {
+  private function isUserAlreadyLikePetition($node, $user) {
     $result = FALSE;
 
     if (isset($node->field_likes)) {
@@ -261,8 +263,36 @@ class IntranetHelperServicesApi {
     return $result;
   }
 
-  public function getUserHash($user) {
+  private function getUserHash($user) {
     return md5($user->id() . $user->getUserName() . $user->getEmail());
+  }
+
+  private function like(Node $node, $hash) {
+    $node->field_likes->set(count($node->field_likes), $hash);
+  }
+
+  private function unLike(Node $node, $key) {
+    $node->field_likes->set($key, NULL);
+  }
+
+  private function updateLikesStatus(Node $node) {
+    $count = 0;
+    $likesLevel = (int) $this->intranetPetitionsConfig->get('intranet_petitions_likes_level');
+
+    foreach ($node->field_likes as $like) {
+      if ($like->value) {
+        $count++;
+      }
+    }
+
+    if ($count >= $likesLevel) {
+      // Voting is complete.
+      $node->field_like_status->set(0, 'scored');
+    }
+    else {
+      // Voting is not complete.
+      $node->field_like_status->set(0, 'vote');
+    }
   }
 
   public function likePetition($nid) {
@@ -285,20 +315,21 @@ class IntranetHelperServicesApi {
           // If user did not like this petition yet.
           if ($key === FALSE) {
             // Like this petition.
-            $node->field_likes->set(count($node->field_likes), $this->getUserHash($this->currentUser));
-            $node->save();
+            $this->like($node, $this->getUserHash($this->currentUser));
 
             $result['status'] = TRUE;
             $result['message'] = t('Petition has been liked successfully.')->render();
           }
           else {
             // Unlike this petition.
-            $node->field_likes->set($key, NULL);
-            $node->save();
+            $this->unLike($node, $key);
 
             $result['status'] = TRUE;
             $result['message'] = t('Petition has been unliked successfully.')->render();
           }
+
+          $this->updateLikesStatus($node);
+          $node->save();
         }
         else {
           $result['status'] = FALSE;
