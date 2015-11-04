@@ -66,7 +66,7 @@ angular.module('d8intranetApp')
     })
 
     .directive('showTableData', function () {
-      var hideShowElement = function (element) {
+      var hideShowElement = function (scope, element) {
         element.bind('click', function () {
           if ($(this).next().hasClass('show-table-data')) {
             $(this).removeClass('active-table-data');

@@ -33,6 +33,7 @@ angular.module('d8intranetApp')
           res.success(function (data) {
             $scope.message = data;
 
+
             if (data.status) {
               modalWindow.setMessage(
                   'success',

@@ -92,7 +92,7 @@ angular.module('d8intranetApp')
             return 'Remote work';
             break;
           case 'totalWorkOff':
-            return 'Work Off';
+            return 'Overtime';
             break;
           default:
             return '';
