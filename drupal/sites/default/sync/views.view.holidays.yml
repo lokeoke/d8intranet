@@ -227,7 +227,7 @@ display:
     position: 1
     display_options:
       display_extenders: {  }
-      path: api/holidays
+      path: api/holiday
       pager:
         type: none
         options:
