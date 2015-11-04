@@ -59,7 +59,8 @@ angular.module('d8intranetApp')
 
     .directive('tableHeadline', function () {
       return {
-        restrict: 'A',
+        restrict: 'AE',
+        replace: true,
         templateUrl: 'templates/tableHeader.html'
       }
     })
@@ -159,41 +160,47 @@ angular.module('d8intranetApp')
       }
     })
 
-    .directive('staticHeader', function ($window) {
+    .directive('staticHeader', function ($window, $timeout) {
+
       return function (scope, element) {
-        var headerTop = element.offset().top,
-            tableWidth = angular.element('.table-data'),
-            w = angular.element($window);
+
+        $timeout(function () {
 
 
-        scope.getTableWidth = function() {
-          return tableWidth.outerWidth();
-        };
+          var headerTop = element.offset().top,
+              tableWidth = angular.element('.table-data'),
+              w = angular.element($window);
+
+          scope.getTableWidth = function () {
+            return tableWidth.outerWidth();
+          };
 
 
-        w.bind('scroll', function () {
-          if (this.pageYOffset >= headerTop) {
-            element.css({
-              width: scope.getTableWidth,
-              position: 'fixed',
-              top: 0
-            })
-          }
-          else {
-            element.removeAttr('style');
-          }
-        });
+          w.bind('scroll', function () {
+            if (this.pageYOffset >= headerTop) {
+              element.css({
+                width: scope.getTableWidth,
+                position: 'fixed',
+                top: 0
+              })
+            }
+            else {
+              element.removeAttr('style');
+            }
+          });
 
-        w.bind('resize', function(){
-          if (this.pageYOffset >= headerTop) {
-            element.css({
-              width: scope.getTableWidth
-            });
-          }
-          scope.$apply();
-        })
+          w.bind('resize', function () {
+            if (this.pageYOffset >= headerTop) {
+              element.css({
+                width: scope.getTableWidth
+              });
+            }
+          });
+
+        }, 100);
 
       }
-    })
+    }
+)
 
 ;
