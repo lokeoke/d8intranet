@@ -78,7 +78,7 @@ angular.module('d8intranetApp')
           url: 'templates/remote.html'
         },
         {
-          title: 'Work off',
+          title: 'Overtime',
           url: 'templates/workoff.html'
         }
       ];
