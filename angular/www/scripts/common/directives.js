@@ -20,13 +20,13 @@ angular.module('d8intranetApp')
 
     .directive('ngBlur', ['$document', function ($document) {
       return {
-        link: function (scope, element, attrs) {
+        link: function (scope, element) {
           element.bind('blur', function () {
             scope.inputSelected = true;
-            element[0].value ? scope.inputSelected = true : scope.inputSelected = false
-          })
+            element[0].value ? scope.inputSelected = true : scope.inputSelected = false;
+          });
         }
-      }
+      };
     }])
 
     .directive('chosen', function () {
@@ -41,7 +41,7 @@ angular.module('d8intranetApp')
       return {
         restrict: 'A',
         link: linker
-      }
+      };
     })
 
     .directive('vacationsLeft', function () {
@@ -54,7 +54,7 @@ angular.module('d8intranetApp')
       return {
         restrict: 'A',
         link: progressLeft
-      }
+      };
     })
 
     .directive('tableHeadline', function () {
@@ -62,11 +62,11 @@ angular.module('d8intranetApp')
         restrict: 'AE',
         replace: true,
         templateUrl: 'templates/tableHeader.html'
-      }
+      };
     })
 
     .directive('showTableData', function () {
-      var hideShowElement = function (scope, element, attrs) {
+      var hideShowElement = function (element) {
         element.bind('click', function () {
           if ($(this).next().hasClass('show-table-data')) {
             $(this).removeClass('active-table-data');
@@ -84,7 +84,7 @@ angular.module('d8intranetApp')
       return {
         restrict: 'A',
         link: hideShowElement
-      }
+      };
     })
 
     .directive('modal', function () {
@@ -104,26 +104,26 @@ angular.module('d8intranetApp')
             }
           });
         }
-      }
+      };
     })
 
     .directive('insertModal', function ($compile) {
-      return function (scope, element, attrs) {
+      return function (scope, element) {
         element.bind('click', function () {
           angular.element(document.getElementById('modal-wrapper'))
               .append(
               $compile('<modal title="{{modalHeaderTitle}}" data-type="{{modalMessageType}}" visible="showModalWindow"></modal>')(scope)
           );
         })
-      }
+      };
     })
 
     .directive('removeModal', function () {
-      return function (scope, element, attrs) {
+      return function (scope, element) {
         element.bind('click', function () {
           angular.element(document.getElementsByClassName('modal')).remove();
         })
-      }
+      };
     })
 
     .directive('updateStatus', function ($rootScope, $timeout, config, getCheckedInUsers) {
@@ -139,7 +139,7 @@ angular.module('d8intranetApp')
 
           });
         });
-      }
+      };
     })
 
     .directive('errSrc', function () {
@@ -157,16 +157,12 @@ angular.module('d8intranetApp')
             }
           });
         }
-      }
+      };
     })
 
     .directive('staticHeader', function ($window, $timeout) {
-
       return function (scope, element) {
-
         $timeout(function () {
-
-
           var headerTop = element.offset().top,
               tableWidth = angular.element('.table-data'),
               w = angular.element($window);
@@ -198,9 +194,7 @@ angular.module('d8intranetApp')
           });
 
         }, 100);
-
-      }
-    }
-)
+      };
+    })
 
 ;

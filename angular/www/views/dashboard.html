@@ -20,7 +20,9 @@
           <img ng-src="{{user.field_image}}"
                err-SRC="images/anonymus.png"
                alt="{{user.field_first_name}} {{user.field_last_name}}"
-               title="{{user.field_first_name}} {{user.field_last_name}}"/>
+               title="{{user.field_first_name}} {{user.field_last_name}}"
+               width="32"
+               height="32"/>
           </span>
             <span class="check-in-time">
               {{user.time * 1000 | date:'h:mma'}}
@@ -46,7 +48,9 @@
                   <img ng-src="{{users.field_image}}"
                        err-SRC="images/anonymus.png"
                        alt="{{users.field_last_name}}"
-                       title="{{users.field_last_name}}"/>
+                       title="{{users.field_last_name}}"
+                       width="32"
+                       height="32"/>
                   </span>
                 </span>
               <span class="back"></span>
@@ -82,7 +86,9 @@
                     <span class="user-pic">
                       <img ng-src="{{employee.user_picture[0].url}}"
                            err-SRC="images/anonymus.png"
-                           alt="{{employee.field_first_name[0].value}} {{employee.field_last_name[0].value}}"/>
+                           alt="{{employee.field_first_name[0].value}} {{employee.field_last_name[0].value}}"
+                           width="32"
+                           height="32"/>
                     </span>
                   </span>
                   <span class="back"></span>

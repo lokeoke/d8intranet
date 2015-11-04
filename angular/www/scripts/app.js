@@ -20,12 +20,12 @@ angular.module('d8intranetApp', [
     .config(function ($routeProvider, $httpProvider, $compileProvider) {
       $routeProvider
           .when('/dashboard', {
-            url: "/dashboard",
+            url: '/dashboard',
             templateUrl: 'views/dashboard.html',
             controller: 'dashboardController'
           })
           .when('/employees', {
-            url: "/employees",
+            url: '/employees',
             templateUrl: 'views/employees.html',
             controller: 'employeesController'
           })
@@ -35,17 +35,17 @@ angular.module('d8intranetApp', [
             controller: 'singleUserController'
           })
           .when('/user/:userId', {
-            url: "/user/:userId",
+            url: '/user/:userId',
             templateUrl: 'views/user.html',
             controller: 'ShowUserCtrl'
           })
           .when('/vacation', {
-            url: "/statistic",
+            url: '/statistic',
             templateUrl: 'views/statistic.html',
             controller: 'StatisticController'
           })
           .when('/documents', {
-            url: "/documents",
+            url: '/documents',
             templateUrl: 'views/documents.html',
             controller: 'documentsController'
           })
@@ -60,20 +60,20 @@ angular.module('d8intranetApp', [
     })
 
     .constant('config', {
-      frontUrl: "#dashboard",
-      employeesUrl: "#employees",
-      vacationsUrl: "#vacation",
-      documentsUrl: "#documents",
-      checkInUrl: "admin/api/user/check-in",
-      checkOutUrl: "admin/api/user/check-out",
-      checkedInList: "admin/api/user/checked-in",
-      checkedOutList: "admin/api/user/checked-out",
-      teamsUrl: "admin/api/user/team",
-      loginPathUrl: "admin/user/login?redirect=true",
-      logoutPathUrl: "admin/user/logout?redirect=true",
-      status: "admin/api/user/check-state",
-      holidaysUrl: "admin/api/holidays/" + new Date().getFullYear(),
-      totalVacation: "20"
+      frontUrl: '#dashboard',
+      employeesUrl: '#employees',
+      vacationsUrl: '#vacation',
+      documentsUrl: '#documents',
+      checkInUrl: 'admin/api/user/check-in',
+      checkOutUrl: 'admin/api/user/check-out',
+      checkedInList: 'admin/api/user/checked-in',
+      checkedOutList: 'admin/api/user/checked-out',
+      teamsUrl: 'admin/api/user/team',
+      loginPathUrl: 'admin/user/login?redirect=true',
+      logoutPathUrl: 'admin/user/logout?redirect=true',
+      status: 'admin/api/user/check-state',
+      holidaysUrl: 'admin/api/holidays/' + new Date().getFullYear(),
+      totalVacation: '20'
     })
 
     .controller('GetDateCtrl', function ($scope) {

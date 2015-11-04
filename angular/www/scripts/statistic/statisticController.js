@@ -50,8 +50,8 @@ angular.module('d8intranetApp')
             }
           });
 
-          $scope.teams.unshift({"name": 'all', "target_id": 0});
-          $scope.teamFilter = {selectedOption: $scope.teams[0].target_id}
+          $scope.teams.unshift( {"name": 'all', "target_id": 0} );
+          $scope.teamFilter = { selectedOption: $scope.teams[0].target_id }
         });
       });
 
