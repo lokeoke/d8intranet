@@ -1299,7 +1299,8 @@ hr {
   position: relative;
   display: block;
   width: 100px;
-  height: 100px; }
+  height: 100px;
+  z-index: 100; }
   .user-pic img {
     border-radius: 100%; }
   .user-pic::before {
@@ -1902,7 +1903,7 @@ hr {
 .message-slide {
   background: #b91010 none repeat scroll 0% 0%;
   color: white;
-  padding: 10px 0px;
+  padding: 10px 0;
   position: fixed;
   top: 0;
   left: 115px;
@@ -2680,46 +2681,40 @@ hr {
   z-index: 10;
   -webkit-transform: rotate(-15deg);
           transform: rotate(-15deg); }
-
-.preloader:after,
-.preloader:before {
-  content: ''; }
-
-.preloader span,
-.preloader span:after,
-.preloader:after,
-.preloader:before {
-  width: 20px;
-  height: 20px;
-  position: absolute;
-  background: red;
-  display: block;
-  border-radius: 100%;
-  -webkit-animation: preloader_element 1s infinite linear;
-          animation: preloader_element 1s infinite linear; }
-
-.preloader:before {
-  background: #4caf50; }
-
-.preloader:after {
-  left: 22px;
-  background: #ff5722;
-  -webkit-animation-delay: .2s;
-          animation-delay: .2s; }
-
-.preloader span {
-  top: 22px;
-  background: #e91e63;
-  -webkit-animation-delay: .4s;
-          animation-delay: .4s; }
-
-.preloader span:nth-child(2) {
-  content: '';
-  top: 22px;
-  left: 22px;
-  background: #286b90;
-  -webkit-animation-delay: .6s;
-          animation-delay: .6s; }
+  .preloader:after,
+  .preloader:before {
+    content: ''; }
+  .preloader span,
+  .preloader span:after,
+  .preloader:after,
+  .preloader:before {
+    width: 20px;
+    height: 20px;
+    position: absolute;
+    background: #f00;
+    display: block;
+    border-radius: 100%;
+    -webkit-animation: preloader_element 1s infinite linear;
+            animation: preloader_element 1s infinite linear; }
+  .preloader:before {
+    background: #4caf50; }
+  .preloader:after {
+    left: 22px;
+    background: #ff5722;
+    -webkit-animation-delay: .2s;
+            animation-delay: .2s; }
+  .preloader span {
+    top: 22px;
+    background: #e91e63;
+    -webkit-animation-delay: .4s;
+            animation-delay: .4s; }
+  .preloader span:nth-child(2) {
+    content: '';
+    top: 22px;
+    left: 22px;
+    background: #286b90;
+    -webkit-animation-delay: .6s;
+            animation-delay: .6s; }
 
 @-webkit-keyframes preloader_element {
   0% {
@@ -3043,7 +3038,7 @@ code {
   .lt-ie9 .no-logged-users {
     font-size: 20px; }
   .light .no-logged-users {
-    color: #9E9E9E; }
+    color: #9e9e9e; }
 
 .available-users,
 .checked-in-users-list {
@@ -3072,7 +3067,7 @@ code {
   display: inline-block;
   border: 1px solid transparent;
   cursor: pointer;
-  background: #DE1B1B none repeat scroll 0% 0%;
+  background: #de1b1b none repeat scroll 0% 0%;
   border-radius: 100%;
   width: 30px;
   height: 30px;
