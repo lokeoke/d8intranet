@@ -11,9 +11,6 @@
   top: 50%;
   z-index: 10;
   transform: rotate(-15deg);
-}
-
-.preloader {
 
   &:after,
   &:before {
@@ -27,7 +24,7 @@
     width: 20px;
     height: 20px;
     position: absolute;
-    background: red;
+    background: #f00;
     display: block;
     border-radius: 100%;
     animation: preloader_element 1s infinite linear;
@@ -49,9 +46,9 @@
     animation-delay: .4s;
   }
 
-  span:nth-child(2)  {
+  span:nth-child(2) {
     content: '';
-          top: 22px;
+    top: 22px;
     left: 22px;
     background: #286b90;
     animation-delay: .6s;
@@ -60,6 +57,8 @@
 
 @keyframes preloader_element {
   0% { transform: scale(1); }
-  50% { transform: scale(0.5); }
+
+  50% { transform: scale(.5); }
+
   100% { transform: scale(1); }
 }

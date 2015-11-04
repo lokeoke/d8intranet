@@ -22,7 +22,7 @@ angular.module('d8intranetApp')
     }
     else {
       // If we have light in cooke set the light theme
-      $cookies.get('current-theme') == 'light' ? $scope.isDark = false : $scope.isDark = true;
+      $cookies.get('current-theme') === 'light' ? $scope.isDark = false : $scope.isDark = true;
     }
 
     $scope.setCookieData = function () {
@@ -33,7 +33,7 @@ angular.module('d8intranetApp')
       var themeCookie = $cookies.get('current-theme');
 
       // If we have value light in cooke set the value to dark
-      if (themeCookie == 'light') {
+      if (themeCookie === 'light') {
         $cookies.put('current-theme', 'dark', {'expires': expireDate});
       }
       // If we have value dark in cooke set the value tp light

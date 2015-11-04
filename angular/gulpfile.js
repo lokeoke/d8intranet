@@ -2,22 +2,23 @@
 'use strict';
 
 var
-  gulp = require('gulp'),                       // Gulp JS
-  sass = require('gulp-sass'),                  // Sass
-  plumber = require('gulp-plumber'),            // Plumber
-  livereload = require('gulp-livereload'),      // Livereload для Gulp
-  imagemin = require('gulp-imagemin'),          // Minimize images
-  uglify = require('gulp-uglify'),              // Minimize JS
-  concat = require('gulp-concat'),              // Concatination of files
-  minifyCss = require('gulp-minify-css'),       // Minify CSS
-  rename = require('gulp-rename'),              // File rename
-  jshint = require('gulp-jshint'),              // JS hint
-  minifyHTML = require('gulp-minify-html'),     // Minify HTML
-  scsslint = require('gulp-scss-lint'),         // SCSS hint
-  prefix = require('gulp-autoprefixer'),        // Autoprefixer
-  connect = require('gulp-connect'),            // Webserver
-  notify = require("gulp-notify"),
-  htmlreplace = require('gulp-html-replace');   // HTML Replace
+    gulp = require('gulp'),                       // Gulp JS
+    sass = require('gulp-sass'),                  // Sass
+    ngmin = require('gulp-ngmin'),                // Angular minification
+    plumber = require('gulp-plumber'),            // Plumber
+    livereload = require('gulp-livereload'),      // Livereload для Gulp
+    imagemin = require('gulp-imagemin'),          // Minimize images
+    uglify = require('gulp-uglify'),              // Minimize JS
+    concat = require('gulp-concat'),              // Concatination of files
+    minifyCss = require('gulp-minify-css'),       // Minify CSS
+    rename = require('gulp-rename'),              // File rename
+    jshint = require('gulp-jshint'),              // JS hint
+    minifyHTML = require('gulp-minify-html'),     // Minify HTML
+    scsslint = require('gulp-scss-lint'),         // SCSS hint
+    prefix = require('gulp-autoprefixer'),        // Autoprefixer
+    connect = require('gulp-connect'),            // Webserver
+    notify = require("gulp-notify"),
+    htmlreplace = require('gulp-html-replace');   // HTML Replace
 
 // Liver reload auto start
 livereload({start: true});
@@ -42,8 +43,8 @@ gulp.task('connect', function () {
     middleware: function (connect, opt) {
       return [
         connect().use(
-          '/bower_components',
-          connect.static('./bower_components')
+            '/bower_components',
+            connect.static('./bower_components')
         )
       ];
     }
@@ -55,43 +56,42 @@ gulp.task('connect', function () {
 // Live reload for changes in html pages
 gulp.task('html', function (done) {
   gulp.src(paths.html)
-    .pipe(livereload())
+      .pipe(livereload())
     //.pipe(connect.reload())
-    .pipe(gulp.dest('www/'))
-    .on('end', done);
+      .pipe(gulp.dest('www/'))
+      .on('end', done);
 });
 
 // -----------------------------------------------------------------------------
 // SCSS compilation task with livereload
 gulp.task('sass', function (done) {
   gulp.src(paths.sass)
-    .pipe(plumber())
-    .pipe(sass(({errLogToConsole: true})))
-    .pipe(prefix({ browsers: ['last 2 version'] }))
-    .on('error', swallowError)
-    .pipe(gulp.dest(paths.css))
-    .pipe(livereload())
-    .pipe(connect.reload())
-    .on('end', done);
+      .pipe(plumber())
+      .pipe(sass(({errLogToConsole: true})))
+      .pipe(prefix({browsers: ['last 2 version']}))
+      .on('error', swallowError)
+      .pipe(gulp.dest(paths.css))
+      .pipe(livereload())
+      .pipe(connect.reload())
+      .on('end', done);
 });
 
 // -----------------------------------------------------------------------------
 // JS
-gulp.task('scripts', function(){
+gulp.task('scripts', function () {
   gulp.src(paths.scripts)
-    .pipe(gulp.dest('./www/scripts/'))
-    .pipe(livereload())
-    .pipe(connect.reload());
+      .pipe(gulp.dest('./www/scripts/'))
+      .pipe(livereload())
+      .pipe(connect.reload());
 });
 
 // SCSS lint
 gulp.task('scss-lint', function () {
   gulp.src(['www/sass/**/*.scss', '!www/sass/vendor/**/*.scss', '!www/sass/base/utils/**/*.scss', '!www/sass/base/_base.scss'])
-    .pipe(scsslint({
-      'config': 'lint.yml'
-    }));
+      .pipe(scsslint({
+        'config': 'lint.yml'
+      }));
 });
-
 
 
 // Task which watching changes in files
@@ -106,8 +106,8 @@ gulp.task('watch', function () {
 // JS lint for errors in code
 gulp.task('lint', function () {
   return gulp.src(paths.scripts)
-    .pipe(jshint())
-    .pipe(jshint.reporter('default'));
+      .pipe(jshint())
+      .pipe(jshint.reporter('default'));
 });
 
 // Default task
@@ -123,48 +123,37 @@ function swallowError(error) {
 // -----------------------------------------------------------------------------
 // Build project
 gulp.task('build', function (done) {
-
-  // ---------------------------------
-  // CSS autoprefixer
-  gulp.src(paths.scripts)
-    .pipe(autoprefixer({
-      browsers: ['last 2 versions'],
-      cascade: false
-    }))
-    .pipe(gulp.dest('./build/css/'));
-
-
   // ---------------------------------
   // HTML Replace
-//  gulp.src('./public/index.html')
-//    .pipe(htmlreplace({
-//      'css': 'css/main.min.css',
-//      'js': 'js/main.js'
-//    }))
-//    .pipe(gulp.dest('./build/'))
-//    .pipe(notify({ title: 'HTML replace', message: 'success', onLast: true }));
-//
-//
-//  // ---------------------------------
-//  // CSS
-//  gulp.src('./public/css/**/*.css')
-//    .pipe(minifyCss({
-//      keepSpecialComments: 0
-//    }))
-//    .pipe(rename({extname: '.min.css'}))
-//    .pipe(gulp.dest('./build/css/')) // write results into build/css folder
-//    .pipe(notify({ title: 'CSS minification', message: 'success', onLast: true }));
-//
-//
-//  // ---------------------------------
-//  // JS
-//  gulp.src(['./public/js/**/*.js'])
-//    .pipe(concat('main.js'))
-//    .pipe(uglify())
-//    .pipe(gulp.dest('./build/js/'))
-//    .pipe(notify({ title: 'JS Compression', message: 'success', onLast: true }));
-//
-//
+  //gulp.src('./www/index.html')
+  //    .pipe(htmlreplace({
+  //      'css': 'styles/main.min.css'
+  //      //'js': 'scripts/main.js'
+  //    }))
+  //    .pipe(gulp.dest('www/index.html'))
+  //    .pipe(notify({title: 'HTML replace', message: 'success', onLast: true}));
+
+
+  // ---------------------------------
+  // CSS
+  gulp.src('./www/styles/**/*.css')
+      .pipe(minifyCss({
+        keepSpecialComments: 0
+      }))
+      .pipe(rename({extname: '.min.css'}))
+      .pipe(gulp.dest('./www/styles/')) // write results into build/css folder
+      .pipe(notify({title: 'CSS minification', message: 'success', onLast: true}));
+
+  // ---------------------------------
+  // JS
+  //gulp.src(['./www/scripts/**/*.js'])
+  //    .pipe(concat('main.js'))
+  //    .pipe(ngmin())
+  //    //.pipe(uglify({mangle: false}))
+  //    .pipe(gulp.dest('./www/scripts/'))
+  //    .pipe(notify({title: 'JS Compression', message: 'success', onLast: true}));
+
+
 //  // ---------------------------------
 //  // Image minification
 //  //gulp.src('./public/images/**/*')

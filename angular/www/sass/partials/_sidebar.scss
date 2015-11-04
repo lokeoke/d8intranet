@@ -13,45 +13,45 @@
 .sidebar {
   position: relative;
   z-index: 10000;
-}
 
-.sidebar li {
-  transition: all .4s ease-in-out;
+  li {
+    transition: all .4s ease-in-out;
 
-  &.active,
-  &:hover {
-    @each $theme, $map in $themes {
-      .#{$theme} & {
-        background: map-get($map, $menu-hover);
-        color: map-get($map, $light-gray);
-      }
-    }
-  }
-
-  @include susy-breakpoint(0 1280px) {
-    &:hover:not(.active) {
+    &.active,
+    &:hover {
       @each $theme, $map in $themes {
         .#{$theme} & {
-          background: transparent;
+          background: map-get($map, $menu-hover);
+          color: map-get($map, $light-gray);
         }
       }
     }
 
-    &.active {
-      @each $theme, $map in $themes {
-        .#{$theme} & {
-          background: rgba(0, 0, 0, .8);
+    @include susy-breakpoint(0 1280px) {
+      &:hover:not(.active) {
+        @each $theme, $map in $themes {
+          .#{$theme} & {
+            background: transparent;
+          }
         }
       }
-      border-radius: 5px;
+
+      &.active {
+        @each $theme, $map in $themes {
+          .#{$theme} & {
+            background: rgba(0, 0, 0, .8);
+          }
+        }
+        border-radius: 5px;
+      }
     }
   }
-}
 
-.sidebar .menu-desktop {
-  left: -20px;
-  opacity: 0;
-  z-index: -9999;
+  .menu-desktop {
+    left: -20px;
+    opacity: 0;
+    z-index: -9999;
+  }
 }
 
 .loaded-bar .menu-desktop {
@@ -63,7 +63,7 @@
 .menu-desktop {
   position: fixed;
   top: 0;
-//  left: 0;
+  //  left: 0;
   height: 100%;
   overflow: hidden;
   transition: all 1s ease-in-out, width .2s ease-in-out;
@@ -172,6 +172,8 @@
 
   // Titles
   .menu-item-title {
+    @include font-size(12);
+    letter-spacing: .06em;
     color: $white;
     float: left;
     padding: 7px 0;
@@ -230,6 +232,7 @@
     content: '\e811';
   }
 }
+
 .doc-icon {
   &::before {
     @include font-size(20);
@@ -266,7 +269,6 @@
 }
 
 .user-data {
-
   .user-pic {
     width: 70px;
     height: 70px;
@@ -386,11 +388,14 @@
     }
   }
 
-  span:before { transform: translateY(-250%); }
+  span:before {
+    transform: translateY(-250%);
+  }
 
-  span:after { transform: translateY(250%); }
+  span:after {
+    transform: translateY(250%);
+  }
 }
-
 
 .menu-close {
   position: fixed;

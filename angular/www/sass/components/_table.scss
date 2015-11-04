@@ -8,6 +8,7 @@
     .front {
       transform: rotateY(180deg);
     }
+
     .back {
       transform: rotateY(0deg);
     }
@@ -47,7 +48,7 @@
   text-align: left;
   display: block;
   clear: both;
-  margin: 0 0 15px 0;
+  margin: 0 0 15px;
 
   @include susy-breakpoint(901px) {
     clear: none;
@@ -83,7 +84,7 @@
   }
 
   .user-dates {
-    background: #37474F;
+    background: #37474f;
 
     .light & {
       background: #fff;
@@ -94,7 +95,7 @@
     @extend %group;
     display: block;
     z-index: 4;
-    box-shadow: 0 0 35px rgba(0, 0, 0, 0.45);
+    box-shadow: 0 0 35px rgba(0, 0, 0, .45);
 
     .month {
       font-size: 14px;
@@ -136,7 +137,7 @@
   // Name of User styles
   .user-name {
     @include font-size(18);
-    background: #37474F;
+    background: #37474f;
 
     .light & {
       background: #fff;
@@ -272,7 +273,7 @@
   // Total user dates in year
   .total {
     transition: none ease-out 0s;
-    background: #37474F;
+    background: #37474f;
 
     .light & {
       background: #fff;
@@ -377,7 +378,7 @@
     top: 100%;
     left: 50%;
     border: 8px solid transparent;
-    content: " ";
+    content: ' ';
     height: 0;
     width: 0;
     position: absolute;

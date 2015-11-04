@@ -24,7 +24,7 @@ angular.module('d8intranetApp')
 
       $scope.teams = [];
 
-      function isInArray(element, index, array) {
+      function isInArray(element) {
         return element.name != this.name;
       }
 
