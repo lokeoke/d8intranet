@@ -1,15 +1,3 @@
-@font-face {
-  font-family: "Open Sans";
-  src: url(../fonts/OpenSans.eot);
-  src: url(../fonts/OpenSans.eot?#iefix) format("embedded-opentype"), url(../fonts/OpenSans.woff) format("woff"), url(../fonts/OpenSans.ttf) format("truetype"), url(../fonts/OpenSans.svg#OpenSans) format("svg");
-  font-style: "normal"; }
-
-@font-face {
-  font-family: "Open Sans Light";
-  src: url(../fonts/OpenSansLight.eot);
-  src: url(../fonts/OpenSansLight.eot?#iefix) format("embedded-opentype"), url(../fonts/OpenSansLight.woff) format("woff"), url(../fonts/OpenSansLight.ttf) format("truetype"), url(../fonts/OpenSansLight.svg#OpenSansLight) format("svg");
-  font-style: "normal"; }
-
 .employee,
 .employees-tabs,
 .table-headline,
