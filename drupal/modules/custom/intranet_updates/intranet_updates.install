@@ -10,7 +10,7 @@ use Drupal\user\Entity\User;
 /**
  * Set default presence status for all users.
  */
-function intranet_user_status_update_8001() {
+function intranet_updates_update_8001() {
   $accounts = User::loadMultiple();
 
   foreach ($accounts as $account) {
@@ -22,6 +22,6 @@ function intranet_user_status_update_8001() {
 /**
  * Set current time for intranet_settings.interval config value..
  */
-function intranet_user_status_update_8002() {
+function intranet_updates_update_8002() {
   \Drupal::configFactory()->getEditable('intranet_helper.settings')->set('interval', time())->save();
 }
