@@ -38,14 +38,13 @@ function intranet_helper_user_logout($account) {
  */
 function intranet_helper_cron() {
   $config = \Drupal::configFactory()->getEditable('intranet_helper.settings');
-  $last_cron_timestamp = $config->get('interval');
   $current_date = new DateTime();
-  $last_cron_date = new DateTime(date('Y-m-d', $last_cron_timestamp));
+  $last_cron_date = new DateTime(date('Y-m-d', $config->get('interval')));
   $days_diff = $current_date->diff($last_cron_date)->days;
 
   if ($days_diff) {
     $intranetApi = \Drupal::service('intranet_helper.services.api');
-    $users = $intranetApi->getCheckedInUsers();
+    $users = $intranetApi->getCheckedInUsers(FALSE);
 
     foreach ($users as $user) {
       $uid = (int) $user['uid'];

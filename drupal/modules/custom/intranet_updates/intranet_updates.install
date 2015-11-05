@@ -2,7 +2,7 @@
 
 /**
  * @file
- * intranet_user_status.install
+ * intranet_updates.install
  */
 
 use Drupal\user\Entity\User;
@@ -17,4 +17,11 @@ function intranet_user_status_update_8001() {
     $account->field_presence_status->set(0, 'available');
     $account->save();
   }
+}
+
+/**
+ * Set current time for intranet_settings.interval config value..
+ */
+function intranet_user_status_update_8002() {
+  \Drupal::configFactory()->getEditable('intranet_helper.settings')->set('interval', time())->save();
 }
