@@ -38,9 +38,9 @@ function intranet_helper_user_logout($account) {
  */
 function intranet_helper_cron() {
   $config = \Drupal::configFactory()->getEditable('intranet_helper.settings');
-  $current_date = new DateTime();
-  $last_cron_date = new DateTime(date('Y-m-d', $config->get('interval')));
-  $days_diff = $current_date->diff($last_cron_date)->days;
+  $current_day_number = (int) date('j', time());
+  $last_cron_day_number = (int) date('j', $config->get('interval'));
+  $days_diff = $current_day_number - $last_cron_day_number;
 
   if ($days_diff) {
     $intranetApi = \Drupal::service('intranet_helper.services.api');
