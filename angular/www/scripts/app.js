@@ -72,7 +72,7 @@ angular.module('d8intranetApp', [
       loginPathUrl: 'admin/user/login?redirect=true',
       logoutPathUrl: 'admin/user/logout?redirect=true',
       status: 'admin/api/user/check-state',
-      holidaysUrl: 'admin/api/holidays/' + new Date().getFullYear(),
+      holidaysUrl: 'admin/api/holiday/' + new Date().getFullYear(),
       totalVacation: '20'
     })
 
