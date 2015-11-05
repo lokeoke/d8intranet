@@ -2097,7 +2097,7 @@ hr {
   top: 0;
   height: 100%;
   overflow: hidden;
-  transition: all 1s ease-in-out, width 0.2s ease-in-out;
+  transition: all 0.5s ease-in-out, width 0.2s ease-in-out;
   box-shadow: -3px 0 2px rgba(0, 0, 0, 0.2) inset;
   display: none; }
   @media (min-width: 1280px) {
@@ -2116,16 +2116,18 @@ hr {
     .menu-desktop .user-pic.active img {
       box-shadow: 0 0 10px 2px #46575d; }
 
+.user-actions {
+  margin-bottom: 30px; }
+
 .checkin,
 .user-login {
   font-size: 0.6875rem;
-  width: 80%;
+  width: 100%;
   outline: none;
-  border-radius: 3px;
-  padding: 10px 0;
+  padding: 10px 3px;
   display: block;
   text-align: center;
-  margin: 0 auto 30px;
+  margin: 0 auto;
   border: 0;
   cursor: pointer;
   transition: all ease 0.3s;
@@ -2145,8 +2147,37 @@ hr {
   .user-login:hover {
     background: #3A9E49; }
 
-.checked {
-  background: #23a170; }
+.user-status {
+  padding: 10px 5px;
+  cursor: pointer;
+  border: 0;
+  width: 100%;
+  font-family: fontello;
+  background: transparent; }
+  .user-status::before {
+    font-size: 1.5rem;
+    content: '\e814';
+    transition: all 0.3s ease-in-out; }
+    .lt-ie9 .user-status::before {
+      font-size: 24px; }
+  .user-status.away,
+  .user-status.available {
+    background: transparent; }
+  .user-status.available::before {
+    color: #7ebc2b; }
+  .user-status.available:hover::before {
+    color: #fdd338; }
+  .user-status.away::before {
+    color: #fdd338; }
+  .user-status.away:hover::before {
+    color: #7ebc2b; }
+
+.away {
+  background: #fdd338;
+  color: #4B2811; }
+
+.available {
+  background: #7ebc2b; }
 
 .menu-mobile {
   display: none; }
@@ -2885,11 +2916,12 @@ form .form-submit {
       background: #4e1313; }
 
 .modal-warning {
-  background: #de741b; }
+  background: #fdd338;
+  color: #6f4f14; }
   .modal-warning .close-modal {
-    background: #62280d; }
+    background: #a58828; }
     .modal-warning .close-modal:hover {
-      background: #4a2515; }
+      background: #6f4f14; }
 
 .modal-success {
   background: #3A9E49; }
@@ -3099,10 +3131,12 @@ code {
 .checked-user {
   padding: .3rem;
   position: relative;
-  background: #286b90;
   border-radius: 20px 5px 5px 20px;
-  color: #fff;
-  box-shadow: -2px 2px 0 #124663; }
+  font-weight: 400; }
+  .checked-user.away {
+    box-shadow: -2px 2px 0 #a58828; }
+  .checked-user.available {
+    box-shadow: -2px 2px 0 #4e7a20; }
 
 .check-in-time {
   display: inline-block;

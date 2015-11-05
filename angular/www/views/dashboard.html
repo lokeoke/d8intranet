@@ -14,8 +14,10 @@
       <span class="no-logged-users" ng-if="checkedInUserList.length == 0">
         There are no checked in users yet
       </span>
+
+
       <ul ng-if="checkedInUserList.length != 0">
-        <li ng-repeat="user in checkedInUserList" class="checked-user">
+        <li ng-repeat="user in checkedInUserList" class="checked-user" ng-class="user.field_presence_status">
           <span class="user-pic">
           <img ng-src="{{user.field_image}}"
                err-SRC="images/anonymus.png"

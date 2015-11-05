@@ -105,11 +105,19 @@
 .checked-user {
   padding: .3rem;
   position: relative;
-  background: #286b90;
   border-radius: 20px 5px 5px 20px;
-  color: #fff;
-  box-shadow: -2px 2px 0 #124663;
+  font-weight: 400;
+
+  &.away {
+    box-shadow: -2px 2px 0 #a58828;
+  }
+
+  &.available {
+    box-shadow: -2px 2px 0 #4e7a20;
+  }
 }
+
+
 
 .check-in-time {
   display: inline-block;

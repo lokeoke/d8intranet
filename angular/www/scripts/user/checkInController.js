@@ -49,8 +49,8 @@ angular.module('d8intranetApp')
                 $rootScope.checkedOutUserList = d;
               });
 
-              checkState.getState(config.status).then(function (data) {
-                $rootScope.checkedIn = data.checked_in;
+              checkState.getState(config.status).then(function (d) {
+                $rootScope.checkedIn = d.checked_in;
               });
 
             }
@@ -79,7 +79,6 @@ angular.module('d8intranetApp')
         var req = $http.post(config.checkOutUrl, requestObject);
 
         req.success(function (data) {
-
           modalWindow.setMessage(
               'success',
               'Check-out is done.',
@@ -95,8 +94,8 @@ angular.module('d8intranetApp')
             $rootScope.checkedOutUserCount = getCheckedInUsers.getObjectSize(d);
           });
 
-          checkState.getState(config.status).then(function (data) {
-            $rootScope.checkedIn = data.checked_in;
+          checkState.getState(config.status).then(function (d) {
+            $rootScope.checkedIn = d.checked_in;
           });
         });
 
@@ -107,5 +106,34 @@ angular.module('d8intranetApp')
               data.message
           );
         });
-      }
+      };
+
+
+      $scope.userAway = function() {
+        var dataObject = {"message": "Switch status"};
+        var requestTo = $http.post(config.presenceState, dataObject);
+
+        $scope.isAway = !$scope.isAway;
+
+        requestTo.success(function(data) {
+          modalWindow.setMessage(
+              'warning',
+              'Status was changed.',
+              data.message
+          );
+
+          getCheckedInUsers.getCheckedIn(config.checkedInList).then(function (d) {
+            $rootScope.checkedInUserList = d;
+          });
+
+          checkState.getState(config.status).then(function (data) {
+            $scope.isAway = data.field_presence_status;
+          });
+        });
+
+        requestTo.error(function(data, status) {
+          console.log('Data: ', data, '\n Status: ', status)
+        })
+      };
+
     });

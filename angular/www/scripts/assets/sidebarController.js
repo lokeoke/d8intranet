@@ -54,6 +54,7 @@ angular.module('d8intranetApp')
         $rootScope.jira = data.jira;
         $scope.currentUserId = data.uid;
         $scope.currentUserPic = data.field_image;
+        $scope.isAway = data.field_presence_status;
 
         $scope.sidebarLoaded = true;
       });
