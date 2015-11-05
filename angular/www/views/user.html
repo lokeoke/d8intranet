@@ -75,6 +75,7 @@
           Working at company:
           <span ng-if="yearsOfWork != 0"> {{yearsOfWork + ' year' | plural}} </span>
           <span ng-if="monthsOfWork != 0"> {{monthsOfWork + ' month' | plural}} </span>
+          <span ng-if="monthsOfWork == 0"> Less than one month ago </span>
         </div>
         <div class="social-list" ng-cloak>
           <h3>Social</h3>

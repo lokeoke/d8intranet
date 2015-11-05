@@ -99,7 +99,6 @@ angular.module('d8intranetApp')
                 formattedObject[month].businessDays = formatUserData.calcBusinessDays(statisticType.start_date, statisticType.end_date, holidays);
             }
           }
-
           return formattedObject[month];
         },
 

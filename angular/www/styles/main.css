@@ -3093,7 +3093,7 @@ code {
     .av-user,
     .checked-user {
       display: inline-block;
-      margin: 0 0.2rem 0.2rem 0;
+      margin: 0 0.5rem 0.5rem 0;
       padding: .3rem; } }
 
 .checked-user {
