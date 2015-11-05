@@ -16,14 +16,18 @@ class IntranetHelperServicesApi {
     $this->termStorage = \Drupal::entityManager()->getStorage('taxonomy_term');
   }
 
-  public function getCheckedInUsers() {
+  public function getCheckedInUsers($todayUsers = TRUE) {
     $result = array();
     $checked_in_users = Database::getConnection()->select('user__field_user_check_in_and_out', 'c')
       ->fields('c')
-      ->condition('field_user_check_in_and_out_check_in', strtotime(date('d F Y')), '>=')
-      ->isNull('field_user_check_in_and_out_check_out')
-      ->execute()
-      ->fetchAll();
+      ->isNull('field_user_check_in_and_out_check_out');
+
+    // Get checked in of current day. Otherwise get ALL checked in users.
+    if ($todayUsers) {
+      $checked_in_users = $checked_in_users->condition('field_user_check_in_and_out_check_in', strtotime(date('d F Y')), '>=');
+    }
+
+    $checked_in_users = $checked_in_users->execute()->fetchAll();
 
     foreach ($checked_in_users as $key => $user) {
       $account = User::load($user->entity_id);

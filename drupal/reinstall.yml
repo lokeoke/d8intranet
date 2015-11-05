@@ -144,18 +144,18 @@
   - name: The configuration import.
     shell: drush config-import sync -y || true
     when: (installed.skipped is defined)
-    tags: 
-      - prod
-
-  - name: Cache clear.
-    shell: drush cr -y || true
-    tags: 
+    tags:
       - prod
 
   - name: Update database
     shell: "{{ php_env_vars }} drush updb -y"
     tags:
       - all
+      - prod
+
+  - name: Cache clear.
+    shell: drush cr -y || true
+    tags:
       - prod
 
   - name: Run Cron.

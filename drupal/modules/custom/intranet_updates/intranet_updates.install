@@ -1,0 +1,27 @@
+<?php
+
+/**
+ * @file
+ * intranet_updates.install
+ */
+
+use Drupal\user\Entity\User;
+
+/**
+ * Set default presence status for all users.
+ */
+function intranet_updates_update_8001() {
+  $accounts = User::loadMultiple();
+
+  foreach ($accounts as $account) {
+    $account->field_presence_status->set(0, 'available');
+    $account->save();
+  }
+}
+
+/**
+ * Set current time for intranet_settings.interval config value..
+ */
+function intranet_updates_update_8002() {
+  \Drupal::configFactory()->getEditable('intranet_helper.settings')->set('interval', time())->save();
+}
