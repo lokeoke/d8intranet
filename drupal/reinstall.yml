@@ -152,6 +152,12 @@
     tags: 
       - prod
 
+  - name: Update database
+    shell: "{{ php_env_vars }} drush updb -y"
+    tags:
+      - all
+      - prod
+
   - name: Run Cron.
     shell: drush cron -y || true
     tags: 

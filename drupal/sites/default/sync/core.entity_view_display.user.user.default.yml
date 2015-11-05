@@ -15,6 +15,7 @@ dependencies:
     - field.field.user.user.field_linkedin
     - field.field.user.user.field_phone_number
     - field.field.user.user.field_position
+    - field.field.user.user.field_presence_status
     - field.field.user.user.field_team
     - field.field.user.user.field_twitter
     - field.field.user.user.field_user_birthday
@@ -37,35 +38,37 @@ bundle: user
 mode: default
 content:
   field_facebook:
-    weight: 12
+    weight: 3
     label: above
     settings:
       link_to_entity: false
     third_party_settings: {  }
     type: string
   field_google_plus:
-    weight: 11
+    weight: 2
     label: above
     settings:
       link_to_entity: false
     third_party_settings: {  }
     type: string
   field_linkedin:
-    weight: 13
+    weight: 4
     label: above
     settings:
       link_to_entity: false
     third_party_settings: {  }
     type: string
   field_twitter:
-    weight: 10
+    weight: 1
     label: above
     settings:
       link_to_entity: false
     third_party_settings: {  }
     type: string
   member_for:
-    weight: 5
+    weight: 0
+    settings: {  }
+    third_party_settings: {  }
 hidden:
   field_came_to_propeople: true
   field_drupal_org_id: true
@@ -76,6 +79,7 @@ hidden:
   field_last_name: true
   field_phone_number: true
   field_position: true
+  field_presence_status: true
   field_team: true
   field_user_birthday: true
   field_user_check_in_and_out: true

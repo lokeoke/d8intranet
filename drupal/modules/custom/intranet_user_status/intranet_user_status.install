@@ -1,0 +1,20 @@
+<?php
+
+/**
+ * @file
+ * intranet_user_status.install
+ */
+
+use Drupal\user\Entity\User;
+
+/**
+ * Set default presence status for all users.
+ */
+function intranet_user_status_update_8001() {
+  $accounts = User::loadMultiple();
+
+  foreach ($accounts as $account) {
+    $account->field_presence_status->set(0, 'available');
+    $account->save();
+  }
+}

@@ -1,0 +1,23 @@
+uuid: 6ec7e8c7-a95a-4bc1-8b11-1759c9d761a0
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.user.field_presence_status
+  module:
+    - options
+    - user
+id: user.user.field_presence_status
+field_name: field_presence_status
+entity_type: user
+bundle: user
+label: 'Presence status'
+description: ''
+required: true
+translatable: false
+default_value:
+  -
+    value: available
+default_value_callback: ''
+settings: {  }
+field_type: list_string
