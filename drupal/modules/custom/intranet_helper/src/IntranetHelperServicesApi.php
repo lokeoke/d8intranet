@@ -193,6 +193,7 @@ class IntranetHelperServicesApi {
       'jira' => $jira,
       'field_image' => $account->user_picture->target_id ? file_create_url(File::load($account->user_picture->target_id)->uri->value) : NULL,
       'uid' => $uid,
+      'field_presence_status' => $account->field_presence_status->value,
       'checked_in' => $checked_in
     );
   }
