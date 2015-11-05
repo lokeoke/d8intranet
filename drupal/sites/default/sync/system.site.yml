@@ -1,6 +1,6 @@
 uuid: 50a80ac9-1d3c-4974-9000-b6c81cbaef74
-name: Site-Install
-mail: admin@example.com
+name: 'FFW intranet'
+mail: dmitriy.mitko@propeople.com.ua
 slogan: ''
 page:
   403: ''
@@ -10,3 +10,4 @@ admin_compact_mode: false
 weight_select_max: 100
 langcode: en
 default_langcode: en
+mail_notification: ''
