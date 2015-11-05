@@ -58,7 +58,6 @@ third_party_settings:
     group_admin:
       children:
         - field_jira_required
-        - field_user_check_in_and_out
       parent_name: group_admin_tabs
       weight: '8'
       label: 'Check in'
@@ -358,11 +357,6 @@ content:
     settings: {  }
     third_party_settings: {  }
     type: datetime_default
-  field_user_check_in_and_out:
-    weight: 18
-    settings: {  }
-    third_party_settings: {  }
-    type: check_in_and_out_default
   field_user_dayoff:
     type: date_interval_with_status_default
     weight: 22
@@ -419,5 +413,6 @@ content:
     weight: 1
 hidden:
   contact: true
+  field_user_check_in_and_out: true
   field_user_status: true
   timezone: true
