@@ -17,9 +17,9 @@ angular.module('d8intranetApp', [
   'ngTouch',
   'ui.router'
 ])
-    .config(function ($routeProvider, $httpProvider, $compileProvider) {
+    .config(function ($routeProvider, $httpProvider, $compileProvider, $locationProvider) {
       $routeProvider
-          .when('/dashboard', {
+          .when('/', {
             url: '/dashboard',
             templateUrl: 'views/dashboard.html',
             controller: 'dashboardController'
@@ -50,13 +50,18 @@ angular.module('d8intranetApp', [
             controller: 'documentsController'
           })
           .otherwise({
-            redirectTo: '/dashboard',
+            redirectTo: 'q/dashboard',
             templateUrl: 'views/dashboard.html'
           });
 
       $httpProvider.defaults.headers.common.Accept = 'application/hal+json';
 
       $compileProvider.aHrefSanitizationWhitelist(/^\s*(https?|mailto|skype|chrome-extension):/);
+
+      $locationProvider.html5Mode({
+        enabled: false,
+        requireBase: false
+      });
     })
 
     .constant('config', {
@@ -67,12 +72,13 @@ angular.module('d8intranetApp', [
       checkInUrl: 'admin/api/user/check-in',
       checkOutUrl: 'admin/api/user/check-out',
       checkedInList: 'admin/api/user/checked-in',
+      presenceState: 'admin/api/user/change-presence-state',
       checkedOutList: 'admin/api/user/checked-out',
       teamsUrl: 'admin/api/user/team',
       loginPathUrl: 'admin/user/login?redirect=true',
       logoutPathUrl: 'admin/user/logout?redirect=true',
       status: 'admin/api/user/check-state',
-      holidaysUrl: 'admin/api/holiday/' + new Date().getFullYear(),
+      holidaysUrl: 'admin/api/holidays/' + new Date().getFullYear(),
       totalVacation: '20'
     })
 
