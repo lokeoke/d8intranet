@@ -32,6 +32,7 @@ class IntranetHelperServicesApi {
       $result[$key]['uid'] = $user->entity_id;
       $result[$key]['field_first_name'] = $account->field_first_name->value;
       $result[$key]['field_last_name'] = $account->field_last_name->value;
+      $result[$key]['field_presence_status'] = $account->field_presence_status->value;
       $result[$key]['field_image'] = $account->user_picture->target_id ? file_create_url(File::load($account->user_picture->target_id)->uri->value) : NULL;
       $result[$key]['time'] = $user->field_user_check_in_and_out_check_in;
     }
@@ -240,6 +241,24 @@ class IntranetHelperServicesApi {
     }
 
     return $result;
+  }
+
+  public function changePresenceStatus($uid) {
+    $account = User::load($uid);
+
+    if ($account->field_presence_status->value == 'available') {
+      $account->field_presence_status->set(0, 'away');
+    }
+    else {
+      $account->field_presence_status->set(0, 'available');
+    }
+
+    $account->save();
+
+    return array(
+      'status' => TRUE,
+      'message' => t('Presence state has been changed on ' . $account->field_presence_status->value . ' successfully.')->render(),
+    );
   }
 
 }

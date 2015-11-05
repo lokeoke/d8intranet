@@ -54,6 +54,15 @@ intranet_helper.user_status:
   options:
      no_cache: TRUE
 
+intranet_helper.user_change_presence_state:
+  path: '/api/user/change-presence-state'
+  defaults:
+    _controller: '\Drupal\intranet_helper\Controller\IntranetUserController::changePresenceStatus'
+  requirements:
+    _access: 'TRUE'
+  methods: [POST]
+  options:
+     no_cache: TRUE
 
 intranet_helper.teams:
   path: '/api/user/team'
