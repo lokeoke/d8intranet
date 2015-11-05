@@ -243,4 +243,22 @@ class IntranetHelperServicesApi {
     return $result;
   }
 
+  public function changePresenceStatus($uid) {
+    $account = User::load($uid);
+
+    if ($account->field_presence_status->value == 'available') {
+      $account->field_presence_status->set(0, 'away');
+    }
+    else {
+      $account->field_presence_status->set(0, 'available');
+    }
+
+    $account->save();
+
+    return array(
+      'status' => TRUE,
+      'message' => t('Presence state has been changed on ' . $account->field_presence_status->value . ' successfully.')->render(),
+    );
+  }
+
 }
