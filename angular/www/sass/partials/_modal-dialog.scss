@@ -73,12 +73,13 @@
 
 .modal-warning { 
   background: $warning;
+  color: #6f4f14;
 
   .close-modal {
-    background: #62280d;
+    background: #a58828;
 
     &:hover {
-      background: #4a2515;
+      background: #6f4f14;
     }
   }
 }

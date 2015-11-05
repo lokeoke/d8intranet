@@ -17,14 +17,12 @@
 
     <a class="user-pic" ng-href="#user/{{currentUserId}}"
        ng-click="setActiveMenuItem('#user/{{currentUserId}}')"
-       ng-class="{'active': '#user/{{currentUserId}}' == menuStates.activeItem}"
+       ng-class="{'active': 'user/{{currentUserId}}' == menuStates.activeItem}"
        ng-if="logged">
       <img ng-src="{{currentUserPic}}" alt="">
     </a>
 
-    <div ng-controller="CheckInController" ng-if="logged">
-
-
+    <div ng-controller="CheckInController" ng-if="logged" class="user-actions">
       <form ng-submit="checkIn()" ng-if="!checkedIn">
         <button insert-modal type="submit" class="checkin"
                 data-checked="false">Check in
@@ -36,6 +34,14 @@
                 data-checked="false"> Check out
         </button>
       </form>
+
+      <div class="toggle-state">
+        <form ng-submit="userAway()" ng-if="checkedIn" >
+          <button insert-modal type="submit" class="user-status away-button"
+                  data-checked="false" ng-class="isAway">
+          </button>
+        </form>
+      </div>
     </div>
 
     <ul>
@@ -88,20 +94,35 @@
       <li class="user-data">
         <a class="user-pic" ng-href="#user/{{currentUserId}}"
            ng-click="setActiveMenuItem('#user/{{currentUserId}}')"
-           ng-class="{'active': '#user/{{currentUserId}}' == menuStates.activeItem}"
+           ng-class="{'active': 'user/{{currentUserId}}' == menuStates.activeItem}"
            ng-if="logged">
           <img ng-src="{{currentUserPic}}" alt="">
         </a>
       </li>
 
       <li>
-        <div ng-controller="CheckInController" ng-if="logged">
-          <form ng-submit="checkIn()">
-            <button type="submit" class="checkin" data-checked="false">
-              Check in
+        <div ng-controller="CheckInController" ng-if="logged" class="user-actions">
+          <form ng-submit="checkIn()" ng-if="!checkedIn">
+            <button insert-modal type="submit" class="checkin"
+                    data-checked="false">Check in
             </button>
           </form>
+
+          <form ng-submit="checkOut()" ng-if="checkedIn">
+            <button insert-modal type="submit" class="checkin"
+                    data-checked="false"> Check out
+            </button>
+          </form>
+
+          <div class="toggle-state">
+            <form ng-submit="userAway()" ng-if="checkedIn" >
+              <button insert-modal type="submit" class="user-status away-button"
+                      data-checked="false" ng-class="isAway">
+              </button>
+            </form>
+          </div>
         </div>
+
       </li>
       <li ng-repeat="menuItem in menuItemsList"
           ng-class="{'active': menuItem.url == menuStates.activeItem}"

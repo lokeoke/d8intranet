@@ -22,6 +22,10 @@ angular.module('d8intranetApp')
           $rootScope.modalMessageType = 'success';
         }
 
+        else if  (modalType == 'warning'){
+          $rootScope.modalMessageType = 'warning';
+        }
+
         $rootScope.modalMessageSubtitle = modalMessageSubtitle;
         $rootScope.modalMessage = modalMessage;
       }

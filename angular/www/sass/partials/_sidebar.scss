@@ -66,7 +66,7 @@
   //  left: 0;
   height: 100%;
   overflow: hidden;
-  transition: all 1s ease-in-out, width .2s ease-in-out;
+  transition: all .5s ease-in-out, width .2s ease-in-out;
   box-shadow: -3px 0 2px rgba(0, 0, 0, .2) inset;
   display: none;
 
@@ -96,6 +96,10 @@
   }
 }
 
+.user-actions {
+  margin-bottom: 30px;
+}
+
 .checkin,
 .user-login {
   @include font-size(11);
@@ -105,14 +109,13 @@
       color: $white;
     }
   }
-
-  width: 80%;
+  width: 100%;
   outline: none;
-  border-radius: 3px;
-  padding: 10px 0;
+  //  border-radius: 3px;
+  padding: 10px 3px;
   display: block;
   text-align: center;
-  margin: 0 auto 30px;
+  margin: 0 auto;
   border: 0;
   cursor: pointer;
   transition: all ease .3s;
@@ -123,8 +126,54 @@
   }
 }
 
-.checked {
-  background: #23a170;
+.user-status {
+  padding: 10px 5px;
+  cursor: pointer;
+  border: 0;
+  width: 100%;
+  font-family: fontello;
+  background: transparent;
+
+  &::before {
+    @include font-size(24);
+    content: '\e814';
+    transition: all .3s ease-in-out;
+  }
+
+  &.away,
+  &.available {
+    background: transparent;
+  }
+
+  &.available {
+    &::before {
+      color: #7ebc2b;
+    }
+
+    &:hover::before {
+      color: #fdd338;
+    }
+  }
+
+  &.away {
+    &::before {
+      color: #fdd338;
+    }
+
+    &:hover::before {
+      color: #7ebc2b;
+    }
+  }
+
+}
+
+.away {
+  background: #fdd338;
+  color: #4B2811;
+}
+
+.available {
+  background: #7ebc2b;
 }
 
 .menu-mobile {
