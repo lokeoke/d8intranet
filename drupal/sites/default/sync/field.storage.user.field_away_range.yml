@@ -1,0 +1,19 @@
+uuid: 68c1331c-cabd-4190-a400-ec49600274d7
+langcode: en
+status: true
+dependencies:
+  module:
+    - intranet_fields
+    - user
+id: user.field_away_range
+field_name: field_away_range
+entity_type: user
+type: away_range
+settings: {  }
+module: intranet_fields
+locked: false
+cardinality: -1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

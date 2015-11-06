@@ -1,0 +1,21 @@
+uuid: 9913d845-a865-4702-a700-fc9c91b9e6e7
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.user.field_away_range
+  module:
+    - intranet_fields
+    - user
+id: user.user.field_away_range
+field_name: field_away_range
+entity_type: user
+bundle: user
+label: 'Away range'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: away_range

@@ -3,6 +3,7 @@ langcode: en
 status: true
 dependencies:
   config:
+    - field.field.user.user.field_away_range
     - field.field.user.user.field_came_to_propeople
     - field.field.user.user.field_drupal_org_id
     - field.field.user.user.field_facebook
@@ -413,6 +414,7 @@ content:
     weight: 1
 hidden:
   contact: true
+  field_away_range: true
   field_user_check_in_and_out: true
   field_user_status: true
   timezone: true
