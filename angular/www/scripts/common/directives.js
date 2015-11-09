@@ -107,6 +107,20 @@ angular.module('d8intranetApp')
       };
     })
 
+    .directive('backbutton', function($window) {
+      return {
+        template: '<span class="back-button-wrapper"><span class="back-button"></span></span>',
+        restrict: 'E',
+        replace: true,
+
+        link: function(scope, element) {
+          element.on('click', function(){
+            $window.history.back();
+          })
+        }
+      }
+    })
+
     .directive('insertModal', function ($compile) {
       return function (scope, element) {
         element.bind('click', function () {

@@ -2931,13 +2931,17 @@ form .form-submit {
       background: #194b2d; }
 
 .document {
-  width: 57.89807%;
-  float: left;
-  margin-right: 1.04463%;
-  float: none;
-  margin: 0 auto;
+  margin-left: 21.05097%;
   padding-bottom: 3rem;
   border-bottom: 1px solid #ccc; }
+  @media (min-width: 641px) {
+    .document {
+      width: 57.89807%;
+      float: left;
+      margin-right: 1.04463%;
+      margin-left: 0%;
+      float: none;
+      margin: 0 auto; } }
 
 .doc-title {
   text-align: center; }
@@ -3038,6 +3042,134 @@ code {
   white-space: pre-wrap; }
   .lt-ie9 code {
     font-size: 13.8px; }
+
+.back-button-wrapper {
+  display: block;
+  color: #fff;
+  background: rgba(0, 0, 0, 0.5);
+  padding: 11px;
+  border-radius: 100%;
+  width: 60px;
+  height: 60px;
+  position: fixed;
+  top: 50%;
+  cursor: pointer;
+  transition: all 0.1s ease-out; }
+  .back-button-wrapper:hover {
+    -webkit-transform: scale(1.1);
+            transform: scale(1.1); }
+  .back-button-wrapper .back-button {
+    font-family: fontello;
+    -webkit-transform: translate(-50%, -50%);
+            transform: translate(-50%, -50%);
+    position: absolute;
+    left: 50%;
+    top: 50%; }
+    .back-button-wrapper .back-button:before {
+      font-size: 1.25rem;
+      -webkit-transform-origin: center;
+              transform-origin: center;
+      content: '\e80d';
+      text-indent: 0;
+      display: block;
+      text-align: center;
+      -webkit-transform: scaleX(-1);
+              transform: scaleX(-1); }
+      .lt-ie9 .back-button-wrapper .back-button:before {
+        font-size: 20px; }
+
+.doc {
+  width: 100%;
+  float: left;
+  margin-left: 0;
+  margin-right: 0;
+  padding-top: 100%;
+  position: relative;
+  float: none;
+  display: inline-block; }
+  @media (min-width: 641px) {
+    .doc {
+      width: 49.47768%;
+      float: left;
+      margin-right: 1.04463%;
+      padding-top: 49.47768%; } }
+  @media (min-width: 641px) and (max-width: 767px) {
+    .doc:nth-child(2n) {
+      margin-right: 0; } }
+  @media (min-width: 768px) {
+    .doc {
+      width: 32.63691%;
+      float: left;
+      margin-right: 1.04463%;
+      padding-top: 32.63691%; } }
+  @media (min-width: 1024px) {
+    .doc {
+      width: 20.00633%;
+      float: left;
+      margin-right: 1.04463%;
+      padding-top: 20.00633%; } }
+  @media (min-width: 1281px) {
+    .doc {
+      width: 15.79614%;
+      float: left;
+      margin-right: 1.04463%;
+      padding-top: 15.79614%; } }
+
+.doc-link {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.4);
+  transition: all 0.1s ease-out;
+  margin: 0 0.5rem 0.5rem 0; }
+  .doc-link:hover {
+    background: rgba(0, 0, 0, 0.3); }
+    .doc-link:hover span {
+      -webkit-transform: translate(-50%, 0%);
+              transform: translate(-50%, 0%); }
+      .doc-link:hover span:after {
+        font-size: 0rem;
+        opacity: 0; }
+        .lt-ie9 .doc-link:hover span:after {
+          font-size: 0px; }
+      .doc-link:hover span:before {
+        font-size: 1.25rem;
+        opacity: 1; }
+        .lt-ie9 .doc-link:hover span:before {
+          font-size: 20px; }
+  .doc-link span {
+    font-size: 1.25rem;
+    padding: 0 20px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    color: #fff;
+    -webkit-transform: translate(-50%, -50%);
+            transform: translate(-50%, -50%);
+    transition: all 0.2s ease-out;
+    width: 100%; }
+    .lt-ie9 .doc-link span {
+      font-size: 20px; }
+    .doc-link span::before,
+    .doc-link span::after {
+      font-family: fontello;
+      display: block;
+      transition: all 0.2s ease-out; }
+    .doc-link span::before {
+      font-size: 0rem;
+      content: '\e80d';
+      padding-bottom: 20px;
+      opacity: 0; }
+      .lt-ie9 .doc-link span::before {
+        font-size: 0px; }
+    .doc-link span::after {
+      font-size: 1.875rem;
+      content: '\e816';
+      padding-top: 20px; }
+      .lt-ie9 .doc-link span::after {
+        font-size: 30px; }
 
 .dashboard h2 {
   font-size: 2.25rem;

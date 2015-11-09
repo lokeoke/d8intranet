@@ -1,0 +1,143 @@
+//------------------------------------------------------------------------------
+// Comments
+// Here you can write styles for comments form
+
+//------------------------------------------------------------------------------
+// Comments - Main form
+
+.back-button-wrapper {
+  display: block;
+  color: $white;
+  background: rgba($black, .5);
+  padding: 11px;
+  border-radius: 100%;
+  width: 60px;
+  height: 60px;
+  position: fixed;
+  top: 50%;
+  cursor: pointer;
+  transition: all .1s ease-out;
+
+  &:hover {
+    transform: scale(1.1);
+  }
+
+  .back-button {
+    font-family: fontello;
+    transform: translate(-50%, -50%);
+    position: absolute;
+    left: 50%;
+    top: 50%;
+
+    &:before {
+      @include font-size(20);
+      transform-origin: center;
+      content: '\e80d';
+      text-indent: 0;
+      display: block;
+      text-align: center;
+      transform: scaleX(-1);
+    }
+  }
+}
+
+//------------------------------------------------------------------------------
+// Comments - Add new comment
+.doc {
+  @include span(24);
+  padding-top: span(24);
+  position: relative;
+  float: none;
+  display: inline-block;
+
+
+
+  @include susy-breakpoint(641px) {
+    @include span(12);
+    padding-top: span(12);
+  }
+
+  @include susy-breakpoint(641px 767px) {
+    &:nth-child(2n) {
+      margin-right: 0;
+    }
+  }
+
+  @include susy-breakpoint(768px) {
+    @include span(8);
+    padding-top: span(8);
+  }
+
+    @include susy-breakpoint(1024px) {
+    @include span(5);
+    padding-top: span(5);
+  }
+
+  @include susy-breakpoint(1281px) {
+    @include span(4);
+    padding-top: span(4);
+  }
+}
+
+.doc-link {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba($black, .4);
+  transition: all .1s ease-out;
+  margin: 0 .5rem .5rem 0;
+
+
+  &:hover {
+    background: rgba($black, .3);
+
+    span {
+      transform: translate(-50%, 0%);
+
+      &:after {
+        @include font-size(0);
+        opacity: 0;
+      }
+
+      &:before {
+        @include font-size(20);
+        opacity: 1;
+      }
+    }
+  }
+
+  span {
+    @include font-size(20);
+    padding: 0 20px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    color: $white;
+    transform: translate(-50%, -50%);
+    transition: all .2s ease-out;
+    width: 100%;
+
+    &::before,
+    &::after {
+      font-family: fontello;
+      display: block;
+      transition: all .2s ease-out;
+    }
+
+    &::before {
+      @include font-size(0);
+      content: '\e80d';
+      padding-bottom: 20px;
+      opacity: 0;
+    }
+
+    &::after {
+      @include font-size(30);
+      content: '\e816';
+      padding-top: 20px;
+
+    }
+  }
+}

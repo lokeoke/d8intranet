@@ -49,8 +49,13 @@ angular.module('d8intranetApp', [
             templateUrl: 'views/documents.html',
             controller: 'documentsController'
           })
+          .when('/documents/:nid', {
+            url: '/documents/:nid',
+            templateUrl: 'templates/document.html',
+            controller: 'singleDocController'
+          })
           .otherwise({
-            redirectTo: 'q/dashboard',
+            redirectTo: '/dashboard',
             templateUrl: 'views/dashboard.html'
           });
 
@@ -69,6 +74,7 @@ angular.module('d8intranetApp', [
       employeesUrl: '#employees',
       vacationsUrl: '#vacation',
       documentsUrl: '#documents',
+      documentsListUrl: 'admin/api/document',
       checkInUrl: 'admin/api/user/check-in',
       checkOutUrl: 'admin/api/user/check-out',
       checkedInList: 'admin/api/user/checked-in',

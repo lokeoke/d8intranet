@@ -2,11 +2,16 @@
 // WYSIWYG styles
 
 .document {
-  @include span(14 of 24);
-  float: none;
-  margin: 0 auto;
+  @include pre(5);
   padding-bottom: 3rem;
   border-bottom: 1px solid #ccc;
+
+  @include susy-breakpoint(641px) {
+    @include span(14 of 24);
+    @include pre(0);
+    float: none;
+    margin: 0 auto;
+  }
 }
 
 .doc-title {
