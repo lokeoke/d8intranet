@@ -1,0 +1,11 @@
+<div ng-controller="singleDocController">
+  <div class="page-container single-document">
+
+    <h1 class="page-title">{{doc.title}}</h1>
+
+    <backbutton></backbutton>
+
+    <div ng-bind-html="doc.body" class="document content-body"></div>
+
+  </div>
+</div>

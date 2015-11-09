@@ -1,1 +1,0 @@
-'use strict';/** * @ngdoc function * @name d8intranetApp.controller:MainCtrl * @description * # MainCtrl * Controller of the d8intranetApp */angular.module('d8intranetApp')    .controller('documentsController', function ($scope, $http, getJsonData, config, getCheckedInUsers, $interval, $rootScope) {      $rootScope.dataLoaded = true;    });
