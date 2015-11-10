@@ -5,12 +5,10 @@ dependencies:
   config:
     - field.storage.node.field_holiday_date
     - node.type.holiday
-    - user.role.administrator
   module:
     - datetime
     - node
     - rest
-    - user
 id: holidays
 label: Holidays
 module: views
@@ -27,10 +25,8 @@ display:
     position: 0
     display_options:
       access:
-        type: role
-        options:
-          role:
-            administrator: administrator
+        type: none
+        options: {  }
       cache:
         type: tag
         options: {  }
@@ -217,7 +213,6 @@ display:
         - url
         - url.query_args
         - 'user.node_grants:view'
-        - user.roles
       tags:
         - 'config:field.storage.node.field_holiday_date'
   rest_export_1:
@@ -252,6 +247,5 @@ display:
         - request_format
         - url
         - 'user.node_grants:view'
-        - user.roles
       tags:
         - 'config:field.storage.node.field_holiday_date'

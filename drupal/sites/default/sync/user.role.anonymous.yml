@@ -4,7 +4,7 @@ status: true
 dependencies: {  }
 id: anonymous
 label: 'Anonymous user'
-weight: 0
+weight: -10
 is_admin: false
 permissions:
   - 'access content'
@@ -12,3 +12,4 @@ permissions:
   - 'access comments'
   - 'access site-wide contact form'
   - 'search content'
+  - 'create petition content'
