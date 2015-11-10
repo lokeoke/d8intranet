@@ -4,6 +4,7 @@ status: true
 dependencies: {  }
 id: employee
 label: Employee
-weight: 3
+weight: -7
 is_admin: null
-permissions: {  }
+permissions:
+  - 'create petition content'

@@ -1,0 +1,7 @@
+intranet_petitions.config_form:
+  path: /admin/config/system/petitions-config-form
+  defaults:
+    _form: 'Drupal\intranet_petitions\Form\PetitionsConfigForm'
+    _title: 'Petitions settings'
+  requirements:
+    _permission: 'access administration pages'

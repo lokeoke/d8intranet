@@ -48,3 +48,4 @@ dependencies:
   - jira_rest
   - intranet_jira
   # CUSTOM
+  - intranet_petitions # it provides settings form at /admin/config/system/petitions-config-form.

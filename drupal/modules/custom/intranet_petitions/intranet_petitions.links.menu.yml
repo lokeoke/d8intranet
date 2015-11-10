@@ -1,0 +1,5 @@
+intranet_petitions.config_form:
+  title: Petitions
+  route_name: intranet_petitions.config_form
+  parent: system.admin_config_system
+  description: 'Petitions configuration.'

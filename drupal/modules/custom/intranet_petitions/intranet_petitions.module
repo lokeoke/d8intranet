@@ -1,0 +1,57 @@
+<?php
+
+use Drupal\user\Entity\User;
+use Drupal\node\Entity\Node;
+
+/**
+ * Implements hook_form_alter().
+ */
+function intranet_petitions_form_alter(&$form, \Drupal\Core\Form\FormStateInterface $form_state, $form_id) {
+  if ($form_id == 'node_petition_form') {
+    // Hide expiration date field from non admin users.
+    $account = User::load(\Drupal::service('current_user')->id());
+
+    if (!$account->hasRole('administrator')) {
+      $form['field_expiration_date']['#access'] = FALSE;
+    }
+  }
+}
+
+/**
+ * Implements hook_entity_presave().
+ */
+function intranet_petitions_node_presave(Drupal\node\Entity\Node $node) {
+  if ($node->getType() == 'petition') {
+    // Hide petition node author.
+    $expiration_days_count = \Drupal::configFactory()->getEditable('intranet_petitions.settings')->get('intranet_petitions_expired_days');
+    $node->setOwnerId(0);
+
+    // Only for new nodes we should calculate expires date.
+    if (!isset($node->original)) {
+      $node->field_expiration_date->value = date('Y-m-d', 86400 * $expiration_days_count + $node->created->value);
+    }
+  }
+}
+
+/**
+ * Implements hook_cron().
+ */
+function intranet_petitions_cron() {
+  $currentDateTimestamp = time();
+  $query = \Drupal::entityQuery('node')
+    ->condition('type', 'petition')
+    ->condition('field_time_status', 'active');
+
+  // Get all active petitions and update status if needed.
+  $nids = array_values($query->execute());
+  $activePetitions = Node::loadMultiple($nids);
+
+  foreach ($activePetitions as $petition) {
+    $expirationDateTimestamp = strtotime($petition->field_expiration_date->value);
+
+    if ($currentDateTimestamp >= $expirationDateTimestamp) {
+      $petition->field_time_status->set(0, 'expired');
+      $petition->save();
+    }
+  }
+}

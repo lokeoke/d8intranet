@@ -28,6 +28,7 @@ module:
   intranet_helper: 0
   intranet_jira: 0
   intranet_updates: 0
+  intranet_petitions: 0
   intranet_user_account: 0
   intranet_user_status: 0
   jira_rest: 0
