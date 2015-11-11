@@ -370,25 +370,41 @@ class IntranetHelperServicesApi {
     return $result;
   }
 
-  public function createPetition($title, $description) {
-    $node = Node::create(array(
-      'type' => 'petition',
-      'title' => $title,
-      'uid' => 0,
-      'status' => 1,
-      'body' => array(
-        array(
-          'value' => $description,
-        ),
-      ),
-    ));
-
-    $node->save();
-
-    return array(
+  public function createPetition($requestContent, $requestHeaders) {
+    $result = array(
       'status' => TRUE,
       'message' => t('Petition has been saved.')->render(),
     );
+
+    if (0 === strpos($requestHeaders->get('Content-Type'), 'application/json')) {
+      $data = json_decode($requestContent, true);
+
+      if (!empty($data['title'])) {
+        $node = Node::create(array(
+          'type' => 'petition',
+          'title' => $data['title'],
+          'uid' => 0,
+          'status' => 1,
+          'body' => array(
+            array(
+              'value' => !empty($data['description']) ? $data['description'] : '',
+            ),
+          ),
+        ));
+
+        $node->save();
+      }
+      else {
+        $result['status'] = FALSE;
+        $result['message'] = t('Petition title can not be empty.')->render();
+      }
+    }
+    else {
+      $result['status'] = FALSE;
+      $result['message'] = t('Content-type must be application/json.')->render();
+    }
+
+    return $result;
   }
 
 }

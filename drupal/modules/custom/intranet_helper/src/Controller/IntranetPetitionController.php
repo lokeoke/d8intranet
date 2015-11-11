@@ -19,10 +19,7 @@ class IntranetPetitionController extends ControllerBase {
   }
 
   public function createPetition(Request $request) {
-    $title = $request->request->get('title');
-    $description = $request->request->get('description');
-
-    return new JsonResponse($this->intranetApi->createPetition($title, $description));
+    return new JsonResponse($this->intranetApi->createPetition($request->getContent(), $request->headers));
   }
 
 }
