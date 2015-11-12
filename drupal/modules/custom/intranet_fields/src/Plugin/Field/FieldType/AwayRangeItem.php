@@ -20,6 +20,7 @@ use Drupal\Core\Field\FieldStorageDefinitionInterface;
  *   description = @Translation("Stores time of away status."),
  *   category = @Translation("FFW"),
  *   default_widget = "away_range_default",
+ *   default_formatter = "away_range_default",
  * )
  */
 class AwayRangeItem extends FieldItemBase {
