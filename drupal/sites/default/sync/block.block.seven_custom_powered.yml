@@ -1,0 +1,20 @@
+uuid: 40635968-de0f-4a98-b34f-7957500d26fc
+langcode: en
+status: true
+dependencies:
+  module:
+    - system
+  theme:
+    - seven_custom
+id: seven_custom_powered
+theme: seven_custom
+region: sidebar_first
+weight: 10
+provider: null
+plugin: system_powered_by_block
+settings:
+  id: system_powered_by_block
+  label: 'Powered by Drupal'
+  provider: system
+  label_display: '0'
+visibility: {  }

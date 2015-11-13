@@ -24,11 +24,12 @@ module:
   history: 0
   image: 0
   intranet_configs: 0
+  intranet_ffw_statistic: 0
   intranet_fields: 0
   intranet_helper: 0
   intranet_jira: 0
-  intranet_updates: 0
   intranet_petitions: 0
+  intranet_updates: 0
   intranet_user_account: 0
   intranet_user_status: 0
   jira_rest: 0
@@ -60,3 +61,4 @@ theme:
   classy: 0
   bartik: 0
   seven: 0
+  seven_custom: 0

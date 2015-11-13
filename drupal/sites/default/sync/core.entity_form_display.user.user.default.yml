@@ -251,6 +251,11 @@ content:
     weight: 0
     settings: {  }
     third_party_settings: {  }
+  field_away_range:
+    type: away_range_default
+    weight: 16
+    settings: {  }
+    third_party_settings: {  }
   field_came_to_propeople:
     type: datetime_default
     weight: 4
@@ -414,7 +419,6 @@ content:
     weight: 1
 hidden:
   contact: true
-  field_away_range: true
   field_user_check_in_and_out: true
   field_user_status: true
   timezone: true

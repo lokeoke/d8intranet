@@ -1,0 +1,24 @@
+uuid: 3b737ed5-7029-498c-9d00-b74eb2c9611e
+langcode: en
+status: true
+dependencies:
+  config:
+    - system.menu.account
+  module:
+    - system
+  theme:
+    - seven_custom
+id: seven_custom_account_menu
+theme: seven_custom
+region: secondary_menu
+weight: 0
+provider: null
+plugin: 'system_menu_block:account'
+settings:
+  id: 'system_menu_block:account'
+  label: 'User account menu'
+  provider: system
+  label_display: '0'
+  level: 1
+  depth: 1
+visibility: {  }
