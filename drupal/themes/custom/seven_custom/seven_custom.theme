@@ -1,0 +1,76 @@
+<?php
+
+/**
+ * @file
+ * template php file.
+ */
+
+/**
+ * Implements template_preprocess_views_view_table().
+ */
+function seven_custom_preprocess_views_view_table(&$vars) {
+  // TODO: values from filter needed.
+  $current_month = date('m');
+  $current_month_name = date('F');
+  $days_in_given_month = date('t');
+  $co_ci_time_format = 'H:i:s';
+  $presence_time_format = 'H\h i\m s\s';
+
+  $users = array();
+
+  // Assemble array for template.
+  foreach ($vars['result'] as $key => $result) {
+    $user = $result->_entity;
+    $users[$user->name->value]['name'] = $user->field_first_name->value . ' ' . $user->field_last_name->value;
+    $users[$user->name->value]['id'] = $user->id();
+
+    // Set check_in, check_out and away field values into month's days.
+    for ($i = 1; $i <= $days_in_given_month; $i++) {
+      // Get all check_ins per day.
+      $check_ins = NULL;
+      $check_outs = NULL;
+      $presence = NULL;
+      $away = 0;
+
+      foreach ($user->field_user_check_in_and_out as $value) {
+        if ($i == date('j', $value->check_in) &&
+          $current_month == date('m', $value->check_in)) {
+          $check_ins[] = $value->check_in;
+        }
+      }
+
+      // Get all check_outs per day.
+      foreach ($user->field_user_check_in_and_out as $value) {
+        if (!empty($value->check_out) &&
+          $i == date('j', $value->check_out) &&
+          $current_month == date('m', $value->check_out)) {
+          $check_outs[] = $value->check_out;
+        }
+      }
+
+      // Get away time.
+      foreach ($user->field_away_range as $value) {
+        if (!empty($value->away_time) &&
+            $i == date('j', $value->away_from) &&
+            $current_month == date('m', $value->away_from)) {
+          $away +=  $value->away_time;
+        }
+      }
+
+      // Calculate presence time.
+      if (!empty($check_ins)) {
+        $co = (!empty($check_outs) ? $check_outs[count($check_outs) - 1] : time());
+        $ci = $check_ins[0];
+        $presence = $co - $ci - $away;
+      }
+
+      $users[$user->name->value]['days'][$i]['check_in'] = !empty($check_ins) ? date($co_ci_time_format, $check_ins[0]) : NULL;
+      $users[$user->name->value]['days'][$i]['check_out'] = !empty($check_outs) ? date($co_ci_time_format, $check_outs[count($check_outs) - 1]) : NULL;
+      $users[$user->name->value]['days'][$i]['presence'] = !empty($presence) ? date($presence_time_format, $presence) : NULL;
+    }
+  }
+
+  $vars['days_in_given_month'] = $days_in_given_month;
+  $vars['current_month_name'] = $current_month_name;
+  $vars['users'] = $users;
+}

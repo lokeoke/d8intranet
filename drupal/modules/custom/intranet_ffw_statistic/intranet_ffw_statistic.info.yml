@@ -1,0 +1,6 @@
+name: Intranet FFW statistic
+description: Module for FFW statistic view.
+package: Intranet
+type: module
+version: 1.0
+core: 8.x
