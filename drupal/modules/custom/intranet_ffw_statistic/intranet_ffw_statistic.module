@@ -24,13 +24,13 @@ function intranet_ffw_statistic_form_alter(&$form, \Drupal\Core\Form\FormStateIn
     $form['check_in_year'] = array(
       '#type' => 'select',
       '#options' => array_combine($years, $years),
-      '#validated' => TRUE
+      '#validated' => TRUE,
     );
 
     $form['check_in_month'] = array(
       '#type' => 'select',
       '#options' => array_combine($months, $months),
-      '#validated' => TRUE
+      '#validated' => TRUE,
     );
   }
 }
