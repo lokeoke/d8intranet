@@ -3,21 +3,19 @@
 }
 
 .view-employees-statistics .view-content tbody tr td .info {
-  background: #0074bd;
   width: 14px;
   height: 14px;
 }
 
   .view-employees-statistics .view-content tbody tr td .info:hover {
-    background: #fff;
     width: auto;
     height: auto;
   }
 
-    .view-employees-statistics .view-content tbody tr td .info > div {
+    .view-employees-statistics .view-content tbody tr td .info .info-popup > div {
       display: none;
     }
 
-    .view-employees-statistics .view-content tbody tr td .info:hover > div {
+    .view-employees-statistics .view-content tbody tr td .info .info-popup:hover > div {
       display: block;
     }

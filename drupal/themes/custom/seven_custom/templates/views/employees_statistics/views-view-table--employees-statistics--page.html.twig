@@ -80,17 +80,22 @@ sticky ? 'sticky-enabled',
                 <td{{ column.attributes.addClass(column_classes) }}>
                     {% if user.days[day_number].state == true %}
                         <div class="info">
-                            <div class="check-in-and-check-out">
-                                <span class="info-label">Check-in and check-out: </span>
-                                <span class="info-data">{{ user.days[day_number].check_in }} - {{ user.days[day_number].check_out }}</span>
+                            <div class="info-preview">
+                                <span class="info-data">{{ user.days[day_number].presence_preview }}</span>
                             </div>
-                            <div class="away">
-                                <span class="info-label">Total away time:</span>
-                                <span class="info-data">{{ user.days[day_number].away }}</span>
-                            </div>
-                            <div class="presence">
-                                <span class="info-label">Total presence time:</span>
-                                <span class="info-data">{{ user.days[day_number].presence }}</span>
+                            <div class="info-popup">
+                                <div class="check-in-and-check-out">
+                                    <span class="info-label">Check-in and check-out: </span>
+                                    <span class="info-data">{{ user.days[day_number].check_in }} - {{ user.days[day_number].check_out }}</span>
+                                </div>
+                                <div class="away">
+                                    <span class="info-label">Total away time:</span>
+                                    <span class="info-data">{{ user.days[day_number].away }}</span>
+                                </div>
+                                <div class="presence">
+                                    <span class="info-label">Total presence time:</span>
+                                    <span class="info-data">{{ user.days[day_number].presence }}</span>
+                                </div>
                             </div>
                         </div>
                     {% endif %}

@@ -20,6 +20,7 @@ function seven_custom_preprocess_views_view_table(&$vars) {
     // Time formats.
     $co_ci_time_format = 'H:i:s';
     $presence_time_format = 'H\h i\m s\s';
+    $presence_preview_time_format = 'H\h i\m';
 
     $users = array();
 
@@ -110,6 +111,7 @@ function seven_custom_preprocess_views_view_table(&$vars) {
           $users[$user->name->value]['days'][$i]['check_in'] = date($co_ci_time_format, $ci);
           $users[$user->name->value]['days'][$i]['check_out'] = $user_not_checked_out ? t('now') : date($co_ci_time_format, $co);
           $users[$user->name->value]['days'][$i]['presence'] = date($presence_time_format, $presence);
+          $users[$user->name->value]['days'][$i]['presence_preview'] = date($presence_preview_time_format, $presence);
           $users[$user->name->value]['days'][$i]['away'] = date($presence_time_format, $away);
         }
 
