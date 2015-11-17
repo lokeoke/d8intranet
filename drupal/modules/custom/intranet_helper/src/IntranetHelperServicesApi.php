@@ -154,7 +154,8 @@ class IntranetHelperServicesApi {
           'check_in' => $account->field_user_check_in_and_out->get($field_value_index)->check_in,
           'check_out' => $time
         ));
-        $account->save();
+        $this->stopAway($account);
+
         $result['status'] = TRUE;
         $result['message'] = t('Successful check-out.')->render();
       }
@@ -253,21 +254,84 @@ class IntranetHelperServicesApi {
     return $result;
   }
 
+  private function startAway($account) {
+    $result = FALSE;
+
+    if ($this->isUserCheckedIn($account->id())) {
+      // Set status.
+      $account->field_presence_status->set(0, 'away');
+
+      // Set away_from value.
+      $new_field_value_index = count($account->field_away_range);
+
+      // Set away_from value only if it is first user's away or
+      // user has been already came back.
+      if ($new_field_value_index == 0 || $account->field_away_range->get($new_field_value_index - 1)->away_from) {
+        $account->field_away_range->set($new_field_value_index, array(
+          'away_from' => time(),
+          'away_to' => NULL,
+          'away_time' => NULL,
+        ));
+      }
+
+      $account->save();
+
+      $result = TRUE;
+    }
+
+    return $result;
+  }
+
+  private function stopAway($account) {
+    $result = FALSE;
+
+    if ($this->isUserCheckedIn($account->id())) {
+      // Set status.
+      $account->field_presence_status->set(0, 'available');
+
+      // Set away_to and away_time values.
+      $field_value_index = count($account->field_away_range) - 1;
+
+      // Set away_to time only if user has been away_from and
+      // hasn't been came back yet.
+      if ($account->field_away_range->get($field_value_index)->away_from && !$account->field_away_range->get($field_value_index)->away_to) {
+        $away_from = $account->field_away_range->get($field_value_index)->away_from;
+        $away_to = time();
+        $away_time = $away_to - $away_from;
+
+        $account->field_away_range->set($field_value_index, array(
+          'away_from' => $away_from,
+          'away_to' => $away_to,
+          'away_time' => $away_time,
+        ));
+      }
+
+      $account->save();
+
+      $result = TRUE;
+    }
+
+    return $result;
+  }
+
   public function changePresenceStatus($uid) {
     $account = User::load($uid);
 
     if ($account->field_presence_status->value == 'available') {
-      $account->field_presence_status->set(0, 'away');
+      // Start recording away time.
+      $result = $this->startAway($account);
     }
     else {
-      $account->field_presence_status->set(0, 'available');
+      // Stop recording away status.
+      $result = $this->stopAway($account);
     }
 
-    $account->save();
-
-    return array(
+    return $result ? array(
       'status' => TRUE,
       'message' => t('Presence state has been changed on ' . $account->field_presence_status->value . ' successfully.')->render(),
+    ) : array(
+      'status' => FALSE,
+      'message' => t('You should to check-in first.')->render(),
     );
   }
 

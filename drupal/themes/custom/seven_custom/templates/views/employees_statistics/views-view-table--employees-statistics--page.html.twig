@@ -1,0 +1,107 @@
+{#
+/**
+ * @file
+ * Default theme implementation for displaying a view as a table.
+ *
+ * Available variables:
+ * - attributes: Remaining HTML attributes for the element.
+ *   - class: HTML classes that can be used to style contextually through CSS.
+ * - title : The title of this group of rows.
+ * - header: The table header columns.
+ *   - attributes: Remaining HTML attributes for the element.
+ *   - content: HTML classes to apply to each header cell, indexed by
+ *   the header's key.
+ *   - default_classes: A flag indicating whether default classes should be
+ *     used.
+ * - caption_needed: Is the caption tag needed.
+ * - caption: The caption for this table.
+ * - accessibility_description: Extended description for the table details.
+ * - accessibility_summary: Summary for the table details.
+ * - rows: Table row items. Rows are keyed by row number.
+ *   - attributes: HTML classes to apply to each row.
+ *   - columns: Row column items. Columns are keyed by column number.
+ *     - attributes: HTML classes to apply to each column.
+ *     - content: The column content.
+ *   - default_classes: A flag indicating whether default classes should be
+ *     used.
+ * - responsive: A flag indicating whether table is responsive.
+ * - sticky: A flag indicating whether table header is sticky.
+ *
+ * @see template_preprocess_views_view_table()
+ *
+ * @ingroup themeable
+ */
+#}
+{%
+set classes = [
+'cols-' ~ header|length,
+responsive ? 'responsive-enabled',
+sticky ? 'sticky-enabled',
+]
+%}
+<table{{ attributes.addClass(classes) }} xmlns="http://www.w3.org/1999/html">
+    {% if caption_needed %}
+        <caption>
+            {% if caption %}
+                {{ caption }}
+            {% else %}
+                {{ title }}
+            {% endif %}
+            {% if (summary is not empty) or (description is not empty) %}
+                <details>
+                    {% if summary is not empty %}
+                        <summary>{{ summary }}</summary>
+                    {% endif %}
+                    {% if description is not empty %}
+                        {{ description }}
+                    {% endif %}
+                </details>
+            {% endif %}
+        </caption>
+    {% endif %}
+    {% if header %}
+        <thead>
+        <tr>
+            <th{{ column.attributes.addClass(column_classes).setAttribute('scope', 'col') }} colspan="{{ days_in_given_month + 1 }}">{{ current_month_name }} {{ current_year }}</th>
+        </tr>
+        <tr>
+            <th{{ column.attributes.addClass(column_classes).setAttribute('scope', 'col') }}></th>
+            {% for day_number in 1..days_in_given_month %}
+                <th{{ column.attributes.addClass(column_classes).setAttribute('scope', 'col') }}>{{ day_number }}</th>
+            {% endfor %}
+        </tr>
+        </thead>
+    {% endif %}
+    <tbody>
+    {% for user in users %}
+        <tr{{ row.attributes }}>
+            <td{{ column.attributes.addClass(column_classes) }}><a href="/user/{{ user.id }}">{{ user.name }}</a></td>
+            {% for day_number in 1..days_in_given_month %}
+                <td{{ column.attributes.addClass(column_classes) }}>
+                    {% if user.days[day_number].state == true %}
+                        <div class="info">
+                            <div class="info-preview">
+                                <span class="info-data">{{ user.days[day_number].presence_preview }}</span>
+                            </div>
+                            <div class="info-popup">
+                                <div class="check-in-and-check-out">
+                                    <span class="info-label">Check-in and check-out: </span>
+                                    <span class="info-data">{{ user.days[day_number].check_in }} - {{ user.days[day_number].check_out }}</span>
+                                </div>
+                                <div class="away">
+                                    <span class="info-label">Total away time:</span>
+                                    <span class="info-data">{{ user.days[day_number].away }}</span>
+                                </div>
+                                <div class="presence">
+                                    <span class="info-label">Total presence time:</span>
+                                    <span class="info-data">{{ user.days[day_number].presence }}</span>
+                                </div>
+                            </div>
+                        </div>
+                    {% endif %}
+                </td>
+            {% endfor %}
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>

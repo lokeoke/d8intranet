@@ -1,0 +1,417 @@
+uuid: f367a7c2-620f-4425-bd2a-42fff41128c0
+langcode: en
+status: true
+dependencies:
+  config:
+    - system.menu.admin
+    - taxonomy.vocabulary.teams
+    - user.role.employee
+  content:
+    - 'taxonomy_term:teams:05b05b68-d852-4c58-a243-679603796128'
+    - 'taxonomy_term:teams:0c07c1c3-0020-496f-9d00-0e590d07d253'
+    - 'taxonomy_term:teams:1678f0eb-7b3b-45f5-8639-57eae4c8040b'
+    - 'taxonomy_term:teams:8a001ae3-a109-4eb2-a100-b60a8f2b76df'
+    - 'taxonomy_term:teams:8fe47202-ff74-4cf9-a000-da1786f9521b'
+    - 'taxonomy_term:teams:e5e1cf16-ff42-4f8a-9f2b-436b1a035656'
+    - 'taxonomy_term:teams:fa5f4c6e-2e6d-4a81-a10c-12b6a75c2325'
+  module:
+    - taxonomy
+    - user
+id: employees_statistics
+label: 'Employees statistics'
+module: user
+description: 'Find and manage people interacting with your site.'
+tag: default
+base_table: users_field_data
+base_field: uid
+core: 8.x
+display:
+  default:
+    display_plugin: default
+    id: default
+    display_title: Master
+    position: 0
+    display_options:
+      access:
+        type: perm
+        options:
+          perm: 'administer users'
+      cache:
+        type: tag
+      query:
+        type: views_query
+        options:
+          disable_sql_rewrite: false
+          distinct: false
+          replica: false
+          query_comment: ''
+          query_tags: {  }
+      exposed_form:
+        type: basic
+        options:
+          submit_button: Filter
+          reset_button: false
+          reset_button_label: Reset
+          exposed_sorts_label: 'Sort by'
+          expose_sort_order: false
+          sort_asc_label: Asc
+          sort_desc_label: Desc
+      pager:
+        type: none
+        options:
+          offset: 0
+      style:
+        type: table
+        options:
+          grouping: {  }
+          row_class: ''
+          default_row_class: true
+          override: true
+          sticky: true
+          caption: ''
+          summary: ''
+          description: ''
+          columns:
+            uid: uid
+          info:
+            uid:
+              sortable: false
+              default_sort_order: asc
+              align: views-align-center
+              separator: ''
+              empty_column: false
+              responsive: ''
+          default: '-1'
+          empty_table: true
+      row:
+        type: fields
+      fields:
+        uid:
+          id: uid
+          table: users
+          field: uid
+          relationship: none
+          group_type: group
+          admin_label: ''
+          label: 'User ID'
+          exclude: false
+          alter:
+            alter_text: false
+            text: ''
+            make_link: false
+            path: ''
+            absolute: false
+            external: false
+            replace_spaces: false
+            path_case: none
+            trim_whitespace: false
+            alt: ''
+            rel: ''
+            link_class: ''
+            prefix: ''
+            suffix: ''
+            target: ''
+            nl2br: false
+            max_length: 0
+            word_boundary: true
+            ellipsis: true
+            more_link: false
+            more_link_text: ''
+            more_link_path: ''
+            strip_tags: false
+            trim: false
+            preserve_tags: ''
+            html: false
+          element_type: ''
+          element_class: ''
+          element_label_type: ''
+          element_label_class: ''
+          element_label_colon: true
+          element_wrapper_type: ''
+          element_wrapper_class: ''
+          element_default_classes: true
+          empty: ''
+          hide_empty: false
+          empty_zero: false
+          hide_alter_empty: true
+          click_sort_column: value
+          type: number_integer
+          settings:
+            thousand_separator: ''
+            prefix_suffix: true
+          group_column: value
+          group_columns: {  }
+          group_rows: true
+          delta_limit: 0
+          delta_offset: 0
+          delta_reversed: false
+          delta_first_last: false
+          multi_type: separator
+          separator: ', '
+          field_api_classes: false
+          entity_type: user
+          entity_field: uid
+          plugin_id: field
+      filters:
+        roles_target_id:
+          id: roles_target_id
+          table: user__roles
+          field: roles_target_id
+          relationship: none
+          group_type: group
+          admin_label: ''
+          operator: or
+          value:
+            employee: employee
+          group: 1
+          exposed: false
+          expose:
+            operator_id: roles_target_id_op
+            label: Role
+            description: ''
+            use_operator: false
+            operator: roles_target_id_op
+            identifier: role
+            required: false
+            remember: false
+            multiple: false
+            remember_roles:
+              authenticated: authenticated
+              anonymous: '0'
+              administrator: '0'
+            reduce: false
+          is_grouped: false
+          group_info:
+            label: ''
+            description: ''
+            identifier: ''
+            optional: true
+            widget: select
+            multiple: false
+            remember: false
+            default_group: All
+            default_group_multiple: {  }
+            group_items: {  }
+          reduce_duplicates: false
+          plugin_id: user_roles
+        field_team_target_id:
+          id: field_team_target_id
+          table: user__field_team
+          field: field_team_target_id
+          relationship: none
+          group_type: group
+          admin_label: ''
+          operator: or
+          value:
+            4: 4
+            6: 6
+            7: 7
+            8: 8
+            2: 2
+            5: 5
+            3: 3
+          group: 1
+          exposed: true
+          expose:
+            operator_id: field_team_target_id_op
+            label: Team
+            description: ''
+            use_operator: false
+            operator: field_team_target_id_op
+            identifier: field_team_target_id
+            required: false
+            remember: true
+            multiple: false
+            remember_roles:
+              administrator: administrator
+              anonymous: '0'
+              authenticated: '0'
+              employee: '0'
+            reduce: false
+          is_grouped: false
+          group_info:
+            label: ''
+            description: ''
+            identifier: ''
+            optional: true
+            widget: select
+            multiple: false
+            remember: false
+            default_group: All
+            default_group_multiple: {  }
+            group_items: {  }
+          reduce_duplicates: false
+          type: select
+          limit: true
+          vid: teams
+          hierarchy: false
+          error_message: true
+          plugin_id: taxonomy_index_tid
+        field_user_check_in_and_out_check_in:
+          id: field_user_check_in_and_out_check_in
+          table: user__field_user_check_in_and_out
+          field: field_user_check_in_and_out_check_in
+          relationship: none
+          group_type: sum
+          admin_label: ''
+          operator: '='
+          value:
+            min: ''
+            max: ''
+            value: '0'
+          group: 1
+          exposed: true
+          expose:
+            operator_id: field_user_check_in_and_out_check_in_op
+            label: Year
+            description: ''
+            use_operator: false
+            operator: field_user_check_in_and_out_check_in_op
+            identifier: check_in_year
+            required: false
+            remember: false
+            multiple: false
+            remember_roles:
+              authenticated: authenticated
+              anonymous: '0'
+              administrator: '0'
+              employee: '0'
+          is_grouped: false
+          group_info:
+            label: ''
+            description: ''
+            identifier: ''
+            optional: true
+            widget: select
+            multiple: false
+            remember: false
+            default_group: All
+            default_group_multiple: {  }
+            group_items: {  }
+          plugin_id: numeric
+        field_user_check_in_and_out_check_in_1:
+          id: field_user_check_in_and_out_check_in_1
+          table: user__field_user_check_in_and_out
+          field: field_user_check_in_and_out_check_in
+          relationship: none
+          group_type: group
+          admin_label: ''
+          operator: '='
+          value:
+            min: ''
+            max: ''
+            value: '0'
+          group: 1
+          exposed: true
+          expose:
+            operator_id: field_user_check_in_and_out_check_in_1_op
+            label: Month
+            description: ''
+            use_operator: false
+            operator: field_user_check_in_and_out_check_in_1_op
+            identifier: check_in_month
+            required: false
+            remember: false
+            multiple: false
+            remember_roles:
+              authenticated: authenticated
+              anonymous: '0'
+              administrator: '0'
+              employee: '0'
+          is_grouped: false
+          group_info:
+            label: ''
+            description: ''
+            identifier: ''
+            optional: true
+            widget: select
+            multiple: false
+            remember: false
+            default_group: All
+            default_group_multiple: {  }
+            group_items: {  }
+          plugin_id: numeric
+      sorts:
+        field_position_target_id:
+          id: field_position_target_id
+          table: user__field_position
+          field: field_position_target_id
+          relationship: none
+          group_type: group
+          admin_label: ''
+          order: ASC
+          exposed: false
+          expose:
+            label: ''
+          plugin_id: standard
+      title: 'FFW statistic'
+      empty:
+        area_text_custom:
+          id: area_text_custom
+          table: views
+          field: area_text_custom
+          relationship: none
+          group_type: group
+          admin_label: ''
+          empty: true
+          tokenize: false
+          content: 'No people available.'
+          plugin_id: text_custom
+      use_more: false
+      use_more_always: false
+      use_more_text: more
+      display_comment: ''
+      use_ajax: false
+      hide_attachment_summary: false
+      show_admin_links: true
+      group_by: false
+      link_url: ''
+      link_display: page_1
+      css_class: ''
+      filter_groups:
+        operator: AND
+        groups:
+          1: AND
+      display_extenders: {  }
+    cache_metadata:
+      contexts:
+        - 'languages:language_content'
+        - 'languages:language_interface'
+        - url
+        - user
+        - user.permissions
+      max-age: 0
+      tags: {  }
+  page_1:
+    display_plugin: page
+    id: page_1
+    display_title: Page
+    position: 1
+    display_options:
+      path: admin/people/ffw-statistic
+      show_admin_links: false
+      menu:
+        type: normal
+        title: 'FFW statistic'
+        description: 'Employees time statistic.'
+        parent: entity.user.collection
+        weight: -100
+        context: '1'
+        menu_name: admin
+      tab_options:
+        type: normal
+        title: Reports
+        description: 'Manage user accounts, roles, and permissions.'
+        weight: 0
+      defaults:
+        show_admin_links: false
+      display_extenders: {  }
+    cache_metadata:
+      contexts:
+        - 'languages:language_content'
+        - 'languages:language_interface'
+        - url
+        - user
+        - user.permissions
+      max-age: 0
+      tags: {  }

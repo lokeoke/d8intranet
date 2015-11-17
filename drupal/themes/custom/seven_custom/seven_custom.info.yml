@@ -1,0 +1,8 @@
+name: Seven custom
+type: theme
+description: This is seven sub-theme
+core: 8.x
+# Defines the base theme
+base theme: seven
+libraries:
+  - seven_custom/base

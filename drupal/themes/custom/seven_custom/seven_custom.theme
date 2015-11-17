@@ -1,0 +1,129 @@
+<?php
+
+/**
+ * @file
+ * template php file.
+ */
+
+/**
+ * Implements template_preprocess_views_view_table().
+ */
+function seven_custom_preprocess_views_view_table(&$vars) {
+  if ($vars['view']->storage->id() == 'employees_statistics') {
+    // Get year and month from exposed filter.
+    $current_year = !empty($vars['view']->getExposedInput()['check_in_year']) ? $vars['view']->getExposedInput()['check_in_year'] : date('Y');
+    $current_month_name = !empty($vars['view']->getExposedInput()['check_in_month']) ? $vars['view']->getExposedInput()['check_in_month'] : date('F');
+
+    // Get number of days of selected month.
+    $days_in_given_month = date('t', strtotime($current_month_name));
+
+    // Time formats.
+    $co_ci_time_format = 'H:i:s';
+    $presence_time_format = 'H\h i\m s\s';
+    $presence_preview_time_format = 'H\h i\m';
+
+    $users = array();
+
+    // Assemble array for template.
+    foreach ($vars['result'] as $key => $result) {
+      $user = $result->_entity;
+      $users[$user->name->value]['name'] = $user->field_first_name->value . ' ' . $user->field_last_name->value;
+      $users[$user->name->value]['id'] = $user->id();
+
+      // Set check_in, check_out and away field values into month's days keys.
+      for ($i = 1; $i <= $days_in_given_month; $i++) {
+        $check_ins = NULL;
+        $check_outs = NULL;
+        $presence = NULL;
+        $away = 0;
+        $day_data_exists = FALSE;
+
+        // Get all check_ins by $i day.
+        foreach ($user->field_user_check_in_and_out as $value) {
+          // Save it into array only these check-ins that was at
+          // date('F', $value->check_in) month and $i day.
+          if ($i == date('j', $value->check_in) &&
+            $current_month_name == date('F', $value->check_in)
+          ) {
+            $check_ins[] = $value->check_in;
+          }
+        }
+
+        // Get all check_outs by $i day.
+        foreach ($user->field_user_check_in_and_out as $value) {
+          // Save it into array only these check-outs that was at
+          // date('F', $value->check_in) month and $i day.
+          // Also check if check-out record exists by $ day.
+          if (!empty($value->check_out) &&
+            $i == date('j', $value->check_out) &&
+            $current_month_name == date('F', $value->check_out)
+          ) {
+            $check_outs[] = $value->check_out;
+          }
+        }
+
+        // Get al away time by $i day.
+        foreach ($user->field_away_range as $value) {
+          // Save it into array only these check-outs that was at
+          // date('F', $value->check_in) month and $i day.
+          // Also check if check-out record exists by $ day.
+          if (!empty($value->away_time) &&
+            $i == date('j', $value->away_from) &&
+            $current_month_name == date('F', $value->away_from)
+          ) {
+            $away += $value->away_time;
+          }
+        }
+
+        // Calculate presence time for user by $i day.
+        if (!empty($check_ins)) {
+          $day_data_exists = TRUE;
+          $user_not_checked_out = FALSE;
+
+          // Get last check-out.
+          if (!empty($check_outs)) {
+            // If user did not check-out yet than we should get current time()
+            // as check-out time to display real-time statistic.
+            if (count($check_ins) > count($check_outs)) {
+              $co = time();
+              $user_not_checked_out = TRUE;
+            }
+            // If user has already checked-out than we should get last check-out
+            // form check-outs array.
+            else {
+              $co = $check_outs[count($check_outs) - 1];
+            }
+          }
+          // If user has not already checked-out than we should get current
+          // time() as check-out time.
+          else {
+            $co = time();
+            $user_not_checked_out = TRUE;
+          }
+
+          // Get first check-in time from check-ins array.
+          $ci = $check_ins[0];
+
+          // Calculate presence time (check-out - check-in - away).
+          $presence = $co - $ci - $away;
+
+          // Forward variables for template.
+          $users[$user->name->value]['days'][$i]['check_in'] = date($co_ci_time_format, $ci);
+          $users[$user->name->value]['days'][$i]['check_out'] = $user_not_checked_out ? t('now') : date($co_ci_time_format, $co);
+          $users[$user->name->value]['days'][$i]['presence'] = date($presence_time_format, $presence);
+          $users[$user->name->value]['days'][$i]['presence_preview'] = date($presence_preview_time_format, $presence);
+          $users[$user->name->value]['days'][$i]['away'] = date($presence_time_format, $away);
+        }
+
+        // Flag to render info block in table cell.
+        $users[$user->name->value]['days'][$i]['state'] = $day_data_exists;
+      }
+    }
+
+    // Forward variables for template.
+    $vars['days_in_given_month'] = $days_in_given_month;
+    $vars['current_month_name'] = $current_month_name;
+    $vars['current_year'] = $current_year;
+    $vars['users'] = $users;
+  }
+}

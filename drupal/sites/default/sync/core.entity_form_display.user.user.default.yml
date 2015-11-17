@@ -3,6 +3,7 @@ langcode: en
 status: true
 dependencies:
   config:
+    - field.field.user.user.field_away_range
     - field.field.user.user.field_came_to_propeople
     - field.field.user.user.field_drupal_org_id
     - field.field.user.user.field_facebook
@@ -248,6 +249,11 @@ mode: default
 content:
   account:
     weight: 0
+    settings: {  }
+    third_party_settings: {  }
+  field_away_range:
+    type: away_range_default
+    weight: 16
     settings: {  }
     third_party_settings: {  }
   field_came_to_propeople:

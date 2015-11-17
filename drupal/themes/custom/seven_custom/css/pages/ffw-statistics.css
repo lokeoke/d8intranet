@@ -1,0 +1,21 @@
+.view-employees-statistics .view-content thead tr th {
+  text-align: center;
+}
+
+.view-employees-statistics .view-content tbody tr td .info {
+  width: 14px;
+  height: 14px;
+}
+
+  .view-employees-statistics .view-content tbody tr td .info:hover {
+    width: auto;
+    height: auto;
+  }
+
+    .view-employees-statistics .view-content tbody tr td .info .info-popup > div {
+      display: none;
+    }
+
+    .view-employees-statistics .view-content tbody tr td .info .info-popup:hover > div {
+      display: block;
+    }

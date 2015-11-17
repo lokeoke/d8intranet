@@ -3,6 +3,7 @@ langcode: en
 status: true
 dependencies:
   config:
+    - field.field.user.user.field_away_range
     - field.field.user.user.field_came_to_propeople
     - field.field.user.user.field_drupal_org_id
     - field.field.user.user.field_facebook
@@ -70,6 +71,7 @@ content:
     settings: {  }
     third_party_settings: {  }
 hidden:
+  field_away_range: true
   field_came_to_propeople: true
   field_drupal_org_id: true
   field_first_name: true

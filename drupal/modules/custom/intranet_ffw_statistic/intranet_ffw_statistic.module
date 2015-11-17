@@ -1,0 +1,59 @@
+<?php
+
+/**
+ * @file
+ * intranet_ffw_statistic.module
+ */
+
+use Drupal\views\ViewExecutable;
+use Drupal\views\Plugin\views\query\QueryPluginBase;
+
+/**
+ * Implements hook_form_alter().
+ */
+function intranet_ffw_statistic_form_alter(&$form, \Drupal\Core\Form\FormStateInterface $form_state, $form_id) {
+  // Add year and month selects to exposed form.
+  if ($form['#id'] == 'views-exposed-form-employees-statistics-page-1') {
+    $years = range(date('Y'), date('Y') - 3);
+    $months = range(1, 12);
+
+    array_walk($months, function (&$element) {
+      $element = t(date('F', mktime(0, 0, 0, $element, 0, 0, 0)));
+    });
+
+    $form['check_in_year'] = array(
+      '#type' => 'select',
+      '#options' => array_combine($years, $years),
+      '#validated' => TRUE,
+    );
+
+    $form['check_in_month'] = array(
+      '#type' => 'select',
+      '#options' => array_combine($months, $months),
+      '#validated' => TRUE,
+    );
+  }
+}
+
+/**
+ * Implements hook_views_query_alter().
+ */
+function intranet_ffw_statistic_views_query_alter(ViewExecutable $view, QueryPluginBase $query) {
+  if ($view->storage->id() == 'employees_statistics') {
+    // Get year and month values from exposed form.
+    $year = $view->getExposedInput()['check_in_year'];
+    $month = $view->getExposedInput()['check_in_month'];
+
+    // Get only these users where
+    // DATE_FORMAT(FROM_UNIXTIME(checkin), \'%Y %M\') = $year $month.
+    $query->where[1]['conditions'] = array(
+      array(
+        'field' => 'DATE_FORMAT(FROM_UNIXTIME(user__field_user_check_in_and_out.field_user_check_in_and_out_check_in), \'%Y %M\') = :date',
+        'value' => array(
+          ':date' => $year . ' ' . $month,
+        ),
+        'operator' => 'formula',
+      )
+    );
+  }
+}
