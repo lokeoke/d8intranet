@@ -25,6 +25,7 @@ function intranet_user_account_form_alter(&$form, \Drupal\Core\Form\FormStateInt
         'field_user_vacation',
         'field_user_work_off',
         'field_presence_status',
+        'field_away_range',
       );
 
       if (!User::load(\Drupal::service('current_user')->id())->hasRole('administrator')) {
