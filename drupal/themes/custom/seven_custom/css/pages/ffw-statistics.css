@@ -1,21 +1,86 @@
+.view-employees-statistics table {
+  table-layout: fixed;
+  width: 100%;
+  /*white-space: nowrap;*/
+}
+
+.view-employees-statistics th,
+.view-employees-statistics td {
+  padding: 0;
+  border-left: 1px solid #bcbab5;
+  font-size: 11px;
+}
+
+
+.view-employees-statistics tr:nth-child(even) {
+  background: #fcfcfc;
+}
+
+.view-employees-statistics tr:hover {
+  background: #d7edfd !important;
+}
+
+
+.view-employees-statistics .user-link-name {
+  width: 10%;
+  position: relative;
+  font-size: 10px;
+  line-height: 1.5;
+
+}
+
+.view-employees-statistics .user-link-name a {
+  display: block;
+  padding: 3px;
+}
+
+
+
 .view-employees-statistics .view-content thead tr th {
   text-align: center;
 }
 
-.view-employees-statistics .view-content tbody tr td .info {
-  width: 14px;
-  height: 14px;
+.view-employees-statistics .info .info-popup {
+  display: none;
 }
 
-  .view-employees-statistics .view-content tbody tr td .info:hover {
-    width: auto;
-    height: auto;
-  }
 
-    .view-employees-statistics .view-content tbody tr td .info .info-popup > div {
-      display: none;
-    }
 
-    .view-employees-statistics .view-content tbody tr td .info .info-popup:hover > div {
-      display: block;
-    }
+.view-employees-statistics .info {
+  position: relative;
+  cursor: pointer;
+  padding: 3px;
+  text-align: center;
+}
+
+.view-employees-statistics .info:hover {
+  background: #0e5f82;
+  color: #fff;
+}
+
+.view-employees-statistics .info:hover .info-popup {
+  display: block;
+  z-index: 100;
+  position: absolute;
+  width: 290px;
+  left: 50%;
+  bottom: 100%;
+  text-align: left;
+  transform: translateX(-50%);
+  padding: 10px;
+  background: #0d709a;
+  color: #fff;
+  border-top-left-radius: 7px;
+  border-bottom-right-radius: 7px;
+}
+
+.away,
+.presence,
+.check-in-and-check-out {
+  overflow: hidden;
+}
+
+.view-employees-statistics .info-data {
+  float: right;
+  font-size: 12px;
+}
