@@ -65,7 +65,7 @@ sticky ? 'sticky-enabled',
             <th{{ column.attributes.addClass(column_classes).setAttribute('scope', 'col') }} colspan="{{ days_in_given_month + 1 }}">{{ current_month_name }} {{ current_year }}</th>
         </tr>
         <tr>
-            <th{{ column.attributes.addClass(column_classes).setAttribute('scope', 'col') }}></th>
+            <th></th>
             {% for day_number in 1..days_in_given_month %}
                 <th{{ column.attributes.addClass(column_classes).setAttribute('scope', 'col') }}>{{ day_number }}</th>
             {% endfor %}
@@ -75,13 +75,13 @@ sticky ? 'sticky-enabled',
     <tbody>
     {% for user in users %}
         <tr{{ row.attributes }}>
-            <td{{ column.attributes.addClass(column_classes) }}><a href="/user/{{ user.id }}">{{ user.name }}</a></td>
+            <td class="user-link-name" data-name="{{ user.name }}"><a href="/user/{{ user.id }}">{{ user.name }}</a></td>
             {% for day_number in 1..days_in_given_month %}
                 <td{{ column.attributes.addClass(column_classes) }}>
                     {% if user.days[day_number].state == true %}
                         <div class="info">
                             <div class="info-preview">
-                                <span class="info-data">{{ user.days[day_number].presence_preview }}</span>
+                                <div>{{ user.days[day_number].presence_preview }}</div>
                             </div>
                             <div class="info-popup">
                                 <div class="check-in-and-check-out">
