@@ -1,0 +1,12 @@
+{
+  "name": "autoprofi",
+  "version": "0.0.0",
+  "dependencies": {
+    "jquery": "~2.1.4"
+  },
+  "devDependencies": {
+    "susy": "~2.2.6"
+  },
+  "appPath": "app",
+  "moduleName": "autoprofi"
+}

@@ -1,0 +1,57 @@
+// -----------------------------------------------------------------------------
+// Profile page
+.profile {
+  .field--name-field-twitter,
+  .field--name-field-facebook,
+  .field--name-field-linkedin,
+  .field--name-field-google-plus {
+    margin: 1rem 0;
+
+    .field__label {
+      font-family: fontello;
+      font-size: 0;
+      display: inline-block;
+      margin-right: 1rem;
+      vertical-align: middle;
+      font-weight: 400;
+
+      & + .field__item {
+        display: inline-block;
+        max-width: 80%;
+        vertical-align: middle;
+
+        @include susy-breakpoint(768px) {
+          max-width: 100%;
+        }
+      }
+    }
+  }
+
+  .field--name-field-twitter {
+    .field__label::before {
+        @include font-size(30);
+        content: '\e805';
+    }
+  }
+
+  .field--name-field-google-plus {
+    .field__label::before {
+      @include font-size(30);
+      content: '\e801';
+    }
+  }
+
+  .field--name-field-facebook {
+    .field__label::before {
+      @include font-size(30);
+      content: '\e803';
+    }
+  }
+
+  .field--name-field-linkedin {
+    .field__label::before {
+      @include font-size(30);
+      content: '\e804';
+    }
+  }
+}

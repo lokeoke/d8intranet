@@ -1,0 +1,48 @@
+table {
+  table-layout: fixed;
+  width: 100%;
+
+  tr:nth-child(odd) {
+    background: #fafafa;
+  }
+
+  tr:hover {
+    background: $dark-blue;
+    color: $white;
+  }
+
+  a {
+    display: inline-block;
+    @include links($active-element, $white, true);
+  }
+}
+
+.table_search {
+  @include font-size(13);
+  line-height: 1.2;
+  margin: 3rem 0;
+
+  td {
+    padding: 5px 10px;
+
+    &:first-child {
+      width: 25%;
+    }
+
+    &:nth-child(2) {
+      width: 25%;
+    }
+  }
+
+  .header_table_search {
+    padding: 5px;
+    background: $dark-blue;
+    color: $white;
+
+    td {
+      padding: 10px;
+    }
+  }
+
+}
+
