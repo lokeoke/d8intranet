@@ -1,4 +1,4 @@
-uuid: 1f71039f-de54-4ba7-b525-373a8dac4e86
+uuid: b4a821e6-fd67-40d8-9c00-a93b79d90bea
 langcode: en
 status: false
 dependencies:
@@ -7,11 +7,11 @@ dependencies:
   module:
     - system
   theme:
-    - bartik
-id: bartik_main_menu
-theme: bartik
+    - ffw_custom
+id: ffw_custom_main_menu
+theme: ffw_custom
 region: '-1'
-weight: -5
+weight: -3
 provider: null
 plugin: 'system_menu_block:main'
 settings:

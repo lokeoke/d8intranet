@@ -1,15 +1,15 @@
-uuid: 471d765a-ec57-4ef6-8801-1fe18c3dc200
+uuid: 5cd20ac4-9fb3-4284-8700-af7a7eb42f1a
 langcode: en
 status: false
 dependencies:
   module:
     - search
   theme:
-    - bartik
-id: bartik_search
-theme: bartik
+    - ffw_custom
+id: ffw_custom_search
+theme: ffw_custom
 region: '-1'
-weight: -6
+weight: -1
 provider: null
 plugin: search_form_block
 settings:

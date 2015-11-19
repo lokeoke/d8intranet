@@ -1,0 +1,24 @@
+uuid: 9f627e21-254b-48d2-8d48-724bc5cf8087
+langcode: en
+status: false
+dependencies:
+  config:
+    - system.menu.footer
+  module:
+    - system
+  theme:
+    - ffw_custom
+id: ffw_custom_footer
+theme: ffw_custom
+region: '-1'
+weight: -5
+provider: null
+plugin: 'system_menu_block:footer'
+settings:
+  id: 'system_menu_block:footer'
+  label: 'Footer menu'
+  provider: system
+  label_display: '0'
+  level: 1
+  depth: 0
+visibility: {  }

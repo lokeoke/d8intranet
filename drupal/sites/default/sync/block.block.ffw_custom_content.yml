@@ -1,0 +1,20 @@
+uuid: edbb2a90-ef6d-4762-9507-7a8c65aba8b3
+langcode: en
+status: true
+dependencies:
+  module:
+    - system
+  theme:
+    - ffw_custom
+id: ffw_custom_content
+theme: ffw_custom
+region: content
+weight: -3
+provider: null
+plugin: system_main_block
+settings:
+  id: system_main_block
+  label: 'Main page content'
+  provider: system
+  label_display: '0'
+visibility: {  }

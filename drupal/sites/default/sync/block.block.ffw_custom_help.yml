@@ -1,15 +1,15 @@
-uuid: d5f7fe26-d30a-40fc-b806-6a5e801f7f72
+uuid: cedd6a82-f33d-4088-8f00-b2e6e07103ac
 langcode: en
 status: false
 dependencies:
   module:
     - help
   theme:
-    - bartik
-id: bartik_help
-theme: bartik
+    - ffw_custom
+id: ffw_custom_help
+theme: ffw_custom
 region: '-1'
-weight: -2
+weight: -4
 provider: null
 plugin: help_block
 settings:
