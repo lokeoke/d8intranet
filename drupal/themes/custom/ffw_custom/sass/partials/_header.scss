@@ -1,0 +1,81 @@
+//------------------------------------------------------------------------------
+// Header global
+.header {
+  text-align: center;
+  padding: 2rem 1rem;
+
+  @include susy-breakpoint(1024px) {
+    padding: 4rem 6rem 2rem 6rem;
+  }
+}
+
+.site-logo,
+.site-branding__text {
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.site-logo {
+  margin-right: 1rem;
+}
+
+.site-branding__name {
+  text-align: center;
+  @include font-size(30);
+
+  a {
+    @include links($white, $white);
+  }
+}
+
+.site-branding__logo {
+  display: block;
+}
+
+.site-branding {
+  margin-bottom: 2rem;
+
+  @include susy-breakpoint(768px) {
+    float: left;
+    margin-bottom: 0;
+  }
+}
+
+.menu--account {
+  width: span(24);
+
+  @include susy-breakpoint(1000px) {
+    float: right;
+    width: span(12);
+  }
+}
+
+// Menu
+.menu--account {
+  @include susy-breakpoint(768px) {
+    text-align: right;
+  }
+
+  .menu-item {
+    max-width: 200px;
+    margin: 0 0 1rem;
+    display: inline-block;
+    width: 100%;
+    text-align: center;
+
+    @include susy-breakpoint(768px) {
+      margin: 0 0 0 2rem;
+    }
+
+    a {
+      padding: 20px;
+      display: block;
+      border: 1px solid $active-element;
+      transition: all .2s ease-out;
+
+      &:hover {
+        background: $active-element;
+      }
+    }
+  }
+}

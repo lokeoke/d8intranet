@@ -1,0 +1,15 @@
+global-styling:
+  version: VERSION
+  css:
+    base:
+      css/main.css: {}
+
+
+maintenance_page:
+  version: VERSION
+  css:
+    theme:
+      css/maintenance-page.css: {}
+  dependencies:
+    - system/maintenance
+    - ffw_custom/global-styling

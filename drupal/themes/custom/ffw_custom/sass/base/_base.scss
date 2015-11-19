@@ -1,0 +1,102 @@
+//------------------------------------------------------------------------------
+// Breakpoints
+
+$wide: 1025px 12 !default;
+$tablet-land: 769px 12 !default;
+$tablet-port: 768px 12 !default;
+$phone-x2: 640px 12 !default;
+$phone: 320px 12 !default;
+
+//------------------------------------------------------------------------------
+//Page
+body {
+  @include font-size(16);
+  @include border-box-sizing;
+  font-family: $sans;
+  font-weight: 300;
+  min-width: 320px;
+  -webkit-text-size-adjust: 100%;
+  word-wrap: break-word;
+  background: #37474F;
+  color: #cfcfcf;
+
+  @include susy-breakpoint(641px) {
+    @include font-size(18);
+  }
+
+}
+
+
+// -----------------------------------------------------------------------------
+// Reset base styles for all lists
+ul,
+ol {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+a {
+  @include links($active-element, $black, true);
+  transition: color .2s ease-out;
+  outline: medium none;
+  text-decoration: none;
+  &:focus { outline: medium none;  }
+}
+
+strong {
+  font-weight: 600;
+}
+
+// -----------------------------------------------------------------------------
+// Make all image are fluid
+
+img {
+  height: auto;
+  max-width: 100%;
+}
+
+
+// -----------------------------------------------------------------------------
+// Make white fill for webkit browsers
+input:-webkit-autofill {
+  -webkit-box-shadow: 0 0 0 1000px $white inset;
+}
+
+hr {
+  border-top: 0 none;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+//------------------------------------------------------------------------------
+// Warning, Tabs, Message pane
+.status,
+.warning,
+.error,
+.ok,
+.alert-block {
+  @include font-size(15);
+  box-sizing: border-box;
+  color: $white;
+  display: block;
+  padding: 15px;
+
+
+  .krumo-root {
+    color: $black;
+  }
+
+  a {
+    color: $black;
+  }
+
+  li {
+    margin-bottom: 10px;
+  }
+}
+
+.error { background-color: #e05041; }
+.ok,
+.status { background-color: #01be53; }
+.warning { background-color: #446bad; }

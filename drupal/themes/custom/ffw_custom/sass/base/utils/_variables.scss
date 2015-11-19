@@ -1,0 +1,41 @@
+//------------------------------------------------------------------------------
+// Images
+$sprite: '../images/sprite.png';
+
+//------------------------------------------------------------------------------
+// Fonts
+
+// Fallback fonts
+$fonts-sans: 'Open Sans', Helvetica, Arial, sans-serif;
+$fonts-sans-light: 'Open Sans Light', Helvetica, Arial, sans-serif;
+$fonts-serif: Georgia, serif;
+
+$sans: $fonts-sans !default;
+$serif: $fonts-serif !default;
+
+// Colors
+//------------------------------------------------------------------------------
+
+// Site base colors
+$white: #fff !default;
+$black: #000 !default;
+
+$active-element: #f2bf86;
+$dark-blue: #242b38;
+
+$table-row-bg: #282828;
+$table-row-bg-odd: #383838;
+
+// Define variables
+
+$block-bg: #282828;
+$dark-red: #DE1B1B;
+
+$site-font-color: #cfcfcf;
+$link: #66d5e9;
+$link-hover: #e9c366;
+
+
+$attention: #99212D;
+$warning: #fdd338;
+$success: #3A9E49;

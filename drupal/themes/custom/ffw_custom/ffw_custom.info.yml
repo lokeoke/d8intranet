@@ -1,0 +1,37 @@
+name: FFW custom
+type: theme
+base theme: bartik
+description: 'A flexible, recolorable theme with many regions and a responsive, mobile-first layout.'
+version: 8.x-1.0
+core: 8.x
+libraries:
+  - ffw_custom/global-styling
+stylesheets-remove:
+  - core/themes/bartik/css/colors.css
+  - core/themes/bartik/css/base/elements.css
+  - core/themes/bartik/css/components/main-content.css
+  - core/themes/bartik/css/components/header.css
+  - core/themes/bartik/css/components/form.css
+  - core/themes/bartik/css/layout.css
+  - core/themes/bartik/css/components/site-branding.css
+  - core/themes/bartik/css/components/menu.css
+  - core/themes/bartik/css/components/block.css
+  - core/themes/bartik/css/components/tabs.css
+  - core/themes/bartik/css/components/vertical-tabs.component.css
+  - core/themes/classy/css/components/button.css
+  - core/themes/classy/css/components/tabs.css
+  - core/themes/classy/css/components/menu.css
+  - core/themes/classy/css/components/user.css
+  - core/themes/classy/css/components/form.css
+  - core/themes/bartik/css/components/buttons.css
+  - core/assets/vendor/normalize-css/normalize.css
+  - core/misc/vertical-tabs.css
+  - core/themes/classy/css/components/details.css
+#  - core/misc/vertical-tabs.css
+
+regions:
+  header: Header
+  primary_menu: 'Primary menu'
+  highlighted: Highlighted
+  content: Content
+  footer: Footer

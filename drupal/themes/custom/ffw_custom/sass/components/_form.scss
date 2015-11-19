@@ -1,0 +1,173 @@
+.form-text {
+  max-width: 100%;
+  border: 0;
+  padding: 0 1rem;
+  color: $black;
+}
+
+.form-item {
+  margin: 1rem 0;
+
+  label {
+    display: block;
+    margin-bottom: .5rem;
+    @include font-size(20);
+  }
+}
+
+.form-actions {
+  margin-top: 2rem;
+}
+
+.description {
+  @include font-size(14);
+  margin-top: .5rem;
+}
+
+.password-suggestions {
+  display: none !important;
+}
+
+.password-strength__indicator {
+
+  &.is-weak {
+    background: #f66;
+  }
+
+  &.is-fair {
+    background: #ffa166;
+  }
+
+  &.is-good {
+    background: #65ff51;
+  }
+
+  &.is-strong {
+    background: #21b114;
+  }
+}
+
+.form-text,
+.form-email {
+  @include inputs($height: 50px);
+  width: 100%;
+}
+
+.button {
+  padding: .7rem 2rem;
+  background: #DE1B1B;
+  border: 0;
+  color: $white;
+  transition: all .2s ease-out;
+
+  &:hover {
+    color: $black;
+    background: $active-element;
+  }
+}
+
+// Vertical Tabs
+.vertical-tabs {
+  margin: 3rem 0 2rem;
+  border: 0;
+}
+
+.vertical-tabs__menu {
+  margin: 0;
+}
+
+.vertical-tabs__menu-item {
+  display: inline-block;
+  margin-right: .5rem;
+
+  .vertical-tabs__menu-item-title {
+    display: none;
+  }
+
+  a {
+    display: block;
+    padding: 1rem 1.5rem;
+    border-radius: 10px 0;
+    transition: all .1s ease-out;
+    border-radius: 10px 0;
+
+    &::after {
+      font-family: fontello;
+      content: '';
+      display: block;
+      @include font-size(24);
+    }
+  }
+
+  a[href*='facebook']:after {
+    content: '\e803';
+  }
+  a[href*='linkedin']:after {
+    content: '\e804';
+  }
+  a[href*='twitter']:after {
+    content: '\e805';
+  }
+  a[href*='google']:after {
+    content: '\e801';
+  }
+
+  a:hover,
+  &.is-selected a {
+    color: $active-element;
+    box-shadow: 0px 5px 6px -1px #2c2c2c inset;
+    background: #334047;
+  }
+}
+
+.vertical-tabs__panes {
+  details {
+    border: 0;
+  }
+
+  summary {
+    display: none;
+  }
+
+  .details-wrapper {
+    padding: 0;
+  }
+}
+
+@include susy-breakpoint(0 640px) {
+  .field-group-tabs-wrapper {
+    margin: 1.5rem 0;
+
+    details {
+      margin-bottom: .5rem;
+      text-align: center;
+      border: 1px solid $active-element;
+    }
+
+
+    .collapse-processed {
+      summary {
+        position: relative;
+        padding: 0;
+
+        &::before {
+          position: absolute;
+          top: 50%;
+          transform: translateY(-50%);
+          background: none;
+        }
+      }
+
+      label {
+        display: none;
+      }
+
+
+      a {
+        padding: 1rem 0;
+        display: block;
+      }
+    }
+  }
+}
+
