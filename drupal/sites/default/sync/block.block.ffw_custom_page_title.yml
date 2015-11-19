@@ -1,13 +1,13 @@
-uuid: 13fd3ec2-28dd-43c5-ae00-c31096f041a8
+uuid: f7ea1ec6-f7eb-48e6-8f48-721cf430dd58
 langcode: en
 status: true
 dependencies:
   theme:
-    - bartik
-id: bartik_page_title
-theme: bartik
+    - ffw_custom
+id: ffw_custom_page_title
+theme: ffw_custom
 region: content
-weight: -7
+weight: -6
 provider: null
 plugin: page_title_block
 settings:

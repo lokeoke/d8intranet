@@ -1,0 +1,24 @@
+uuid: 92f76626-85c0-4a2f-9000-0ab2892ffd68
+langcode: en
+status: true
+dependencies:
+  config:
+    - system.menu.account
+  module:
+    - system
+  theme:
+    - ffw_custom
+id: ffw_custom_account_menu
+theme: ffw_custom
+region: header
+weight: -5
+provider: null
+plugin: 'system_menu_block:account'
+settings:
+  id: 'system_menu_block:account'
+  label: 'User account menu'
+  provider: system
+  label_display: '0'
+  level: 1
+  depth: 1
+visibility: {  }

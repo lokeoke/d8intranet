@@ -1,15 +1,15 @@
-uuid: 7c552ae0-4af2-4fd7-8800-f356e62add74
+uuid: c3d3657d-6af7-4e57-a000-c2acd266aee1
 langcode: en
-status: true
+status: false
 dependencies:
   module:
     - system
   theme:
-    - bartik
-id: bartik_powered
-theme: bartik
-region: footer_fifth
-weight: -7
+    - ffw_custom
+id: ffw_custom_powered
+theme: ffw_custom
+region: '-1'
+weight: -2
 provider: null
 plugin: system_powered_by_block
 settings:

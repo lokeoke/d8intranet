@@ -1,13 +1,13 @@
-uuid: c7214f3a-9c72-4541-b602-2ec88837c66d
+uuid: cae43908-2dcf-4695-a400-b42db5a1501b
 langcode: en
 status: true
 dependencies:
   theme:
-    - bartik
-id: bartik_local_actions
-theme: bartik
+    - ffw_custom
+id: ffw_custom_local_actions
+theme: ffw_custom
 region: content
-weight: -7
+weight: -4
 provider: null
 plugin: local_actions_block
 settings:

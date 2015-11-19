@@ -1,15 +1,15 @@
-uuid: aba09b3e-32ff-48a8-ae00-b36d66222644
+uuid: befceffa-f131-4128-b342-66c444fb346e
 langcode: en
 status: false
 dependencies:
   module:
     - system
   theme:
-    - bartik
-id: bartik_breadcrumbs
-theme: bartik
+    - ffw_custom
+id: ffw_custom_breadcrumbs
+theme: ffw_custom
 region: '-1'
-weight: -4
+weight: -6
 provider: null
 plugin: system_breadcrumb_block
 settings:

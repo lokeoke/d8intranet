@@ -1,13 +1,13 @@
-uuid: 28519e61-d576-45ce-b717-23c556b27d64
+uuid: becbc00d-008f-4b36-9855-854c2d17bd6a
 langcode: en
-status: false
+status: true
 dependencies:
   theme:
-    - bartik
-id: bartik_local_tasks
-theme: bartik
-region: '-1'
-weight: -3
+    - ffw_custom
+id: ffw_custom_local_tasks
+theme: ffw_custom
+region: content
+weight: -5
 provider: null
 plugin: local_tasks_block
 settings:
