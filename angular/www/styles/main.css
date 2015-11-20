@@ -5,8 +5,6 @@
 .sidebar-icon,
 .current-date-wrapper,
 .info-box-headline,
-.webform-client-form .webform-component-fieldset,
-.webform-client-form .webform-component-textarea,
 .available-users,
 .team,
 .user-page .page-content,
@@ -20,8 +18,6 @@
   .sidebar-icon:before,
   .current-date-wrapper:before,
   .info-box-headline:before,
-  .webform-client-form .webform-component-fieldset:before,
-  .webform-client-form .webform-component-textarea:before,
   .available-users:before,
   .team:before,
   .user-page .page-content:before,
@@ -33,8 +29,6 @@
   .sidebar-icon:after,
   .current-date-wrapper:after,
   .info-box-headline:after,
-  .webform-client-form .webform-component-fieldset:after,
-  .webform-client-form .webform-component-textarea:after,
   .available-users:after,
   .team:after,
   .user-page .page-content:after,
@@ -50,8 +44,6 @@
   .sidebar-icon:after,
   .current-date-wrapper:after,
   .info-box-headline:after,
-  .webform-client-form .webform-component-fieldset:after,
-  .webform-client-form .webform-component-textarea:after,
   .available-users:after,
   .team:after,
   .user-page .page-content:after,
@@ -1015,6 +1007,14 @@
   .lt-ie9 .github-icon::before {
     font-size: 33px; }
 
+.edit-profile-icon::before {
+  font-size: 1.125rem;
+  content: '\e81c';
+  margin-top: 10px;
+  display: block; }
+  .lt-ie9 .edit-profile-icon::before {
+    font-size: 18px; }
+
 /**
  * Eric Meyer's Reset CSS v2.0 (http://meyerweb.com/eric/tools/css/reset/)
  * http://cssreset.com
@@ -1092,6 +1092,10 @@ a {
     color: #FF9E80; }
   .light a {
     color: #DE1B1B; }
+  .dark a:hover {
+    color: #ffb19a; }
+  .light a:hover {
+    color: #e52d2d; }
   a:focus {
     outline: medium none; }
 
@@ -1102,37 +1106,6 @@ strong {
   width: 310.52632%;
   float: left;
   margin-right: 5.26316%; }
-
-input[type="text"],
-input[type="password"],
-input[type="email"],
-input[type="url"],
-input[type="search"] {
-  font-size: 0.875rem;
-  border: 0;
-  color: #000;
-  height: 17px;
-  margin: 0;
-  max-width: 100%;
-  padding: 9px 0; }
-  .lt-ie9 input[type="text"],
-  .lt-ie9 input[type="password"],
-  .lt-ie9 input[type="email"],
-  .lt-ie9 input[type="url"],
-  .lt-ie9 input[type="search"] {
-    font-size: 14px; }
-
-input[type="text"]::-ms-clear {
-  display: none; }
-
-.form-text,
-.form-textarea {
-  border: 1px solid transparent; }
-  .form-text:hover,
-  .form-text:focus,
-  .form-textarea:hover,
-  .form-textarea:focus {
-    outline: none; }
 
 img {
   height: auto;
@@ -1177,13 +1150,13 @@ hr {
     margin-bottom: 10px; }
 
 .error {
-  background-color: #e05041; }
+  background-color: #99212D; }
 
 .status {
-  background-color: #01be53; }
+  background-color: #3A9E49; }
 
 .warning {
-  background-color: #446bad; }
+  background-color: #fdd338; }
 
 .clearfix:after {
   clear: both;
@@ -2276,6 +2249,12 @@ hr {
   .lt-ie9 .logout-icon::before {
     font-size: 20px; }
 
+.edit-icon::before {
+  font-size: 1.25rem;
+  content: '\e817'; }
+  .lt-ie9 .edit-icon::before {
+    font-size: 20px; }
+
 .roll-menu-icon {
   display: block; }
   .roll-menu-icon::before {
@@ -2757,99 +2736,101 @@ hr {
     -webkit-transform: scale(1);
             transform: scale(1); } }
 
-form input:-webkit-autofill {
-  background-color: #fff !important; }
-
-form .form-wrapper {
-  clear: both;
-  position: relative; }
-
-form .form-text,
-form .form-textarea {
+input[type="text"],
+input[type="password"],
+input[type="email"],
+input[type="url"],
+input[type="search"] {
   font-size: 1rem;
-  background-color: #f2f2f2;
-  color: #000;
-  font-family: "Open Sans", Helvetica, Arial, sans-serif;
-  height: 44px;
-  padding: 0 3%;
-  width: 94%; }
-  .lt-ie9 form .form-text,
-  .lt-ie9 form .form-textarea {
-    font-size: 16px; }
-  form .form-text:active,
-  form .form-text:focus,
-  form .form-textarea:active,
-  form .form-textarea:focus {
-    box-shadow: 0 1px 0 #d4d4d4 inset, 0 0 0 1000px #080d10 inset; }
-
-form label {
-  font-size: 0.9375rem;
-  box-sizing: border-box;
-  line-height: 1.2;
-  padding-right: 10px;
-  text-align: right; }
-  .lt-ie9 form label {
-    font-size: 15px; }
-
-form .error {
-  margin-bottom: 10px; }
-
-form .form-checkbox.error + form .form-checkbox.error label,
-form .form-radio.error + form .form-radio.error label {
-  color: #8b1a35; }
-
-form .form-textarea {
-  height: 100px;
-  resize: vertical;
-  padding: 10px; }
-
-form .form-actions {
-  margin-top: -7px; }
-
-form .form-submit {
-  padding: 8px 25px 7px; }
-
-.webform-client-form .webform-component-fieldset {
-  padding: 10px 0;
-  margin: 0 auto 30px;
-  max-width: 600px; }
-  .webform-client-form .webform-component-fieldset .webform-component {
-    margin-bottom: 20px;
-    font-size: 0; }
-
-.webform-client-form .form-item label {
+  font-family: "Open Sans Light", Helvetica, Arial, sans-serif;
+  font-weight: 300;
+  border: 0;
+  margin: 0;
+  max-width: 100%;
+  height: 50px;
+  position: relative;
   display: block;
+  overflow: hidden;
+  padding: 0 0 0 10px;
+  white-space: nowrap; }
+  .dark input[type="text"],
+  .dark input[type="password"],
+  .dark input[type="email"],
+  .dark input[type="url"],
+  .dark input[type="search"] {
+    background: #263238;
+    color: #cfcfcf; }
+  .light input[type="text"],
+  .light input[type="password"],
+  .light input[type="email"],
+  .light input[type="url"],
+  .light input[type="search"] {
+    background: #f6f6f6;
+    color: #2e2e2e; }
+  .lt-ie9 input[type="text"],
+  .lt-ie9 input[type="password"],
+  .lt-ie9 input[type="email"],
+  .lt-ie9 input[type="url"],
+  .lt-ie9 input[type="search"] {
+    font-size: 16px; }
+
+textarea {
+  font-size: 1rem;
+  resize: vertical;
+  border: 0 none;
+  padding: 15px 10px;
+  font-family: "Open Sans Light", Helvetica, Arial, sans-serif;
+  font-weight: 300;
+  min-height: 200px; }
+  .lt-ie9 textarea {
+    font-size: 16px; }
+  .dark textarea {
+    background: #263238;
+    color: #cfcfcf; }
+  .light textarea {
+    background: #f6f6f6;
+    color: #2e2e2e; }
+
+label {
+  display: block;
+  margin-bottom: .5rem; }
+
+.petition-form {
+  max-width: 600px;
   width: 100%;
   text-align: left; }
+  .petition-form h3 {
+    font-size: 1.25rem;
+    margin-bottom: 1rem;
+    text-align: center; }
+    .lt-ie9 .petition-form h3 {
+      font-size: 20px; }
 
-.webform-client-form .form-text {
+.submit-btn {
+  border: 0;
+  padding: 10px 15px;
+  cursor: pointer;
+  transition: all 0.2s ease-out;
+  font-size: 0.875rem; }
+  .lt-ie9 .submit-btn {
+    font-size: 14px; }
+  .dark .submit-btn {
+    background: #FF9E80;
+    color: #fff; }
+    .dark .submit-btn:hover {
+      background: #000; }
+  .light .submit-btn {
+    background: #DE1B1B;
+    color: #fff; }
+    .light .submit-btn:hover {
+      background: #000; }
+
+form {
   width: 100%; }
-
-.webform-client-form .webform-component-textarea {
-  margin-bottom: 40px;
-  clear: both; }
-  .webform-client-form .webform-component-textarea label {
-    line-height: 1.2;
-    display: block;
-    margin-bottom: 10px;
-    text-align: left; }
-  .webform-client-form .webform-component-textarea .form-textarea {
-    width: 100%; }
-
-.webform-client-form .webform-component-radios {
-  font-size: 0;
-  padding: 20px 0; }
-  .webform-client-form .webform-component-radios .form-type-radio {
-    display: block;
-    margin: 0 40px 5px 0; }
-    .webform-client-form .webform-component-radios .form-type-radio label {
-      display: block; }
-
-.webform-client-form .webform-component-file {
-  clear: both; }
-
-.webform-client-form .form-actions {
-  text-align: center; }
+  form textarea,
+  form input[type='text'] {
+    width: 100%;
+    margin-bottom: 1rem; }
 
 .modal {
   background: rgba(221, 221, 221, 0.9);
@@ -3171,6 +3152,142 @@ code {
       .lt-ie9 .doc-link span::after {
         font-size: 30px; }
 
+.createPetition {
+  padding: 0 0 3rem;
+  border-bottom: 1px solid #ccc; }
+  .createPetition h2 {
+    font-size: 1.875rem;
+    display: inline-block;
+    vertical-align: middle;
+    margin-right: 1rem; }
+    .lt-ie9 .createPetition h2 {
+      font-size: 30px; }
+
+.add-petition {
+  font-family: fontello;
+  font-size: 2.5rem;
+  display: inline-block;
+  vertical-align: middle;
+  cursor: pointer; }
+  .lt-ie9 .add-petition {
+    font-size: 40px; }
+  .add-petition:after {
+    content: '\e818'; }
+
+.remove-petition-button:after {
+  content: '\e819'; }
+
+#formPetition {
+  margin: 3rem 0 2rem; }
+
+.petition-item {
+  padding: 2rem 0;
+  border: 1px solid #ccc;
+  border-left: 0;
+  border-right: 0; }
+  .petition-item:first-child,
+  .petition-item:last-child {
+    border-top: 0; }
+  .petition-item .shortly-about-petition {
+    width: 66.31846%;
+    float: left;
+    margin-right: 1.04463%; }
+  .petition-item h3 {
+    font-size: 1.5rem;
+    margin: 2rem 0 2rem; }
+    .lt-ie9 .petition-item h3 {
+      font-size: 24px; }
+  .petition-item .more-about-petition {
+    margin-top: 1rem; }
+  .petition-item .petition-votes {
+    width: 7.37575%;
+    float: right;
+    margin-right: 0;
+    padding-top: 7.37575%; }
+
+.petition-content {
+  margin-bottom: 2rem; }
+
+.petition-votes {
+  width: 15.79614%;
+  float: left;
+  margin-right: 1.04463%;
+  padding-top: 15.79614%;
+  text-align: center;
+  position: relative;
+  height: 0; }
+  .document .petition-votes {
+    display: block;
+    float: none;
+    margin: 0 auto 3rem; }
+
+.votes-count-wrapper {
+  position: absolute;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 100%;
+  overflow: hidden;
+  background: rgba(0, 0, 0, 0.5); }
+
+.votes-count {
+  font-size: 0.8125rem;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  -webkit-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%);
+  width: 100%; }
+  .lt-ie9 .votes-count {
+    font-size: 13px; }
+  .votes-count span {
+    font-size: 1.5rem;
+    display: block;
+    margin-top: 10px; }
+    .lt-ie9 .votes-count span {
+      font-size: 24px; }
+
+.votes-count {
+  color: #fff; }
+
+.like-form-wrapper {
+  height: 100%; }
+  .like-form-wrapper form {
+    height: 100%; }
+
+.like-dislike-btn {
+  border-radius: 10px 0;
+  display: block;
+  margin: 0 auto;
+  cursor: pointer;
+  padding: 1rem;
+  border: 0;
+  position: relative;
+  background: transparent;
+  overflow: hidden;
+  transition: all 0.1s ease-out;
+  font-size: 1rem; }
+  .lt-ie9 .like-dislike-btn {
+    font-size: 16px; }
+  .dark .like-dislike-btn {
+    color: #fff;
+    background: #FF9E80; }
+  .light .like-dislike-btn {
+    color: #fff;
+    background: #DE1B1B; }
+  .dark .like-dislike-btn:hover {
+    background: #ff774d; }
+  .light .like-dislike-btn:hover {
+    background: #b11515; }
+
+.document .petition-title {
+  font-size: 1.75rem;
+  text-align: center;
+  font-weight: 400;
+  margin-bottom: 2rem; }
+  .lt-ie9 .document .petition-title {
+    font-size: 28px; }
+
 .dashboard h2 {
   font-size: 2.25rem;
   margin-bottom: 2rem; }
@@ -3273,7 +3390,8 @@ code {
 .check-in-time {
   display: inline-block;
   vertical-align: middle;
-  margin-right: 5px; }
+  margin-right: 5px;
+  color: #000; }
 
 .available-users {
   position: relative; }
@@ -3651,6 +3769,28 @@ code {
   .user-page .page-content {
     position: relative; }
 
+.edit-profile {
+  font-size: 0;
+  margin-top: 2rem;
+  display: inline-block;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  position: relative;
+  transition: all 0.2s ease-out; }
+  .dark .edit-profile {
+    border: 1px solid #FF9E80; }
+  .light .edit-profile {
+    border: 1px solid #DE1B1B; }
+  .dark .edit-profile:hover {
+    background: #FF9E80; }
+    .dark .edit-profile:hover:before {
+      color: #fff; }
+  .light .edit-profile:hover {
+    background: #DE1B1B; }
+    .light .edit-profile:hover:before {
+      color: #fff; }
+
 .page-bg {
   min-height: 500px;
   background: url(../images/user-page-bg-blue.jpg) no-repeat;
@@ -3871,15 +4011,15 @@ code {
 
 .vacation-days-left {
   font-size: 1rem;
-  border-bottom: 1px solid #5999bb;
   position: absolute;
-  left: -50px;
+  -webkit-transform: translateX(-50%);
+          transform: translateX(-50%);
   margin-bottom: -1px;
   bottom: 15px;
+  left: 50%;
   z-index: 1;
   font-family: "Open Sans", Helvetica, Arial, sans-serif;
   font-weight: 500;
-  background: #f2f659;
   padding: 5px 10px; }
   .lt-ie9 .vacation-days-left {
     font-size: 16px; }

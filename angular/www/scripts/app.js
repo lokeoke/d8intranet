@@ -44,6 +44,16 @@ angular.module('d8intranetApp', [
             templateUrl: 'views/statistic.html',
             controller: 'StatisticController'
           })
+          .when('/petitions', {
+            url: '/petitions',
+            templateUrl: 'views/petitions.html',
+            controller: 'petitionsController'
+          })
+          .when('/petitions/:nid', {
+            url: '/petitions/:nid',
+            templateUrl: 'templates/petition.html',
+            controller: 'singlePetitionsController'
+          })
           .when('/documents', {
             url: '/documents',
             templateUrl: 'views/documents.html',
@@ -70,10 +80,16 @@ angular.module('d8intranetApp', [
     })
 
     .constant('config', {
+      // Main routes to pages
       frontUrl: '#dashboard',
       employeesUrl: '#employees',
       vacationsUrl: '#vacation',
       documentsUrl: '#documents',
+      petitionsUrl: '#petitions',
+      // Petitions list
+      petitionsListUrl: 'admin/api/petition',
+      petitionsPostUrl: 'admin/api/petition/create',
+
       documentsListUrl: 'admin/api/document',
       checkInUrl: 'admin/api/user/check-in',
       checkOutUrl: 'admin/api/user/check-out',

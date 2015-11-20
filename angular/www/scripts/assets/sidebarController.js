@@ -34,6 +34,11 @@ angular.module('d8intranetApp')
           url: config.vacationsUrl
         },
         {
+          icon: 'edit',
+          title: 'Petitions',
+          url: config.petitionsUrl
+        },
+        {
           icon: 'doc',
           title: 'Documents',
           url: config.documentsUrl
@@ -49,10 +54,10 @@ angular.module('d8intranetApp')
       $rootScope.jira = '';
 
       checkState.getState(config.status).then(function (data) {
-        $scope.logged = data.logged;
+        $rootScope.logged = data.logged;
         $rootScope.checkedIn = data.checked_in;
         $rootScope.jira = data.jira;
-        $scope.currentUserId = data.uid;
+        $rootScope.currentUserId = data.uid;
         $scope.currentUserPic = data.field_image;
         $scope.isAway = data.field_presence_status;
 

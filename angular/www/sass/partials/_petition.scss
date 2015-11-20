@@ -1,0 +1,152 @@
+//------------------------------------------------------------------------------
+// Petition Add
+
+.createPetition {
+  padding: 0 0 3rem;
+  border-bottom: 1px solid #ccc;
+
+  h2 {
+    @include font-size(30);
+    display: inline-block;
+    vertical-align: middle;
+    margin-right: 1rem;
+  }
+}
+
+.add-petition {
+  font-family: fontello;
+  @include font-size(40);
+  display: inline-block;
+  vertical-align: middle;
+  cursor: pointer;
+
+  &:after {
+    content: '\e818';
+  }
+}
+
+.remove-petition-button {
+  &:after {
+    content: '\e819';
+  }
+}
+
+#formPetition {
+  margin: 3rem 0 2rem;
+}
+
+// Petitions list
+
+//Petition item
+.petition-item {
+  padding: 2rem 0;
+  border: 1px solid #ccc;
+  border-left: 0;
+  border-right: 0;
+
+  &:first-child,
+  &:last-child {
+    border-top: 0;
+  }
+
+  .shortly-about-petition {
+    @include span(16 of 24)
+  }
+
+  h3 {
+    @include font-size(24);
+    margin: 2rem 0 2rem;
+  }
+
+  .more-about-petition {
+    margin-top: 1rem;
+  }
+
+  .petition-votes {
+    @include span(2 last of 24);
+    padding-top: span(2);
+  }
+}
+
+.petition-content {
+  margin-bottom: 2rem;
+}
+
+// Right side
+
+.petition-votes {
+  @include circle(4);
+
+  .document & {
+    display: block;
+    float: none;
+    margin: 0 auto 3rem;
+  }
+}
+
+.votes-count-wrapper {
+  @include circle-content(rgba($black, .5));
+}
+
+.votes-count {
+  @include font-size(13);
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 100%;
+
+  span {
+    @include font-size(24);
+    display: block;
+    margin-top: 10px;
+  }
+}
+
+.votes-count {
+  color: $white;
+}
+
+.like-form-wrapper {
+  height: 100%;
+
+  form {
+    height: 100%;
+  }
+}
+
+.like-dislike-btn {
+  border-radius: 10px 0;
+  display: block;
+  margin: 0 auto;
+  cursor: pointer;
+  padding: 1rem;
+  border: 0;
+  position: relative;
+  background: transparent;
+  overflow: hidden;
+  transition: all .1s ease-out;
+  @include font-size(16);
+
+  @each $theme, $map in $themes {
+    .#{$theme} & {
+      color: #fff;
+      background: map-get($map, $active-elements);
+    }
+  }
+
+  &:hover {
+    @each $theme, $map in $themes {
+      .#{$theme} & {
+        background: darken(map-get($map, $active-elements), 10%);
+      }
+    }
+  }
+}
+
+.document .petition-title {
+  @include font-size(28);
+  text-align: center;
+  font-weight: 400;
+  margin-bottom: 2rem;
+}
