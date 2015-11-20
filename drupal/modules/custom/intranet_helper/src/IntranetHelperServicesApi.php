@@ -154,8 +154,19 @@ class IntranetHelperServicesApi {
           'check_in' => $account->field_user_check_in_and_out->get($field_value_index)->check_in,
           'check_out' => $time
         ));
-        $this->stopAway($account);
 
+        /**
+         * @TODO Please, rewrite this approach
+         *
+         * This function will not make any changes
+         */
+        $this->stopAway($account);
+        /**
+         * Acount saving was added related to commect above
+         * Check one more time that the intranet_helper_cron function works correctly
+         * @see intranet_helper_cron
+         */
+        $account->save();
         $result['status'] = TRUE;
         $result['message'] = t('Successful check-out.')->render();
       }
