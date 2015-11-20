@@ -36,6 +36,10 @@ function intranet_user_account_form_alter(&$form, \Drupal\Core\Form\FormStateInt
           $form[$field_name]['#access'] = FALSE;
         }
       }
+      // field should be hidden foor all users except super admin
+      if(\Drupal::service('current_user')->id() != 1) {
+        $form['field_user_check_in_and_out']['#access'] = FALSE;
+      }
 
     break;
 
