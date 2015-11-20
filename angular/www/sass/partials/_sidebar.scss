@@ -296,6 +296,13 @@
   }
 }
 
+.edit-icon {
+  &::before {
+    @include font-size(20);
+    content: '\e817';
+  }
+}
+
 .roll-menu-icon {
   display: block;
 

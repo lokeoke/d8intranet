@@ -41,13 +41,20 @@ ol {
 }
 
 a {
-//  @include links($black, $black, true);
   outline: medium none;
   text-decoration: none;
 
   @each $theme, $map in $themes {
     .#{$theme} & {
       color: map-get($map, $active-elements);
+    }
+  }
+
+  &:hover {
+    @each $theme, $map in $themes {
+      .#{$theme} & {
+        color: lighten(map-get($map, $active-elements), 5%);
+      }
     }
   }
   &:focus { outline: medium none;  }
@@ -63,33 +70,8 @@ strong {
   @include span(12);
 }
 
-input[type="text"],
-input[type="password"],
-input[type="email"],
-input[type="url"],
-input[type="search"] {
-  @include font-size(14);
-  border: 0;
-  color: $black;
-  height: 17px;
-  margin: 0;
-  max-width: 100%;
-  padding: 9px 0;
-}
 
-input[type="text"]::-ms-clear {
-  display: none;
-}
 
-.form-text,
-.form-textarea {
-  border: 1px solid transparent;
-
-  &:hover,
-  &:focus {
-    outline: none;
-  }
-}
 
 // -----------------------------------------------------------------------------
 // Make all image are fluid
@@ -138,9 +120,9 @@ hr {
   }
 }
 
-.error { background-color: #e05041; }
-.status { background-color: #01be53; }
-.warning { background-color: #446bad; }
+.error { background-color: $attention; }
+.status { background-color: $success; }
+.warning { background-color: $warning; }
 
 // Clear floats.
 .clearfix:after {

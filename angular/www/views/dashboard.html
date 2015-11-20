@@ -18,6 +18,7 @@
 
       <ul ng-if="checkedInUserList.length != 0">
         <li ng-repeat="user in checkedInUserList" class="checked-user" ng-class="user.field_presence_status">
+          <a href="#user/{{users.uid}}" class="employee-link">
           <span class="user-pic">
           <img ng-src="{{user.field_image}}"
                err-SRC="images/anonymus.png"
@@ -29,6 +30,7 @@
             <span class="check-in-time">
               {{user.time * 1000 | date:'h:mma'}}
             </span>
+          </a>
         </li>
       </ul>
     </article>

@@ -81,3 +81,12 @@
   }
 }
 
+.edit-profile-icon {
+  &::before {
+    @include font-size(18);
+    content: '\e81c';
+    margin-top: 10px;
+    display: block;
+  }
+}
+

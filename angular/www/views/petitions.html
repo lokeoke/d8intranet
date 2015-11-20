@@ -1,0 +1,41 @@
+<div class="page-container">
+  <h1 class="page-title">Petitions</h1>
+
+  <section class="createPetition">
+    <h2>Create new petition</h2>
+    <span class="add-petition" insert-petition="remove-petition-button"></span>
+    <div id="petitionForm" class="petition-form">
+    </div>
+  </section>
+
+  <section class="petitions-list">
+    <ul>
+      <li class="petition-item group" ng-repeat="petition in petitionsList">
+
+        <div class="shortly-about-petition">
+          <span class="petition-status">{{petition.field_time_status}}</span>
+          <span class="petition-date"> | Expiry: {{petition.field_expiration_date}}</span>
+
+          <h3>{{petition.title}}</h3>
+
+          <div class="more-about-petition">
+            <a ng-href="#petitions/{{petition.nid}}">More about</a>
+          </div>
+        </div>
+
+        <div class="petition-votes">
+          <div class="votes-count-wrapper">
+            <div class="votes-count">
+              Total votes:
+              <span>{{petition.field_likes}}</span>
+            </div>
+          </div>
+        </div>
+
+
+      </li>
+    </ul>
+  </section>
+
+
+</div>

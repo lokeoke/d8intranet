@@ -1,0 +1,31 @@
+<div>
+  <div class="page-container single-document">
+
+    <h1 class="page-title">Petitions</h1>
+
+    <backbutton></backbutton>
+
+    <section class="document content-body">
+      <section class="group">
+        <div class="petition-votes">
+          <div class="votes-count-wrapper">
+            <div class="votes-count">
+              Total votes:
+              <span>{{petitionLikes}}</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <h2 class="petition-title">{{petitionTitle}}</h2>
+      <div ng-bind-html="petitionBody | htmlCleanUp" class="petition-content"></div>
+
+      <section class="group">
+        <petition-like ng-if="logged" data-petition-id="{{petitionId}}" update-likes="updateLikesFn()" insert-modal></petition-like>
+        <span ng-if="!logged" class="warning"> Sorry but you can't vote. Please login. </span>
+
+      </section>
+    </section>
+
+  </div>
+</div>

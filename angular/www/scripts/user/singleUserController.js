@@ -37,6 +37,15 @@ angular.module('d8intranetApp')
 
               cameToCompany = user.field_came_to_propeople[0].value;
 
+              console.log($rootScope.currentUserId);
+
+              if($rootScope.currentUserId == $routeParams.userId) {
+                $scope.enableEdit = true;
+                $scope.userEdit = '/admin/user/' + user.uid[0].value + '/edit';
+              }
+
+
+
 
               var today = new Date(),
                   past = new Date(cameToCompany);

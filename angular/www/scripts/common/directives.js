@@ -48,7 +48,6 @@ angular.module('d8intranetApp')
       var progressLeft = function (scope, element, attrs) {
         var barHeight = (attrs.daysLeft / attrs.daysTotal) * 100 + '%';
         element.height(barHeight);
-        $('.vacation-days-left').css('bottom', ((attrs.daysLeft / attrs.daysTotal) * 100 + '%'));
       };
 
       return {
@@ -107,17 +106,87 @@ angular.module('d8intranetApp')
       };
     })
 
-    .directive('backbutton', function($window) {
+    .directive('backbutton', function ($window) {
       return {
         template: '<span class="back-button-wrapper"><span class="back-button"></span></span>',
         restrict: 'E',
         replace: true,
 
-        link: function(scope, element) {
-          element.on('click', function(){
+        link: function (scope, element) {
+          element.on('click', function () {
             $window.history.back();
           })
         }
+      }
+    })
+
+    .directive('petitionLike', function ($http, $cookies, modalWindow) {
+      return {
+        restrict: 'E',
+        templateUrl: 'templates/petition-like.html',
+        replace: true,
+        scope: {updateLikes: '&'},
+
+        link: function (scope, element, attrs) {
+          scope.isLike = true;
+
+          element.bind('click', function () {
+            var request = {'like': 'request'};
+            var likeRequest = $http.post('admin/api/petition/' + attrs.petitionId + '/like', request);
+
+            likeRequest.success(function (data) {
+              scope.updateLikes();
+
+              modalWindow.setMessage(
+                  'success',
+                  'Sucess',
+                  data.message
+              );
+            });
+
+            likeRequest.error(function (data) {
+              modalWindow.setMessage(
+                  'error',
+                  'Erorr',
+                  data.message
+              );
+            });
+          })
+        }
+      }
+    })
+
+    .directive('insertPetition', function ($compile) {
+      return {
+        restrict: 'AE',
+
+        link: function (scope, element, attrs) {
+          element.bind('click', function () {
+            var petitionForm = angular.element(document.getElementById('petitionForm')).find('#formPetition');
+
+            element.toggleClass(attrs.insertPetition);
+
+            if (petitionForm.length == 0) {
+              angular.element(document.getElementById('petitionForm'))
+                  .append(
+                  $compile('<petition-form></petition-form>')(scope));
+            }
+            else {
+              petitionForm.remove();
+            }
+          });
+
+        }
+      }
+    })
+
+    .directive('petitionForm', function () {
+      return {
+        templateUrl: 'templates/petitionForm.html',
+        restrict: 'E',
+        replace: true,
+        scope: true,
+        transclude: true
       }
     })
 
@@ -133,11 +202,13 @@ angular.module('d8intranetApp')
     })
 
     .directive('removeModal', function () {
-      return function (scope, element) {
-        element.bind('click', function () {
-          angular.element(document.getElementsByClassName('modal')).remove();
-        })
-      };
+      return {
+        link: function (scope, element) {
+          element.bind('click', function () {
+            angular.element(document.getElementsByClassName('modal')).remove();
+          })
+        }
+      }
     })
 
     .directive('updateStatus', function ($rootScope, $timeout, config, getCheckedInUsers) {

@@ -10,8 +10,9 @@
         {{user.field_first_name[0].value}} {{user.field_last_name[0].value}}
       </div>
       <div class="position">
-        {{user.field_user_position[0].value}}
+        {{user.field_position[0].name}}
       </div>
+      <a ng-if="enableEdit" ng-href="{{userEdit}}" class="font-icon edit-profile edit-profile-icon">Edit profile</a>
     </div>
   </div>
   <div class="page-container">

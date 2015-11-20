@@ -1,0 +1,8 @@
+
+<form name="petitionForm" id="formPetition" ng-controller="petitionFormController" ng-submit="sendPetition()">
+  <input type="text" name="petition-title" placeholder="Petition name" ng-model="petitionTitle" required/>
+  <label for="petition-body">I propose...</label>
+  <textarea name="petitionBody" id="petition-body" cols="30" rows="10" ng-model="petitionBody" required></textarea>
+
+  <button  type="submit" class="submit-btn" data-checked="false" insert-modal> Submit petition</button>
+</form>
