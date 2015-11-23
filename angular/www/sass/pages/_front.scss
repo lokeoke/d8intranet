@@ -9,6 +9,7 @@
 
   article {
     padding-bottom: 4rem;
+    margin: 0 0 4rem;
 
     // Themes
     @each $theme, $map in $themes {
@@ -19,6 +20,102 @@
   }
 }
 
+
+// Today birth days block
+
+.user-years {
+  position: absolute;
+  bottom: 45px;
+  right: 27px;
+  color: #37474f;
+  font-weight: 600;
+  background: url(../images/hp-bg.png) no-repeat 0 -282px;
+  width: 60px;
+  height: 60px;
+  padding-top: 23px;
+  z-index: 101;
+}
+
+.birthday-ribbon {
+  background: url(../images/hp-bg.png) no-repeat 0 -220px;
+  width: 250px;
+  height: 65px;
+  position: absolute;
+  bottom: 8px;
+  display: block;
+  z-index: 100;
+  left: 5px;
+}
+
+.today-birthdays {
+  padding: 2rem 0;
+  text-align: center;
+
+  h3 {
+    @include font-size(26);
+    margin-bottom: 1rem;
+    font-weight: 500;
+
+    // Themes
+    @each $theme, $map in $themes {
+      .#{$theme} & {
+        color: map-get($map, $site-font-color);
+      }
+    }
+  }
+
+  ul {
+    padding: 2rem 0;
+  }
+
+  li {
+    background: url(../images/hp-bg.png) no-repeat top center;
+    max-width: 250px;
+    display: inline-block;
+    width: 100%;
+    padding-top: 215px;
+    position: relative;
+    margin-right: 30px;
+
+    .light & {
+      background: url(../images/hp-bg-l.png) no-repeat top center;
+    }
+
+    &:last-child {
+      margin-right: 0;
+    }
+  }
+
+  .user-name,
+  .user-pic {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
+  .user-pic {
+    top: 58px;
+    width: 130px;
+    height: 130px;
+    margin-left: 2px;
+  }
+
+  .user-name {
+    @include font-size(15);
+    bottom: -15px;
+    font-weight: 400;
+    width: 100%;
+
+    @each $theme, $map in $themes {
+      .#{$theme} & {
+        color: map-get($map, $site-font-color);
+      }
+    }
+
+  }
+}
+
+// Not logged users list
 .no-logged-users {
   @include font-size(20);
   color: #5c6b71;
@@ -30,8 +127,6 @@
 
 .available-users,
 .checked-in-users-list {
-  margin: 4rem 0;
-
   .user-pic {
     width: 32px;
     height: 32px;
@@ -134,3 +229,32 @@
     right: 0;
   }
 }
+
+
+
+.users-birthdays {
+  li {
+    display: inline-block;
+    margin: 0 span(2) span(2) 0;
+
+  }
+
+  .user-pic,
+  .user-name {
+    display: inline-block;
+    vertical-align: middle;
+  }
+
+  .user-pic {
+    @include font-size(12);
+    width: 60px;
+    height: 60px;
+    margin-right: 20px;
+  }
+
+  .user-name {
+    @include font-size(18);
+  }
+}
+
+

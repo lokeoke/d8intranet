@@ -3295,11 +3295,84 @@ code {
     font-size: 36px; }
 
 .dashboard article {
-  padding-bottom: 4rem; }
+  padding-bottom: 4rem;
+  margin: 0 0 4rem; }
   .dark .dashboard article {
     border-bottom: 1px solid; }
   .light .dashboard article {
     border-bottom: 1px solid #c6c6c6; }
+
+.user-years {
+  position: absolute;
+  bottom: 45px;
+  right: 27px;
+  color: #37474f;
+  font-weight: 600;
+  background: url(../images/hp-bg.png) no-repeat 0 -282px;
+  width: 60px;
+  height: 60px;
+  padding-top: 23px;
+  z-index: 101; }
+
+.birthday-ribbon {
+  background: url(../images/hp-bg.png) no-repeat 0 -220px;
+  width: 250px;
+  height: 65px;
+  position: absolute;
+  bottom: 8px;
+  display: block;
+  z-index: 100;
+  left: 5px; }
+
+.today-birthdays {
+  padding: 2rem 0;
+  text-align: center; }
+  .today-birthdays h3 {
+    font-size: 1.625rem;
+    margin-bottom: 1rem;
+    font-weight: 500; }
+    .lt-ie9 .today-birthdays h3 {
+      font-size: 26px; }
+    .dark .today-birthdays h3 {
+      color: #cfcfcf; }
+    .light .today-birthdays h3 {
+      color: #2e2e2e; }
+  .today-birthdays ul {
+    padding: 2rem 0; }
+  .today-birthdays li {
+    background: url(../images/hp-bg.png) no-repeat top center;
+    max-width: 250px;
+    display: inline-block;
+    width: 100%;
+    padding-top: 215px;
+    position: relative;
+    margin-right: 30px; }
+    .light .today-birthdays li {
+      background: url(../images/hp-bg-l.png) no-repeat top center; }
+    .today-birthdays li:last-child {
+      margin-right: 0; }
+  .today-birthdays .user-name,
+  .today-birthdays .user-pic {
+    position: absolute;
+    left: 50%;
+    -webkit-transform: translateX(-50%);
+            transform: translateX(-50%); }
+  .today-birthdays .user-pic {
+    top: 58px;
+    width: 130px;
+    height: 130px;
+    margin-left: 2px; }
+  .today-birthdays .user-name {
+    font-size: 0.9375rem;
+    bottom: -15px;
+    font-weight: 400;
+    width: 100%; }
+    .lt-ie9 .today-birthdays .user-name {
+      font-size: 15px; }
+    .dark .today-birthdays .user-name {
+      color: #cfcfcf; }
+    .light .today-birthdays .user-name {
+      color: #2e2e2e; }
 
 .no-logged-users {
   font-size: 1.25rem;
@@ -3309,16 +3382,13 @@ code {
   .light .no-logged-users {
     color: #9e9e9e; }
 
-.available-users,
-.checked-in-users-list {
-  margin: 4rem 0; }
-  .available-users .user-pic,
-  .checked-in-users-list .user-pic {
-    width: 32px;
-    height: 32px;
-    display: inline-block;
-    vertical-align: middle;
-    margin-right: 5px; }
+.available-users .user-pic,
+.checked-in-users-list .user-pic {
+  width: 32px;
+  height: 32px;
+  display: inline-block;
+  vertical-align: middle;
+  margin-right: 5px; }
 
 .checked-in-users-list ul {
   clear: both; }
@@ -3402,6 +3472,28 @@ code {
     right: 0; }
     .lt-ie9 .available-users .av-users-count {
       font-size: 14px; }
+
+.users-birthdays li {
+  display: inline-block;
+  margin: 0 7.37575% 7.37575% 0; }
+
+.users-birthdays .user-pic,
+.users-birthdays .user-name {
+  display: inline-block;
+  vertical-align: middle; }
+
+.users-birthdays .user-pic {
+  font-size: 0.75rem;
+  width: 60px;
+  height: 60px;
+  margin-right: 20px; }
+  .lt-ie9 .users-birthdays .user-pic {
+    font-size: 12px; }
+
+.users-birthdays .user-name {
+  font-size: 1.125rem; }
+  .lt-ie9 .users-birthdays .user-name {
+    font-size: 18px; }
 
 .user-pic img {
   transition: all 0.2s ease-out; }
