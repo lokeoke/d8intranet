@@ -127,7 +127,7 @@ third_party_settings:
         - field_user_work_off
       parent_name: group_admin_tabs
       weight: '8'
-      label: 'Work off'
+      label: 'Overtime'
       format_type: tab
       format_settings:
         formatter: closed
