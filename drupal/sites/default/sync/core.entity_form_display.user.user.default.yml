@@ -127,7 +127,7 @@ third_party_settings:
         - field_user_work_off
       parent_name: group_admin_tabs
       weight: '8'
-      label: 'Overtime'
+      label: Overtime
       format_type: tab
       format_settings:
         formatter: closed
@@ -372,12 +372,16 @@ content:
   field_user_dayoff:
     type: date_interval_with_status_default
     weight: 22
-    settings: {  }
+    settings:
+      always_paid: 0
+      single_day_shortcut: 1
     third_party_settings: {  }
   field_user_duty_journey:
     type: date_interval_with_status_default
     weight: 19
-    settings: {  }
+    settings:
+      always_paid: 1
+      single_day_shortcut: 1
     third_party_settings: {  }
   field_user_email:
     weight: 12
@@ -388,12 +392,16 @@ content:
   field_user_remote_work:
     type: date_interval_with_status_default
     weight: 20
-    settings: {  }
+    settings:
+      always_paid: 1
+      single_day_shortcut: 1
     third_party_settings: {  }
   field_user_sick:
     type: date_interval_with_status_default
     weight: 18
-    settings: {  }
+    settings:
+      always_paid: 0
+      single_day_shortcut: 1
     third_party_settings: {  }
   field_user_skype:
     weight: 13
@@ -405,12 +413,16 @@ content:
   field_user_vacation:
     type: date_interval_with_status_default
     weight: 17
-    settings: {  }
+    settings:
+      always_paid: false
+      single_day_shortcut: false
     third_party_settings: {  }
   field_user_work_off:
     type: date_interval_with_status_default
     weight: 21
-    settings: {  }
+    settings:
+      always_paid: 1
+      single_day_shortcut: 1
     third_party_settings: {  }
   language:
     weight: 6

@@ -99,7 +99,7 @@ display:
               responsive: ''
             status:
               sortable: true
-              default_sort_order: asc
+              default_sort_order: desc
               align: ''
               separator: ''
               empty_column: false
@@ -137,7 +137,7 @@ display:
               separator: ''
               empty_column: false
               responsive: ''
-          default: created
+          default: status
           empty_table: true
       row:
         type: fields
@@ -630,8 +630,8 @@ display:
           type: boolean
           settings:
             format: custom
-            format_custom_true: NotRequared
-            format_custom_false: Requared
+            format_custom_true: NotRequired
+            format_custom_false: Required
           group_column: value
           group_columns: {  }
           group_rows: true

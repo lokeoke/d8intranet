@@ -49,7 +49,7 @@ class DateIntervalWithStatusDefaultWidget extends WidgetBase {
     $always_paid = $this->getSetting('always_paid');
     $single_day_shortcut = $this->getSetting('single_day_shortcut');
     $summary[] = t('Always paid: @always_paid', array('@always_paid' => ($always_paid ? t('Yes') : t('No'))));
-    $summary[] = t('Single day shortcut: @single_day', array('single_day' => ($single_day_shortcut ? t('Yes') : t('No'))));
+    $summary[] = t('Single day shortcut: @single_day', array('@single_day' => ($single_day_shortcut ? t('Yes') : t('No'))));
 
     return $summary;
   }
