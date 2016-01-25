@@ -50,8 +50,10 @@ angular.module('d8intranetApp')
               var today = new Date(),
                   past = new Date(cameToCompany);
 
+              var currentYear = today.getFullYear();
 
-              angular.forEach(user.timeRanges, function (value, key) {
+
+              angular.forEach(user.timeRanges[currentYear], function (value, key) {
                 $scope.filteredKeys[setStiaticTitle(key)] = value;
               });
 
