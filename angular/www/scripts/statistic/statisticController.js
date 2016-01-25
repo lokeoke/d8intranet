@@ -25,10 +25,7 @@ angular.module('d8intranetApp')
             holidaysList.push(new Date(holiday.field_holiday_date));
           });
 
-          var calendarMonths = {};
           formatUserData.formattedUser($scope.users, holidaysList);
-
-          $scope.months = formatUserData.setMonths(calendarMonths);
 
           $scope.$watch('teamFilter', function (newValue, oldValue) {
             $scope.filterBy = newValue;
@@ -51,7 +48,10 @@ angular.module('d8intranetApp')
           });
 
           $scope.teams.unshift( {"name": 'all', "target_id": 0} );
-          $scope.teamFilter = { selectedOption: $scope.teams[0].target_id }
+          $scope.teamFilter = { selectedOption: $scope.teams[0].target_id };
+
+          $scope.years = formatUserData.setYears();
+          $scope.yearFilter = new Date().getFullYear().toString();
         });
       });
 

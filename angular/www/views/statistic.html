@@ -17,6 +17,11 @@
             ng-options="option.target_id as option.name for option in teams">
     </select>
 
+    <select chosen ng-model='yearFilter' name="Year filter"
+            id="yearFilter"
+            ng-options="year as year for (year, months) in years">
+    </select>
+
     <ul class="legend">
       <li class="leave-type pre-holiday-leave">Pre-holiday</li>
       <li class="leave-type approved-paid-leave">Paid leave</li>

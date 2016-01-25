@@ -12,7 +12,7 @@
 
            ng-click="date.showDetailsJourney = !date.showDetailsJourney"
            data-month="{{date.monthName}}"
-           ng-repeat="date in user.calendarMonths">
+           ng-repeat="date in user.calendarYears[yearFilter]">
 
         <div class="dates-popup"
              ng-class="{hidden: !date.showDetailsJourney}"
@@ -37,7 +37,7 @@
 
       <div class="month total" data-month="Total:">
 
-        <span class="dates dates-total">{{user.timeRanges.totalJourney.totalDaysYear}}</span>
+        <span class="dates dates-total">{{user.timeRanges[yearFilter].totalJourney.totalDaysYear}}</span>
       </div>
     </div>
 

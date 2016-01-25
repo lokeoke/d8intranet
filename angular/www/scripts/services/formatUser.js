@@ -150,7 +150,8 @@ angular.module('d8intranetApp')
         // @parameters:
         //   calendarMonths [object] -  which will be filled with property
         //    - monthName: Contain month short name;
-        setMonths: function (calendarMonths) {
+        setMonths: function () {
+          var calendarMonths = [];
           var months = ["Jan", "Feb", "Mar", "Apr", "May", "June",
             "July", "Aug", "Sep", "Oct", "Nov", "Dec"];
 
@@ -161,77 +162,101 @@ angular.module('d8intranetApp')
           return calendarMonths;
         },
 
+        setYears: function () {
+          var calendarYears = [];
+          var currentYear = new Date().getFullYear();
+
+          for (var i = 2015; i <= currentYear; i++) {
+            calendarYears[i] = formatUserData.setMonths();
+          }
+
+          return calendarYears;
+        },
+
 
         formattedUser: function (users, holidays) {
           // Go through all users in JSON
           angular.forEach(users, function (employee) {
 
-            var calendarMonths = {},
-                sickDays = {},
+            var sickDays = {},
                 journeyDays = {},
                 remoteWorkDays = {},
                 dayOffDays = {},
                 workOffDays = {},
                 vacationDays = {};
 
-            employee.timeRanges = {};
-
-            var months = formatUserData.setMonths(calendarMonths);
+            var years = formatUserData.setYears();
 
             // Get Vacation days
             // ---------------------------------------------------------------------
             angular.forEach(employee.field_user_vacation, function (vacation) {
+              var year = formatUserData.getYearNumber(formatUserData.reformatDate(vacation.start_date));
               var month = formatUserData.getMonthNumber(formatUserData.reformatDate(vacation.start_date));
-              months[month].vacationDays = formatUserData.formatStatisticsData(vacationDays, vacation, holidays);
+              years[year][month].vacationDays = formatUserData.formatStatisticsData(vacationDays, vacation, holidays);
             });
 
 
             // Get DaysOff days
             // ---------------------------------------------------------------------
             angular.forEach(employee.field_user_dayoff, function (dayoff) {
+              var year = formatUserData.getYearNumber(formatUserData.reformatDate(dayoff.start_date));
               var month = formatUserData.getMonthNumber(formatUserData.reformatDate(dayoff.start_date));
-              months[month].dayOffDays = formatUserData.formatStatisticsData(dayOffDays, dayoff);
+              years[year][month].dayOffDays = formatUserData.formatStatisticsData(dayOffDays, dayoff);
             });
 
             // Get Sick days
             // ---------------------------------------------------------------------
             angular.forEach(employee.field_user_sick, function (sick) {
+              var year = formatUserData.getYearNumber(formatUserData.reformatDate(sick.start_date));
               var month = formatUserData.getMonthNumber(formatUserData.reformatDate(sick.start_date));
-              months[month].sickDays = formatUserData.formatStatisticsData(sickDays, sick);
+              years[year][month].sickDays = formatUserData.formatStatisticsData(sickDays, sick);
             });
 
             // Get Duty Journey days
             // -------------------------------------------------------------------
             angular.forEach(employee.field_user_duty_journey, function (journey) {
+              var year = formatUserData.getYearNumber(formatUserData.reformatDate(journey.start_date));
               var month = formatUserData.getMonthNumber(formatUserData.reformatDate(journey.start_date));
-              months[month].journeyDays = formatUserData.formatStatisticsData(journeyDays, journey);
+              years[year][month].journeyDays = formatUserData.formatStatisticsData(journeyDays, journey);
             });
 
             // Get Remote work days
             // -------------------------------------------------------------------
             angular.forEach(employee.field_user_remote_work, function (remoteWork) {
+              var year = formatUserData.getYearNumber(formatUserData.reformatDate(remoteWork.start_date));
               var month = formatUserData.getMonthNumber(formatUserData.reformatDate(remoteWork.start_date));
-              months[month].remoteWorkDays = formatUserData.formatStatisticsData(remoteWorkDays, remoteWork);
+              years[year][month].remoteWorkDays = formatUserData.formatStatisticsData(remoteWorkDays, remoteWork);
             });
 
             // Get WorkOff work days
             // -------------------------------------------------------------------
             angular.forEach(employee.field_user_work_off, function (workOff) {
+              var year = formatUserData.getYearNumber(formatUserData.reformatDate(workOff.start_date));
               var month = formatUserData.getMonthNumber(formatUserData.reformatDate(workOff.start_date));
-              months[month].workOffDays = formatUserData.formatStatisticsData(workOffDays, workOff);
+              years[year][month].workOffDays = formatUserData.formatStatisticsData(workOffDays, workOff);
             });
 
             // Add new property into main employee object
             // which collect all table data for each user.
-            employee.calendarMonths = months;
+            employee.calendarYears = years;
 
             // Add property with sum of Vacations, Days off, etc. fields
-            employee.timeRanges.totalVacation = formatUserData.getTotalDays(months, 'vacationDays');
-            employee.timeRanges.totalDaysOff = formatUserData.getTotalDays(months, 'dayOffDays');
-            employee.timeRanges.totalWorkOff = formatUserData.getTotalDays(months, 'workOffDays');
-            employee.timeRanges.totalSick = formatUserData.getTotalDays(months, 'sickDays');
-            employee.timeRanges.totalJourney = formatUserData.getTotalDays(months, 'journeyDays');
-            employee.timeRanges.totalRemoteWork = formatUserData.getTotalDays(months, 'remoteWorkDays');
+            employee.timeRanges = [];
+
+            angular.forEach(years, function (months, year) {
+              if (employee.timeRanges[year] == undefined) {
+                employee.timeRanges[year] = {};
+              }
+              employee.timeRanges[year].totalVacation = formatUserData.getTotalDays(months, 'vacationDays');
+              employee.timeRanges[year].totalDaysOff = formatUserData.getTotalDays(months, 'dayOffDays');
+              employee.timeRanges[year].totalWorkOff = formatUserData.getTotalDays(months, 'workOffDays');
+              employee.timeRanges[year].totalSick = formatUserData.getTotalDays(months, 'sickDays');
+              employee.timeRanges[year].totalJourney = formatUserData.getTotalDays(months, 'journeyDays');
+              employee.timeRanges[year].totalRemoteWork = formatUserData.getTotalDays(months, 'remoteWorkDays');
+            });
+
+
+
           });
         },
 

@@ -2,7 +2,7 @@
   <div class="user-dates">
     <div class="user-name">Employee</div>
     <div class="months">
-      <div class="month" ng-repeat="month in months">
+      <div class="month" ng-repeat="month in years[yearFilter]">
         <span class="dates">{{month.monthName}}</span>
       </div>
       <div class="month total"><span class="dates">Total</span></div>

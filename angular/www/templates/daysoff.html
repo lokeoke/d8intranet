@@ -12,7 +12,7 @@
       <div class="month"
            ng-click="date.showDetailsDayoff = !date.showDetailsDayoff"
            data-month="{{date.monthName}}"
-           ng-repeat="date in user.calendarMonths">
+           ng-repeat="date in user.calendarYears[yearFilter]">
         <div class="dates-popup" ng-class="{hidden: !date.showDetailsDayoff}"
              ng-if="date.dayOffDays.multipleDates">
           <span class="popup-label">Dates:</span>
@@ -34,7 +34,7 @@
       </div>
 
       <div class="month total" data-month="Total:">
-        <span class="dates dates-total">{{user.timeRanges.totalDaysOff.totalDaysYear}}</span>
+        <span class="dates dates-total">{{user.timeRanges[yearFilter].totalDaysOff.totalDaysYear}}</span>
       </div>
     </div>
   </div>

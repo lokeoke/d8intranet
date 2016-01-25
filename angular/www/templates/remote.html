@@ -12,7 +12,7 @@
 
            ng-click="date.showDetailsRemote = !date.showDetailsRemote"
            data-month="{{date.monthName}}"
-           ng-repeat="date in user.calendarMonths">
+           ng-repeat="date in user.calendarYears[yearFilter]">
 
         <div class="dates-popup"
              ng-class="{hidden: !date.showDetailsRemote}"
@@ -38,7 +38,7 @@
 
       <div class="month total" data-month="Total:">
 
-        <span class="dates dates-total">{{user.timeRanges.totalRemoteWork.totalDaysYear}}</span>
+        <span class="dates dates-total">{{user.timeRanges[yearFilter].totalRemoteWork.totalDaysYear}}</span>
       </div>
     </div>
   </div>
