@@ -95,3 +95,10 @@ intranet_helper.like_petition:
   methods: [POST]
   options:
      no_cache: TRUE
+
+intranet_helper.user_years:
+  path: '/api/user/years'
+  defaults:
+    _controller: '\Drupal\intranet_helper\Controller\IntranetUserController::userYears'
+  requirements:
+    _access: 'TRUE'

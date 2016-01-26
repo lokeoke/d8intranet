@@ -1,5 +1,5 @@
 intranet_callendar:
-  path: '/intranet/callendar/{user}/{type}
+  path: '/intranet/callendar/{user}/{type}'
   defauts:
     _title: 'Get users dates of given type'
     _controller: '\Drupal\intranet_callendar\Controller\IntranetCallendarController::getUserDates'

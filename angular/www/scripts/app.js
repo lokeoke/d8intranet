@@ -101,7 +101,8 @@ angular.module('d8intranetApp', [
       logoutPathUrl: 'admin/user/logout?redirect=true',
       status: 'admin/api/user/check-state',
       holidaysUrl: 'admin/api/holiday/',
-      totalVacation: '20'
+      totalVacation: '20',
+      userYearsRangeUrl: 'admin/api/user/years'
     })
 
     .controller('GetDateCtrl', function ($scope) {

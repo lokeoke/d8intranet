@@ -8,9 +8,11 @@
  * Controller of the d8intranetApp
  */
 angular.module('d8intranetApp')
-    .controller('singleUserController', function ($scope, $rootScope, $http, $routeParams, getJsonData, getHolidays, formatUserData, config) {
-      getHolidays.getDays(config.holidaysUrl + new Date().getFullYear()).then(function (data) {
-        $rootScope.holidays = data;
+  .controller('singleUserController', function ($scope, $rootScope, $http, $routeParams, getJsonData, getHolidays, formatUserData, config) {
+    getHolidays.getDays(config.holidaysUrl + new Date().getFullYear()).then(function (data) {
+      $rootScope.holidays = data;
+
+      $http.get(config.userYearsRangeUrl).then(function (yearsRange) {
 
         getJsonData.getUsers().then(function (data) {
           $scope.users = data;
@@ -22,7 +24,7 @@ angular.module('d8intranetApp')
             holidaysList.push(new Date(holiday.field_holiday_date));
           });
 
-          formatUserData.formattedUser($scope.users, holidaysList);
+          formatUserData.formattedUser($scope.users, holidaysList, yearsRange);
 
           $rootScope.user = {};
           var cameToCompany = '';
@@ -37,21 +39,15 @@ angular.module('d8intranetApp')
 
               cameToCompany = user.field_came_to_propeople[0].value;
 
-              console.log($rootScope.currentUserId);
-
-              if($rootScope.currentUserId == $routeParams.userId) {
+              if ($rootScope.currentUserId == $routeParams.userId) {
                 $scope.enableEdit = true;
                 $scope.userEdit = '/admin/user/' + user.uid[0].value + '/edit';
               }
 
-
-
-
               var today = new Date(),
-                  past = new Date(cameToCompany);
+                past = new Date(cameToCompany);
 
               var currentYear = today.getFullYear();
-
 
               angular.forEach(user.timeRanges[currentYear], function (value, key) {
                 $scope.filteredKeys[setStiaticTitle(key)] = value;
@@ -60,7 +56,6 @@ angular.module('d8intranetApp')
 
               // Get current days of user vacation
               var totalMonthOfWork = calcDate(today, past);
-
 
               $scope.totalVacationDays = 0;
 
@@ -85,7 +80,7 @@ angular.module('d8intranetApp')
           });
 
 
-          function setStiaticTitle(title) {
+          function setStiaticTitle (title) {
             switch (title) {
               case 'totalVacation':
                 return 'Vacation';
@@ -116,7 +111,7 @@ angular.module('d8intranetApp')
           var months;
 
           // Calculate amount of months from user started to work in company
-          function calcDate(date1, date2) {
+          function calcDate (date1, date2) {
 
             var diff = Math.floor(date1.getTime() - date2.getTime());
             var day = 1000 * 60 * 60 * 24;
@@ -128,7 +123,7 @@ angular.module('d8intranetApp')
           }
 
           // Get amount of Years and Months of user work in company
-          function getWorkPeriod(month) {
+          function getWorkPeriod (month) {
             $scope.yearsOfWork = Math.floor(month / 12);
             $scope.monthsOfWork = month % 12;
 
@@ -140,10 +135,11 @@ angular.module('d8intranetApp')
           getWorkPeriod(calcDate(today, past));
         });
       });
-
-
-    })
-
-    .controller('ShowUserCtrl', function ($scope, $routeParams) {
-      $scope.user_id = $routeParams.userId;
     });
+
+
+  })
+
+  .controller('ShowUserCtrl', function ($scope, $routeParams) {
+    $scope.user_id = $routeParams.userId;
+  });

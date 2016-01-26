@@ -42,4 +42,30 @@ class IntranetUserController extends ControllerBase {
     return new JsonResponse($this->intranetApi->changePresenceStatus(\Drupal::service('current_user')->id()));
   }
 
+  public function userYears() {
+    $stats = ['vacation', 'dayoff', 'sick', 'duty_journey', 'remote_work', 'work_off'];
+
+    $db = \Drupal::database();
+
+    $min = $max = date("Y");
+
+    foreach ($stats as $stat) {
+      $query = $db->select('user__field_user_' . $stat);
+      $query->addExpression('MIN(YEAR(field_user_' . $stat . '_start_date))');
+      $query->addExpression('MAX(YEAR(field_user_' . $stat . '_end_date))');
+      $stat_min = $query->execute()->fetchField(0);
+      $stat_max = $query->execute()->fetchField(1);
+
+      if ($stat_min < $min) {
+        $min = $stat_min;
+      }
+
+      if ($stat_max > $max) {
+        $max = $stat_max;
+      }
+    }
+
+    return new JsonResponse([$min, $max]);
+  }
+
 }

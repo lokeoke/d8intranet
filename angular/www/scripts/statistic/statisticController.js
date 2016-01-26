@@ -11,10 +11,12 @@
 
 angular.module('d8intranetApp')
 
-    .controller('StatisticController', function ($scope, $http, getJsonData, config, formatUserData, getHolidays) {
+  .controller('StatisticController', function ($scope, $http, getJsonData, config, formatUserData, getHolidays) {
 
-      getHolidays.getDays(config.holidaysUrl).then(function (data) {
-        $scope.holidays = data;
+    getHolidays.getDays(config.holidaysUrl).then(function (data) {
+      $scope.holidays = data;
+
+      $http.get(config.userYearsRangeUrl).then(function (yearsRange) {
 
         getJsonData.getUsers().then(function (data) {
           $scope.users = data;
@@ -25,7 +27,7 @@ angular.module('d8intranetApp')
             holidaysList.push(new Date(holiday.field_holiday_date));
           });
 
-          formatUserData.formattedUser($scope.users, holidaysList);
+          formatUserData.formattedUser($scope.users, holidaysList, yearsRange);
 
           $scope.$watch('teamFilter', function (newValue, oldValue) {
             $scope.filterBy = newValue;
@@ -33,7 +35,7 @@ angular.module('d8intranetApp')
 
           $scope.teams = [];
 
-          function isInArray(element, index, array) {
+          function isInArray (element, index, array) {
             return element.name != this.name;
           }
 
@@ -47,49 +49,53 @@ angular.module('d8intranetApp')
             }
           });
 
-          $scope.teams.unshift( {"name": 'all', "target_id": 0} );
-          $scope.teamFilter = { selectedOption: $scope.teams[0].target_id };
+          $scope.teams.unshift({"name": 'all', "target_id": 0});
+          $scope.teamFilter = {selectedOption: $scope.teams[0].target_id};
 
-          $scope.years = formatUserData.setYears();
+
+          $scope.years = formatUserData.setYears(yearsRange.data);
+
+
           $scope.yearFilter = new Date().getFullYear().toString();
         });
       });
-
-
-      $scope.tabs = [
-        {
-          title: 'Vacations',
-          url: 'templates/vacations.html'
-        },
-        {
-          title: 'Days off',
-          url: 'templates/daysoff.html'
-        },
-        {
-          title: 'Sick days',
-          url: 'templates/sick.html'
-        },
-        {
-          title: 'Business trips',
-          url: 'templates/journey.html'
-        },
-        {
-          title: 'Remote work',
-          url: 'templates/remote.html'
-        },
-        {
-          title: 'Overtime',
-          url: 'templates/workoff.html'
-        }
-      ];
-
-      $scope.currentTab = 'templates/vacations.html';
-
-      $scope.onClickTab = function (tab) {
-        $scope.currentTab = tab.url;
-      };
-
-      $scope.isActiveTab = function (tabUrl) {
-        return tabUrl == $scope.currentTab;
-      };
     });
+
+
+    $scope.tabs = [
+      {
+        title: 'Vacations',
+        url: 'templates/vacations.html'
+      },
+      {
+        title: 'Days off',
+        url: 'templates/daysoff.html'
+      },
+      {
+        title: 'Sick days',
+        url: 'templates/sick.html'
+      },
+      {
+        title: 'Business trips',
+        url: 'templates/journey.html'
+      },
+      {
+        title: 'Remote work',
+        url: 'templates/remote.html'
+      },
+      {
+        title: 'Overtime',
+        url: 'templates/workoff.html'
+      }
+    ];
+
+    $scope.currentTab = 'templates/vacations.html';
+
+    $scope.onClickTab = function (tab) {
+      $scope.currentTab = tab.url;
+    };
+
+    $scope.isActiveTab = function (tabUrl) {
+      return tabUrl == $scope.currentTab;
+    };
+  });
