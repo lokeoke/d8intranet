@@ -9,7 +9,7 @@
  */
 angular.module('d8intranetApp')
     .controller('singleUserController', function ($scope, $rootScope, $http, $routeParams, getJsonData, getHolidays, formatUserData, config) {
-      getHolidays.getDays(config.holidaysUrl).then(function (data) {
+      getHolidays.getDays(config.holidaysUrl + new Date().getFullYear()).then(function (data) {
         $rootScope.holidays = data;
 
         getJsonData.getUsers().then(function (data) {
